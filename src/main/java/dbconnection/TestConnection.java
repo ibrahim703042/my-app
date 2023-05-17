@@ -1,47 +1,36 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
 package dbconnection;
-
-
-import java.io.*;
 import java.sql.*;
 
-import jakarta.annotation.Resource;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
+/**
+ *
+ * @author Ibrahim
+ * 
+ */
 
+public class TestConnection {
 
-
-@WebServlet("/TestConnection")
-public class TestConnection extends HttpServlet {
-	
-    private static final long serialVersionUID = 1L;
-
-    @Resource(name="jdbc/TDImpotFiscal")
-    private DataSource dataSource;
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        response.setContentType("text/plain");
-
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = dataSource.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM administrateur");
-            while(resultSet.next()) {
-                String name = resultSet.getString("nom");
-                System.out.println("Name: "+name);
-            }
-
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
+    /**
+     * @param args the command line arguments
+     */
+    
+    public static void main(String[] args) {
+        
+        String msg = "Connected to database %s successfully.";
+        
+        // create a new connection from MySQLJDBCUtil
+        try (
+                Connection connection = MySQLJDBCUtil.getConnection()) {
+            
+            // print out a message
+            System.out.println(String.format(msg, connection.getCatalog()));
+            
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
+    
 }

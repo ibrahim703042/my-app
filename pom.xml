@@ -1,6 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.obr</groupId>
     <artifactId>my-app</artifactId>
@@ -76,35 +77,50 @@
         </dependency>
         
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-<!--        <dependency>
+        <!--
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.5.7.Final</version>
-        </dependency>-->
+        </dependency>
+        -->
         
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
-<!--        <dependency>
+        <!--
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>5.5.7.Final</version>
-        </dependency>-->
+        </dependency>
+        -->
         
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
-<!--        <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>5.4.3.Final</version>
-                <scope>compile</scope>
-        </dependency>-->
+        <!--
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.4.3.Final</version>
+            <scope>compile</scope>
+        </dependency>
+        -->
         
     </dependencies>
     
     <build>
         <plugins>
+            
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                  <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.11.0</version>
                 <configuration>
                     <compilerArgs>
                         <args>-Djava.endorsed.dirs=${endorsed.dir}</args>
@@ -119,7 +135,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>

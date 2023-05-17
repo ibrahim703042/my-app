@@ -22,59 +22,42 @@
            <div class="card ">
                 <h:form>
                     <p:dataTable 
-                        id="provinces"
                         paginator="true" 
                         rows="4" 
                         rowSelectMode="add" 
                         paginatorPosition="bottom"
                         binding="#{table}" 
-                        value="#{provinceView.provinces}" 
+                        value="#{provinceController.provinceList()}" 
                         var="provinc"  >
-                        
-                        <p:ajax event="rowEdit" listener="#{provinceView.onRowEdit}" update=":form:msgs"/>
-                        <p:ajax event="rowEditCancel" listener="#{provinceView.onRowCancel}" update=":form:msgs"/>
                         
                         <p:column headerText="Code">
                             <h:outputText value="#{table.rowIndex + 1}" />
                         </p:column>
 
-                        <!--                        
-                        <p:column headerText="Nom" sortBy="#{provinc.nomProvince}" filterBy="#{provinc.nomProvince}">
+                        <p:column 
+                        headerText="Nom" 
+                        sortBy="#{provinc.nomProvince}" 
+                        filterBy="#{provinc.nomProvince}"
+                        >
                         <h:outputText value="#{provinc.nomProvince}" />
-                        -->
+                    </p:column>
+                
+                    <p:column >
+                        <p:commandButton 
+                            icon="pi pi-pencil" 
+                            styleClass="edit-button rounded-button ui-button-success mr-4" 
+                            process="@this"
+                            >
+                           
+                        </p:commandButton>
+                        <p:commandButton 
+                            class="ui-button-warning rounded-button" 
+                            icon="pi pi-trash"
+                            process="@this"
+                            >
                             
-                        <p:column headerText="Nom" sortBy="#{provinc.nomProvince}" filterBy="#{provinc.nomProvince}">
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{provinc.nomProvince}"/>
-                                </f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{provinc.nomProvince}" style="width:100%" label="Name"/>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                        
-                        <p:column style="width:6rem">
-                            <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
-                        </p:column>
-                        <!--
-                        <p:column >
-                            <p:commandButton 
-                                icon="pi pi-pencil" 
-                                styleClass="edit-button rounded-button ui-button-success mr-4" 
-                                process="@this"
-                                >
-
-                            </p:commandButton>
-                            <p:commandButton 
-                                class="ui-button-warning rounded-button" 
-                                icon="pi pi-trash"
-                                process="@this"
-                                >
-
-                            </p:commandButton>
-                        </p:column>
-                        -->
+                        </p:commandButton>
+                    </p:column>
                     </p:dataTable>
                 </h:form>
                 

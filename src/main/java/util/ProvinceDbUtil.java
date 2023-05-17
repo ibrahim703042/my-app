@@ -5,6 +5,7 @@
 package util;
 
 
+import dbconnection.MySQLJDBCUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
 //import jakarta.faces.bean.ApplicationScoped;
@@ -16,11 +17,11 @@ import java.util.*;
 
 import model.Province;
 
-
 /**
  *
  * @author Ibrahim
  */
+
 
 @Named
 @ApplicationScoped
@@ -31,27 +32,15 @@ public class ProvinceDbUtil implements Serializable {
     public static Connection connection;
     public static ResultSet resultSet;
     public static PreparedStatement pstmt;
-        
-    public static Connection getConnection() {
-        
-        try {
 
-            Class.forName("com.mysql.cj.jdbc.Driver");     
-            String db_url ="jdbc:mysql://localhost:3306/db_impotFiscal",db_userName = "root",db_password = "";
-            connection = DriverManager.getConnection(db_url,db_userName,db_password);  
-        
-        }catch(ClassNotFoundException | SQLException sqlException) {  
-            sqlException.printStackTrace();
-        } 
-        
-        return connection;
-    }
-    
-    // display list
+    /// ************************ display data *************************/
     public static ArrayList findAll() {
+        
         ArrayList provinceList = new ArrayList();  
+        
         try {
-            statement = getConnection().createStatement();
+            connection = MySQLJDBCUtil.getConnection();
+            statement = connection.createStatement();
             String query = "SELECT * FROM province WHERE id IS NOT NULL ORDER BY id DESC";
             resultSet = statement.executeQuery(query);  
             
@@ -75,7 +64,7 @@ public class ProvinceDbUtil implements Serializable {
         return provinceList;
     }
     
-    // insert into 
+    /// ************************ save data *************************/
     public static String save(Province province) {
         int saveResult = 0;
         String navigationResult = "";
@@ -84,7 +73,8 @@ public class ProvinceDbUtil implements Serializable {
         try {   
             
             String query = "insert into province (nomProvince) values (?)";
-            pstmt = getConnection().prepareStatement(query);         
+            connection = MySQLJDBCUtil.getConnection();
+            pstmt = connection.prepareStatement(query);         
             pstmt.setString(1, province.getNomProvince());
             
             saveResult = pstmt.executeUpdate();
@@ -94,7 +84,7 @@ public class ProvinceDbUtil implements Serializable {
             addErrorMessage(sqlException);
         }
         if(saveResult !=0) {
-            //navigationResult = "/pages/pays/province/template.xhtml?faces-redirect=true";
+            navigationResult = "/pages/pays/province/template.xhtml?faces-redirect=true";
             showMessage(message);
             
         } else {
@@ -103,6 +93,7 @@ public class ProvinceDbUtil implements Serializable {
         return navigationResult;
     }
     
+    /// ************************ find data by ID *************************/
     public static String findById(int provinceId) {
         
         Province province = null;
@@ -113,7 +104,8 @@ public class ProvinceDbUtil implements Serializable {
 
         try {
             
-            statement = getConnection().createStatement();
+            connection = MySQLJDBCUtil.getConnection();
+            statement = connection.createStatement();
             resultSet = statement.executeQuery("select * from province where id = " + provinceId);    
             
             if(resultSet != null) {
@@ -123,7 +115,7 @@ public class ProvinceDbUtil implements Serializable {
                 province.setNomProvince(resultSet.getString("nomProvince"));
 
             }
-            sessionMapObj.put("province", province);
+            sessionMapObj.put("provinceMapped", province);
             connection.close();
         } catch(SQLException sqlException) {
             //addErrorMessage(sqlException);
@@ -132,25 +124,38 @@ public class ProvinceDbUtil implements Serializable {
         return "/pages/pays/province/template.xhtml?faces-redirect=true";
     }
 
+    /// ************************ update data *************************/
     public static String update(Province province) {
+        
         try {
-            pstmt = getConnection().prepareStatement("update province set nomProvince=? where id = ? ");    
-            pstmt.setString(1,province.getNomProvince());  
+            String query = "update province set nomProvince=? where id = ?";
+            
+            connection = MySQLJDBCUtil.getConnection();
+            pstmt = connection.prepareStatement(query);
+            pstmt.setString(1,province.getNomProvince());
+            
             pstmt.executeUpdate();
-            connection.close();            
+            
+            connection.close();
+            
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
         return "/pages/pays/province/template.xhtml?faces-redirect=true";
     }
 
+    /// ************************ delete data *************************/
     public static String delete(int provinceId){
-        System.out.println("delete() : Province Id: " + provinceId);
+        
+        //System.out.println("delete() : Province Id: " + provinceId);
         
         try {
             
-            pstmt = getConnection().prepareStatement("delete from province where id = " + provinceId );  
-            pstmt.executeUpdate();  
+            String query = "delete from province where id = " + provinceId ;
+            connection = MySQLJDBCUtil.getConnection();
+            pstmt = connection.prepareStatement(query);
+            pstmt.executeUpdate(); 
+            
             connection.close();
             
         } catch(SQLException sqlException){
@@ -159,12 +164,14 @@ public class ProvinceDbUtil implements Serializable {
         return "/pages/pays/province/template.xhtml?faces-redirect=true";
     }
 
+    /// ************************ show message after executing  *************************/
     private static void showMessage(String msg){
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage message = new FacesMessage("Notice",msg);
         context.addMessage(null, message);
     }
     
+    /// ************************ error *************************/
     private static void addErrorMessage(SQLException ex) {
         FacesMessage message = new FacesMessage(ex.getMessage());
         FacesContext.getCurrentInstance().addMessage(null, message);

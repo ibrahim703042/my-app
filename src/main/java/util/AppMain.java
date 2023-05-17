@@ -15,7 +15,7 @@ public class AppMain {
         
         //ProvinceDbUtil.findAll();
         //ContribuableDbUtil.findAll();
-        //AdministrateurDbUtil.findAll();
+        AdministrateurDbUtil.findAll();
        // AdministrateurDbUtil.findById(2);
         
          

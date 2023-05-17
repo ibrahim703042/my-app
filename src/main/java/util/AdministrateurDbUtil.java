@@ -9,6 +9,7 @@ package util;
  * @author Ibrahim
  */
 
+import dbconnection.MySQLJDBCUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -16,7 +17,6 @@ import jakarta.inject.Named;
 import model.Administrateur;
 import java.sql.*;
 import java.util.*;
-import java.util.Map;
 
 @Named
 @ApplicationScoped
@@ -27,29 +27,16 @@ public class AdministrateurDbUtil {
     public static Connection connection;
     public static ResultSet resultSet;
     public static PreparedStatement pstmt;
-    
-    //************** data connection ***********************/  
-    public static Connection getConnection() {
-
-        try {
-
-            Class.forName("com.mysql.cj.jdbc.Driver");     
-            String db_url ="jdbc:mysql://localhost:3306/db_impotFiscal",db_userName = "root",db_password = "";
-            connection = DriverManager.getConnection(db_url,db_userName,db_password);  
-
-        }catch(ClassNotFoundException | SQLException sqlException) {  
-            sqlException.printStackTrace();
-        } 
-
-        return connection;
-    }
 
     //*************************** display data *****************/
     public static ArrayList findAll() {
-        ArrayList administrateurList = new ArrayList();  
+        
+        ArrayList administrateurList = new ArrayList();
+        
         try {
-            statement = getConnection().createStatement();
             String query = "SELECT * FROM administrateur WHERE id IS NOT NULL ORDER BY id DESC";
+            connection = MySQLJDBCUtil.getConnection();
+            statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
             while(resultSet.next()) { 
@@ -89,8 +76,8 @@ public class AdministrateurDbUtil {
             String query = 
                     "INSERT INTO administrateur (nom, prenom, email, motPasse, telephone, BP) "
                     + "values (?, ?, ?, ?, ?, ?)";
-
-            pstmt = getConnection().prepareStatement(query);         
+            connection = MySQLJDBCUtil.getConnection();
+            pstmt = connection.prepareStatement(query);         
 
             pstmt.setString(1, administrateur.getNom());
             pstmt.setString(2, administrateur.getPrenom());
@@ -125,9 +112,10 @@ public class AdministrateurDbUtil {
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
         try {
-            
-            statement = getConnection().createStatement();
+           
             String query = "SELECT * FROM administrateur WHERE id =" + administrateurId ;
+            connection = MySQLJDBCUtil.getConnection();
+            statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
             if(resultSet.next()) {
@@ -157,8 +145,6 @@ public class AdministrateurDbUtil {
     //************** update data ******************************/
     public static String update(Administrateur administrateur){
 
-        //Integer saveResult = 0;
-        //String navigationResult = "";
         String message = "Updated Successfully";
 
         try {
@@ -170,7 +156,8 @@ public class AdministrateurDbUtil {
                     + "BP=? "
                     + "where id= ? ";
 
-            pstmt = getConnection().prepareStatement(query);
+            connection = MySQLJDBCUtil.getConnection();
+            pstmt = connection.prepareStatement(query);
             pstmt.setString(1, administrateur.getNom());
             pstmt.setString(2, administrateur.getPrenom());
             pstmt.setInt(3, administrateur.getTelephone());
@@ -188,12 +175,14 @@ public class AdministrateurDbUtil {
 
     //************** delete data ********************************/
     public static String delete(int administrateurId) {
+        
+        connection = MySQLJDBCUtil.getConnection();
         //System.out.println("delete() : Administrateur Id: " + administrateurId);
 
         try {
 
             String query = "DELETE FROM administrateur WHERE id = " + administrateurId ;
-            pstmt = getConnection().prepareStatement(query);
+            pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  
             connection.close();
             
@@ -206,6 +195,7 @@ public class AdministrateurDbUtil {
     
     //************** conecxt msg data ***********************/
     private static void showMessage(String msg){
+        
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage message = new FacesMessage("Notice",msg);
         context.addMessage(null, message);
@@ -213,6 +203,7 @@ public class AdministrateurDbUtil {
     
      //************** error  message from sql ***********************/
     private static void addErrorMessage(SQLException ex) {
+        
         FacesMessage message = new FacesMessage(ex.getMessage());
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
