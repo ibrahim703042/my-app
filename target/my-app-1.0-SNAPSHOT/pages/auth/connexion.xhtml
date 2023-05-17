@@ -1,0 +1,93 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns = "http://www.w3.org/1999/xhtml"   
+   xmlns:h = "http://java.sun.com/jsf/html"
+   xmlns:ui = "http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+<!--       <h:outputStylesheet library="css" name="resources/auth.css"/>-->
+
+   <h:body> 
+      <ui:composition template = "/resources/templates/welcomeTemplate.xhtml">
+     
+        <ui:define name = "contents">
+
+            <div class="container d-flex justify-content-center align-items-center mt-5">
+
+                <div class="row border rounded-5 p-3 bg-white shadow box-area">
+
+                    <div class="col-md-6 rounded-4 d-flex justify-content-center
+                         align-items-center flex-column left-box" 
+                         style="background: #BF251D;">
+                        
+                        <p class="text-white fs-2" 
+                           style="font-family: 'Courier New', 
+                           Courier, monospace; font-weight: 600;">
+                               <h:outputText value="Be Verified"/>
+                        </p>
+                        <small class="text-white text-wrap text-center" 
+                               style="width: 17rem ;
+                               font-family: 'Courier New', Courier, monospace;">
+                            
+                            Join experienced Designers on this platform.
+                            
+                        </small>
+                    </div> 
+
+                    <div class="col-md-6 right-box">
+                        <div class="row align-items-center">
+                            <div class="header-text mb-4">
+                                <h3>S'authentifier</h3>
+                                <p class="text-muted fs-6">Par email et le mot de passe.</p>
+                            </div>
+                            <h:form>
+                                
+                                <div class="input-group mb-4">
+                                    <h:inputText id="email" styleClass="form-control" value="">
+                                        <f:passThroughAttribute name="type" value="email"/>
+                                        <f:passThroughAttribute name="placeholder" value="E-mail"/>
+                                    </h:inputText>
+
+                                </div>
+                                <div class="input-group mb-5">
+                                    <h:inputText id="motPasse" styleClass="form-control" value="">
+                                        <f:passThroughAttribute name="type" value="motPasse"/>
+                                        <f:passThroughAttribute name="placeholder" value="Mot de passe"/>
+                                    </h:inputText>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <h:commandButton class="btn btn-dark" value="S'authentifier" />
+                                </div>
+                                
+                            </h:form>
+                        </div>
+                    </div> 
+                </div>
+
+            </div>
+            
+        </ui:define> 
+          
+      </ui:composition>
+   </h:body> 
+</html>	
+
+
+<!--           <h:form>
+		<h3>JSF Login Logout</h3>
+		<h:outputText value="E-mail" />
+		<h:inputText id="email" value=""></h:inputText>
+		<h:message for="email"></h:message>
+		<br></br><br></br>
+		
+		<h:outputText value="Mot de passe" />
+		<h:inputSecret id="motPasse" value=""></h:inputSecret>
+		<h:message for="motPasse"></h:message>
+		<br></br><br></br>
+		
+		<h:commandButton value="Se connectez"></h:commandButton>
+            </h:form>
+-->

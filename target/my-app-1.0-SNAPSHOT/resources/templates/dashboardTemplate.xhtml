@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+<h:head>
+    <title>
+        <ui:insert name="title">Tele declaration d'impot fiscale</ui:insert>
+    </title>
+    
+    <!-- Custom styles for this template -->
+    <h:outputStylesheet library="webjars" name="primeflex/3.3.0/primeflex.min.css" />
+    <h:outputStylesheet library="css" name="admin.css"/>
+    
+    
+</h:head>
+<h:body>
+    
+    <ui:insert name="sidebar" >
+        <ui:include src="/resources/templates/admin/sidebar.xhtml" />
+    </ui:insert>
+    
+    <main class="main">
+        <div class="container" style="width:100%; padding: 10px;">
+            <ui:insert name = "header" >
+                <ui:include src = "/resources/templates/admin/header.xhtml" />
+            </ui:insert>
+            <div class="card container">
+                <ui:insert name="contents" >
+                    <ui:include src="/resources/templates/admin/contents.xhtml" />
+                </ui:insert>
+            </div>
+        </div>
+        
+    </main>
+    
+    <h:outputScript library="js" name="script.js"/>
+     
+</h:body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns = "http://www.w3.org/1999/xhtml"   
+   xmlns:h = "http://java.sun.com/jsf/html"
+   xmlns:ui = "http://java.sun.com/jsf/facelets"> 
+   
+   <h:head></h:head>
+   
+   <!-- Custom styles for this template -->
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+    <h:outputStylesheet library="css" name="style.css"/>
+   
+   <h:body> 
+       
+        <ui:insert name = "header" >
+           <ui:include src = "/resources/templates/visitor/header.xhtml" />
+        </ui:insert> 
+      
+         <ui:insert name = "content" >
+            <ui:include src = "/resources/templates/visitor/content.xhtml" />
+         </ui:insert>    
+      
+<!--        <ui:insert name = "footer" >
+            <ui:include src = "/resources/templates/visitor/footer.xhtml" />
+        </ui:insert>-->
+   
+    <!-- Custom Js for this template -->
+    <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
+    
+   </h:body>
+</html>

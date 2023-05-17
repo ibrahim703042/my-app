@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns = "http://www.w3.org/1999/xhtml"   
+      xmlns:ui = "http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+   
+   <body>
+        <ui:composition> 
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <h:graphicImage name="image/image_1.png" class="d-block w-100" alt="..."/>
+                    <div class="carousel-caption">
+                      <h5>Your Dream House</h5>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+                          Maxime, nulla, tempore. Deserunt excepturi quas vero.
+                      </p>
+                      <p><a href="#" class="btn btn-danger mt-3">Learn More</a></p>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <h:graphicImage name="image/image_2.jpg" class="d-block w-100" alt="..."/>
+                    <div class="carousel-caption">
+                      <h5>Always Dedicated</h5>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+                          Maxime, nulla, tempore. Deserunt excepturi quas vero.
+                      </p>
+                      <p><a href="#" class="btn btn-danger mt-3">Learn More</a></p>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <h:graphicImage name="image/image_3.jpg" class="d-block w-100" alt="..."/>
+                    <div class="carousel-caption">
+                      <h5>True Construction</h5>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                          Maxime, nulla, tempore. Deserunt excepturi quas vero.
+                      </p>
+                      <p><a href="#" class="btn btn-danger mt-3">Learn More</a></p>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </ui:composition>	
+   </body>
+</html>

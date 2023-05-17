@@ -1,0 +1,176 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+    
+    <div class="surface-card p-4 shadow-1 border-round">
+        <div class="text-3xl font-medium text-900 mb-3">
+            Administrateur
+        </div>
+        <div class="font-medium text-500 mb-3">
+            Listes
+        </div>
+       <div  class="border-2 border-dashed surface-border">
+
+           <div class="card ">
+             
+                <h:form>
+                    <p:growl id="message" showDetail="true"/>
+                    
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton 
+                                value="New" 
+                                icon="pi pi-plus" 
+                                styleClass="ui-button-success"
+                                action="/pages/admin/ajouter?faces-redirect=true"
+                                ajax="false"
+                                style="margin-right: .5rem">
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                        
+                        <!-- toolbarGroup for import, excel, pdf-->
+                        <p:toolbarGroup align="right">
+                            
+                            <!--Export import -->
+                            <p:fileUpload 
+                                mode="simple" 
+                                skinSimple="true" 
+                                label="Import" 
+                                chooseIcon="pi pi-download" 
+                            />
+                            
+                            <!-- Export data pdf -->
+                            <p:commandButton 
+                                value="PDF" 
+                                icon="pi pi-upload" 
+                                styleClass="ui-button-help" 
+                                ajax="false"
+                                class="mr-2"
+                                >
+                                <p:dataExporter 
+                                    type="pdf" 
+                                    target="dt-administrateurs" 
+                                    fileName="admin" 
+                                />
+                            </p:commandButton>
+                            
+                            <!--Export data excel -->
+                            <p:commandButton 
+                                value="EXCEL" 
+                                icon="pi pi-upload" 
+                                styleClass="ui-button-help" 
+                                ajax="false">
+                                <p:dataExporter 
+                                    type="xls" 
+                                    target="dt-administrateurs" 
+                                    fileName="Gestion administrateurs" 
+                                />
+                            </p:commandButton>
+                            
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    
+                    <p:dataTable
+                        id="dt-administrateurs"
+                        paginator="true" 
+                        rows="4" 
+                        rowSelectMode="add" 
+                        paginatorPosition="bottom"
+                        binding="#{table}" 
+                        value="#{administrateurController.administrateurList()}" 
+                        var="admin"  
+                        >
+
+                        <p:column 
+                            headerText="" 
+                            style="width: 5%">
+                             <h:outputText value="#{table.rowIndex + 1}" />
+                         </p:column>
+                        
+                        <!--
+                        <p:column 
+                            headerText="Matricule"
+                            sortBy="#{admin.id}" 
+                            filterBy="#{admin.id}"
+                            style="width: 17%"
+                            >
+                             <h:outputText value="#{admin.id}" />
+                         </p:column>
+                        -->
+
+                         <p:column 
+                            headerText="Nom" 
+                            sortBy="#{admin.nom}" 
+                            filterBy="#{admin.nom}"
+                            style="width: 10%"
+                            
+                            >
+                            <h:outputText value="#{admin.nom}" />
+                         </p:column>
+                        <!--
+                         <p:column 
+                            headerText="Prenom" 
+                            sortBy="#{admin.prenom}" 
+                            filterBy="#{admin.prenom}"
+                            >
+                            <h:outputText value="#{admin.prenom}" />
+                         </p:column>
+                        -->
+                        
+                         <p:column 
+                            headerText="Email" 
+                            sortBy="#{admin.email}" 
+                            filterBy="#{admin.email}"
+                            >
+                            <h:outputText value="#{admin.email}" />
+                         </p:column>
+                        
+                         <p:column 
+                            headerText="B.P" 
+                            sortBy="#{admin.bp}" 
+                            filterBy="#{admin.bp}"
+                            >
+                            <h:outputText value="#{admin.bp}" />
+                         </p:column>
+                        
+                        <!--
+                         <p:column 
+                            headerText="Date" 
+                            sortBy="#{admin.date}" 
+                            filterBy="#{admin.date}"
+                            >
+                            <h:outputText value="#{admin.date}" />
+                         </p:column>
+                        -->
+
+                     <p:column exportable="false" >
+                         <p:commandButton 
+                             icon="pi pi-pencil" 
+                             styleClass="edit-button rounded-button ui-button-success mr-4" 
+                             process="@this"
+                             ajax="false"
+                             action="#{administrateurController.edit(admin.id)}"
+                             >
+
+                         </p:commandButton>
+                         <p:commandButton 
+                             class="ui-button-warning rounded-button" 
+                             icon="pi pi-trash"
+                             process="@this"
+                             ajax="false"
+                             action="#{administrateurController.delete(admin.id)}"
+                             >
+
+                         </p:commandButton>
+                     </p:column>
+                     </p:dataTable>
+                 </h:form>
+            </div>
+
+       </div>
+    </div>
+            
+</ui:composition>

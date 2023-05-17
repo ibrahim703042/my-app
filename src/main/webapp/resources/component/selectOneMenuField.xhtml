@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <style>
+        .ui-inputtext:hover {
+            background-color: #fff;
+            border-color: #ccc;
+          }
+        
+    </style>
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name = "label" />
+        <cc:attribute name = "selectOneMenuView" />
+        <cc:attribute name = "placeholder" />
+        <cc:attribute name = "id" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        
+        <p:outputLabel value="#{cc.attrs.label}" />
+        <p:selectOneMenu 
+            id="#{cc.attrs.id}" 
+            value="#{cc.attrs.selectOneMenuView}">
+
+            <f:selectItem itemLabel="#{cc.attrs.placeholder}" itemValue=""/>
+            <f:selectItems itemValue="#{cc.attrs.selectOneMenuView}" value="#{cc.attrs.selectOneMenuView}"/>
+            
+        </p:selectOneMenu>
+            
+    </cc:implementation>
+</html>

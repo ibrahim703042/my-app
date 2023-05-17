@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name = "label" />
+        <cc:attribute name = "value" />
+        <cc:attribute name = "placeholder" />
+        <cc:attribute name = "symbol" />
+        <cc:attribute name = "symbolePosition" />
+        <cc:attribute name = "decimalPlaces" />
+        <cc:attribute name = "minValue" />
+        <cc:attribute name = "maxValue" />
+        <cc:attribute name = "symbolPosition" />
+        <cc:attribute name = "id" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+            <p:outputLabel value="#{cc.attrs.label}" />
+            <p:inputNumber 
+                id="#{cc.attrs.id}" 
+                value="#{value}" 
+                symbol="#{cc.attrs.symbol}"
+                symbolPosition="#{cc.attrs.symbolPosition}" 
+                minValue="#{cc.attrs.minValue}"
+                maxValue="#{cc.attrs.maxValue}" 
+                decimalPlaces="#{cc.attrs.decimalPlaces}"
+                style="height: 41px; "
+                placeholder="#{cc.attrs.placeholder}"
+                />
+    </cc:implementation>
+</html>

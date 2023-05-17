@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+
+    <style>
+        .ui-inputtext:hover {
+            background-color: #fff;
+            border-color: #ccc;
+          }
+        
+    </style>
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name = "label" />
+        <cc:attribute name = "value" />
+        <cc:attribute name = "display" />
+        <cc:attribute name = "validatedBean" />
+        <cc:attribute name = "placeholder" />
+        <cc:attribute name = "type" />
+        <cc:attribute name = "id" />
+        <cc:attribute name = "forLabel" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        
+        <p:outputLabel class="font-bold" for="#{cc.attrs.forLabel}" value="#{cc.attrs.label}" />
+        <p:inputText 
+            placeholder="#{cc.attrs.placeholder}" 
+            value="#{cc.attrs.value}" 
+            id="#{cc.attrs.id}"
+            type="#{cc.attrs.type}"
+            style="height: 41px; "
+            required="true"
+        >
+            
+        </p:inputText>
+            
+    </cc:implementation>
+</html>

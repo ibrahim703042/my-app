@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+    
+<!--    <f:metadata>
+        <f:event listener="" type="preRenderView" />
+    </f:metadata>-->
+    
+            
+    <div class="surface-card p-4 shadow-1 border-round">
+        <div class="text-3xl font-medium text-900 mb-3">
+            PROVINCE
+        </div>
+        <div class="font-medium text-500 mb-3">
+            Listes
+        </div>
+        <div  class="border-2 border-dashed surface-border">
+
+           <div class="card ">
+                <h:form>
+                    <p:dataTable 
+                        paginator="true" 
+                        rows="4" 
+                        rowSelectMode="add" 
+                        paginatorPosition="bottom"
+                        binding="#{table}" 
+                        value="#{provinceController.provinceList()}" 
+                        var="provinc"  >
+                        
+                        <p:column headerText="Code">
+                            <h:outputText value="#{table.rowIndex + 1}" />
+                        </p:column>
+
+                        <p:column 
+                        headerText="Nom" 
+                        sortBy="#{provinc.nomProvince}" 
+                        filterBy="#{provinc.nomProvince}"
+                        >
+                        <h:outputText value="#{provinc.nomProvince}" />
+                    </p:column>
+                
+                    <p:column >
+                        <p:commandButton 
+                            icon="pi pi-pencil" 
+                            styleClass="edit-button rounded-button ui-button-success mr-4" 
+                            process="@this"
+                            >
+                           
+                        </p:commandButton>
+                        <p:commandButton 
+                            class="ui-button-warning rounded-button" 
+                            icon="pi pi-trash"
+                            process="@this"
+                            >
+                            
+                        </p:commandButton>
+                    </p:column>
+                    </p:dataTable>
+                </h:form>
+                
+            </div>
+
+       </div>
+    </div>
+            
+</ui:composition>

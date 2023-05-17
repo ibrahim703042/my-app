@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:co = "http://java.sun.com/jsf/composite/component"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component"> 
+    
+    <p:spacer height="90" />
+    <div class="surface-ground">
+        <div class="mb-5"> 
+            <p:link value="Dashboard" 
+                class="no-underline font-bold text-2xl line-height-2 mb-3" 
+                outcome="dashboard?faces-redirect=true" />
+        </div>
+        <p:spacer />
+
+        <div class="grid">
+            <div class="col-12 md:col-6 lg:col-3">
+                <div class="px-5 py-3 surface-card shadow-2 border-round">
+                    <div class="flex">
+                    
+                        <div class="text-blue-600  font-medium line-height-3 mb-2">
+                            <p:outputLabel value="Admistrateur" styleClass="fs"/>
+                        </div>
+                        
+                    </div>
+                    <div class="text-900 font-bold line-height-3 text-2xl mb-2">
+                        10
+                    </div>
+                    <p class="text-700 line-height-3 m-0">
+                        <span class="" style="color: #ff3333">24 </span>
+                        <span class="">new since last week</span> 
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+</ui:composition>
+  
