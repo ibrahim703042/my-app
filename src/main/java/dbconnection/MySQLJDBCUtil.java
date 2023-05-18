@@ -35,15 +35,15 @@ public class MySQLJDBCUtil {
     }
     
     
-//    public static void close(Connection connection) {
-//        try {
-//
-//            connection.close();
-//
-//        }catch (SQLException ex) {
-//
-//            ex.printStackTrace();
-//        }
-//    }
+    public static void close(Connection connection) {
+        try {
+
+            connection.close();
+
+        }catch (SQLException ex) {
+
+            ex.printStackTrace();
+        }
+    }
     
 }

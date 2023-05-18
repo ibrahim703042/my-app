@@ -5,6 +5,7 @@
 package model;
 
 import jakarta.inject.Named;
+import java.util.Date;
 
 
 /**
@@ -17,7 +18,7 @@ public class Impot{
 
     private Integer id;
     private int idSLocation;
-    private int impDPaye;
+    private Date impDPaye;
     private int impotTotal;
 
     public Impot() {
@@ -27,7 +28,7 @@ public class Impot{
         this.id = id;
     }
 
-    public Impot(Integer id, int idSLocation, int impDPaye, int impotTotal) {
+    public Impot(Integer id, int idSLocation, Date impDPaye, int impotTotal) {
         this.id = id;
         this.idSLocation = idSLocation;
         this.impDPaye = impDPaye;
@@ -50,11 +51,11 @@ public class Impot{
         this.idSLocation = idSLocation;
     }
 
-    public int getImpDPaye() {
+    public Date getImpDPaye() {
         return impDPaye;
     }
 
-    public void setImpDPaye(int impDPaye) {
+    public void setImpDPaye(Date impDPaye) {
         this.impDPaye = impDPaye;
     }
 

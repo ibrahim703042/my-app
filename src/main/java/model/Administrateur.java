@@ -14,6 +14,7 @@ import java.sql.Date;
  *
  * @author Ibrahim
  */
+
 @Named
 @RequestScoped
 public class Administrateur {
