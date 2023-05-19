@@ -4,6 +4,8 @@
  */
 package model;
 
+import jakarta.faces.bean.ManagedBean;
+import jakarta.faces.bean.RequestScoped;
 import jakarta.validation.constraints.Email;
 import java.util.Date;
 
@@ -12,12 +14,13 @@ import java.util.Date;
  * @author Ibrahim
  */
 
+@ManagedBean
+@RequestScoped
+
 public class Representant  {
 
     private Integer id;
-    
     private String nomRepresentant;
-    
     private String prenomRepresentant;
     
     @Email
@@ -36,16 +39,6 @@ public class Representant  {
 
     public Representant(Integer id) {
         this.id = id;
-    }
-
-    public Representant(Integer id, String nomRepresentant, String prenomRepresentant, String emailRepresentant, int telephoneRepresentant, String bpRepresentant, Date date) {
-        this.id = id;
-        this.nomRepresentant = nomRepresentant;
-        this.prenomRepresentant = prenomRepresentant;
-        this.emailRepresentant = emailRepresentant;
-        this.telephoneRepresentant = telephoneRepresentant;
-        this.bpRepresentant = bpRepresentant;
-        this.date = date;
     }
 
     public Integer getId() {

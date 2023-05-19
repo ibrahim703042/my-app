@@ -21,17 +21,13 @@
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
-            <p:outputLabel value="#{cc.attrs.label}" />
-            <p:inputNumber 
+            <p:outputLabel class="font-bold" value="#{cc.attrs.label}" />
+            <p:inputText  
                 id="#{cc.attrs.id}" 
                 value="#{value}" 
-                symbol="#{cc.attrs.symbol}"
-                symbolPosition="#{cc.attrs.symbolPosition}" 
-                minValue="#{cc.attrs.minValue}"
-                maxValue="#{cc.attrs.maxValue}" 
-                decimalPlaces="#{cc.attrs.decimalPlaces}"
                 style="height: 41px; "
                 placeholder="#{cc.attrs.placeholder}"
+                required="true"
                 />
     </cc:implementation>
 </html>
