@@ -10,15 +10,15 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.bean.ApplicationScoped;
+import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
-import jakarta.inject.Named;
 import model.Contribuable;
 import java.sql.*;
 import java.util.*;
 
-@Named
+@ManagedBean
 @ApplicationScoped
 
 public class ContribuableDbUtil {
@@ -69,7 +69,6 @@ public class ContribuableDbUtil {
         
         Integer saveResult = 0;
         String navigationResult = "";
-        String message = "Record Inserted";
         
         try {
 
@@ -91,22 +90,21 @@ public class ContribuableDbUtil {
             connection.close();
 
         }catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
-        }if(saveResult !=0) {
-            navigationResult = "/pages/admin/template.xhtml?faces-redirect=true";
-            showMessage(message);
+              addErrorMessage(sqlException);
+        } if (saveResult != 0) {
+            return "/pages/contribuable/template.xhtml?faces-redirect=true";
             
         } else {
             navigationResult = "";
         }
-        return navigationResult;
+        return "/pages/contribuable/template.xhtml?faces-redirect=true";
     }
 
     //************** find data by ID ***************************/
     public static String findById(int contribuableId) {
         
         Contribuable contribuable = null;
-        System.out.println(" findById() : Province Id: " + contribuableId);
+        System.out.println(" findById() : Contribuable Id: " + contribuableId);
         
         /* Setting The Particular province Details In Session */
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -139,7 +137,7 @@ public class ContribuableDbUtil {
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
-        return "/pages/admin/edit.xhtml";
+        return "/pages/contribuable/edit?faces-redirect=true";
     }
 	
     //************** update data ******************************/
@@ -149,28 +147,31 @@ public class ContribuableDbUtil {
 
         try {
 
-            String query ="Update contribuable SET "
-                    + "nom=?, "
-                    + "prenom=?, "
-                    + "telephone=?, "
-                    + "BP=? "
-                    + "where id= ? ";
+            String query ="UPDATE contribuable SET "
+                    + "nom = ?, "
+                    + "prenom = ?, "
+                    + "email = ?, "
+                    + "telephone = ?, "
+                    + "BP = ? "
+                    + "WHERE id = ? ";
 
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, contribuable.getNom());
             pstmt.setString(2, contribuable.getPrenom());
-            pstmt.setInt(3, contribuable.getTelephone());
-            pstmt.setString(4, contribuable.getBp());
-
+            pstmt.setString(3, contribuable.getEmail());
+            pstmt.setInt(4, contribuable.getTelephone());
+            pstmt.setString(5, contribuable.getBp());
+            pstmt.setInt(6,contribuable.getId());
+            
             pstmt.execute();
             connection.close();
 
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
-            showMessage(message);
-            return "/pages/admin/template.xhtml?faces-redirect=true";
+            //showMessage(message);
+            return "/pages/contribuable/template.xhtml?faces-redirect=true";
     }
 
     //************** delete data ********************************/
@@ -189,7 +190,7 @@ public class ContribuableDbUtil {
         } catch(SQLException sqlException){
             addErrorMessage(sqlException);
         }
-        return "/pages/admin/template.xhtml?faces-redirect=true";
+        return "/pages/contribuable/template.xhtml?faces-redirect=true";
     }
     
     

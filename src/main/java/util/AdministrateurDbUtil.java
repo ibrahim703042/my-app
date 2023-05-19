@@ -10,15 +10,14 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
-import jakarta.inject.Named;
 import model.Administrateur;
 import java.sql.*;
 import java.util.*;
 
-@Named
+@ManagedBean
 @ApplicationScoped
 
 public class AdministrateurDbUtil {
@@ -149,19 +148,22 @@ public class AdministrateurDbUtil {
 
         try {
 
-            String query ="Update administrateur SET "
-                    + "nom=?, "
-                    + "prenom=?, "
-                    + "telephone=?, "
-                    + "BP=? "
-                    + "where id= ? ";
+            var query =" UPDATE administrateur SET "
+                    + "nom = ?, "
+                    + "prenom = ?, "
+                    + "email = ?, "
+                    + "telephone = ?, "
+                    + "BP = ? "
+                    + "where id = ? ";
 
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, administrateur.getNom());
             pstmt.setString(2, administrateur.getPrenom());
-            pstmt.setInt(3, administrateur.getTelephone());
-            pstmt.setString(4, administrateur.getBp());
+            pstmt.setString(3, administrateur.getEmail());
+            pstmt.setInt(4, administrateur.getTelephone());
+            pstmt.setString(5, administrateur.getBp());
+            pstmt.setInt(6, administrateur.getId());
 
             pstmt.execute();
             connection.close();

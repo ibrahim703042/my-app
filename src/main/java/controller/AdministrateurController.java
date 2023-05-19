@@ -6,9 +6,9 @@ package controller;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.FacesContext;
-import jakarta.inject.Named;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Administrateur;
@@ -19,10 +19,8 @@ import util.AdministrateurDbUtil;
  * @author Ibrahim
  */
 
-@Named(value = "administrateurController")
-//@ViewScoped
+@ManagedBean
 @SessionScoped
-
 
 public class AdministrateurController {
 
@@ -57,8 +55,7 @@ public class AdministrateurController {
     public String delete(int id) {
         return AdministrateurDbUtil.delete(id);
     }
-    
-    
+        
     //************** conecxt msg data ***********************/
     private static void showMessage(String msg){
         FacesContext context = FacesContext.getCurrentInstance();

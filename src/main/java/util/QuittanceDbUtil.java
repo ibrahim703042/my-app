@@ -35,7 +35,7 @@ public class QuittanceDbUtil {
     public static PreparedStatement pstmt;
 
     //*************************** display data *****************/
-    public static ArrayList findAll() {
+    public static ArrayList findAll(Object newParam) {
         
         ArrayList quittanceList = new ArrayList();
         

@@ -19,7 +19,6 @@ import java.sql.Date;
 @RequestScoped
 public class Administrateur {
 
-    
     private Integer id;
     
     @NotNull

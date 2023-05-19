@@ -6,11 +6,9 @@ package util;
 
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
-//import jakarta.faces.bean.ApplicationScoped;
+import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
-import jakarta.inject.Named;
 import java.io.Serializable;
 import java.sql.*;
 import java.util.*;
@@ -20,10 +18,10 @@ import model.Province;
 /**
  *
  * @author Ibrahim
+ * 
  */
 
-
-@Named
+@ManagedBean
 @ApplicationScoped
 
 public class ProvinceDbUtil implements Serializable {

@@ -6,8 +6,7 @@
 package controller;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.bean.SessionScoped;
-import jakarta.inject.Named;
+import jakarta.faces.bean.*;
 import model.Province;
 
 import java.util.*;
@@ -16,10 +15,11 @@ import util.ProvinceDbUtil;
 /**
  *
  * @author Ibrahim
+ * 
  */
 
 
-@Named(value="provinceController")
+@ManagedBean
 @SessionScoped
 //@ViewScoped
 

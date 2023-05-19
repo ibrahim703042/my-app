@@ -18,6 +18,7 @@
     </properties>
     
     <dependencies>
+        
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
@@ -31,14 +32,6 @@
             <artifactId>jakarta.persistence-api</artifactId>
             <version>3.1.0</version>
         </dependency>
-        
-        <!--
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>javax.persistence-api</artifactId>
-            <version>2.2</version>
-        </dependency>
-        -->
         
         <!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
         <dependency>
@@ -55,6 +48,13 @@
             <version>5.2.3</version>
         </dependency>
         
+        <!-- https://mvnrepository.com/artifact/com.lowagie/itext -->
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>4.2.2</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -75,35 +75,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.30</version>
         </dependency>
-        
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-        <!--
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.5.7.Final</version>
-        </dependency>
-        -->
-        
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
-        <!--
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.5.7.Final</version>
-        </dependency>
-        -->
-        
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
-        <!--
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.4.3.Final</version>
-            <scope>compile</scope>
-        </dependency>
-        -->
-        
+          
     </dependencies>
     
     <build>

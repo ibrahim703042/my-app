@@ -4,51 +4,47 @@
  */
 package model;
 
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import java.util.Collection;
+import java.util.List;
 import java.util.Date;
 
 /**
  *
  * @author Ibrahim
+ * 
  */
+
 @Named
+@RequestScoped
 
 public class Contribuable {
 
     private Integer id;
     
     @NotNull
-    @Size(min = 1, max = 20)
     private String nom;
     
-    
     @NotNull
-    @Size(min = 1, max = 20)
     private String prenom;
     
     @NotNull
-    @Size(min = 1, max = 255)
     private String email;
     
     @NotNull
-    @Size(min = 1, max = 255)
     private String motPasse;
     
     @NotNull
     private int telephone;
     
     @NotNull
-    @Size(min = 1, max = 255)
     private String bp;
-   
-    private Date date;
-
-    private Collection<Representant> representantCollection;
     
-    private Collection<Abattement> abattementCollection;
+    private Date date;
+    
+    private List<Representant> representantList;
+    private List<Abattement> abattementList;
 
     public Contribuable() {
     }
@@ -132,20 +128,22 @@ public class Contribuable {
         this.date = date;
     }
 
-    public Collection<Representant> getRepresentantCollection() {
-        return representantCollection;
+    public List<Representant> getRepresentantList() {
+        return representantList;
     }
 
-    public void setRepresentantCollection(Collection<Representant> representantCollection) {
-        this.representantCollection = representantCollection;
+    public void setRepresentantList(List<Representant> representantList) {
+        this.representantList = representantList;
     }
 
-    public Collection<Abattement> getAbattementCollection() {
-        return abattementCollection;
+    public List<Abattement> getAbattementList() {
+        return abattementList;
     }
 
-    public void setAbattementCollection(Collection<Abattement> abattementCollection) {
-        this.abattementCollection = abattementCollection;
+    public void setAbattementList(List<Abattement> abattementList) {
+        this.abattementList = abattementList;
     }
+    
+    
     
 }
