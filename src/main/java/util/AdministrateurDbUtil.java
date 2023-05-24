@@ -64,40 +64,6 @@ public class AdministrateurDbUtil {
         return administrateurList;
     }
     
-    //*************************** display data *****************/
-    public static ArrayList getAll() {
-        
-        ArrayList administrateurList = new ArrayList();
-        
-        try {
-            String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = MySQLJDBCUtil.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);  
-
-            while(resultSet.next()) { 
-
-                Immeuble immeuble = new Immeuble(); 
-
-                immeuble.setId(resultSet.getInt("id"));  
-                immeuble.setNomAvenue(resultSet.getString("nomAvenue"));   
-                immeuble.setIdColline(resultSet.getInt("id_colline"));  
-                
-
-                administrateurList.add(immeuble);  
-            }   
-
-            System.out.println("Total Records Fetched: " + administrateurList.size());
-            connection.close();
-
-        } catch(SQLException sqlException) {  
-            sqlException.printStackTrace();
-        }
-        return administrateurList;
-    }
-    
-    
-
     //************** Save data **********************************/ 
     public void save(Administrateur administrateur){
         

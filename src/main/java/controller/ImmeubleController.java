@@ -82,11 +82,6 @@ public class ImmeubleController implements Serializable{
         
         try {
             immeubleDbUtil.findById(id);
-            // put in the request attribute ... so we can use it on the form page
-            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();		
-            Map<String, Object> requestMap = externalContext.getRequestMap();
-            requestMap.put("immeubleMap", immeubleDbUtil);
-            
 
         }catch (Exception ex) {
             addErrorMessage ((SQLException) ex);

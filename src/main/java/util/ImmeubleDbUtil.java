@@ -136,22 +136,22 @@ public class ImmeubleDbUtil {
         } 
     }
 
-    //************** find data by ID ***************************/
-    public void findById(int immeubleId) {
+    //*************************** find data by id *****************/
+    public void findById(int immeubleId ) {
         
         Immeuble immeuble = null;
         System.out.println(" findById() : immeuble Id: " + immeubleId);
         
         /* Setting The Particular province Details In Session */
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-
+        
         try {
-           
-            String query = ""
-                    + "SELECT contribuable.id As Contribuable_ID,"
-                    + "contribuable.nom As nom_contribuable,"
-                    + "contribuable.prenom AS prenom_contribuable,"
-                    + "contribuable.email AS email_contribuable,"
+            String query = 
+                    "SELECT "
+                    + "contribuable.id As Contribuable_ID, "
+                    + "contribuable.nom As nom_contribuable, "
+                    + "contribuable.prenom AS prenom_contribuable, "
+                    + "contribuable.email AS email_contribuable, "
                     + "contribuable.telephone AS tel_contribuable, "
                     + "contribuable.BP AS BP_contribuable, "
                     + "representant.id As representant_ID, "
@@ -160,35 +160,33 @@ public class ImmeubleDbUtil {
                     + "representant.emailRepresentant AS email_representant, "
                     + "representant.telephoneRepresentant AS tel_representant, "
                     + "representant.bpRepresentant AS BP_representant, "
-                    + "immeuble.id AS Immeuble_ID, "
-                    + "immeuble.nomAvenue AS Rue , "
-                    + "colline.nomColline AS Colline, "
-                    + "commune.nomCommune AS Commune, "
-                    + "province.nomProvince AS Province "
-                    + "FROM contribuable "
+                    + "immeuble.id as Immeuble_ID, "
+                    + "immeuble.nomAvenue as Rue , "
+                    + "colline.nomColline as Colline,  "
+                    + "commune.nomCommune as Commune,  "
+                    + "province.nomProvince as Province "
+                    + "FROM representant JOIN contribuable "
+                    + "ON contribuable.id_representant = representant.id "
                     + "JOIN immeuble "
-                    + "ON immeuble.id_contibuable = contribuable.id "
-                    + "JOIN representant "
-                    + "ON representant.id_contribuable = contribuable.id "
-                    + "JOIN colline "
+                    + "ON immeuble.id_contribuable = "
+                    + "contribuable.id JOIN colline "
                     + "ON immeuble.id_colline = colline.id "
-                    + "JOIN commune "
-                    + "ON colline.id_commune = commune.id "
-                    + "JOIN province "
-                    + "ON commune.id_province = province.id"
-                    + "WHERE immeuble.id =" + immeubleId ;
-                    
-            
+                    + "JOIN commune ON colline.id_commune = commune.id "
+                    + "JOIN province ON commune.id_province = province.id "
+                    + "WHERE immeuble.id = " +immeubleId;
+
+            // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);    
-            
-            if(resultSet.next()) {
-                
+            resultSet = statement.executeQuery(query);  
+
+            while(resultSet.next()) { 
+
                 immeuble = new Immeuble();
                 
                 /* *******contribuable **** */
-                immeuble.setId(resultSet.getInt("Immeuble_ID"));  
+                
+                immeuble.setId(resultSet.getInt("Immeuble_ID")); 
                 immeuble.setIdContribuable(resultSet.getInt("Contribuable_ID"));  
                 immeuble.setNomContribuable(resultSet.getString("nom_contribuable"));  
                 immeuble.setPrenomContribuable(resultSet.getString("prenom_contribuable"));  
@@ -211,15 +209,16 @@ public class ImmeubleDbUtil {
                 immeuble.setTelephoneRepresentant(resultSet.getString("tel_representant"));
                 immeuble.setBpRepresentant(resultSet.getString("BP_representant"));  
                 immeuble.setEmailRepresentant(resultSet.getString("email_representant"));
-            }
-            
+                
+            }   
+
             sessionMap.put("immeubleMapped", immeuble);
             connection.close();
-
-        } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            
+        } catch(SQLException sqlException) {  
+            sqlException.printStackTrace();
         }
-        
+
     }
 	
     //************** update data ******************************/

@@ -17,10 +17,10 @@ public class AppMain {
    
     public static void main(String[] args) throws Exception {
      
-        AdministrateurDbUtil.getAll();
+        //AdministrateurDbUtil.getAll();
         System.out.println("**************************************************");
         System.out.println("**************************************************");
 
-        //ImmeubleDbUtil.getAll();
+        //ImmeubleDbUtil.findById(1);
     }
 }
