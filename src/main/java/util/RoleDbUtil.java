@@ -6,11 +6,10 @@ package util;
 
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
-//import jakarta.faces.bean.ApplicationScoped;
+import jakarta.faces.bean.ApplicationScoped;
+import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
-import jakarta.inject.Named;
 import java.io.Serializable;
 import java.sql.*;
 import java.util.*;
@@ -23,7 +22,7 @@ import model.Role;
  */
 
 
-@Named
+@ManagedBean
 @ApplicationScoped
 
 public class RoleDbUtil implements Serializable {
@@ -34,7 +33,7 @@ public class RoleDbUtil implements Serializable {
     public static PreparedStatement pstmt;
 
     /// ************************ display data *************************/
-    public static ArrayList findAll() {
+    public ArrayList findAll() {
         
         ArrayList roleList = new ArrayList();  
         
@@ -65,10 +64,9 @@ public class RoleDbUtil implements Serializable {
     }
     
     /// ************************ save data *************************/
-    public static String save(Role role) {
+    public String save(Role role) {
         int saveResult = 0;
         String navigationResult = "";
-        String message = "Record Inserted";
         
         try {   
             
@@ -84,8 +82,7 @@ public class RoleDbUtil implements Serializable {
             addErrorMessage(sqlException);
         }
         if(saveResult !=0) {
-            navigationResult = "/pages/pays/role/template.xhtml?faces-redirect=true";
-            showMessage(message);
+            navigationResult = "/pages/role/template.xhtml?faces-redirect=true";
             
         } else {
             navigationResult = "";
@@ -94,19 +91,20 @@ public class RoleDbUtil implements Serializable {
     }
     
     /// ************************ find data by ID *************************/
-    public static String findById(int roleId) {
+    public String findById(int roleId) {
         
         Role role = null;
-        System.out.println(" findById() : role Id: " + roleId);
+        System.out.println(" findById() : Role Id: " + roleId);
 
         /* Setting The Particular role Details In Session */
         Map<String,Object> sessionMapObj = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
         try {
             
+            String query = "SELECT * FROM role WHERE id = " + roleId ;
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("select * from role where id = " + roleId);    
+            resultSet = statement.executeQuery(query );    
             
             if(resultSet != null) {
                 resultSet.next();
@@ -121,14 +119,14 @@ public class RoleDbUtil implements Serializable {
             //addErrorMessage(sqlException);
             addErrorMessage(sqlException);
         }
-        return "/pages/pays/role/template.xhtml?faces-redirect=true";
+        return "/pages/role/edit.xhtml?faces-redirect=true";
     }
 
     /// ************************ update data *************************/
-    public static String update(Role role) {
+    public String update(Role role) {
         
         try {
-            String query = "update role set nomrole=? where id = ?";
+            String query = " UPDATE role SET nomrole = ? WHERE id = ? ";
             
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
@@ -141,17 +139,17 @@ public class RoleDbUtil implements Serializable {
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
-        return "/pages/pays/role/template.xhtml?faces-redirect=true";
+        return "/pages/role/template.xhtml?faces-redirect=true";
     }
 
     /// ************************ delete data *************************/
-    public static String delete(int roleId){
+    public String delete(int roleId){
         
         //System.out.println("delete() : role Id: " + roleId);
         
         try {
             
-            String query = "delete from role where id = " + roleId ;
+            String query = "DELETE FROM role WHERE id = " + roleId ;
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate(); 
@@ -161,14 +159,7 @@ public class RoleDbUtil implements Serializable {
         } catch(SQLException sqlException){
             addErrorMessage(sqlException);
         }
-        return "/pages/pays/role/template.xhtml?faces-redirect=true";
-    }
-
-    /// ************************ show message after executing  *************************/
-    private static void showMessage(String msg){
-        FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage message = new FacesMessage("Notice",msg);
-        context.addMessage(null, message);
+        return "/pages/role/template.xhtml?faces-redirect=true";
     }
     
     /// ************************ error *************************/

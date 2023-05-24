@@ -4,8 +4,7 @@
  */
 package model;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Named;
+import jakarta.faces.bean.ManagedBean;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.sql.Date;
@@ -15,33 +14,17 @@ import java.sql.Date;
  * @author Ibrahim
  */
 
-@Named
-@RequestScoped
+@ManagedBean
 public class Administrateur {
 
     private Integer id;
-    
-    @NotNull
-    @Size(min = 1, max = 20)
+    private Integer idRole;
+    private String nomRole;
     private String nom;
-    
-    @NotNull
-    @Size(min = 1, max = 20)
     private String prenom;
-    
-    @NotNull
-    @Size(min = 1, max = 255)
     private String email;
-    
-    @NotNull
-    @Size(min = 1, max = 255)
     private String motPasse;
-    
-    @NotNull
     private int telephone;
-    
-    @NotNull
-    @Size(min = 1, max = 255)
     private String bp;
    
     private Date date;
@@ -128,11 +111,20 @@ public class Administrateur {
         this.date = date;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public Integer getIdRole() {
+        return idRole;
+    }
+
+    public void setIdRole(Integer idRole) {
+        this.idRole = idRole;
+    }
+
+    public String getNomRole() {
+        return nomRole;
+    }
+
+    public void setNomRole(String nomRole) {
+        this.nomRole = nomRole;
     }
  
 }

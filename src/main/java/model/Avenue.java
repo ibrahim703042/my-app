@@ -4,33 +4,27 @@
  */
 package model;
 
-import jakarta.inject.Named;
+import jakarta.faces.bean.ManagedBean;
+
 
 /**
  *
  * @author Ibrahim
  */
 
-@Named
+@ManagedBean
 public class Avenue {
 
- 
     private Integer id;
     private String nomAvenue;
-    private int numeroAvenue;
-    private Colline idColline;
+    private String nomColline;
+    private Integer idColline;
 
     public Avenue() {
     }
 
     public Avenue(Integer id) {
         this.id = id;
-    }
-
-    public Avenue(Integer id, String nomAvenue, int numeroAvenue) {
-        this.id = id;
-        this.nomAvenue = nomAvenue;
-        this.numeroAvenue = numeroAvenue;
     }
 
     public Integer getId() {
@@ -49,20 +43,22 @@ public class Avenue {
         this.nomAvenue = nomAvenue;
     }
 
-    public int getNumeroAvenue() {
-        return numeroAvenue;
+    public String getNomColline() {
+        return nomColline;
     }
 
-    public void setNumeroAvenue(int numeroAvenue) {
-        this.numeroAvenue = numeroAvenue;
+    public void setNomColline(String nomColline) {
+        this.nomColline = nomColline;
     }
 
-    public Colline getIdColline() {
+    public Integer getIdColline() {
         return idColline;
     }
 
-    public void setIdColline(Colline idColline) {
+    public void setIdColline(Integer idColline) {
         this.idColline = idColline;
     }
 
+    
+   
 }

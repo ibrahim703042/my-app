@@ -1,0 +1,84 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/dashboardTemplate.xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+    <ui:define name = "contents">
+            
+        <p:spacer height="90" />
+                    
+        <h:form id="form" class=" py-3 mb-4 shadow-1 px-4">
+        <div class="">
+            <div class="ui-fluid formgrid grid">
+                <div class="field col-12 md:col-6">
+                    <component:inputTextField
+                        label="Nom"
+                        placeholder="Entrer nom"
+                        value="#{adminMapped.nom}"
+                    />
+                </div>
+
+                <div class="field col-12 md:col-6">
+                    <component:inputTextField
+                        label="Prenom"
+                        placeholder="Entrer prenom"
+                        value="#{adminMapped.prenom}"
+                    />
+                </div>
+
+                <div class="field col-12 md:col-6">
+                <component:inputTextField
+                    label="E-mail"
+                    placeholder="Entrer email "
+                    value="#{adminMapped.email}"
+                />
+
+                </div>
+                 
+                <!--
+                <div class="field col-12 md:col-6">
+                    <component:inputPasswordField
+                        label="Mot de passe"
+                        placeholder="Entrer Mot de passe"
+                        value="#{adminMapped.motPasse}"
+                    />
+                </div>
+                -->
+
+                <div class="field col-12 md:col-6">
+                    <component:inputTextField
+                        label="Boite postal"
+                        placeholder="B.P 1023456 "
+                        value="#{adminMapped.bp}"
+                    />
+
+                </div>
+
+                <div class="field col-12 md:col-6">
+                    <component:inputTextField
+                        label="Telephone"
+                        placeholder="+257 71 20 47 78"
+                        value="#{adminMapped.telephone}"
+                    />
+                </div>
+
+                <div class="field col-12 md:col-10"></div>
+                <div class="field col-12 md:col-2">
+                    <p:commandButton
+                        ajax="false"
+                        value="Modifier" 
+                        action="#{administrateurController.update(adminMapped)}"
+                        style="height: 41px; "
+                    />
+                </div>
+            </div>
+        </div>
+
+    </h:form>
+            
+    </ui:define>
+        
+</ui:composition>

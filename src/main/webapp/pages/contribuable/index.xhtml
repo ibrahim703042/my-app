@@ -49,7 +49,7 @@
                                 <p:dataExporter 
                                     type="pdf" 
                                     target="dt-contribuables" 
-                                    fileName="contribuabl" 
+                                    fileName="contribuables" 
                                 />
                             </p:commandButton>
                             
@@ -72,100 +72,100 @@
                     <p:dataTable
                         id="dt-contribuables"
                         paginator="true" 
-                        rows="4" 
-                        rowSelectMode="add" 
+                        rows="4"
                         paginatorPosition="bottom"
                         binding="#{table}" 
                         value="#{contribuableController.contribuableList()}" 
-                        var="taxer"  
+                        var="contribuabl"  
                         >
-
+                        
+                        <!--
                         <p:column 
                             headerText="" 
                             style="width: 5%">
-                             <h:outputText value="#{table.rowIndex + 1}" />
-                         </p:column>
+                            <h:outputText value="#{table.rowIndex + 1}" />
+                        </p:column>
+                        -->
                         
                         <p:column 
                             headerText="Code"
-                            sortBy="#{taxer.id}" 
-                            filterBy="#{taxer.id}"
+                            sortBy="#{contribuabl.id}" 
+                            filterBy="#{contribuabl.id}"
                             style="width: 10%"
                             >
-                             <h:outputText value="#{taxer.id}" />
+                             <h:outputText value="#{contribuabl.id}" />
                          </p:column>
 
                         <!--
-                         <p:column 
+                        <p:column 
                             headerText="Nom" 
-                            sortBy="#{taxer.nom}" 
-                            filterBy="#{taxer.nom}"
+                            sortBy="#{contribuabl.nom}" 
+                            filterBy="#{contribuabl.nom}"
                             style="width: 10%"
                             
                             >
-                            <h:outputText value="#{taxer.nom}" />
-                         </p:column>
+                            <h:outputText value="#{contribuabl.nom}" />
+                        </p:column>
                         -->
                         
-                         <p:column 
+                        <p:column 
                             headerText="Prenom" 
-                            sortBy="#{taxer.prenom}" 
-                            filterBy="#{taxer.prenom}"
+                            sortBy="#{contribuabl.prenom}" 
+                            filterBy="#{contribuabl.prenom}"
                             >
-                            <h:outputText value="#{taxer.prenom}" />
-                         </p:column>
+                            <h:outputText value="#{contribuabl.prenom}" />
+                        </p:column>
                         
-                         <p:column 
+                        <p:column 
                             headerText="Email" 
-                            sortBy="#{taxer.email}" 
-                            filterBy="#{taxer.email}"
+                            sortBy="#{contribuabl.email}" 
+                            filterBy="#{contribuabl.email}"
                             >
-                            <h:outputText value="#{taxer.email}" />
-                         </p:column>
+                            <h:outputText value="#{contribuabl.email}" />
+                        </p:column>
                         
-                         <p:column 
+                        <p:column 
                             headerText="B.P" 
-                            sortBy="#{taxer.bp}" 
-                            filterBy="#{taxer.bp}"
+                            sortBy="#{contribuabl.bp}" 
+                            filterBy="#{contribuabl.bp}"
                             style="width: 10%"
                             >
-                            <h:outputText value="#{taxer.bp}" />
-                         </p:column>
+                            <h:outputText value="#{contribuabl.bp}" />
+                        </p:column>
                         
                         <!--
-                         <p:column 
+                        <p:column 
                             headerText="Date" 
-                            sortBy="#{taxer.date}" 
-                            filterBy="#{taxer.date}"
+                            sortBy="#{contribuabl.date}" 
+                            filterBy="#{contribuabl.date}"
                             >
-                            <h:outputText value="#{taxer.date}" />
-                         </p:column>
+                            <h:outputText value="#{contribuabl.date}" />
+                        </p:column>
                         -->
 
-                     <p:column exportable="false" style="width: 10%" >
-                         <p:commandButton 
-                             icon="pi pi-pencil" 
-                             styleClass="edit-button rounded-button ui-button-success mr-4" 
-                             process="@this"
-                             ajax="false"
-                             action="#{contribuableController.edit(taxer.id)}"
-                             >
+                        <p:column exportable="false" style="width: 10%" >
+                            <p:commandButton 
+                                icon="pi pi-pencil" 
+                                styleClass="edit-button rounded-button ui-button-success mr-4" 
+                                process="@this"
+                                ajax="false"
+                                action="#{contribuableController.edit(contribuabl.id)}"
+                            >
 
-                         </p:commandButton>
-                         <p:commandButton 
-                             class="ui-button-warning rounded-button" 
-                             icon="pi pi-trash"
-                             process="@this"
-                             ajax="false"
-                             action="#{contribuableController.delete(taxer.id)}"
-                             >
+                        </p:commandButton>
+                            <p:commandButton 
+                                class="ui-button-warning rounded-button" 
+                                icon="pi pi-trash"
+                                process="@this"
+                                ajax="false"
+                                action="#{contribuableController.delete(contribuabl.id)}"
+                            >
 
                          </p:commandButton>
                      </p:column>
-                     </p:dataTable>
+                    </p:dataTable>
                  </h:form>
             </div>
-
        </div>
     </div>
             

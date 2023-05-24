@@ -10,15 +10,16 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.bean.ApplicationScoped;
+import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import model.Colline;
 import java.sql.*;
 import java.util.*;
 
-@Named
+@ManagedBean
 @ApplicationScoped
 
 public class CollineDbUtil {
@@ -29,12 +30,16 @@ public class CollineDbUtil {
     public static PreparedStatement pstmt;
 
     //*************************** display data *****************/
-    public static ArrayList findAll() {
+    public ArrayList findAll() {
         
         ArrayList collineList = new ArrayList();
         
         try {
-            String query = "SELECT * FROM colline WHERE id IS NOT NULL ORDER BY id DESC";
+            String query = "SELECT colline.*,commune.nomCommune, commune.id  "
+                    + "FROM colline, commune "
+                    + "WHERE colline.id_commune = commune.id "
+                    + "ORDER BY colline.nomColline";
+            
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
@@ -44,7 +49,7 @@ public class CollineDbUtil {
                 Colline colline = new Colline(); 
 
                 colline.setId(resultSet.getInt("id"));  
-                colline.setIdCommune(resultSet.getInt("idCommune"));  
+                colline.setNomCommune(resultSet.getString("nomCommune"));  
                 colline.setNomColline(resultSet.getString("nomColline")); 
 
                 collineList.add(colline);  
@@ -60,51 +65,40 @@ public class CollineDbUtil {
     }
 
     //************** Save data **********************************/ 
-    public static String save(Colline colline){
-        
-        Integer saveResult = 0;
-        String navigationResult = "";
-        String message = "Record Inserted";
+    public void save(Colline colline){
         
         try {
 
-            String query = 
-                    "INSERT INTO colline (idCommune, numerocolline) "
-                    + "values (?, ?)";
+            String query = "INSERT INTO colline (id_commune, nomColline) values (?,?)";
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setInt(1, colline.getIdCommune());
             pstmt.setString(2, colline.getNomColline());
-            //statement.setDate(7, (java.sql.Date) colline.getDate());
 
-            saveResult = pstmt.executeUpdate();
             connection.close();
 
         }catch(SQLException sqlException) {
             addErrorMessage(sqlException);
-        }if(saveResult !=0) {
-            navigationResult = "/pages/admin/template.xhtml?faces-redirect=true";
-            showMessage(message);
-            
-        } else {
-            navigationResult = "";
         }
-        return navigationResult;
     }
 
     //************** find data by ID ***************************/
-    public static String findById(int collineId) {
+    public void findById(int collineId) {
         
         Colline colline = null;
-        System.out.println(" findById() : Province Id: " + collineId);
+        System.out.println(" findById() : Colline Id: " + collineId);
         
         /* Setting The Particular province Details In Session */
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
         try {
            
-            String query = "SELECT * FROM colline WHERE id =" + collineId ;
+            String query = "SELECT colline.*,commune.nomCommune, commune.id  "
+                    + "FROM colline, commune "
+                    + "WHERE colline.id_commune = commune.id ";
+
+//            String query = "SELECT * FROM colline WHERE id =" + collineId ;
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
@@ -113,10 +107,8 @@ public class CollineDbUtil {
                 
                 colline = new Colline();
                 colline.setId(resultSet.getInt("id"));  
-                colline.setIdCommune(resultSet.getInt("idCommune"));  
+                colline.setNomCommune(resultSet.getString("nomCommune"));  
                 colline.setNomColline(resultSet.getString("nomColline")); 
-                //colline.setDate(resultSet.getDate("date"));  
-               //LocalDate date = LocalDate.now();
 
             }
             
@@ -126,19 +118,17 @@ public class CollineDbUtil {
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
-        return "/pages/admin/edit.xhtml";
     }
 	
     //************** update data ******************************/
-    public static String update(Colline colline){
+    public void update(Colline colline){
 
-        String message = "Updated Successfully";
 
         try {
 
-            String query ="Update colline SET "
-                    + "idCommune=?, "
-                    + "numerocolline=?, ";
+            String query ="UPDATE colline SET "
+                    + "id_commune=?, "
+                    + "nomColline=?, ";
 
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
@@ -151,15 +141,14 @@ public class CollineDbUtil {
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
-            showMessage(message);
-            return "/pages/admin/template.xhtml?faces-redirect=true";
+            
     }
 
     //************** delete data ********************************/
-    public static String delete(int collineId) {
+    public void delete(int collineId) {
         
         connection = MySQLJDBCUtil.getConnection();
-        //System.out.println("delete() : colline Id: " + collineId);
+        System.out.println("delete() : colline Id: " + collineId);
 
         try {
 
@@ -171,17 +160,8 @@ public class CollineDbUtil {
         } catch(SQLException sqlException){
             addErrorMessage(sqlException);
         }
-        return "/pages/admin/template.xhtml?faces-redirect=true";
     }
     
-    
-    //************** conecxt msg data ***********************/
-    private static void showMessage(String msg){
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage message = new FacesMessage("Notice",msg);
-        context.addMessage(null, message);
-    }
     
      //************** error  message from sql ***********************/
     private static void addErrorMessage(SQLException ex) {

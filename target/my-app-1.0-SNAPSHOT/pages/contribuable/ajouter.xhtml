@@ -53,15 +53,6 @@
                     />
                 </div>
 
-                <!--
-               <div class="field col-12 md:col-4">
-                    <component:inputTextField
-                        label="No"
-                        placeholder="Entrer numero"
-                    />
-                </div>
-                -->
-
                 <div class="field col-12 md:col-6">
                     <component:inputTextField
                         label="Boite postal"
@@ -78,144 +69,33 @@
                         value="#{contribuable.telephone}"
                     />
                 </div>
-                    
-                <p:divider styleClass="ui-divider-dashed" />
-
-                <!-- ====================== Representant Fiscale ====================== -->
                 
-                <p:spacer height="30" />
-                <div class="field col-12 md:col-6 font-medium text-500 mb-3">
-                    B. REPRESANTANT DU CONTRIBUABLE
-                </div>
-                
-                <div class="field col-12 md:col-6">
-                    <component:inputTextField
-                        label="Nom"
-                        placeholder="Entrer nom du represantant"
-                        value="#{contribuable.nom}"
-                    />
-                </div>
-
-                <div class="field col-12 md:col-6">
-                    <component:inputTextField
-                        label="Prenom"
-                        placeholder="Entrer prenom du represantant"
-                        value="#{contribuable.prenom}"
-                    />
-                </div>
-
-                <div class="field col-12 md:col-6">
-                    <component:inputTextField
-                        label="E-mail"
-                        placeholder="Entrer email represantant"
-                        value="#{contribuable.email}"
-                    />
-
-                </div>
-
-                <div class="field col-12 md:col-6">
-                    <component:inputTextField
-                        label="Boite postal"
-                        placeholder="BP 1023456 "
-                        value="#{contribuable.bp}"
-                    />
-
-                </div>
-
-                <div class="field col-12 md:col-6">
-                    <component:inputPhoneNumber
-                        label="Telephone"
-                        placeholder="+25771204778"
-                        value="#{contribuable.telephone}"
-                    />
-                </div>
-
-                <p:divider styleClass="ui-divider-dashed" />
-
-                <!-- ====================== Abbattement ====================== -->
-                
-                <p:spacer height="30" />
-                
-                <div class="field col-12 md:col-6 font-medium text-500 mb-3">
-                    C. ABBATTEMENT
-                </div>
-                    
-                <div class=" flex field col-12 md:col-12">
-                    <p:outputLabel for="@next" >
-                        Bénéficiaire d’abattement (Article 84)2 
-                    </p:outputLabel>
-                    <p:spacer width="20" />
-                    <p:selectOneRadio value="#">
-                        <f:selectItem itemValue="#{true}" itemLabel="Oui"/>
-                        <f:selectItem itemValue="#{false}" itemLabel="No"/>
-                    </p:selectOneRadio>
-                    <p:message for="@previous"/>
-                    <h:outputText/>
-                </div>
-
-                <div class=" field col-12 md:col-12">
-                    <p:outputLabel for="@next" class="font-bold" >
-                        Motif d’abattement :  
-                    </p:outputLabel>
-                    <p class="mb-5">
-                        A. Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à l’âge de 25 ans, orphelin de père et de mère, héritier ou usufruitier <br/>
-                        B. Enfant mineur ou enfant majeur, copropriétaires, cohéritiers et co-	 usufruitier <br/>
-                        C. Veuf  (veuve)   propriétaire,   possesseur,   titulaire, héritier ou usufruitier <br/>
-                        D. Retraité ou handicapé, personne ayant atteint l’âge légal de la retraite propriétaire, possesseur, titulaire, héritier ou usufruitier <br/>
-                        E. Démobilisé non en fonction publique, privée ou élective 
-
-                    </p>
+                <div class="field col-12 md:col-12">
+                    <p:outputLabel class="font-bold"  value="Representant"/>
                     <p:selectOneMenu 
-                        id="commune" 
-                        value="#"
+                        value="#{contribuable.idRepresentant}"
                         style="height: 41px; "
-                        >
-
-                        <f:selectItem itemLabel="Choisir motif d’abattement" itemValue=""/>
-                        <f:selectItems itemValue="" value="#"/>
-                        <f:selectItem itemLabel="A" 
-                            itemValue="
-                            Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à 
-                            l’âge de 25 ans, orphelin de père et de mère, 
-                            héritier ou usufruitier
-                            "
-                        />
-                        <f:selectItem itemLabel="B" 
-                            itemValue="
-                            Enfant mineur ou enfant majeur, copropriétaires, 
-                            cohéritiers et co-usufruitier"
-                        />
-                        <f:selectItem itemLabel="C" 
-                            itemValue="
-                            Veuf (veuve) propriétaire, possesseur, titulaire, 
-                            héritier ou usufruitier
-                            "
-                            />
-                        <f:selectItem itemLabel="D" 
-                            itemValue="
-                            Retraité ou handicapé, personne ayant atteint l’âge légal 
-                            de la retraite propriétaire, possesseur, titulaire, 
-                            héritier ou usufruitier
-                            "
-                        />
-                        <f:selectItem itemLabel="E" 
-                            itemValue="
-                            Démobilisé non en fonction publique, privée ou élective 
-                            "
+                    >
+                        <!--<f:event type="preRenderView" listener="" />-->
+                        <f:selectItem itemLabel="Choisir Contribuable" />
+                        <f:selectItems var="representan"
+                            value="#{representantController.representantList()}"
+                            itemLabel=" R-00-#{representan.id} : #{representan.nomRepresentant} #{representan.prenomRepresentant}"
+                            itemValue="#{representan.id}" 
                         />
 
                     </p:selectOneMenu>
                 </div>
                 
                 <div class="field col-12 md:col-10"></div>
-                    <div class="field col-12 md:col-2">
-                        <p:commandButton 
-                            value="Enregistrer"
-                            ajax="false"
-                            action="#{contribuableController.save(contribuable)}"
-                            style="height: 41px; "
-                        />
-                    </div>
+                <div class="field col-12 md:col-2">
+                    <p:commandButton 
+                        value="Enregistrer"
+                        ajax="false"
+                        action="#{contribuableController.save(contribuable)}"
+                        style="height: 41px; "
+                    />
+                </div>
             </div>
 
         </h:form>

@@ -1,0 +1,298 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/dashboardTemplate.xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+    
+    <ui:define name = "contents">
+            
+        <p:spacer height="90" />
+        
+        <h:form id="form" class=" py-3 mb-4 bg-white shadow-1 px-4">
+            <div class="ui-fluid formgrid grid py-3">
+                
+                <p:spacer height="30" />
+                
+                <div class=" field col-12 md:col-6 font-medium text-500 mb-3">
+                    B. IDENTIFICATION DU CONTRIBUABLE
+                </div>
+                    
+                    <!-- ======================first name and last name ====================== -->
+                    <div class="field col-12 md:col-6">
+                        <component:inputTextField
+                            label="Nom"
+                            placeholder="Entrer nom"
+                            value="#{contribuable.nom}"
+                        />
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <component:inputTextField
+                            label="Prenom"
+                            placeholder="Entrer prenom"
+                            value="#{contribuable.prenom}"
+                        />
+                    </div>
+
+                    <!-- ======================address====================== -->
+                    
+                    <div class="field col-12 md:col-4">
+                        <component:inputTextField
+                            label="No"
+                            placeholder="Entrer numero"
+                            value="#{contribuable.id}"
+                        />
+                    </div>
+                    
+                    <div class="field col-12 md:col-4">
+                        <component:inputTextField
+                            label="Avenue/Rue"
+                            placeholder="Entrer avenue ou rue"
+                            value="#{avenue.nomAvenue}"
+                        />
+                    </div>
+                    
+                    <div class="field col-12 md:col-4">
+                        <component:inputTextField
+                            label="Colline/Quartier"
+                            placeholder="Entrer Colline ou Quartier"
+                            value="#{colline.nomColline}"
+                        />
+                    </div>
+                    
+                    <!-- ======================city & state====================== -->
+                    <div class="field col-12 md:col-6">
+                        <component:inputTextField
+                            label="Commune"
+                            placeholder="Entrer commune"
+                            value="#{commune.nomCommune}"
+                        />
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <component:inputTextField
+                            label="Province"
+                            placeholder="Entrer province"
+                            value="#{province.nomProvince}"
+                        />
+                    </div>
+                    
+                    <!-- ======================contact====================== -->
+
+                    <div class="field col-12 md:col-4">
+                        <component:inputTextField
+                            label="B.P"
+                            placeholder="B.P 1023456 "
+                            value="#{contribuable.bp}"
+                        />
+
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                        <component:inputPhoneNumber
+                            label="Telephone"
+                            placeholder="+257 71 20 47 78"
+                            value="#{contribuable.telephone}"
+                        />
+                    </div>
+                    
+                    <div class="field col-12 md:col-4">
+                        <component:inputTextField
+                            label="Email"
+                            placeholder="Entrer email"
+                            value="#{contribuable.email}"
+                        />
+                    </div>
+                    
+                <p:divider styleClass="ui-divider-dashed" />
+                
+<!-- ==================================== Representant Fiscale============================================= -->
+                
+                <p:spacer height="40" />
+                <div class="field col-12 md:col-6 font-medium text-500 mb-3">
+                    B. REPRESENTANT DU CONTRIBUABLE
+                </div>
+                
+                    <!-- ======================first name and last name ====================== -->
+                    <div class="field col-12 md:col-6">
+                        <component:inputTextField
+                            label="Nom"
+                            placeholder="Entrer nom"
+                            value="#{representant.nomRepresentant}"
+                        />
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <component:inputTextField
+                            label="Prenom"
+                            placeholder="Entrer prenom"
+                            value="#{representant.prenomRepresentant}"
+                        />
+                    </div>
+
+                    <!-- ======================address====================== -->
+                    
+                    <div class="field col-12 md:col-4">
+                        <component:inputTextField
+                            label="No"
+                            placeholder="Entrer numero"
+                            value="#{representant.id}"
+                        />
+                    </div>
+                    
+                    <div class="field col-12 md:col-4">
+                        <component:inputTextField
+                            label="Avenue/Rue"
+                            placeholder="Entrer avenue ou rue"
+                            value="#{avenue.nomAvenue}"
+                        />
+                    </div>
+                    
+                    <div class="field col-12 md:col-4">
+                        <component:inputTextField
+                            label="Colline/Quartier"
+                            placeholder="Entrer Colline ou Quartier"
+                            value="#{colline.nomColline}"
+                        />
+                    </div>
+                    
+                    <!-- ======================city & state====================== -->
+                    <div class="field col-12 md:col-6">
+                        <component:inputTextField
+                            label="Commune"
+                            placeholder="Entrer commune"
+                            value="#{commune.nomCommune}"
+                        />
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <component:inputTextField
+                            label="Province"
+                            placeholder="Entrer province"
+                            value="#{province.nomProvince}"
+                        />
+                    </div>
+                    
+                    <!-- ======================contact====================== -->
+
+                    <div class="field col-12 md:col-4">
+                        <component:inputTextField
+                            label="B.P"
+                            placeholder="B.P 1023456 "
+                            value="#{representant.bpRepresentant}"
+                        />
+
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                        <component:inputPhoneNumber
+                            label="Telephone"
+                            placeholder="+257 71 20 47 78"
+                            value="#{representant.telephoneRepresentant}"
+                        />
+                    </div>
+                    
+                    <div class="field col-12 md:col-4">
+                        <component:inputTextField
+                            label="Email"
+                            placeholder="Entrer email"
+                            value="#{representant.emailRepresentant}"
+                        />
+                    </div>
+                
+                <p:divider styleClass="ui-divider-dashed" />
+                
+<!-- ============================================ Abbattement ============================================= -->
+                
+                <p:spacer height="30" />
+                
+                <div class="field col-12 md:col-6 font-medium text-500 mb-3">
+                    C. ABBATTEMENT
+                </div>
+                    
+                <div class=" flex field col-12 md:col-12">
+                    <p:outputLabel for="@next" >
+                        Bénéficiaire d’abattement (Article 84)2 
+                    </p:outputLabel>
+                    <p:spacer width="20" />
+                    <p:selectOneRadio value="#">
+                        <f:selectItem itemValue="#{true}" itemLabel="Oui"/>
+                        <f:selectItem itemValue="#{false}" itemLabel="No"/>
+                    </p:selectOneRadio>
+                    <p:message for="@previous"/>
+                    <h:outputText/>
+                </div>
+
+                <div class=" field col-12 md:col-12">
+                    <p:outputLabel for="@next" class="font-bold" >
+                        Motif d’abattement :  
+                    </p:outputLabel>
+                    <p class="mb-5">
+                        A. Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à l’âge de 25 ans, orphelin de père et de mère, héritier ou usufruitier <br/>
+                        B. Enfant mineur ou enfant majeur, copropriétaires, cohéritiers et co-	 usufruitier <br/>
+                        C. Veuf  (veuve)   propriétaire,   possesseur,   titulaire, héritier ou usufruitier <br/>
+                        D. Retraité ou handicapé, personne ayant atteint l’âge légal de la retraite propriétaire, possesseur, titulaire, héritier ou usufruitier <br/>
+                        E. Démobilisé non en fonction publique, privée ou élective 
+
+                    </p>
+                    <p:selectOneMenu 
+                        id="commune" 
+                        value="#"
+                        style="height: 41px; "
+                        >
+
+                        <f:selectItem itemLabel="Choisir motif d’abattement" itemValue=""/>
+                        <f:selectItems itemValue="" value="#"/>
+                        <f:selectItem itemLabel="A" 
+                            itemValue="
+                            Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à 
+                            l’âge de 25 ans, orphelin de père et de mère, 
+                            héritier ou usufruitier
+                            "
+                        />
+                        <f:selectItem itemLabel="B" 
+                            itemValue="
+                            Enfant mineur ou enfant majeur, copropriétaires, 
+                            cohéritiers et co-usufruitier"
+                        />
+                        <f:selectItem itemLabel="C" 
+                            itemValue="
+                            Veuf (veuve) propriétaire, possesseur, titulaire, 
+                            héritier ou usufruitier
+                            "
+                            />
+                        <f:selectItem itemLabel="D" 
+                            itemValue="
+                            Retraité ou handicapé, personne ayant atteint l’âge légal 
+                            de la retraite propriétaire, possesseur, titulaire, 
+                            héritier ou usufruitier
+                            "
+                        />
+                        <f:selectItem itemLabel="E" 
+                            itemValue="
+                            Démobilisé non en fonction publique, privée ou élective 
+                            "
+                        />
+
+                    </p:selectOneMenu>
+                </div>
+                
+                
+                <div class="field col-12 md:col-10"></div>
+                    <div class="field col-12 md:col-2">
+                        <p:commandButton 
+                            value="Enregistrer"
+                            ajax="false"
+                            action="#{contribuableController.save(contribuable)}"
+                            style="height: 41px; "
+                        />
+                    </div>
+            </div>
+
+        </h:form>
+            
+    </ui:define>
+        
+</ui:composition>

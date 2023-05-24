@@ -4,18 +4,22 @@
  */
 package model;
 
+import jakarta.faces.bean.ManagedBean;
 import java.util.Collection;
 
 /**
  *
  * @author Ibrahim
+ * 
  */
 
+@ManagedBean
 public class Role{
 
     private Integer id;
     private String nomRole;
-    private Collection<Permission> permissionCollection;
+    private Permission permission;
+    private Integer idPermission;
 
     public Role() {
     }
@@ -45,12 +49,20 @@ public class Role{
         this.nomRole = nomRole;
     }
 
-    public Collection<Permission> getPermissionCollection() {
-        return permissionCollection;
+    public Permission getPermission() {
+        return permission;
     }
 
-    public void setPermissionCollection(Collection<Permission> permissionCollection) {
-        this.permissionCollection = permissionCollection;
+    public void setPermission(Permission permission) {
+        this.permission = permission;
+    }
+
+    public Integer getIdPermission() {
+        return idPermission;
+    }
+
+    public void setIdPermission(Integer idPermission) {
+        this.idPermission = idPermission;
     }
     
 }

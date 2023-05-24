@@ -10,6 +10,7 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.FacesContext;
+import jakarta.inject.Inject;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,42 +23,81 @@ import util.ContribuableDbUtil;
  * 
  */
 
+
 @ManagedBean
 @SessionScoped
 
-public class ContribuableController implements Serializable {
+public class ContribuableController implements Serializable{
 
-    public ArrayList contribuableDbUtil;
+    public ArrayList contribuables;
+    
+    @Inject
+    private ContribuableDbUtil contribuableDbUtil;
     
     //************************ display data **************************/
     @PostConstruct
     public void init() {
-        contribuableDbUtil = ContribuableDbUtil.findAll();
+        contribuables = contribuableDbUtil.findAll();
     }
 
     public ArrayList contribuableList() {
-        return contribuableDbUtil;
+        
+        contribuables.clear();
+        try {
+            contribuables = contribuableDbUtil.findAll();
+        }catch (Exception ex) {
+            addErrorMessage ((SQLException) ex);
+        }
+        return contribuables;
     }
         
-    
     //************************ save data **************************/
-    public void save(Contribuable contribuable) {
-        ContribuableDbUtil.save(contribuable);
+    public String save(Contribuable contribuable) {
+        
+        try {
+            contribuableDbUtil.save(contribuable);
+
+        }catch (Exception ex) {
+            addErrorMessage ((SQLException) ex);
+        }
+          
+        return "/pages/contribuable/template.xhtml?faces-redirect=true";
     }
     	
     //************************  edit data by Id  **************************/
     public String edit(int id) {
-        return ContribuableDbUtil.findById(id);
+        
+        try {
+            contribuableDbUtil.findById(id);
+
+        }catch (Exception ex) {
+            addErrorMessage ((SQLException) ex);
+        }
+        return "/pages/contribuable/edit.xhtml?faces-redirect=true";
     }
     
     //************************ update data **************************/
     public String update(Contribuable contribuable) {
-        return ContribuableDbUtil.update(contribuable);
+        
+        try {
+            contribuableDbUtil.update(contribuable);
+
+        }catch (Exception ex) {
+            addErrorMessage ((SQLException) ex);
+        }
+        return "/pages/contribuable/template.xhtml?faces-redirect=true";
     }
     
     ///************************ delete data **************************/
     public String delete(int id) {
-        return ContribuableDbUtil.delete(id);
+        
+        try {
+            contribuableDbUtil.delete(id);
+
+        }catch (Exception ex) {
+            addErrorMessage ((SQLException) ex);
+        }
+        return "/pages/contribuable/template.xhtml?faces-redirect=true";
     }
     
     

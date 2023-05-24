@@ -21,7 +21,6 @@ import util.ProvinceDbUtil;
 
 @ManagedBean
 @SessionScoped
-//@ViewScoped
 
 public class ProvinceController{
 

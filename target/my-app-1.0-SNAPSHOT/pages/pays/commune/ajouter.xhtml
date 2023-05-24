@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+                
+    <h:form id="form" class=" py-3">
+        <!--<p:messages id="msgs"/>-->
+        <div class="">
+            <div class="ui-fluid formgrid grid">
+                <div class="field col-12 md:col-4">
+
+                    <component:inputTextField
+                        label="Nom"
+                        placeholder="Entrer nom"
+                        value="#{commune.nomCommune}"
+                    />
+
+                </div>
+                <div class="field col-12 md:col-4">
+                    <p:outputLabel class="font-bold"  value="Province"/>
+                    <p:selectOneMenu 
+                        value="#{commune.idProvince}"
+                        style="height: 41px; "
+                    >
+                        <!--<f:event type="preRenderView" listener="" />-->
+                        <f:selectItem itemLabel="Choisir Province" />
+                        <f:selectItems var="provinc"
+                            value="#{provinceController.provinceList()}"
+                            itemLabel="#{provinc.nomProvince}"
+                            itemValue="#{provinc.id}" 
+                        />
+                        
+                    </p:selectOneMenu>
+                </div>
+
+                <div class="field col-12 md:col-4 pt-1">
+                    <p:spacer />
+                    <p:commandButton 
+                        value="Enregistrer" 
+                        ajax="false"
+                        action="#{communeController.save(commune)}"
+                        style="height: 41px; "
+                    />
+                </div>
+            </div>
+        </div>
+
+    </h:form>
+                
+</ui:composition>

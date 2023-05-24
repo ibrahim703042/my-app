@@ -4,7 +4,8 @@
     template="/resources/templates/dashboardTemplate.xhtml"
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component"
-    xmlns:h="http://xmlns.jcp.org/jsf/html">
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <ui:define name = "contents">
             
@@ -38,15 +39,13 @@
 
                 </div>
                  
-                <!--
                 <div class="field col-12 md:col-6">
-                    <component:inputPasswordField
+                    <component:inputTextField
                         label="Mot de passe"
                         placeholder="Entrer Mot de passe"
                         value="#{adminMapped.motPasse}"
                     />
                 </div>
-                -->
 
                 <div class="field col-12 md:col-6">
                     <component:inputTextField
@@ -63,6 +62,23 @@
                         placeholder="+257 71 20 47 78"
                         value="#{adminMapped.telephone}"
                     />
+                </div>
+                
+                <div class="field col-12 md:col-12">
+                    <p:outputLabel class="font-bold"  value="Representant"/>
+                    <p:selectOneMenu 
+                        value="#{adminMapped.idRole}"
+                        style="height: 41px; "
+                    >
+                        <f:selectItem itemLabel="#{adminMapped.nomRole}" itemValue="#{adminMapped.idRole}" />
+                        <!--<f:selectItem itemLabel="Choisir Role" />-->
+                        <f:selectItems var="rol"
+                            value="#{roleController.roleList()}"
+                            itemLabel="#{rol.nomRole}"
+                            itemValue="#{rol.id}" 
+                        />
+
+                    </p:selectOneMenu>
                 </div>
 
                 <div class="field col-12 md:col-10"></div>

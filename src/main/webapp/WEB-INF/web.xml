@@ -31,6 +31,33 @@
         <!--<welcome-file>faces/login.xhtml</welcome-file>-->
     </welcome-file-list>
     
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+    
+    <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>application/font-woff</mime-type>
+    </mime-mapping>
+    
+    <mime-mapping>
+        <extension>woff2</extension>
+        <mime-type>application/font-woff2</mime-type>
+   </mime-mapping>
+   
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>application/x-font-ttf</mime-type>
+    </mime-mapping>
+    
+    <!--
+    <mime-mapping>
+        <extension>extension</extension>
+        <mime-type>mime-type</mime-type>
+    </mime-mapping>
+    -->
+      
     <resource-ref>
         <res-ref-name>jdbc/db_impotfiscal</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>

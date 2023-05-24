@@ -5,8 +5,6 @@
 package model;
 
 import jakarta.faces.bean.ManagedBean;
-import jakarta.faces.bean.RequestScoped;
-import jakarta.validation.constraints.Email;
 import java.util.Date;
 
 /**
@@ -15,25 +13,21 @@ import java.util.Date;
  */
 
 @ManagedBean
-@RequestScoped
 
 public class Representant  {
 
     private Integer id;
     private String nomRepresentant;
     private String prenomRepresentant;
-    
-    @Email
     private String emailRepresentant;
-    
     private int telephoneRepresentant;
-    
     private String bpRepresentant;
-    
     private Date date;
     
-    private Contribuable idContribuable;
-
+    private Integer idContribuable;
+    private String nomContribuable;
+    private String prenomContribuable;
+    
     public Representant() {
     }
 
@@ -97,12 +91,28 @@ public class Representant  {
         this.date = date;
     }
 
-    public Contribuable getIdContribuable() {
+    public Integer getIdContribuable() {
         return idContribuable;
     }
 
-    public void setIdContribuable(Contribuable idContribuable) {
+    public void setIdContribuable(Integer idContribuable) {
         this.idContribuable = idContribuable;
     }
 
+    public String getNomContribuable() {
+        return nomContribuable;
+    }
+
+    public void setNomContribuable(String nomContribuable) {
+        this.nomContribuable = nomContribuable;
+    }
+
+    public String getPrenomContribuable() {
+        return prenomContribuable;
+    }
+
+    public void setPrenomContribuable(String prenomContribuable) {
+        this.prenomContribuable = prenomContribuable;
+    }
+    
 }

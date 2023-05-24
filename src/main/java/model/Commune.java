@@ -4,30 +4,25 @@
  */
 package model;
 
-import jakarta.inject.Named;
+import jakarta.faces.bean.ManagedBean;
 
 /**
  *
  * @author Ibrahim
  */
-@Named
+@ManagedBean
 public class Commune {
 
     private Integer id;
     private String nomCommune;
-    private Colline colline;
-    private Province idProvince;
+    private Integer idProvince;
+    private String NomProvince;
 
     public Commune() {
     }
 
     public Commune(Integer id) {
         this.id = id;
-    }
-
-    public Commune(Integer id, String nomCommune) {
-        this.id = id;
-        this.nomCommune = nomCommune;
     }
 
     public Integer getId() {
@@ -46,20 +41,20 @@ public class Commune {
         this.nomCommune = nomCommune;
     }
 
-    public Colline getColline() {
-        return colline;
-    }
-
-    public void setColline(Colline colline) {
-        this.colline = colline;
-    }
-
-    public Province getIdProvince() {
+    public Integer getIdProvince() {
         return idProvince;
     }
 
-    public void setIdProvince(Province idProvince) {
+    public void setIdProvince(Integer idProvince) {
         this.idProvince = idProvince;
     }
 
+    public String getNomProvince() {
+        return NomProvince;
+    }
+
+    public void setNomProvince(String NomProvince) {
+        this.NomProvince = NomProvince;
+    }
+    
 }

@@ -2,120 +2,182 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
-    template="/resources/templates/dashboardTemplate.xhtml"
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
     
-    <ui:define name = "contents">
-            
-        <p:spacer height="90" />
-        
-        
-        <h:form id="form" class=" py-3 mb-4 shadow-1 px-4">
-            <div class="">
-                <div class="ui-fluid formgrid grid">
-                    <div class="field col-12 md:col-6">
-                        <component:inputTextField
-                            label="Nom"
-                            placeholder="Entrer nom"
-                            value="#{contribuable.nom}"
-                        />
-                    </div>
-
-                    <div class="field col-12 md:col-6">
-                        <component:inputTextField
-                            label="Prenom"
-                            placeholder="Entrer prenom"
-                            value="#{contribuable.prenom}"
-                        />
-                    </div>
-                    
-                    <div class="field col-12 md:col-6">
-                    <component:inputTextField
-                        label="E-mail"
-                        placeholder="Entrer email "
-                        value="#{contribuable.email}"
-                    />
-
-                    </div>
-                    
-                    <div class="field col-12 md:col-6">
-                        <component:inputPasswordField
-                            label="Mot de passe"
-                            placeholder="Entrer Mot de passe"
-                            value="#{contribuable.password}"
-                        />
-                    </div>
-
-                    <div class="field col-12 md:col-6">
-                        <component:inputTextField
-                            label="Boite postal"
-                            placeholder="B.P 1023456 "
-                            value="#{contribuable.BP}"
-                        />
-
-                    </div>
-                    <div class="field col-12 md:col-6">
-                        <component:inputTextField
-                            label="Telephone"
-                            placeholder="+257 71 20 47 78"
-                            value="#{contribuable.telephone}"
-                            type="number"
-                        />
-                    </div>
-
-                    <div class="field col-12 md:col-10"></div>
-                    <div class="field col-12 md:col-2">
-                        <p:commandButton 
-                            value="Enregistrer" 
-                            update="@form" 
-                            action="#{contribuable.save}"
-                            style="height: 41px; "
-                        />
-                    </div>
-                </div>
-            </div>
-
-        </h:form>
-        
-                    
-        <!--        datatables       -->
-        
-        <div class="surface-card p-4 shadow-1 border-round">
-            <div class="text-3xl font-medium text-900 mb-3">
-                Contribuable
-            </div>
-            <div class="font-medium text-500 mb-3">
-                Listes
-            </div>
-           <div  class="border-2 border-dashed surface-border">
-               
-               <div class="card ">
-                    <h:form>
-                        <p:dataTable var="contribuable" value="#{contribuableView.contribuables}">
-                            <p:column headerText="Code">
-                                <h:outputText value="#{contribuable.id}" />
-                            </p:column>
-                            
-                            <p:column headerText="Nom">
-                                <h:outputText value="#{contribuable.nom}" />
-                            </p:column>
-                            
-                            <p:column headerText="E-mail">
-                                <h:outputText value="#{contribuable.email}" />
-                            </p:column>
-                            
-                            <p:column headerText="B.P">
-                                <h:outputText value="#{contribuable.bp}" />
-                            </p:column>
-                            
-                        </p:dataTable>
-                    </h:form>
-                </div>
-               
-           </div>
+    <f:metadata>
+        <f:event  type="preRenderView" listener="#{representantController.representantList()}" />
+    </f:metadata>
+    
+    <div class="surface-card p-4 shadow-1 border-round">
+        <div class="text-3xl font-medium text-900 mb-3">
+            Representants
         </div>
+        <div class="font-medium text-500 mb-3">
+            Listes
+        </div>
+       <div  class="border-2 border-dashed surface-border">
+
+           <div class="card ">
+             
+                <h:form>
+                    <p:growl id="message" showDetail="true"/>
+                    
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton 
+                                value="New" 
+                                icon="pi pi-plus" 
+                                styleClass="ui-button-success"
+                                action="/pages/representant/ajouter?faces-redirect=true"
+                                ajax="false"
+                                style="margin-right: .5rem">
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                        
+                        <!-- toolbarGroup for import, excel, pdf-->
+                        <p:toolbarGroup align="right">
+                            
+                            <!--Export import -->
+                            <p:fileUpload 
+                                mode="simple" 
+                                skinSimple="true" 
+                                label="Import" 
+                                chooseIcon="pi pi-download" 
+                            />
+                            
+                            <!-- Export data pdf -->
+                            <p:commandButton 
+                                value="PDF" 
+                                icon="pi pi-upload" 
+                                styleClass="ui-button-help" 
+                                ajax="false"
+                                class="mr-2"
+                                >
+                                <p:dataExporter 
+                                    type="pdf" 
+                                    target="dt-representants" 
+                                    fileName="representant" 
+                                />
+                            </p:commandButton>
+                            
+                            <!--Export data excel -->
+                            <p:commandButton 
+                                value="EXCEL" 
+                                icon="pi pi-upload" 
+                                styleClass="ui-button-help" 
+                                ajax="false">
+                                <p:dataExporter 
+                                    type="xls" 
+                                    target="dt-representants" 
+                                    fileName="Gestion representants" 
+                                />
+                            </p:commandButton>
+                            
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    
+                    <p:dataTable
+                        id="dt-representants"
+                        paginator="true" 
+                        rows="4" 
+                        rowSelectMode="add" 
+                        paginatorPosition="bottom"
+                        binding="#{table}" 
+                        value="#{representantController.representantList()}" 
+                        var="representan"  
+                        >
+
+                        <p:column 
+                            headerText="" 
+                            style="width: 5%">
+                             <h:outputText value="#{table.rowIndex + 1}" />
+                         </p:column>
+                        
+                        <!--
+                        <p:column 
+                            headerText="Matricule"
+                            sortBy="#{representan.id}" 
+                            filterBy="#{representan.id}"
+                            style="width: 17%"
+                            >
+                             <h:outputText value="#{representan.id}" />
+                         </p:column>
+                        -->
+
+                         <p:column 
+                            headerText="Nom" 
+                            sortBy="#{representan.nomRepresentant}" 
+                            filterBy="#{representan.nomRepresentant}"
+                            style="width: 10%"
+                            
+                            >
+                            <h:outputText value="#{representan.nomRepresentant}" />
+                         </p:column>
+                        
+                         <p:column 
+                            headerText="Prenom" 
+                            sortBy="#{representan.prenomRepresentant}" 
+                            filterBy="#{representan.prenomRepresentant}"
+                            style="width: 15%"
+                            >
+                            <h:outputText value="#{representan.prenomRepresentant}" />
+                         </p:column>
+                        
+                        
+                         <p:column 
+                            headerText="Email" 
+                            sortBy="#{representan.emailRepresentant}" 
+                            filterBy="#{representan.emailRepresentant}"
+                            >
+                            <h:outputText value="#{representan.emailRepresentant}" />
+                         </p:column>
+                        
+                         <p:column 
+                            headerText="B.P" 
+                            sortBy="#{representan.bpRepresentant}" 
+                            filterBy="#{representan.bpRepresentant}"
+                            style="width: 10%"
+                            >
+                            <h:outputText value="#{representan.bpRepresentant}" />
+                         </p:column>
+                        
+                        <!--
+                         <p:column 
+                            headerText="Date" 
+                            sortBy="#{representan.date}" 
+                            filterBy="#{representan.date}"
+                            >
+                            <h:outputText value="#{representan.date}" />
+                         </p:column>
+                        -->
+
+                     <p:column exportable="false" style="width: 10%" >
+                         <p:commandButton 
+                             icon="pi pi-pencil" 
+                             styleClass="edit-button rounded-button ui-button-success mr-4" 
+                             process="@this"
+                             ajax="false"
+                             action="#{representantController.edit(representan.id)}"
+                             >
+
+                         </p:commandButton>
+                         <p:commandButton 
+                             class="ui-button-warning rounded-button" 
+                             icon="pi pi-trash"
+                             process="@this"
+                             ajax="false"
+                             action="#{representantController.delete(representan.id)}"
+                             >
+
+                         </p:commandButton>
+                     </p:column>
+                     </p:dataTable>
+                 </h:form>
+               
+            </div>
+
+       </div>
+    </div>
             
-    </ui:define>
-        
 </ui:composition>

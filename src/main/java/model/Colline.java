@@ -4,20 +4,21 @@
  */
 package model;
 
-import java.util.*;
+import jakarta.faces.bean.ManagedBean;
+
 /**
  *
  * @author Ibrahim
  */
 
+@ManagedBean
 public class Colline{
 
     private Integer id;
-    private int idCommune;
+    private Integer idCommune;
+    private String nomCommune;
     private String nomColline;
-    private Commune commune;
-    private Collection<Avenue> avenueCollection;
-
+    
     public Colline() {
     }
 
@@ -25,7 +26,7 @@ public class Colline{
         this.id = id;
     }
 
-    public Colline(Integer id, int idCommune, String nomColline) {
+    public Colline(Integer id, Integer idCommune, String nomColline) {
         this.id = id;
         this.idCommune = idCommune;
         this.nomColline = nomColline;
@@ -39,12 +40,20 @@ public class Colline{
         this.id = id;
     }
 
-    public int getIdCommune() {
+    public Integer getIdCommune() {
         return idCommune;
     }
 
-    public void setIdCommune(int idCommune) {
+    public void setIdCommune(Integer idCommune) {
         this.idCommune = idCommune;
+    }
+
+    public String getNomCommune() {
+        return nomCommune;
+    }
+
+    public void setNomCommune(String nomCommune) {
+        this.nomCommune = nomCommune;
     }
 
     public String getNomColline() {
@@ -53,22 +62,6 @@ public class Colline{
 
     public void setNomColline(String nomColline) {
         this.nomColline = nomColline;
-    }
-
-    public Commune getCommune() {
-        return commune;
-    }
-
-    public void setCommune(Commune commune) {
-        this.commune = commune;
-    }
-
-    public Collection<Avenue> getAvenueCollection() {
-        return avenueCollection;
-    }
-
-    public void setAvenueCollection(Collection<Avenue> avenueCollection) {
-        this.avenueCollection = avenueCollection;
     }
 
     

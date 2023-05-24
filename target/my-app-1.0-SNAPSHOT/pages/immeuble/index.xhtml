@@ -1,0 +1,134 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+    
+    <f:metadata>
+        <f:event listener="#{immeubleController.immeubleList()}" type="preRenderView" />
+    </f:metadata>
+    
+            
+    <div class="surface-card p-4 shadow-1 border-round">
+        <div class="text-3xl font-medium text-900 mb-3">
+            IMMEUBLE
+        </div>
+        <div class="font-medium text-500 mb-3">
+            Listes
+        </div>
+        <div  class="border-2 border-dashed surface-border">
+
+           <div class="card ">
+                <h:form>
+                    <p:dataTable 
+                        paginator="true" 
+                        rows="4" 
+                        rowSelectMode="add" 
+                        paginatorPosition="bottom"
+                        binding="#{table}" 
+                        value="#{immeubleController.immeubleList()}" 
+                        var="immeubl"  >
+                        
+                        <!--
+                        <p:column headerText="Code">
+                            <h:outputText value="#{table.rowIndex + 1}" />
+                        </p:column>
+                        -->
+
+                         
+                        <p:column 
+                            headerText="Id" 
+                            sortBy="#{immeubl.id}" 
+                            filterBy="#{immeubl.id}"
+                        >
+                            <h:outputText value="#{immeubl.id}" />
+                        </p:column>
+                        
+                        
+                        <p:column 
+                            headerText="Nom" 
+                            sortBy="#{immeubl.nomContribuable}" 
+                            filterBy="#{immeubl.nomContribuable}"
+                        >
+                            <h:outputText value="#{immeubl.nomContribuable}" />
+                        </p:column>
+                        
+                        <p:column 
+                            headerText="Prenom" 
+                            sortBy="#{immeubl.prenomContribuable}" 
+                            filterBy="#{immeubl.prenomContribuable}"
+                        >
+                            <h:outputText value="#{immeubl.prenomContribuable}" />
+                        </p:column>
+                        
+                        <p:column 
+                            headerText="Province" 
+                            sortBy="#{immeubl.nomProvince}" 
+                            filterBy="#{immeubl.nomProvince}"
+                        >
+                            <h:outputText value="#{immeubl.nomProvince}" />
+                        </p:column>
+                        
+                        <p:column 
+                            headerText="Commune" 
+                            sortBy="#{immeubl.nomCommune}" 
+                            filterBy="#{immeubl.nomCommune}"
+                        >
+                            <h:outputText value="#{immeubl.nomCommune}" />
+                        </p:column>
+                        
+                        <p:column 
+                            headerText="Colline" 
+                            sortBy="#{immeubl.nomColline}" 
+                            filterBy="#{immeubl.nomCommune}"
+                        >
+                            <h:outputText value="#{immeubl.nomColline}" />
+                        </p:column>
+                
+                        <p:column 
+                            headerText="Avenue" 
+                            sortBy="#{immeubl.nomAvenue}" 
+                            filterBy="#{immeubl.nomAvenue}"
+                        >
+                            <h:outputText value="#{immeubl.nomAvenue}" />
+                        </p:column>
+                        
+                
+                    <p:column exportable="false" style="width: 10%" >
+                        <!--
+                        <p:commandButton 
+                            icon="pi pi-pencil" 
+                            styleClass="edit-button rounded-button ui-button-success mr-4" 
+                            ajax="false"
+                            action="#{immeubleController.edit(immeubl.id)}"
+                            >
+
+                        </p:commandButton>
+                        -->
+                        <p:commandButton 
+                            icon="pi pi-eye" 
+                            styleClass="edit-button rounded-button ui-button-info mr-4" 
+                            ajax="false"
+                            action="#{immeubleController.detail(immeubl.id)}"
+                            >
+                        </p:commandButton>
+                        
+                        <p:commandButton 
+                            class="ui-button-warning rounded-button" 
+                            icon="pi pi-trash"
+                            ajax="false"
+                            action="#{communeController.delete(immeubl.id)}"
+                            >
+
+                        </p:commandButton>
+                    </p:column>
+                    </p:dataTable>
+                </h:form>
+                
+            </div>
+
+       </div>
+    </div>
+            
+</ui:composition>

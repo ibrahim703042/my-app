@@ -4,10 +4,7 @@
  */
 package model;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Named;
-import jakarta.validation.constraints.NotNull;
-import java.util.List;
+import jakarta.faces.bean.ManagedBean;
 import java.util.Date;
 
 /**
@@ -16,36 +13,28 @@ import java.util.Date;
  * 
  */
 
-@Named
-@RequestScoped
+@ManagedBean
 
 public class Contribuable {
 
     private Integer id;
-    
-    @NotNull
     private String nom;
-    
-    @NotNull
     private String prenom;
-    
-    @NotNull
     private String email;
-    
-    @NotNull
     private String motPasse;
-    
-    @NotNull
     private int telephone;
-    
-    @NotNull
     private String bp;
     
-    private Date date;
+    //** represantant **/
+    private Integer idRepresentant;
+    private String bpRepresentant;
+    private String nomRepresentant;
+    private String prenomRepresentant;
+    private String telephoneRepresentant;
+    private String EmailRepresentant;
     
-    private List<Representant> representantList;
-    private List<Abattement> abattementList;
-
+    private Date date;
+   
     public Contribuable() {
     }
 
@@ -120,6 +109,54 @@ public class Contribuable {
         this.bp = bp;
     }
 
+    public Integer getIdRepresentant() {
+        return idRepresentant;
+    }
+
+    public void setIdRepresentant(Integer idRepresentant) {
+        this.idRepresentant = idRepresentant;
+    }
+
+    public String getBpRepresentant() {
+        return bpRepresentant;
+    }
+
+    public void setBpRepresentant(String bpRepresentant) {
+        this.bpRepresentant = bpRepresentant;
+    }
+
+    public String getNomRepresentant() {
+        return nomRepresentant;
+    }
+
+    public void setNomRepresentant(String nomRepresentant) {
+        this.nomRepresentant = nomRepresentant;
+    }
+
+    public String getPrenomRepresentant() {
+        return prenomRepresentant;
+    }
+
+    public void setPrenomRepresentant(String prenomRepresentant) {
+        this.prenomRepresentant = prenomRepresentant;
+    }
+
+    public String getTelephoneRepresentant() {
+        return telephoneRepresentant;
+    }
+
+    public void setTelephoneRepresentant(String telephoneRepresentant) {
+        this.telephoneRepresentant = telephoneRepresentant;
+    }
+
+    public String getEmailRepresentant() {
+        return EmailRepresentant;
+    }
+
+    public void setEmailRepresentant(String EmailRepresentant) {
+        this.EmailRepresentant = EmailRepresentant;
+    }
+
     public Date getDate() {
         return date;
     }
@@ -128,22 +165,5 @@ public class Contribuable {
         this.date = date;
     }
 
-    public List<Representant> getRepresentantList() {
-        return representantList;
-    }
-
-    public void setRepresentantList(List<Representant> representantList) {
-        this.representantList = representantList;
-    }
-
-    public List<Abattement> getAbattementList() {
-        return abattementList;
-    }
-
-    public void setAbattementList(List<Abattement> abattementList) {
-        this.abattementList = abattementList;
-    }
-    
-    
     
 }

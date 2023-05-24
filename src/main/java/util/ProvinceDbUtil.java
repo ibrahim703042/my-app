@@ -39,7 +39,7 @@ public class ProvinceDbUtil implements Serializable {
         try {
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
-            String query = "SELECT * FROM province WHERE id IS NOT NULL ORDER BY id DESC";
+            String query = "SELECT * FROM province P WHERE P.id IS NOT NULL ORDER BY P.nomProvince";
             resultSet = statement.executeQuery(query);  
             
             while(resultSet.next()) { 

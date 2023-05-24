@@ -10,15 +10,15 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.bean.ApplicationScoped;
+import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
-import jakarta.inject.Named;
 import model.Avenue;
 import java.sql.*;
 import java.util.*;
 
-@Named
+@ManagedBean
 @ApplicationScoped
 
 public class AvenueDbUtil {
@@ -29,12 +29,13 @@ public class AvenueDbUtil {
     public static PreparedStatement pstmt;
 
     //*************************** display data *****************/
-    public static ArrayList findAll() {
+    public ArrayList findAll() {
         
         ArrayList avenueList = new ArrayList();
         
         try {
-            String query = "SELECT * FROM avenue WHERE id IS NOT NULL ORDER BY id DESC";
+            String query = "SELECT * FROM avenue,colline WHERE avenue.id_colline = colline.id ";
+                    
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
@@ -44,8 +45,9 @@ public class AvenueDbUtil {
                 Avenue avenue = new Avenue(); 
 
                 avenue.setId(resultSet.getInt("id"));  
+                avenue.setIdColline(resultSet.getInt("id_colline"));  
                 avenue.setNomAvenue(resultSet.getString("nomAvenue"));  
-                avenue.setNumeroAvenue(resultSet.getInt("numeroAvenue")); 
+                avenue.setNomColline(resultSet.getString("nomColline")); 
 
                 avenueList.add(avenue);  
             }   
@@ -60,63 +62,55 @@ public class AvenueDbUtil {
     }
 
     //************** Save data **********************************/ 
-    public static String save(Avenue avenue){
-        
-        Integer saveResult = 0;
-        String navigationResult = "";
-        String message = "Record Inserted";
+    public void save(Avenue avenue){
         
         try {
 
-            String query = 
-                    "INSERT INTO avenue (nomAvenue, numeroAvenue) "
-                    + "values (?, ?)";
+            String query = "INSERT INTO avenue (id_colline, nomAvenue) values (?, ?)";
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);         
 
-            pstmt.setString(1, avenue.getNomAvenue());
-            pstmt.setInt(2, avenue.getNumeroAvenue());
-            //statement.setDate(7, (java.sql.Date) avenue.getDate());
+            pstmt.setInt(1, avenue.getIdColline());
+            pstmt.setString(2,avenue.getNomAvenue());
 
-            saveResult = pstmt.executeUpdate();
+            pstmt.executeUpdate();
             connection.close();
 
         }catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
-        }if(saveResult !=0) {
-            navigationResult = "/pages/admin/template.xhtml?faces-redirect=true";
-            showMessage(message);
-            
-        } else {
-            navigationResult = "";
+            //addErrorMessage(sqlException);
+            sqlException.printStackTrace();
         }
-        return navigationResult;
     }
 
     //************** find data by ID ***************************/
-    public static String findById(int avenueId) {
+    public void findById(int avenueId) {
         
         Avenue avenue = null;
-        System.out.println(" findById() : Province Id: " + avenueId);
+        System.out.println(" findById() : Avenue Id: " + avenueId);
         
         /* Setting The Particular province Details In Session */
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
         try {
-           
-            String query = "SELECT * FROM avenue WHERE id =" + avenueId ;
+//            String query = ""
+//                    + "SELECT A.*, C.* "
+//                    + "FROM avenue A, colline C "
+//                    + "WHERE A.id_colline = C.id "
+//                    + "ORDER BY C.nomColline";
+            String query = "SELECT * FROM avenue,colline WHERE avenue.id_colline = colline.id ";
+                    
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);    
-            
-            if(resultSet.next()) {
-                
-                avenue = new Avenue();
+            resultSet = statement.executeQuery(query);  
+
+            while(resultSet.next()) { 
+
+                avenue = new Avenue(); 
+
                 avenue.setId(resultSet.getInt("id"));  
+                avenue.setIdColline(resultSet.getInt("id"));  
                 avenue.setNomAvenue(resultSet.getString("nomAvenue"));  
-                avenue.setNumeroAvenue(resultSet.getInt("numeroAvenue")); 
-                //avenue.setDate(resultSet.getDate("date"));  
-               //LocalDate date = LocalDate.now();
+                avenue.setNomColline(resultSet.getString("nomColline")); 
 
             }
             
@@ -126,24 +120,26 @@ public class AvenueDbUtil {
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
-        return "/pages/admin/edit.xhtml";
+  
     }
 	
     //************** update data ******************************/
-    public static String update(Avenue avenue){
-
-        String message = "Updated Successfully";
+    public void update(Avenue avenue){
 
         try {
 
-            String query ="Update avenue SET "
-                    + "nomAvenue=?, "
-                    + "numeroAvenue=?, ";
+            String query = " "
+                    + "UPDATE avenue "
+                    + "SET "
+                    + "nomAvenue = ?, "
+                    + "id_colline = ? "
+                    + "WHERE id = ?";
 
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, avenue.getNomAvenue());
-            pstmt.setInt(2, avenue.getNumeroAvenue());
+            
+            pstmt.setInt(1, avenue.getIdColline());
+            pstmt.setString(2, avenue.getNomAvenue());
 
             pstmt.execute();
             connection.close();
@@ -151,15 +147,14 @@ public class AvenueDbUtil {
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
-            showMessage(message);
-            return "/pages/admin/template.xhtml?faces-redirect=true";
+        
     }
 
     //************** delete data ********************************/
-    public static String delete(int avenueId) {
+    public void delete(int avenueId) {
         
         connection = MySQLJDBCUtil.getConnection();
-        //System.out.println("delete() : avenue Id: " + avenueId);
+        System.out.println("delete() : Avenue Id: " + avenueId);
 
         try {
 
@@ -171,19 +166,9 @@ public class AvenueDbUtil {
         } catch(SQLException sqlException){
             addErrorMessage(sqlException);
         }
-        return "/pages/admin/template.xhtml?faces-redirect=true";
     }
     
-    
-    //************** conecxt msg data ***********************/
-    private static void showMessage(String msg){
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage message = new FacesMessage("Notice",msg);
-        context.addMessage(null, message);
-    }
-    
-     //************** error  message from sql ***********************/
+    //************** error  message from sql ***********************/
     private static void addErrorMessage(SQLException ex) {
         
         FacesMessage message = new FacesMessage(ex.getMessage());

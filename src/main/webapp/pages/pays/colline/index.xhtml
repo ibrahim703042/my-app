@@ -2,89 +2,80 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
-    template="/resources/templates/dashboardTemplate.xhtml"
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
     
-    <ui:define name = "contents">
-            
-            <p:spacer height="90" />
-            <h:form id="form" class=" py-3">
-                    <div class="">
-                        <div class="ui-fluid formgrid grid">
-                            <div class="field col-12 md:col-4">
-
-                                <component:inputTextField
-                                    label="Nom"
-                                    placeholder="Entrer nom"
-                                    value="#{colline.nom}"
-                                />
-                                                
-                            </div>
-                            <div class="field col-12 md:col-4">
-                                <p:outputLabel for="@next" value="Commune"/>
-                                <p:selectOneMenu 
-                                    id="commune" 
-                                    value="#{collineView.selectedOption}"
-                                    style="height: 41px; ">
-                                    
-                                    <f:selectItem itemLabel="Select One" itemValue=""/>
-                                    <f:selectItems itemValue="" value="#{collineView.selectedOption}"/>
-                                    <f:selectItem itemLabel="Option1" itemValue="Option1"/>
-                                    <f:selectItem itemLabel="Option2" itemValue="Option2"/>
-                                    <f:selectItem itemLabel="Option3" itemValue="Option3"/>
-                                    
-                                </p:selectOneMenu>
-                            </div>
-
-                            <div class="field col-12 md:col-4 pt-1">
-                                <p:spacer />
-                                <p:commandButton 
-                                    value="Enregistrer" 
-                                    update="@form" 
-                                    action="#{colline.enregistrer}"
-                                    style="height: 41px; "
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                </h:form>
-                    
-        <!--        datatables       -->
-        
-        <div class="surface-card p-4 shadow-1 border-round">
-            <div class="text-3xl font-medium text-900 mb-3">
-                Colline
-            </div>
-            <div class="font-medium text-500 mb-3">
-                Listes
-            </div>
-           <div  class="border-2 border-dashed surface-border">
-               
-               <div class="card ">
-                    <h:form>
-                        <p:dataTable var="product" value="#{colline.collines}">
-                            <p:column headerText="Code">
-                                <h:outputText value="#{colline.id}" />
-                            </p:column>
-                            
-                            <p:column headerText="Commune">
-                                <h:outputText value="#{colline.commune}" />
-                            </p:column>
-                            
-                            <p:column headerText="Nom">
-                                <h:outputText value="#{colline.nom}" />
-                            </p:column>
-     
-                        </p:dataTable>
-                    </h:form>
-                </div>
-               
-           </div>
-        </div>
-            
+<!--    <f:metadata>
+        <f:event listener="" type="preRenderView" />
+    </f:metadata>-->
     
-    </ui:define>
-        
+            
+    <div class="surface-card p-4 shadow-1 border-round">
+        <div class="text-3xl font-medium text-900 mb-3">
+            COLLINE
+        </div>
+        <div class="font-medium text-500 mb-3">
+            Listes
+        </div>
+        <div  class="border-2 border-dashed surface-border">
+
+           <div class="card ">
+                <h:form>
+                    <p:dataTable 
+                        paginator="true" 
+                        rows="4" 
+                        rowSelectMode="add" 
+                        paginatorPosition="bottom"
+                        binding="#{table}" 
+                        value="#{collineController.collineList()}" 
+                        var="collin"  >
+                        
+                        <!--
+                        <p:column headerText="Code">
+                            <h:outputText value="#{table.rowIndex + 1}" />
+                        </p:column>
+                        -->
+
+                        <p:column 
+                            headerText="Colline" 
+                            sortBy="#{collin.nomColline}" 
+                            filterBy="#{collin.nomColline}"
+                        >
+                            <h:outputText value="#{collin.nomColline}" />
+                        </p:column>
+                        
+                        <p:column 
+                            headerText="Commune" 
+                            sortBy="#{collin.nomCommune}" 
+                            filterBy="#{collin.nomCommune}"
+                        >
+                            <h:outputText value="#{collin.nomCommune}" />
+                        </p:column>
+                
+                    <p:column exportable="false" style="width: 10%" >
+                        <p:commandButton 
+                            icon="pi pi-pencil" 
+                            styleClass="edit-button rounded-button ui-button-success mr-4" 
+                            ajax="false"
+                            action="#{collineController.edit(collin.id)}"
+                            >
+
+                        </p:commandButton>
+                        <p:commandButton 
+                            class="ui-button-warning rounded-button" 
+                            icon="pi pi-trash"
+                            ajax="false"
+                            action="#{collineController.delete(collin.id)}"
+                            >
+
+                        </p:commandButton>
+                    </p:column>
+                    </p:dataTable>
+                </h:form>
+                
+            </div>
+
+       </div>
+    </div>
+            
 </ui:composition>

@@ -4,11 +4,15 @@
  */
 package model;
 
+import jakarta.faces.bean.ManagedBean;
+
 /**
  *
  * @author Ibrahim
+ * 
  */
 
+@ManagedBean
 public class Permission{
 
     private Integer id;
@@ -79,31 +83,6 @@ public class Permission{
 
     public void setIdRole(Role idRole) {
         this.idRole = idRole;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        
-        if (!(object instanceof Permission)) {
-            return false;
-        }
-        Permission other = (Permission) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "model.Permission[ id=" + id + " ]";
     }
     
 }
