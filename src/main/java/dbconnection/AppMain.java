@@ -21,6 +21,6 @@ public class AppMain {
         System.out.println("**************************************************");
         System.out.println("**************************************************");
 
-        ImmeubleDbUtil.getAll();
+        //ImmeubleDbUtil.getAll();
     }
 }
