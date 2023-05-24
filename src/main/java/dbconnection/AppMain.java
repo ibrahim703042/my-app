@@ -4,26 +4,23 @@
  */
 package dbconnection;
 
-import model.Contribuable;
+import util.AdministrateurDbUtil;
+import util.ImmeubleDbUtil;
 
 /**
  *
  * @author Ibrahim
+ * 
  */
 
 public class AppMain {
    
     public static void main(String[] args) throws Exception {
-        
-        //ProvinceDbUtil.findAll();
-        //ContribuableDbUtil.findAll();
-        //AdministrateurDbUtil.findAll();
-       // ContribuableDbUtil.findAll();
-       // AdministrateurDbUtil.findById(2);
-        
-         Contribuable cont = new Contribuable();
-         
-         
+     
+        AdministrateurDbUtil.getAll();
+        System.out.println("**************************************************");
+        System.out.println("**************************************************");
+
+        ImmeubleDbUtil.getAll();
     }
-    
 }

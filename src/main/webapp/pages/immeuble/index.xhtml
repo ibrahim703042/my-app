@@ -20,7 +20,67 @@
         <div  class="border-2 border-dashed surface-border">
 
            <div class="card ">
+               
                 <h:form>
+                    
+                    <p:growl id="message" showDetail="true"/>
+                    
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton 
+                                value="New" 
+                                icon="pi pi-plus" 
+                                styleClass="ui-button-success"
+                                action="/pages/immeuble/ajouter?faces-redirect=true"
+                                ajax="false"
+                                style="margin-right: .5rem">
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                        
+                        <!-- toolbarGroup for import, excel, pdf-->
+                        <p:toolbarGroup align="right">
+                            
+                            <!--Export import -->
+                            <p:fileUpload 
+                                mode="simple" 
+                                skinSimple="true" 
+                                label="Import" 
+                                chooseIcon="pi pi-download" 
+                            />
+                            
+                            <!-- Export data pdf -->
+                            <p:commandButton 
+                                value="PDF" 
+                                icon="pi pi-upload" 
+                                styleClass="ui-button-help" 
+                                ajax="false"
+                                class="mr-2"
+                                >
+                                <p:dataExporter 
+                                    type="pdf" 
+                                    target="dt-immeubles" 
+                                    fileName="admin" 
+                                />
+                            </p:commandButton>
+                            
+                            <!--Export data excel -->
+                            <p:commandButton 
+                                value="EXCEL" 
+                                icon="pi pi-upload" 
+                                styleClass="ui-button-help" 
+                                ajax="false">
+                                <p:dataExporter 
+                                    type="xls" 
+                                    target="dt-immeubles" 
+                                    fileName="Gestion immeubles" 
+                                />
+                            </p:commandButton>
+                            
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    
+                    <!--/**  Datatables**/-->
+                    
                     <p:dataTable 
                         paginator="true" 
                         rows="4" 

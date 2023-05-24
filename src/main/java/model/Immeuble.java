@@ -4,18 +4,19 @@
  */
 package model;
 
-import java.util.List;
+import jakarta.faces.bean.ManagedBean;
 
 /**
  *
  * @author Ibrahim
  */
 
+@ManagedBean
 public class Immeuble {
 
     private Integer id;
-    private int idContibuable;
     private int idColline;
+    private Integer id_immeuble;
     private String nomAvenue;
 
     private String nomProvince;
@@ -47,20 +48,20 @@ public class Immeuble {
         this.id = id;
     }
 
-    public int getIdContibuable() {
-        return idContibuable;
-    }
-
-    public void setIdContibuable(int idContibuable) {
-        this.idContibuable = idContibuable;
-    }
-
     public int getIdColline() {
         return idColline;
     }
 
     public void setIdColline(int idColline) {
         this.idColline = idColline;
+    }
+
+    public Integer getId_immeuble() {
+        return id_immeuble;
+    }
+
+    public void setId_immeuble(Integer id_immeuble) {
+        this.id_immeuble = id_immeuble;
     }
 
     public String getNomAvenue() {
@@ -190,6 +191,6 @@ public class Immeuble {
     public void setEmailRepresentant(String EmailRepresentant) {
         this.EmailRepresentant = EmailRepresentant;
     }
-    
+
     
 }

@@ -62,13 +62,14 @@ immeuble.nomAvenue as Rue ,
 colline.nomColline as Colline, 
 commune.nomCommune as Commune, 
 province.nomProvince as Province
-FROM contribuable
+FROM representant
+JOIN contribuable ON contribuable.id_representant = representant.id
 JOIN immeuble ON immeuble.id_contibuable = contribuable.id
-JOIN representant ON representant.id_contribuable = contribuable.id
 JOIN colline ON immeuble.id_colline = colline.id
 JOIN commune ON colline.id_commune = commune.id
 JOIN province ON commune.id_province = province.id;
 
 
+String query = "SELECT contribuable.id As Contribuable_ID, contribuable.nom As nom_contribuable, contribuable.prenom AS prenom_contribuable, contribuable.email AS email_contribuable, contribuable.telephone AS tel_contribuable, contribuable.BP AS BP_contribuable, representant.id As representant_ID, representant.nomRepresentant As nom_representant, representant.prenomRepresentant AS prenom_representant, representant.emailRepresentant AS email_representant, representant.telephoneRepresentant AS tel_representant, representant.bpRepresentant AS BP_representant, immeuble.id as immeuble_id, immeuble.nomAvenue as Rue , colline.nomColline as Colline,  commune.nomCommune as Commune,  province.nomProvince as Province FROM representant JOIN contribuable ON contribuable.id_representant = representant.id JOIN immeuble ON immeuble.id_contibuable = contribuable.id JOIN colline ON immeuble.id_colline = colline.id JOIN commune ON colline.id_commune = commune.id JOIN province ON commune.id_province = province.id";
 
 

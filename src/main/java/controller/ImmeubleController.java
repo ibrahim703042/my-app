@@ -12,6 +12,7 @@ import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -28,7 +29,7 @@ import util.ImmeubleDbUtil;
 @ManagedBean
 @SessionScoped
 
-public class ImmeubleController{
+public class ImmeubleController implements Serializable{
 
     public ArrayList immeubles;
     
@@ -53,10 +54,10 @@ public class ImmeubleController{
     }
         
     //************************ save data **************************/
-    public String save(Immeuble im) {
+    public String save(Immeuble immeuble) {
         
         try {
-            immeubleDbUtil.save(im);
+            immeubleDbUtil.save(immeuble);
 
         }catch (Exception ex) {
             addErrorMessage ((SQLException) ex);
@@ -94,10 +95,10 @@ public class ImmeubleController{
     }
     
     //************************ update data **************************/
-    public String update(Immeuble im) {
+    public String update(Immeuble immeuble) {
         
         try {
-            immeubleDbUtil.update(im);
+            immeubleDbUtil.update(immeuble);
             
         }catch (Exception ex) {
             addErrorMessage ((SQLException) ex);
