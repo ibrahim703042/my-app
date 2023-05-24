@@ -154,26 +154,19 @@ public class ImmeubleDbUtil {
                     + "contribuable.email AS email_contribuable, "
                     + "contribuable.telephone AS tel_contribuable, "
                     + "contribuable.BP AS BP_contribuable, "
-                    + "representant.id As representant_ID, "
-                    + "representant.nomRepresentant As nom_representant, "
-                    + "representant.prenomRepresentant AS prenom_representant, "
-                    + "representant.emailRepresentant AS email_representant, "
-                    + "representant.telephoneRepresentant AS tel_representant, "
-                    + "representant.bpRepresentant AS BP_representant, "
                     + "immeuble.id as Immeuble_ID, "
                     + "immeuble.nomAvenue as Rue , "
                     + "colline.nomColline as Colline,  "
                     + "commune.nomCommune as Commune,  "
                     + "province.nomProvince as Province "
-                    + "FROM representant JOIN contribuable "
-                    + "ON contribuable.id_representant = representant.id "
+                    + "FROM contribuable "
                     + "JOIN immeuble "
                     + "ON immeuble.id_contribuable = "
                     + "contribuable.id JOIN colline "
                     + "ON immeuble.id_colline = colline.id "
                     + "JOIN commune ON colline.id_commune = commune.id "
                     + "JOIN province ON commune.id_province = province.id "
-                    + "WHERE immeuble.id = " +immeubleId;
+                    + "WHERE contribuable.id = " +immeubleId;
 
             // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
             connection = MySQLJDBCUtil.getConnection();
@@ -199,16 +192,16 @@ public class ImmeubleDbUtil {
                 immeuble.setEmailContribuable(resultSet.getString("email_contribuable"));  
                 
                 /* *******representant **** */
-                immeuble.setIdRepresentant(resultSet.getInt("Representant_ID"));  
-                immeuble.setNomRepresentant(resultSet.getString("nom_representant"));  
-                immeuble.setPrenomRepresentant(resultSet.getString("prenom_representant"));  
-                immeuble.setNomColline(resultSet.getString("Colline"));  
-                immeuble.setNomCommune(resultSet.getString("Commune"));  
-                immeuble.setNomProvince(resultSet.getString("Province"));  
-                immeuble.setNomAvenue(resultSet.getString("Rue"));  
-                immeuble.setTelephoneRepresentant(resultSet.getString("tel_representant"));
-                immeuble.setBpRepresentant(resultSet.getString("BP_representant"));  
-                immeuble.setEmailRepresentant(resultSet.getString("email_representant"));
+//                immeuble.setIdRepresentant(resultSet.getInt("Representant_ID"));  
+//                immeuble.setNomRepresentant(resultSet.getString("nom_representant"));  
+//                immeuble.setPrenomRepresentant(resultSet.getString("prenom_representant"));  
+//                immeuble.setNomColline(resultSet.getString("Colline"));  
+//                immeuble.setNomCommune(resultSet.getString("Commune"));  
+//                immeuble.setNomProvince(resultSet.getString("Province"));  
+//                immeuble.setNomAvenue(resultSet.getString("Rue"));  
+//                immeuble.setTelephoneRepresentant(resultSet.getString("tel_representant"));
+//                immeuble.setBpRepresentant(resultSet.getString("BP_representant"));  
+//                immeuble.setEmailRepresentant(resultSet.getString("email_representant"));
                 
             }   
 

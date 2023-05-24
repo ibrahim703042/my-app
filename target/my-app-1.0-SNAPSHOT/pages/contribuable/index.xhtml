@@ -6,12 +6,12 @@
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
     
     <f:metadata>
-        <f:event type="preRenderView" listener="#{contribuableController.contribuableList()}" />
+        <f:event  type="preRenderView" listener="#{contribuableController.contribuableList()}" />
     </f:metadata>
     
     <div class="surface-card p-4 shadow-1 border-round">
         <div class="text-3xl font-medium text-900 mb-3">
-            Contribuables
+            Contribuable
         </div>
         <div class="font-medium text-500 mb-3">
             Listes
@@ -26,7 +26,7 @@
                     <p:toolbar>
                         <p:toolbarGroup>
                             <p:commandButton 
-                                value="Ajouter" 
+                                value="New" 
                                 icon="pi pi-plus" 
                                 styleClass="ui-button-success"
                                 action="/pages/contribuable/ajouter?faces-redirect=true"
@@ -37,6 +37,14 @@
                         
                         <!-- toolbarGroup for import, excel, pdf-->
                         <p:toolbarGroup align="right">
+                            
+                            <!--Export import -->
+                            <p:fileUpload 
+                                mode="simple" 
+                                skinSimple="true" 
+                                label="Import" 
+                                chooseIcon="pi pi-download" 
+                            />
                             
                             <!-- Export data pdf -->
                             <p:commandButton 
@@ -49,7 +57,7 @@
                                 <p:dataExporter 
                                     type="pdf" 
                                     target="dt-contribuables" 
-                                    fileName="contribuables" 
+                                    fileName="admin" 
                                 />
                             </p:commandButton>
                             
@@ -72,100 +80,103 @@
                     <p:dataTable
                         id="dt-contribuables"
                         paginator="true" 
-                        rows="4"
+                        rows="4" 
+                        rowSelectMode="add" 
                         paginatorPosition="bottom"
                         binding="#{table}" 
                         value="#{contribuableController.contribuableList()}" 
-                        var="contribuabl"  
+                        var="admin"  
                         >
-                        
-                        <!--
+
                         <p:column 
                             headerText="" 
                             style="width: 5%">
-                            <h:outputText value="#{table.rowIndex + 1}" />
-                        </p:column>
-                        -->
-                        
-                        <p:column 
-                            headerText="Code"
-                            sortBy="#{contribuabl.id}" 
-                            filterBy="#{contribuabl.id}"
-                            style="width: 10%"
-                            >
-                             <h:outputText value="#{contribuabl.id}" />
+                             <h:outputText value="#{table.rowIndex + 1}" />
                          </p:column>
-
+                        
                         <!--
                         <p:column 
+                            headerText="Matricule"
+                            sortBy="#{admin.id}" 
+                            filterBy="#{admin.id}"
+                            style="width: 17%"
+                            >
+                             <h:outputText value="#{admin.id}" />
+                         </p:column>
+                        -->
+
+                         <p:column 
                             headerText="Nom" 
-                            sortBy="#{contribuabl.nom}" 
-                            filterBy="#{contribuabl.nom}"
+                            sortBy="#{admin.nom}" 
+                            filterBy="#{admin.nom}"
                             style="width: 10%"
                             
                             >
-                            <h:outputText value="#{contribuabl.nom}" />
-                        </p:column>
-                        -->
+                            <h:outputText value="#{admin.nom}" />
+                         </p:column>
                         
-                        <p:column 
+                         <p:column 
                             headerText="Prenom" 
-                            sortBy="#{contribuabl.prenom}" 
-                            filterBy="#{contribuabl.prenom}"
+                            sortBy="#{admin.prenom}" 
+                            filterBy="#{admin.prenom}"
+                            style="width: 15%"
                             >
-                            <h:outputText value="#{contribuabl.prenom}" />
-                        </p:column>
+                            <h:outputText value="#{admin.prenom}" />
+                         </p:column>
                         
-                        <p:column 
+                        
+                         <p:column 
                             headerText="Email" 
-                            sortBy="#{contribuabl.email}" 
-                            filterBy="#{contribuabl.email}"
+                            sortBy="#{admin.email}" 
+                            filterBy="#{admin.email}"
                             >
-                            <h:outputText value="#{contribuabl.email}" />
-                        </p:column>
+                            <h:outputText value="#{admin.email}" />
+                         </p:column>
                         
-                        <p:column 
+                         <p:column 
                             headerText="B.P" 
-                            sortBy="#{contribuabl.bp}" 
-                            filterBy="#{contribuabl.bp}"
+                            sortBy="#{admin.bp}" 
+                            filterBy="#{admin.bp}"
                             style="width: 10%"
                             >
-                            <h:outputText value="#{contribuabl.bp}" />
-                        </p:column>
+                            <h:outputText value="#{admin.bp}" />
+                         </p:column>
                         
                         <!--
-                        <p:column 
+                         <p:column 
                             headerText="Date" 
-                            sortBy="#{contribuabl.date}" 
-                            filterBy="#{contribuabl.date}"
+                            sortBy="#{admin.date}" 
+                            filterBy="#{admin.date}"
                             >
-                            <h:outputText value="#{contribuabl.date}" />
-                        </p:column>
+                            <h:outputText value="#{admin.date}" />
+                         </p:column>
                         -->
 
-                        <p:column exportable="false" style="width: 10%" >
-                            <p:commandButton 
-                                icon="pi pi-pencil" 
-                                styleClass="edit-button rounded-button ui-button-success mr-4" 
-                                process="@this"
-                                ajax="false"
-                                action="#{contribuableController.edit(contribuabl.id)}"
-                            >
+                     <p:column exportable="false" style="width: 10%" >
+                         <p:commandButton 
+                             icon="pi pi-pencil" 
+                             styleClass="edit-button rounded-button ui-button-success mr-4" 
+                             process="@this"
+                             ajax="false"
+                             action="#{contribuableController.edit(admin.id)}"
+                             >
 
-                        </p:commandButton>
-                            <p:commandButton 
-                                class="ui-button-warning rounded-button" 
-                                icon="pi pi-trash"
-                                process="@this"
-                                ajax="false"
-                                action="#{contribuableController.delete(contribuabl.id)}"
-                            >
+                         </p:commandButton>
+                         <p:commandButton 
+                             class="ui-button-warning rounded-button" 
+                             icon="pi pi-trash"
+                             process="@this"
+                             ajax="false"
+                             action="#{contribuableController.delete(admin.id)}"
+                             >
 
                          </p:commandButton>
                      </p:column>
-                    </p:dataTable>
+                     </p:dataTable>
                  </h:form>
+               
             </div>
+
        </div>
     </div>
             

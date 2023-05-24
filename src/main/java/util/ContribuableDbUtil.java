@@ -11,31 +11,29 @@ package util;
 
 import dbconnection.MySQLJDBCUtil;
 import jakarta.faces.application.FacesMessage;
-import jakarta.faces.bean.ApplicationScoped;
-import jakarta.faces.bean.ManagedBean;
+import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
-import model.Contribuable;
 import java.sql.*;
 import java.util.*;
-import model.Representant;
+import model.Contribuable;
 
 @ManagedBean
 @ApplicationScoped
 
 public class ContribuableDbUtil {
     
-    public Representant representant ;
     public static Statement statement;
     public static Connection connection;
     public static ResultSet resultSet;
     public static PreparedStatement pstmt;
 
     //*************************** display data *****************/
-    public  ArrayList findAll() {
+    public ArrayList findAll() {
         
         ArrayList contribuableList = new ArrayList();
         
         try {
+
             String query = "SELECT * FROM contribuable WHERE id IS NOT NULL ORDER BY id DESC";
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
@@ -43,18 +41,18 @@ public class ContribuableDbUtil {
 
             while(resultSet.next()) { 
 
-                Contribuable contribuable = new Contribuable(); 
+               Contribuable contribuable = new Contribuable(); 
 
-                contribuable.setId(resultSet.getInt("id"));  
-                contribuable.setNom(resultSet.getString("nom"));  
-                contribuable.setPrenom(resultSet.getString("prenom"));  
-                contribuable.setEmail(resultSet.getString("email"));  
-                contribuable.setMotPasse(resultSet.getString("motPasse"));  
-                contribuable.setTelephone(resultSet.getInt("telephone"));  
-                contribuable.setBp(resultSet.getString("BP"));  
-                contribuable.setDate(resultSet.getDate("date")); 
+               contribuable.setId(resultSet.getInt("id"));  
+               contribuable.setNom(resultSet.getString("nom"));  
+               contribuable.setPrenom(resultSet.getString("prenom"));  
+               contribuable.setEmail(resultSet.getString("email"));  
+               contribuable.setMotPasse(resultSet.getString("motPasse"));  
+               contribuable.setTelephone(resultSet.getInt("telephone"));  
+               contribuable.setBp(resultSet.getString("BP"));  
+               contribuable.setDate(resultSet.getDate("date")); 
 
-                contribuableList.add(contribuable);  
+               contribuableList.add(contribuable);  
             }   
 
             System.out.println("Total Records Fetched: " + contribuableList.size());
@@ -65,17 +63,15 @@ public class ContribuableDbUtil {
         }
         return contribuableList;
     }
-
+    
     //************** Save data **********************************/ 
     public void save(Contribuable contribuable){
         
         try {
-            
 
-            String query = ""
-                    + "INSERT INTO contribuable (id_representant, nom, prenom, email, motPasse, telephone, BP) "
+            String query = 
+                    "INSERT INTO contribuable (id_representant, nom, prenom, email, motPasse, telephone, BP) "
                     + "values (?, ?, ?, ?, ?, ?, ?)";
-            
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);         
 
@@ -86,13 +82,13 @@ public class ContribuableDbUtil {
             pstmt.setString(5, contribuable.getMotPasse());
             pstmt.setInt(6, contribuable.getTelephone());
             pstmt.setString(7, contribuable.getBp());
-
+            
             pstmt.executeUpdate();
             connection.close();
 
         }catch(SQLException sqlException) {
             addErrorMessage(sqlException);
-        } 
+        }
     }
 
     //************** find data by ID ***************************/
@@ -101,24 +97,15 @@ public class ContribuableDbUtil {
         Contribuable contribuable = null;
         System.out.println(" findById() : Contribuable Id: " + contribuableId);
         
-        /* Setting The Particular province Details In Session */
+        /* Setting The Particular contribuable Details In Session */
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
         try {
            
-//            String quer = ""
-//                    + "SELECT C.*, "
-//                    + "R.id As representant_ID, "
-//                    + "R.nomRepresentant As nom_representant, "
-//                    + "R.prenomRepresentant AS prenom_representant, "
-//                    + "R.emailRepresentant AS email_representant, "
-//                    + "R.telephoneRepresentant AS tel_representant, "
-//                    + "R.bpRepresentant AS BP_representant "
-//                    + "FROM contribuable C, representant R "
-//                    + "WHERE C.id = " + contribuableId ;
-            
-            String query = "SELECT FROM contribuable WHERE id = " + contribuableId ;
-            
+            String query = ""
+                    + "SELECT C.*, R.* "
+                    + "FROM contribuable C, representant R  "
+                    + "WHERE  C.id = " + contribuableId ;
             
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
@@ -133,28 +120,20 @@ public class ContribuableDbUtil {
                 contribuable.setEmail(resultSet.getString("email"));  
                 contribuable.setMotPasse(resultSet.getString("motPasse"));  
                 contribuable.setTelephone(resultSet.getInt("telephone"));  
-                contribuable.setBp(resultSet.getString("BP"));
+                contribuable.setBp(resultSet.getString("BP"));  
                 
-                /* *******representant **** */
-//                contribuable.setIdRepresentant(resultSet.getInt("Representant_ID"));  
-//                contribuable.setIdRepresentant(resultSet.getInt("Representant_ID"));  
-//                contribuable.setNomRepresentant(resultSet.getString("nom_representant"));  
-//                contribuable.setPrenomRepresentant(resultSet.getString("prenom_representant"));  
-//                contribuable.setTelephoneRepresentant(resultSet.getString("tel_representant"));
-//                contribuable.setBpRepresentant(resultSet.getString("BP_representant"));  
-//                contribuable.setEmailRepresentant(resultSet.getString("email_representant"));
-//                
+                contribuable.setIdRepresentant(resultSet.getInt("id"));  
+                contribuable.setNomRepresentant(resultSet.getString("nom"));  
+                contribuable.setPrenomRepresentant(resultSet.getString("prenom")); 
                 
-
             }
             
-            sessionMap.put("contribuableMapped", contribuable);
+            sessionMap.put("adminMapped", contribuable);
             connection.close();
 
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
-        
     }
 	
     //************** update data ******************************/
@@ -162,7 +141,7 @@ public class ContribuableDbUtil {
 
         try {
 
-            String query =""
+            var query =" "
                     + "UPDATE contribuable "
                     + "SET "
                     + "nom = ?, "
@@ -170,31 +149,33 @@ public class ContribuableDbUtil {
                     + "email = ?, "
                     + "telephone = ?, "
                     + "BP = ? "
-                    + "WHERE id = ? ";
+                    + "where id = ? ";
 
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
+            
             pstmt.setString(1, contribuable.getNom());
             pstmt.setString(2, contribuable.getPrenom());
             pstmt.setString(3, contribuable.getEmail());
             pstmt.setInt(4, contribuable.getTelephone());
             pstmt.setString(5, contribuable.getBp());
-            pstmt.setInt(6,contribuable.getId());
-            
+            pstmt.setInt(6, contribuable.getId());
+            //pstmt.setInt(6, contribuable.getIdRepresentant());
+
+
             pstmt.execute();
             connection.close();
 
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
-        
     }
 
     //************** delete data ********************************/
     public void delete(int contribuableId) {
         
         connection = MySQLJDBCUtil.getConnection();
-        //System.out.println("delete() : contribuable Id: " + contribuableId);
+        System.out.println("delete() : Contribuable Id: " + contribuableId);
 
         try {
 
@@ -206,18 +187,10 @@ public class ContribuableDbUtil {
         } catch(SQLException sqlException){
             addErrorMessage(sqlException);
         }
-    }
-    
-    
-    //************** conecxt msg data ***********************/
-    private static void showMessage(String msg){
         
-        FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage message = new FacesMessage("Notice",msg);
-        context.addMessage(null, message);
     }
-    
-     //************** error  message from sql ***********************/
+
+    //************** error  message from sql ***********************/
     private static void addErrorMessage(SQLException ex) {
         
         FacesMessage message = new FacesMessage(ex.getMessage());
