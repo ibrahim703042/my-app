@@ -4,32 +4,25 @@
  */
 package model;
 
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.bean.ManagedBean;
+import jakarta.faces.bean.RequestScoped;
 import jakarta.faces.context.FacesContext;
-import jakarta.inject.Named;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import java.util.*;
+import java.io.Serializable;
 
 /**
  *
  * @author Ibrahim
  */
 
-@Named
+@ManagedBean
 @RequestScoped
 
-public class Province{
+public class Province implements Serializable{
 
     private Integer id;
-    
-    @NotNull
-    @Size(min = 1, max = 50)
     private String nomProvince;
     
-    private Collection<Commune> communeCollection;
-
     public Province() {
     }
 
@@ -57,46 +50,9 @@ public class Province{
     public void setNomProvince(String nomProvince) {
         this.nomProvince = nomProvince;
     }
-
-    public Collection<Commune> getCommuneCollection() {
-        return communeCollection;
-    }
-
-    public void setCommuneCollection(Collection<Commune> communeCollection) {
-        this.communeCollection = communeCollection;
-    }
-    
-    @Override
-    public Province clone() {
-        return new Province(getId(), getNomProvince());
-    }
-    
-    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof Province)) {
-            return false;
-        }
-        Province other = (Province) object;
-        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
-    }
-
-    @Override
-    public String toString() {
-        return "model.Province[ id=" + id + " ]";
-    }
-    
-    
-    
+ 
     public void save() {
         FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage("Welcome " + nomProvince ));
+            new FacesMessage("Welcome " + nomProvince ));
     }
 }

@@ -5,6 +5,7 @@
 package model;
 
 import jakarta.faces.bean.ManagedBean;
+import java.io.Serializable;
 
 
 /**
@@ -13,7 +14,7 @@ import jakarta.faces.bean.ManagedBean;
  */
 
 @ManagedBean
-public class Avenue {
+public class Avenue implements Serializable{
 
     private Integer id;
     private String nomAvenue;
@@ -59,6 +60,4 @@ public class Avenue {
         this.idColline = idColline;
     }
 
-    
-   
 }

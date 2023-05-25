@@ -5,8 +5,7 @@
 package model;
 
 import jakarta.faces.bean.ManagedBean;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -15,7 +14,7 @@ import java.sql.Date;
  */
 
 @ManagedBean
-public class Administrateur {
+public class Administrateur implements Serializable{
 
     private Integer id;
     private Integer idRole;

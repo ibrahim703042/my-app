@@ -5,6 +5,7 @@
 package model;
 
 import jakarta.faces.bean.ManagedBean;
+import java.io.Serializable;
 
 /**
  *
@@ -13,7 +14,7 @@ import jakarta.faces.bean.ManagedBean;
  */
 
 @ManagedBean
-public class Permission{
+public class Permission implements Serializable{
 
     private Integer id;
     private short ajouter;

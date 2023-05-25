@@ -5,6 +5,7 @@
 package model;
 
 import jakarta.inject.Named;
+import java.io.Serializable;
 
 /**
  *
@@ -12,7 +13,7 @@ import jakarta.inject.Named;
  */
 
 @Named
-public class Declaration {
+public class Declaration implements Serializable {
 
     private Integer id;
     private int nif;

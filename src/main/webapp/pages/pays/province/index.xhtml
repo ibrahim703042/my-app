@@ -5,9 +5,11 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
     
-<!--    <f:metadata>
+    <!--    
+    <f:metadata>
         <f:event listener="" type="preRenderView" />
-    </f:metadata>-->
+    </f:metadata>
+    -->
     
             
     <div class="surface-card p-4 shadow-1 border-round">
@@ -42,22 +44,26 @@
                         <h:outputText value="#{provinc.nomProvince}" />
                     </p:column>
                 
-                    <p:column >
-                        <p:commandButton 
-                            icon="pi pi-pencil" 
-                            styleClass="edit-button rounded-button ui-button-success mr-4" 
-                            process="@this"
-                            >
-                           
-                        </p:commandButton>
-                        <p:commandButton 
-                            class="ui-button-warning rounded-button" 
-                            icon="pi pi-trash"
-                            process="@this"
-                            >
-                            
-                        </p:commandButton>
-                    </p:column>
+                    <p:column exportable="false" style="width: 10%" >
+                         <p:commandButton 
+                             icon="pi pi-pencil" 
+                             styleClass="edit-button rounded-button ui-button-success mr-4" 
+                             ajax="false"
+                             action="#{provinceController.edit(provinc.id)}"
+                             >
+
+                         </p:commandButton>
+                         <p:commandButton 
+                             class="ui-button-warning rounded-button" 
+                             icon="pi pi-trash"
+                             ajax="false"
+                             action="#{provinceController.delete(provinc.id)}"
+                             >
+
+                         </p:commandButton>
+                     </p:column>
+                     
+                        
                     </p:dataTable>
                 </h:form>
                 

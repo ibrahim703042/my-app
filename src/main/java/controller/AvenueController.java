@@ -26,7 +26,7 @@ import util.AvenueDbUtil;
 @ManagedBean
 @SessionScoped
 
-public class AvenueController{
+public class AvenueController implements Serializable{
 
     public ArrayList avenues;
     

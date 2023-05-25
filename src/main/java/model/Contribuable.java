@@ -5,6 +5,7 @@
 package model;
 
 import jakarta.faces.bean.ManagedBean;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Date;
 
 @ManagedBean
 
-public class Contribuable {
+public class Contribuable implements Serializable {
 
     private Integer id;
     private String nom;

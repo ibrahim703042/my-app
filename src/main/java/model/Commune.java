@@ -5,13 +5,14 @@
 package model;
 
 import jakarta.faces.bean.ManagedBean;
+import java.io.Serializable;
 
 /**
  *
  * @author Ibrahim
  */
 @ManagedBean
-public class Commune {
+public class Commune implements Serializable{
 
     private Integer id;
     private String nomCommune;

@@ -11,6 +11,7 @@ import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Colline;
@@ -25,7 +26,7 @@ import util.CollineDbUtil;
 @ManagedBean
 @SessionScoped
 
-public class CollineController {
+public class CollineController implements Serializable {
 
     public ArrayList collines;
     

@@ -5,6 +5,7 @@
 package model;
 
 import jakarta.inject.Named;
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -14,7 +15,7 @@ import java.util.Date;
  */
 
 @Named
-public class Impot{
+public class Impot implements Serializable{
 
     private Integer id;
     private int idSLocation;

@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
  * @author Ibrahim
  */
 
-public class Payement {
+public class Payement implements Serializable {
 
     private Integer id;
     private String modePayement;

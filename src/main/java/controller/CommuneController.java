@@ -11,6 +11,7 @@ import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Commune;
@@ -25,7 +26,7 @@ import util.CommuneDbUtil;
 @ManagedBean
 @SessionScoped
 
-public class CommuneController {
+public class CommuneController implements Serializable {
 
     public ArrayList communes;
     

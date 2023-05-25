@@ -5,6 +5,7 @@
 package model;
 
 import jakarta.faces.bean.ManagedBean;
+import java.io.Serializable;
 
 /**
  *
@@ -12,7 +13,7 @@ import jakarta.faces.bean.ManagedBean;
  */
 
 @ManagedBean
-public class Immeuble {
+public class Immeuble implements Serializable{
 
     private Integer id;
     private int idColline;

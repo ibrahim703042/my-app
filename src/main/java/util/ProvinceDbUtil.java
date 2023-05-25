@@ -32,7 +32,7 @@ public class ProvinceDbUtil implements Serializable {
     public static PreparedStatement pstmt;
 
     /// ************************ display data *************************/
-    public static ArrayList findAll() {
+    public ArrayList findAll() {
         
         ArrayList provinceList = new ArrayList();  
         
@@ -63,36 +63,25 @@ public class ProvinceDbUtil implements Serializable {
     }
     
     /// ************************ save data *************************/
-    public static String save(Province province) {
-        int saveResult = 0;
-        String navigationResult = "";
-        String message = "Record Inserted";
+    public void save(Province province) {
         
         try {   
             
-            String query = "insert into province (nomProvince) values (?)";
+            String query = "INSERT INTO province (nomProvince) VALUES (?)";
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);         
             pstmt.setString(1, province.getNomProvince());
             
-            saveResult = pstmt.executeUpdate();
+            pstmt.executeUpdate();
             connection.close();
             
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
-        if(saveResult !=0) {
-            navigationResult = "/pages/pays/province/template.xhtml?faces-redirect=true";
-            showMessage(message);
-            
-        } else {
-            navigationResult = "";
-        }
-        return navigationResult;
     }
     
     /// ************************ find data by ID *************************/
-    public static String findById(int provinceId) {
+    public void findById(int provinceId) {
         
         Province province = null;
         System.out.println(" findById() : Province Id: " + provinceId);
@@ -102,9 +91,10 @@ public class ProvinceDbUtil implements Serializable {
 
         try {
             
+            String query = "SELECT * FROM province WHERE id = " + provinceId ;
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("select * from province where id = " + provinceId);    
+            resultSet = statement.executeQuery(query);    
             
             if(resultSet != null) {
                 resultSet.next();
@@ -115,22 +105,22 @@ public class ProvinceDbUtil implements Serializable {
             }
             sessionMapObj.put("provinceMapped", province);
             connection.close();
+            
         } catch(SQLException sqlException) {
-            //addErrorMessage(sqlException);
             addErrorMessage(sqlException);
         }
-        return "/pages/pays/province/template.xhtml?faces-redirect=true";
     }
 
     /// ************************ update data *************************/
-    public static String update(Province province) {
+    public void update(Province province) {
         
         try {
-            String query = "update province set nomProvince=? where id = ?";
+            String query = "UPDATE province SET nomProvince = ? WHERE id = ? ";
             
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1,province.getNomProvince());
+            pstmt.setInt(2,province.getId());
             
             pstmt.executeUpdate();
             
@@ -139,17 +129,16 @@ public class ProvinceDbUtil implements Serializable {
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
-        return "/pages/pays/province/template.xhtml?faces-redirect=true";
     }
 
     /// ************************ delete data *************************/
-    public static String delete(int provinceId){
+    public void delete(int provinceId){
         
-        //System.out.println("delete() : Province Id: " + provinceId);
+        System.out.println("delete() : Province Id: " + provinceId);
         
         try {
             
-            String query = "delete from province where id = " + provinceId ;
+            String query = "DELETE FROM province WHERE id = " + provinceId ;
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate(); 
@@ -159,7 +148,6 @@ public class ProvinceDbUtil implements Serializable {
         } catch(SQLException sqlException){
             addErrorMessage(sqlException);
         }
-        return "/pages/pays/province/template.xhtml?faces-redirect=true";
     }
 
     /// ************************ show message after executing  *************************/

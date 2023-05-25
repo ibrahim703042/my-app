@@ -5,6 +5,7 @@
 package model;
 
 import jakarta.faces.bean.ManagedBean;
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Collection;
  */
 
 @ManagedBean
-public class Role{
+public class Role implements Serializable{
 
     private Integer id;
     private String nomRole;
