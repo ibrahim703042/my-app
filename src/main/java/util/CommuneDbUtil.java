@@ -99,10 +99,9 @@ public class CommuneDbUtil {
         try {
            
             String query = ""
-                    + "SELECT C.*, P.nomProvince "
-                    + "FROM commune C, province P "
-                    + "WHERE C.id_province = P.id "
-                    + "AND WHERE C.id = " + communeId;
+                    + "SELECT * " 
+                    + "FROM commune, province "
+                    + "WHERE commune.id = " + communeId;
             
            // String query = "SELECT * FROM commune C WHERE C.id = " + communeId ;
 
@@ -120,7 +119,7 @@ public class CommuneDbUtil {
                 
             }
             
-            session.put("commune", commune);
+            session.put("communeMapped", commune);
             connection.close();
 
         } catch(SQLException sqlException) {
@@ -134,16 +133,14 @@ public class CommuneDbUtil {
 
         try {
 
-            String query =" UPDATE commune SET "
-                    + "id_province = ?, "
-                    + "nomProvince = ?, "
-                    + "WHERE id = ? ";
+            String query ="UPDATE commune SET id_province = ?, nomCommune = ? WHERE id =? " ;
 
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, commune.getIdProvince());
             pstmt.setString(2, commune.getNomCommune());
             pstmt.setInt(3,commune.getId());
+
             
             pstmt.execute();
             connection.close();
