@@ -112,6 +112,7 @@ public class CommuneDbUtil {
             if(resultSet.next()) {
                 
                 commune = new Commune();
+                
                 commune.setId(resultSet.getInt("id"));  
                 commune.setIdProvince(resultSet.getInt("id_province"));  
                 commune.setNomProvince(resultSet.getString("nomProvince"));

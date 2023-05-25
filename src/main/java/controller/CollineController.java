@@ -51,10 +51,10 @@ public class CollineController implements Serializable {
     }
         
     //************************ save data **************************/
-    public String save(Colline c) {
+    public String save(Colline colline) {
         
         try {
-            collineDbUtil.save(c);
+            collineDbUtil.save(colline);
 
         }catch (Exception ex) {
             addErrorMessage ((SQLException) ex);
@@ -75,10 +75,10 @@ public class CollineController implements Serializable {
     }
     
     //************************ update data **************************/
-    public String update(Colline c) {
+    public String update(Colline colline) {
         
         try {
-            collineDbUtil.update(c);
+            collineDbUtil.update(colline);
 
         }catch (Exception ex) {
             addErrorMessage ((SQLException) ex);

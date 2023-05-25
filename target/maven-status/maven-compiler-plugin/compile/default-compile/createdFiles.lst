@@ -2,10 +2,8 @@ util\ImmeubleDbUtil.class
 model\Amande.class
 util\RepresentantDbUtil.class
 dbconnection\AppMain.class
-model\InventoryStatus.class
 model\Representant.class
 controller\AdministrateurController.class
-model\Product.class
 util\AmandeDbUtil.class
 util\UserDbUtil.class
 model\NavigationController.class

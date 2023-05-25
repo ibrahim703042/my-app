@@ -6,15 +6,18 @@
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
                 
     <h:form id="form" class=" py-3">
+        <p:messages id="msgs"/>
         <div class="">
             <div class="ui-fluid formgrid grid">
                 <div class="field col-12 md:col-4">
 
                     <component:inputTextField
                         label="Nom"
-                        placeholder="Entrer nom"
+                        placeholder="Entrer Colline"
                         value="#{colline.nomColline}"
+                        id="Nom"
                     />
+                     <h:outputText id="display" value="#{colline.nomColline}"/>
 
                 </div>
                 <div class="field col-12 md:col-4">
@@ -23,7 +26,6 @@
                         id="commune" 
                         value="#{colline.idCommune}"
                         style="height: 41px; ">
-                        
                         
                         <f:selectItem itemLabel="Choisir Commune" />
                         <f:selectItems 
@@ -41,6 +43,8 @@
                     <p:commandButton 
                         value="Enregistrer" 
                         ajax="false"
+                        validateClient="true"
+                        update="display" 
                         action="#{collineController.save(colline)}"
                         style="height: 41px; "
                     />

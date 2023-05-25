@@ -12,7 +12,7 @@
         
         <h:form id="form" class=" py-3">
             
-        <!--<p:messages id="msgs"/>-->
+        <p:messages id="msgs"/>
         
             <div class="">
                 <div class="ui-fluid formgrid grid">
@@ -21,23 +21,22 @@
                         <component:inputTextField
                             label="Nom"
                             placeholder="Entrer nom"
-                            value="#{collineMapped.nomCommune}"
+                            value="#{collineMapped.nomColline}"
                         />
 
                     </div>
                     <div class="field col-12 md:col-4">
                         <p:outputLabel class="font-bold"  value="Province"/>
                         <p:selectOneMenu 
-                            value="#{collineMapped.idProvince}"
+                            value="#{collineMapped.idCommune}"
                             style="height: 41px; "
                         >
-                            <f:selectItem itemLabel="#{collineMapped.nomProvince}"  
-                                          itemValue="#{collineMaped.id}"/>
+                            <f:selectItem itemLabel="#{collineMapped.nomCommune}" itemValue="#{collineMapped.idCommune}" />
                             <f:selectItem itemLabel="Choisir Province"  />
-                            <f:selectItems var="provinc"
-                                value="#{provinceController.provinceList()}"
-                                itemLabel="#{provinc.nomProvince}"
-                                itemValue="#{provinc.id}" 
+                            <f:selectItems var="commun"
+                                value="#{communeController.communeList()}"
+                                itemLabel="#{commun.nomCommune}"
+                                itemValue="#{commun.id}" 
                             />
 
                         </p:selectOneMenu>
@@ -48,7 +47,7 @@
                         <p:commandButton 
                             value="Modifier" 
                             ajax="false"
-                            action="#{communeController.update(communeMapped)}"
+                            action="#{collineController.update(collineMapped)}"
                             style="height: 41px; "
                         />
                     </div>
@@ -56,6 +55,13 @@
             </div>
 
         </h:form>
+        
+        
+        
+        <ui:insert>
+            <ui:include src="index.xhtml" />
+        </ui:insert>
+        
             
     </ui:define>
         

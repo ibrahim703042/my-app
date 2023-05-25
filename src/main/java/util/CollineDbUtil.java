@@ -14,7 +14,6 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
-import jakarta.inject.Named;
 import model.Colline;
 import java.sql.*;
 import java.util.*;
@@ -35,10 +34,11 @@ public class CollineDbUtil {
         ArrayList collineList = new ArrayList();
         
         try {
-            String query = "SELECT colline.*,commune.nomCommune, commune.id  "
-                    + "FROM colline, commune "
-                    + "WHERE colline.id_commune = commune.id "
-                    + "ORDER BY colline.nomColline";
+            String query = ""
+                    + "SELECT C.*, P.nomCommune "
+                    + "FROM colline C, commune P "
+                    + "WHERE C.id_commune = P.id "
+                    + "ORDER BY P.nomCommune";
             
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
@@ -48,7 +48,8 @@ public class CollineDbUtil {
 
                 Colline colline = new Colline(); 
 
-                colline.setId(resultSet.getInt("id"));  
+                colline.setId(resultSet.getInt("id"));
+                colline.setIdCommune(resultSet.getInt("id_commune"));  
                 colline.setNomCommune(resultSet.getString("nomCommune"));  
                 colline.setNomColline(resultSet.getString("nomColline")); 
 
@@ -69,20 +70,22 @@ public class CollineDbUtil {
         
         try {
 
-            String query = "INSERT INTO colline (id_commune, nomColline) values (?,?)";
+            String query = "INSERT INTO colline (id_commune, nomColline) values (?, ?)";
+            
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setInt(1, colline.getIdCommune());
             pstmt.setString(2, colline.getNomColline());
 
+            pstmt.executeUpdate();
             connection.close();
 
         }catch(SQLException sqlException) {
             addErrorMessage(sqlException);
-        }
+        } 
     }
-
+    
     //************** find data by ID ***************************/
     public void findById(int collineId) {
         
@@ -94,11 +97,11 @@ public class CollineDbUtil {
 
         try {
            
-            String query = "SELECT colline.*,commune.nomCommune, commune.id  "
+            String query = ""
+                    + "SELECT * " 
                     + "FROM colline, commune "
-                    + "WHERE colline.id_commune = commune.id ";
-
-//            String query = "SELECT * FROM colline WHERE id =" + collineId ;
+                    + "WHERE colline.id = " + collineId ;
+            
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
@@ -106,9 +109,12 @@ public class CollineDbUtil {
             if(resultSet.next()) {
                 
                 colline = new Colline();
+                
                 colline.setId(resultSet.getInt("id"));  
+                colline.setIdCommune(resultSet.getInt("id_commune"));
                 colline.setNomCommune(resultSet.getString("nomCommune"));  
                 colline.setNomColline(resultSet.getString("nomColline")); 
+                 
 
             }
             
@@ -123,17 +129,16 @@ public class CollineDbUtil {
     //************** update data ******************************/
     public void update(Colline colline){
 
-
         try {
 
-            String query ="UPDATE colline SET "
-                    + "id_commune=?, "
-                    + "nomColline=?, ";
+            String query =" UPDATE colline SET id_commune=?, nomColline=? WHERE id = ? ";
 
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
+            
             pstmt.setInt(1, colline.getIdCommune());
             pstmt.setString(2, colline.getNomColline());
+            pstmt.setInt(3, colline.getId());
 
             pstmt.execute();
             connection.close();
