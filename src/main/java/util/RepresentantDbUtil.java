@@ -117,9 +117,9 @@ public class RepresentantDbUtil implements Serializable {
         try {
            
             String query = ""
-                    + "SELECT A.* "
-                    + "FROM representant A"
-                    + "WHERE  A.id = " + representantId ;
+                    + "SELECT * "
+                    + "FROM representant "
+                    + "WHERE id = " + representantId ;
             
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
@@ -134,7 +134,7 @@ public class RepresentantDbUtil implements Serializable {
                 representant.setEmailRepresentant(resultSet.getString("emailRepresentant"));    
                 representant.setTelephoneRepresentant(resultSet.getInt("telephoneRepresentant"));  
                 representant.setBpRepresentant(resultSet.getString("bpRepresentant"));  
-                representant.setDate(resultSet.getDate("date")); 
+                //representant.setDate(resultSet.getDate("date")); 
 
                 
             }
@@ -154,7 +154,6 @@ public class RepresentantDbUtil implements Serializable {
             String query = " "
                     + "UPDATE representant "
                     + "SET "
-                    + "id_contribuable = ?, "
                     + "nomRepresentant = ?, "
                     + "prenomRepresentant = ?, "
                     + "emailRepresentant = ?, "
@@ -164,13 +163,12 @@ public class RepresentantDbUtil implements Serializable {
 
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, representant.getIdContribuable());
-            pstmt.setString(2, representant.getNomRepresentant());
-            pstmt.setString(3, representant.getPrenomRepresentant());
-            pstmt.setString(4,representant.getEmailRepresentant());
-            pstmt.setInt(5, representant.getTelephoneRepresentant());
-            pstmt.setString(6, representant.getBpRepresentant());
-            pstmt.setInt(7, representant.getId());
+            pstmt.setString(1, representant.getNomRepresentant());
+            pstmt.setString(2, representant.getPrenomRepresentant());
+            pstmt.setString(3,representant.getEmailRepresentant());
+            pstmt.setInt(4, representant.getTelephoneRepresentant());
+            pstmt.setString(5, representant.getBpRepresentant());
+            pstmt.setInt(6, representant.getId());
 
             pstmt.execute();
             connection.close();
@@ -184,7 +182,7 @@ public class RepresentantDbUtil implements Serializable {
     public void delete(int representantId) {
         
         connection = MySQLJDBCUtil.getConnection();
-        //System.out.println("delete() : representant Id: " + representantId);
+        System.out.println("delete() : Representant Id: " + representantId);
 
         try {
 

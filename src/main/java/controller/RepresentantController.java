@@ -49,6 +49,7 @@ public class RepresentantController implements Serializable{
         
         return representants;
     }
+    
     //************************ save data **************************/
     public String save(Representant representant) {
         
@@ -75,14 +76,15 @@ public class RepresentantController implements Serializable{
     }
     
     //************************ update data **************************/
-    public String update(Representant representan) {
+    public String update(Representant representant) {
         
         try {
-            representantDbUtil.update(representan);
+            representantDbUtil.update(representant);
 
         }catch (Exception ex) {
             addErrorMessage ((SQLException) ex);
         }
+        
         return "/pages/representant/template.xhtml?faces-redirect=true";
     }
     

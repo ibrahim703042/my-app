@@ -18,7 +18,7 @@
                     <component:inputTextField
                         label="Nom"
                         placeholder="Entrer nom"
-                        value="#{adminMapped.nom}"
+                        value="#{contribuableMapped.nom}"
                     />
                 </div>
 
@@ -26,7 +26,7 @@
                     <component:inputTextField
                         label="Prenom"
                         placeholder="Entrer prenom"
-                        value="#{adminMapped.prenom}"
+                        value="#{contribuableMapped.prenom}"
                     />
                 </div>
 
@@ -34,7 +34,7 @@
                 <component:inputTextField
                     label="E-mail"
                     placeholder="Entrer email "
-                    value="#{adminMapped.email}"
+                    value="#{contribuableMapped.email}"
                 />
 
                 </div>
@@ -43,7 +43,7 @@
                     <component:inputTextField
                         label="Mot de passe"
                         placeholder="Entrer Mot de passe"
-                        value="#{adminMapped.motPasse}"
+                        value="#{contribuableMapped.motPasse}"
                     />
                 </div>
 
@@ -51,7 +51,7 @@
                     <component:inputTextField
                         label="Boite postal"
                         placeholder="B.P 1023456 "
-                        value="#{adminMapped.bp}"
+                        value="#{contribuableMapped.bp}"
                     />
 
                 </div>
@@ -60,18 +60,18 @@
                     <component:inputTextField
                         label="Telephone"
                         placeholder="+257 71 20 47 78"
-                        value="#{adminMapped.telephone}"
+                        value="#{contribuableMapped.telephone}"
                     />
                 </div>
                 
                 <div class="field col-12 md:col-12">
                     <p:outputLabel class="font-bold"  value="Representant"/>
                     <p:selectOneMenu 
-                        value="#{adminMapped.idRepresentant}"
+                        value="#{contribuableMapped.idRepresentant}"
                         style="height: 41px; "
                     >
                         
-                        <f:selectItem itemLabel="#{adminMapped.nomRepresentant} #{adminMapped.prenomRepresentant}" itemValue="#{adminMapped.idRepresentant}" />
+                        <f:selectItem itemLabel="#{contribuableMapped.nomRepresentant} #{contribuableMapped.prenomRepresentant}" itemValue="#{contribuableMapped.idRepresentant}" />
                         <f:selectItems var="representan"
                             value="#{representantController.representantList()}"
                             itemLabel=" R-00-#{representan.id} : #{representan.nomRepresentant} #{representan.prenomRepresentant}"
@@ -86,7 +86,7 @@
                     <p:commandButton
                         ajax="false"
                         value="Modifier" 
-                        action="#{contribuableController.update(adminMapped)}"
+                        action="#{contribuableController.update(contribuableMapped)}"
                         style="height: 41px; "
                     />
                 </div>

@@ -128,7 +128,7 @@ public class ContribuableDbUtil {
                 
             }
             
-            sessionMap.put("adminMapped", contribuable);
+            sessionMap.put("contribuableMapped", contribuable);
             connection.close();
 
         } catch(SQLException sqlException) {
