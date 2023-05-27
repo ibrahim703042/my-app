@@ -11,7 +11,7 @@
     
     <div class="surface-card p-4 shadow-1 border-round">
         <div class="text-3xl font-medium text-900 mb-3">
-            Administrateur
+            Abbattement
         </div>
         <div class="font-medium text-500 mb-3">
             Listes
@@ -26,55 +26,16 @@
                     <p:toolbar>
                         <p:toolbarGroup>
                             <p:commandButton 
-                                value="New" 
+                                value="Ajouter" 
                                 icon="pi pi-plus" 
                                 styleClass="ui-button-success"
-                                action="/pages/admin/ajouter?faces-redirect=true"
+                                action="/pages/abbatement/ajouter?faces-redirect=true"
                                 ajax="false"
                                 style="margin-right: .5rem">
                             </p:commandButton>
                         </p:toolbarGroup>
                         
-                        <!-- toolbarGroup for import, excel, pdf-->
-                        <p:toolbarGroup align="right">
-                            
-                            <!--Export import -->
-                            <p:fileUpload 
-                                mode="simple" 
-                                skinSimple="true" 
-                                label="Import" 
-                                chooseIcon="pi pi-download" 
-                            />
-                            
-                            <!-- Export data pdf -->
-                            <p:commandButton 
-                                value="PDF" 
-                                icon="pi pi-upload" 
-                                styleClass="ui-button-help" 
-                                ajax="false"
-                                class="mr-2"
-                                >
-                                <p:dataExporter 
-                                    type="pdf" 
-                                    target="dt-administrateurs" 
-                                    fileName="admin" 
-                                />
-                            </p:commandButton>
-                            
-                            <!--Export data excel -->
-                            <p:commandButton 
-                                value="EXCEL" 
-                                icon="pi pi-upload" 
-                                styleClass="ui-button-help" 
-                                ajax="false">
-                                <p:dataExporter 
-                                    type="xls" 
-                                    target="dt-administrateurs" 
-                                    fileName="Gestion administrateurs" 
-                                />
-                            </p:commandButton>
-                            
-                        </p:toolbarGroup>
+                        
                     </p:toolbar>
                     
                     <p:dataTable

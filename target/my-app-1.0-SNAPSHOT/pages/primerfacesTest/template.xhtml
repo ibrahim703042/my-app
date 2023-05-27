@@ -14,8 +14,22 @@
         <!--        datatables       -->
         
         <ui:insert>
-            <ui:include src="index.xhtml" />
+            <!--<ui:include src="index.xhtml" />-->
         </ui:insert>
+        <div class="card">
+            <p:commandButton value="Print" type="button" icon="pi pi-print" styleClass="shadow-1 mb-3 mr-2">
+
+                <p:printer target="image"/>
+            </p:commandButton>
+            <p:commandButton value="Print (custom configuration)" type="button" icon="pi pi-print" styleClass="shadow-1 mb-3">
+                <p:printer target="pnlPrint" configuration="globalStyles: true, title: 'Nature Image Header', timeout: 1000"/>
+            </p:commandButton>
+
+            <p:outputPanel id="pnlPrint">
+               <p:graphicImage id="image" name="demo/images/nature/nature10.jpg"/>
+               <h1>Tescsssd</h1>
+            </p:outputPanel>
+        </div>
             
     </ui:define>
         
