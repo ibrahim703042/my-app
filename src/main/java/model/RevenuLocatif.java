@@ -13,27 +13,30 @@ import java.io.Serializable;
  *
  * @author Ibrahim
  */
-@ManagedBean(name = "revenuLocatif")
+@ManagedBean
 @RequestScoped
 public class RevenuLocatif implements Serializable {
 
     private Integer id;
-    private double loyerExonere;
-    private double loyerImposable;
-    private double chargeIncombat;
-    
+    private double loyerExonere = Double.valueOf(0);
+    private double loyerImposable = Double.valueOf(0);
+    private double chargeIncombat = Double.valueOf(0);
     //chargeIncombat + loyerImposable
-    private double revenuBrut = (chargeIncombat + loyerImposable);
-    
+    private double revenuBrut;
     //revenuBrut * 40%
-    private double deductionDepenses = (revenuBrut*40)/100 ;
-    
+    private double deductionDepenses;
     private double interetEmprunt;
-    
     //revenuBrut-deduction-interetEmprunt
-    private double revenuNetImposable = (revenuBrut-deductionDepenses-interetEmprunt) ;
+    private double revenuNetImposable;
+    private Immeuble idImmeuble ;
     
     public RevenuLocatif() {
+        loyerExonere = 0d;
+        loyerImposable = 0d;
+        chargeIncombat = 0d;
+        revenuBrut = (chargeIncombat + loyerImposable);
+        deductionDepenses = (revenuBrut*40)/100;
+        revenuNetImposable = (revenuBrut-deductionDepenses-interetEmprunt) ;
     }
 
     public Integer getId() {
@@ -99,6 +102,13 @@ public class RevenuLocatif implements Serializable {
     public void setRevenuNetImposable(double revenuNetImposable) {
         this.revenuNetImposable = revenuNetImposable;
     }
-    
-    
+
+    public Immeuble getIdImmeuble() {
+        return idImmeuble;
+    }
+
+    public void setIdImmeuble(Immeuble idImmeuble) {
+        this.idImmeuble = idImmeuble;
+    }
+        
 }

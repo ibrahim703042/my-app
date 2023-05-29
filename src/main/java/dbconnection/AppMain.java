@@ -4,7 +4,6 @@
  */
 package dbconnection;
 
-import util.AdministrateurDbUtil;
 import util.ImmeubleDbUtil;
 
 /**
@@ -20,7 +19,7 @@ public class AppMain {
         //AdministrateurDbUtil.getAll();
         System.out.println("**************************************************");
         System.out.println("**************************************************");
-
+        ImmeubleDbUtil.findAll();
         //ImmeubleDbUtil.findById(1);
     }
 }

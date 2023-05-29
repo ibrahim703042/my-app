@@ -15,26 +15,24 @@
             <div class="">
                 
                 <div class="ui-fluid formgrid grid">
-                    
-<!--                    <div class="field col-12 md:col-12">
-                        <component:inputTextField
-                            label="Identification"
-                            placeholder="Contribuable id"
-                            value="#{immeuble.id}"
-                        />
-                    </div>-->
-                    
+                       
                     <div class="field col-12 md:col-12">
                         <p:outputLabel class="font-bold"  value="Contribuable"/>
                         <p:selectOneMenu 
                             value="#{immeuble.id_immeuble}"
+                            filter="true" 
+                            filterMatchMode="startsWith" 
+                            dynamic="true"
                             style="height: 41px; "
                         >
                             <f:selectItem itemLabel="-------Choisir contribuable-------" />
-                            <f:selectItems var="cont"
+                            <f:selectItems var="contribuabl"
                                 value="#{contribuableController.contribuableList()}"
-                                itemLabel="#{cont.nom} #{cont.prenom}"
-                                itemValue="#{cont.id}" 
+                                itemLabel="#{contribuabl.id} : 
+                                    #{contribuabl.nom} 
+                                    #{contribuabl.prenom}
+                                "
+                                itemValue="#{contribuabl.id}" 
                             />
 
                         </p:selectOneMenu>
@@ -44,6 +42,9 @@
                         <p:outputLabel class="font-bold"  value="Colline"/>
                         <p:selectOneMenu 
                             value="#{immeuble.id}"
+                            filter="true" 
+                            filterMatchMode="startsWith" 
+                            dynamic="true"
                             style="height: 41px; "
                         >
                             <f:selectItem itemLabel="-------Choisir colline-------" />

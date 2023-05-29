@@ -1,8 +1,10 @@
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\controller\AvenueController.java
+C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\model\RevenuSousLocation.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\model\Avenue.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\model\Role.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\model\Amande.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\model\Abbattement.java
+C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\controller\RevenusController.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\dbconnection\AppMain.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\util\AmandeDbUtil.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\controller\CollineController.java
@@ -19,6 +21,8 @@ C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\model\Imme
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\util\AvenueDbUtil.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\filter\AuthorizationFilter.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\controller\AbbattementController.java
+C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\model\RevenuLocatif.java
+C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\util\RevenusDbUtil.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\controller\ProvinceController.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\util\RoleDbUtil.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\test\src\main\java\util\UserDbUtil.java

@@ -29,7 +29,7 @@ public class ImmeubleDbUtil {
     public static PreparedStatement pstmt;
 
     //*************************** display data *****************/
-    public  ArrayList findAll() {
+    public static  ArrayList findAll() {
         
         ArrayList administrateurList = new ArrayList();
         
@@ -51,16 +51,15 @@ public class ImmeubleDbUtil {
                     + "immeuble.id as Immeuble_ID, "
                     + "immeuble.nomAvenue as Rue , "
                     + "colline.nomColline as Colline,  "
-                    + "commune.nomCommune as Commune,  "
-                    + "province.nomProvince as Province "
-                    + "FROM representant JOIN contribuable "
+                    + "commune.nomCommune as Commune "
+                    + "FROM representant "
+                    + "JOIN contribuable "
                     + "ON contribuable.id_representant = representant.id "
                     + "JOIN immeuble "
-                    + "ON immeuble.id_contribuable = "
-                    + "contribuable.id JOIN colline "
+                    + "ON immeuble.id_contribuable = contribuable.id "
+                    + "JOIN colline "
                     + "ON immeuble.id_colline = colline.id "
-                    + "JOIN commune ON colline.id_commune = commune.id "
-                    + "JOIN province ON commune.id_province = province.id";
+                    + "JOIN commune ON colline.id_commune = commune.id ";
 
             // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
             connection = MySQLJDBCUtil.getConnection();
@@ -79,7 +78,7 @@ public class ImmeubleDbUtil {
                 immeuble.setPrenomContribuable(resultSet.getString("prenom_contribuable"));  
                 immeuble.setNomColline(resultSet.getString("Colline"));  
                 immeuble.setNomCommune(resultSet.getString("Commune"));  
-                immeuble.setNomProvince(resultSet.getString("Province"));  
+                //immeuble.setNomProvince(resultSet.getString("Province"));  
                 immeuble.setNomAvenue(resultSet.getString("Rue"));  
                 immeuble.setTelephoneContribuable(resultSet.getString("tel_contribuable"));  
                 immeuble.setBpContribuable(resultSet.getString("BP_contribuable"));  
@@ -91,7 +90,7 @@ public class ImmeubleDbUtil {
                 immeuble.setPrenomRepresentant(resultSet.getString("prenom_representant"));  
                 immeuble.setNomColline(resultSet.getString("Colline"));  
                 immeuble.setNomCommune(resultSet.getString("Commune"));  
-                immeuble.setNomProvince(resultSet.getString("Province"));  
+                //immeuble.setNomProvince(resultSet.getString("Province"));  
                 immeuble.setNomAvenue(resultSet.getString("Rue"));  
                 immeuble.setTelephoneRepresentant(resultSet.getString("tel_representant"));
                 immeuble.setBpRepresentant(resultSet.getString("BP_representant"));  
@@ -116,10 +115,7 @@ public class ImmeubleDbUtil {
         
         try {
 
-            String query = ""
-                    + "INSERT INTO immeuble "
-                    + "(id_colline, id_contribuable, nomAvenue) "
-                    + "values (?, ?, ?)";
+            String query ="INSERT INTO immeuble (id_colline, id_contribuable, nomAvenue) values (?, ?, ?)";
             
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);         
@@ -131,8 +127,12 @@ public class ImmeubleDbUtil {
             pstmt.executeUpdate();
             connection.close();
 
-        }catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+        }catch (NullPointerException e) {
+            // handle the null value appropriately
+            System.err.println("Caught NullPointerException: " + e.getMessage());
+        } catch (SQLException e) {
+            // handle the SQLException appropriately
+            System.err.println("Caught SQLException: " + e.getMessage());
         } 
     }
 

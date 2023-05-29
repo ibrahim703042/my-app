@@ -1,6 +1,9 @@
+model\RevenuLocatif.class
+controller\RevenusController.class
 util\ImmeubleDbUtil.class
 model\Amande.class
 util\RepresentantDbUtil.class
+util\RevenusDbUtil.class
 dbconnection\AppMain.class
 model\Representant.class
 controller\AdministrateurController.class
@@ -36,6 +39,7 @@ model\Administrateur.class
 model\Role.class
 model\Permission.class
 controller\RoleController.class
+model\RevenuSousLocation.class
 controller\AbbattementController.class
 com\obr\app\resources\JakartaEE91Resource.class
 controller\CollineController.class

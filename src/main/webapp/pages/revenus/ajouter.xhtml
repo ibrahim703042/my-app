@@ -1,0 +1,118 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/dashboardTemplate.xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:define name = "contents">
+            
+        <p:spacer height="90" />
+                    
+         <h:form id="form" class=" py-3 mb-4 bg-white shadow-1 px-4">
+            <div class="ui-fluid formgrid grid py-3">
+                
+                <p:spacer height="30" />
+                
+                <div class=" field col-12 md:col-6 font-medium text-500 mb-3">
+                    C. REVENUS LOCTIF 
+                </div>
+
+                <div class="field col-12 md:col-12">
+                    <p:outputLabel class="font-bold"  value="Immeuble"/>
+                    <p:selectOneMenu
+                        value="#{revenuLocatif.id}"
+                        filter="true" 
+                        filterMatchMode="startsWith" 
+                        dynamic="true"
+                        style="height: 41px; "
+                    >
+                        <f:selectItem itemLabel=" ------- Choisir Immeuble -------" />
+                        <f:selectItems var="cont"
+                            value="#{immeubleController.immeubleList()}"
+                            itemLabel=" #{cont.id} :              
+                            PROVINCE: #{cont.nomProvince}   -     
+                            COMMUNE: #{cont.nomCommune}     -   
+                            COLLINE: #{cont.nomColline}     -    
+                            AVENUE: #{cont.nomAvenue} "
+                            itemValue="#{cont.id}" 
+                        />
+
+                    </p:selectOneMenu>
+                </div>
+                    
+                <div class="field col-12 md:col-6">
+                    <component:inputNumberField
+                        label="Loyer exonere"
+                        value="#{revenuLocatif.loyerExonere}"
+                    />
+                </div>
+                
+                <div class="field col-12 md:col-6">
+                    <component:inputNumberField
+                        label="Loyer imposable"
+                        value="#{revenuLocatif.loyerImposable}"
+                    />
+                </div>
+                
+                <div class="field col-12 md:col-6">
+                    <component:inputNumberField
+                        label="Charge"
+                        value="#{revenuLocatif.chargeIncombat}"
+                    />
+                </div>
+                
+                <div class="field col-12 md:col-6">
+                    <component:inputNumberField
+                        label="Revenu Brut"
+                        value="#{revenuLocatif.revenuBrut}"
+                    />
+                </div>
+                
+                <div class="field col-12 md:col-6">
+                    <component:inputNumberField
+                        label="Loyer imposable"
+                        value="#{revenuLocatif.revenuBrut}"
+                    />
+                </div>
+                
+                <div class="field col-12 md:col-6">
+                    <component:inputNumberField
+                        label="Deduction depenses"
+                        value="#{revenuLocatif.deductionDepenses}"
+                    />
+                </div>
+                
+                <div class="field col-12 md:col-6">
+                    <component:inputNumberField
+                        label="Interet emprunt"
+                        value="#{revenuLocatif.interetEmprunt}"
+                    />
+                </div>
+                
+                <div class="field col-12 md:col-6">
+                    <component:inputNumberField
+                        label="Revenu Net imposable"
+                        value="#{revenuLocatif.revenuNetImposable}"
+                    />
+                </div>
+
+                
+                <div class="field col-12 md:col-10"></div>
+                <div class="field col-12 md:col-2">
+                    <p:commandButton 
+                        value="Enregistrer"
+                        ajax="false"
+                        action="#{revenusController.save(revenuLocatif)}"
+                        style="height: 41px; "
+                    />
+                </div>
+            </div>
+
+        </h:form>
+            
+    </ui:define>
+        
+</ui:composition>
