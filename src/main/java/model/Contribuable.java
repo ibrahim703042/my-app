@@ -23,7 +23,7 @@ public class Contribuable implements Serializable {
     private String prenom;
     private String email;
     private String motPasse;
-    private int telephone;
+    private Integer telephone;
     private String bp;
     
     //** represantant **/
@@ -41,17 +41,6 @@ public class Contribuable implements Serializable {
 
     public Contribuable(Integer id) {
         this.id = id;
-    }
-
-    public Contribuable(Integer id, String nom, String prenom, String email, String motPasse, int telephone, String bp, Date date) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-        this.motPasse = motPasse;
-        this.telephone = telephone;
-        this.bp = bp;
-        this.date = date;
     }
 
     public Integer getId() {
@@ -94,11 +83,11 @@ public class Contribuable implements Serializable {
         this.motPasse = motPasse;
     }
 
-    public int getTelephone() {
+    public Integer getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(Integer telephone) {
         this.telephone = telephone;
     }
 

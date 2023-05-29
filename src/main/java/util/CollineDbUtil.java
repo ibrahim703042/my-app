@@ -98,9 +98,10 @@ public class CollineDbUtil {
         try {
            
             String query = ""
-                    + "SELECT * " 
-                    + "FROM colline, commune "
-                    + "WHERE colline.id = " + collineId ;
+                    + "SELECT colline.*, commune.nomCommune, commune.id as Commune_id "
+                    + "FROM commune, colline "
+                    + "WHERE commune.id = colline.id_commune "
+                    + "AND colline.id = " + collineId ;
             
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
@@ -111,11 +112,10 @@ public class CollineDbUtil {
                 colline = new Colline();
                 
                 colline.setId(resultSet.getInt("id"));  
-                colline.setIdCommune(resultSet.getInt("id_commune"));
+                colline.setIdCommune(resultSet.getInt("Commune_id"));
                 colline.setNomCommune(resultSet.getString("nomCommune"));  
                 colline.setNomColline(resultSet.getString("nomColline")); 
                  
-
             }
             
             sessionMap.put("collineMapped", colline);

@@ -134,7 +134,7 @@ public class RepresentantDbUtil implements Serializable {
                 representant.setEmailRepresentant(resultSet.getString("emailRepresentant"));    
                 representant.setTelephoneRepresentant(resultSet.getInt("telephoneRepresentant"));  
                 representant.setBpRepresentant(resultSet.getString("bpRepresentant"));  
-                //representant.setDate(resultSet.getDate("date")); 
+                representant.setDate(resultSet.getDate("date")); 
 
                 
             }
@@ -151,18 +151,19 @@ public class RepresentantDbUtil implements Serializable {
 
         try {
 
-            String query = " "
+            String query = ""
                     + "UPDATE representant "
                     + "SET "
                     + "nomRepresentant = ?, "
                     + "prenomRepresentant = ?, "
                     + "emailRepresentant = ?, "
-                    + "telephonRepresentante = ?, "
+                    + "telephoneRepresentant = ?, "
                     + "bpRepresentant = ? "
                     + "WHERE id = ? ";
 
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
+            
             pstmt.setString(1, representant.getNomRepresentant());
             pstmt.setString(2, representant.getPrenomRepresentant());
             pstmt.setString(3,representant.getEmailRepresentant());

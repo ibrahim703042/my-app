@@ -26,7 +26,7 @@
                     <p:toolbar>
                         <p:toolbarGroup>
                             <p:commandButton 
-                                value="New" 
+                                value="Ajouter" 
                                 icon="pi pi-plus" 
                                 styleClass="ui-button-success"
                                 action="/pages/admin/ajouter?faces-redirect=true"
@@ -37,29 +37,6 @@
                         
                         <!-- toolbarGroup for import, excel, pdf-->
                         <p:toolbarGroup align="right">
-                            
-                            <!--Export import -->
-                            <p:fileUpload 
-                                mode="simple" 
-                                skinSimple="true" 
-                                label="Import" 
-                                chooseIcon="pi pi-download" 
-                            />
-                            
-                            <!-- Export data pdf -->
-                            <p:commandButton 
-                                value="PDF" 
-                                icon="pi pi-upload" 
-                                styleClass="ui-button-help" 
-                                ajax="false"
-                                class="mr-2"
-                                >
-                                <p:dataExporter 
-                                    type="pdf" 
-                                    target="dt-administrateurs" 
-                                    fileName="admin" 
-                                />
-                            </p:commandButton>
                             
                             <!--Export data excel -->
                             <p:commandButton 
@@ -133,14 +110,23 @@
                             <h:outputText value="#{admin.email}" />
                          </p:column>
                         
-                         <p:column 
+                        <p:column 
                             headerText="B.P" 
                             sortBy="#{admin.bp}" 
                             filterBy="#{admin.bp}"
                             style="width: 10%"
                             >
                             <h:outputText value="#{admin.bp}" />
-                         </p:column>
+                        </p:column>
+                        
+                        <p:column 
+                            headerText="Role" 
+                            sortBy="#{admin.nomRole}" 
+                            filterBy="#{admin.nomRole}"
+                            style="width: 10%"
+                            >
+                            <h:outputText value="#{admin.nomRole}" />
+                        </p:column>
                         
                         <!--
                          <p:column 
@@ -156,7 +142,6 @@
                          <p:commandButton 
                              icon="pi pi-pencil" 
                              styleClass="edit-button rounded-button ui-button-success mr-4" 
-                             process="@this"
                              ajax="false"
                              action="#{administrateurController.edit(admin.id)}"
                              >
@@ -165,7 +150,6 @@
                          <p:commandButton 
                              class="ui-button-warning rounded-button" 
                              icon="pi pi-trash"
-                             process="@this"
                              ajax="false"
                              action="#{administrateurController.delete(admin.id)}"
                              >

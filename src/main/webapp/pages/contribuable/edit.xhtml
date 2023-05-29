@@ -68,13 +68,14 @@
                     <p:outputLabel class="font-bold"  value="Representant"/>
                     <p:selectOneMenu 
                         value="#{contribuableMapped.idRepresentant}"
+                        filter="true" 
+                        filterMatchMode="startsWith" 
+                        dynamic="true"
                         style="height: 41px; "
                     >
-                        
-                        <f:selectItem itemLabel="#{contribuableMapped.nomRepresentant} #{contribuableMapped.prenomRepresentant}" itemValue="#{contribuableMapped.idRepresentant}" />
                         <f:selectItems var="representan"
                             value="#{representantController.representantList()}"
-                            itemLabel=" R-00-#{representan.id} : #{representan.nomRepresentant} #{representan.prenomRepresentant}"
+                            itemLabel="#{representan.id} : #{representan.nomRepresentant} #{representan.prenomRepresentant}"
                             itemValue="#{representan.id}" 
                         />
 

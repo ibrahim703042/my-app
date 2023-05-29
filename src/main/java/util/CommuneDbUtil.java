@@ -97,12 +97,14 @@ public class CommuneDbUtil {
         Map<String,Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
         try {
-           
-            String query = ""
-                    + "SELECT * " 
-                    + "FROM commune, province "
-                    + "WHERE commune.id = " + communeId;
             
+            String query = ""
+                    + "SELECT commune.*, province.nomProvince, province.id as Province_id "
+                    + "FROM commune, province "
+                    + "WHERE commune.id_province = province.id "
+                    + "AND commune.id = " + communeId ;
+            
+           
            // String query = "SELECT * FROM commune C WHERE C.id = " + communeId ;
 
             connection = MySQLJDBCUtil.getConnection();
@@ -114,7 +116,7 @@ public class CommuneDbUtil {
                 commune = new Commune();
                 
                 commune.setId(resultSet.getInt("id"));  
-                commune.setIdProvince(resultSet.getInt("id_province"));  
+                commune.setIdProvince(resultSet.getInt("Province_id"));  
                 commune.setNomProvince(resultSet.getString("nomProvince"));
                 commune.setNomCommune(resultSet.getString("nomCommune"));
                 
@@ -134,7 +136,11 @@ public class CommuneDbUtil {
 
         try {
 
-            String query ="UPDATE commune SET id_province = ?, nomCommune = ? WHERE id =? " ;
+            String query =""
+                    + "UPDATE commune "
+                    + "SET id_province = ?, "
+                    + "nomCommune = ? "
+                    + "WHERE id =? " ;
 
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);

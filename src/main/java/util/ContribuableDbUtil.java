@@ -7,6 +7,7 @@ package util;
 /**
  *
  * @author Ibrahim
+ * 
  */
 
 import dbconnection.MySQLJDBCUtil;
@@ -101,11 +102,15 @@ public class ContribuableDbUtil {
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
         try {
-           
-            String query = ""
-                    + "SELECT C.*, R.* "
-                    + "FROM contribuable C, representant R  "
-                    + "WHERE  C.id = " + contribuableId ;
+           String query = ""
+                    + "SELECT contribuable.*, "
+                    + "representant.nomRepresentant,"
+                    + "representant.prenomRepresentant,"
+                    + "representant.id as Representant_id "
+                    + "FROM contribuable, representant "
+                    + "WHERE contribuable.id_representant = representant.id "
+                    + "AND contribuable.id = " + contribuableId ;
+            
             
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
@@ -122,9 +127,9 @@ public class ContribuableDbUtil {
                 contribuable.setTelephone(resultSet.getInt("telephone"));  
                 contribuable.setBp(resultSet.getString("BP"));  
                 
-                contribuable.setIdRepresentant(resultSet.getInt("id"));  
-                contribuable.setNomRepresentant(resultSet.getString("nom"));  
-                contribuable.setPrenomRepresentant(resultSet.getString("prenom")); 
+                contribuable.setIdRepresentant(resultSet.getInt("Representant_id"));  
+                contribuable.setNomRepresentant(resultSet.getString("nomRepresentant"));  
+                contribuable.setPrenomRepresentant(resultSet.getString("prenomRepresentant")); 
                 
             }
             
@@ -144,6 +149,7 @@ public class ContribuableDbUtil {
             var query =" "
                     + "UPDATE contribuable "
                     + "SET "
+                    + "id_representant = ?, "
                     + "nom = ?, "
                     + "prenom = ?, "
                     + "email = ?, "
@@ -154,14 +160,13 @@ public class ContribuableDbUtil {
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
             
-            pstmt.setString(1, contribuable.getNom());
-            pstmt.setString(2, contribuable.getPrenom());
-            pstmt.setString(3, contribuable.getEmail());
-            pstmt.setInt(4, contribuable.getTelephone());
-            pstmt.setString(5, contribuable.getBp());
-            pstmt.setInt(6, contribuable.getId());
-            //pstmt.setInt(6, contribuable.getIdRepresentant());
-
+            pstmt.setInt(1, contribuable.getIdRepresentant());
+            pstmt.setString(2, contribuable.getNom());
+            pstmt.setString(3, contribuable.getPrenom());
+            pstmt.setString(4, contribuable.getEmail());
+            pstmt.setInt(5, contribuable.getTelephone());
+            pstmt.setString(6, contribuable.getBp());
+            pstmt.setInt(7, contribuable.getId());
 
             pstmt.execute();
             connection.close();

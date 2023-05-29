@@ -26,7 +26,7 @@
                     <p:toolbar>
                         <p:toolbarGroup>
                             <p:commandButton 
-                                value="New" 
+                                value="Ajouter" 
                                 icon="pi pi-plus" 
                                 styleClass="ui-button-success"
                                 action="/pages/contribuable/ajouter?faces-redirect=true"
@@ -38,18 +38,10 @@
                         <!-- toolbarGroup for import, excel, pdf-->
                         <p:toolbarGroup align="right">
                             
-                            <!--Export import -->
-                            <p:fileUpload 
-                                mode="simple" 
-                                skinSimple="true" 
-                                label="Import" 
-                                chooseIcon="pi pi-download" 
-                            />
-                            
                             <!-- Export data pdf -->
                             <p:commandButton 
                                 value="PDF" 
-                                icon="pi pi-upload" 
+                                icon="pi pi-print" 
                                 styleClass="ui-button-help" 
                                 ajax="false"
                                 class="mr-2"
@@ -57,7 +49,7 @@
                                 <p:dataExporter 
                                     type="pdf" 
                                     target="dt-contribuables" 
-                                    fileName="admin" 
+                                    fileName="Gestion des contribuables" 
                                 />
                             </p:commandButton>
                             
@@ -70,7 +62,7 @@
                                 <p:dataExporter 
                                     type="xls" 
                                     target="dt-contribuables" 
-                                    fileName="Gestion contribuables" 
+                                    fileName="Gestion des contribuables" 
                                 />
                             </p:commandButton>
                             
@@ -80,13 +72,28 @@
                     <p:dataTable
                         id="dt-contribuables"
                         paginator="true" 
-                        rows="4" 
+                        rows="4"
+                        widgetVar="dtContribuables"
+                        reflow="true"
                         rowSelectMode="add" 
                         paginatorPosition="bottom"
                         binding="#{table}" 
                         value="#{contribuableController.contribuableList()}" 
                         var="admin"  
                         >
+                        <f:facet name="header">
+                            <div class="flex justify-content-between">
+                                <span style="font-weight: bold"></span>
+                                <span class="filter-container ui-input-icon-left"> 
+                                    <i class="pi pi-search"></i>
+                                    <p:inputText 
+                                        id="globalFilter" 
+                                        onkeyup="PF('dtContribuables').filter()" 
+                                        placeholder="Search" 
+                                    />
+                                </span>
+                            </div>
+                        </f:facet>
 
                         <p:column 
                             headerText="" 

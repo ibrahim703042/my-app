@@ -19,7 +19,7 @@ public class AppMain {
         //AdministrateurDbUtil.getAll();
         System.out.println("**************************************************");
         System.out.println("**************************************************");
-        ImmeubleDbUtil.findAll();
+        //ImmeubleDbUtil.findAll();
         //ImmeubleDbUtil.findById(1);
     }
 }

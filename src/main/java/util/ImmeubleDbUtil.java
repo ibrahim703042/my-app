@@ -7,6 +7,7 @@ package util;
 /**
  *
  * @author Ibrahim
+ * 
  */
 
 import dbconnection.MySQLJDBCUtil;
@@ -29,7 +30,7 @@ public class ImmeubleDbUtil {
     public static PreparedStatement pstmt;
 
     //*************************** display data *****************/
-    public static  ArrayList findAll() {
+    public ArrayList findAll() {
         
         ArrayList administrateurList = new ArrayList();
         
@@ -59,7 +60,8 @@ public class ImmeubleDbUtil {
                     + "ON immeuble.id_contribuable = contribuable.id "
                     + "JOIN colline "
                     + "ON immeuble.id_colline = colline.id "
-                    + "JOIN commune ON colline.id_commune = commune.id ";
+                    + "JOIN commune ON colline.id_commune = commune.id "
+                    + "ORDER BY immeuble.id DESC";
 
             // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
             connection = MySQLJDBCUtil.getConnection();
@@ -127,10 +129,12 @@ public class ImmeubleDbUtil {
             pstmt.executeUpdate();
             connection.close();
 
-        }catch (NullPointerException e) {
-            // handle the null value appropriately
-            System.err.println("Caught NullPointerException: " + e.getMessage());
-        } catch (SQLException e) {
+        }
+//        catch (NullPointerException e) {
+//            // handle the null value appropriately
+//            System.err.println("Caught NullPointerException: " + e.getMessage());
+//        } 
+        catch (SQLException e) {
             // handle the SQLException appropriately
             System.err.println("Caught SQLException: " + e.getMessage());
         } 
@@ -138,6 +142,59 @@ public class ImmeubleDbUtil {
 
     //*************************** find data by id *****************/
     public void findById(int immeubleId ) {
+        
+        Immeuble immeuble = null;
+        System.out.println(" findById() : immeuble Id: " + immeubleId);
+        
+        /* Setting The Particular province Details In Session */
+        Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        
+        try {
+            String query = ""
+                    + "SELECT contribuable.*, "
+                    + "colline.nomColline AS Colline, "
+                    + "colline.id AS Colline_id, "
+                    + "immeuble.id AS immeuble_id,"
+                    + "immeuble.nomAvenue AS Rue "
+                    + "FROM contribuable, immeuble, colline "
+                    + "WHERE immeuble.id_contribuable = contribuable.id "
+                    + "AND immeuble.id_colline = colline.id "
+                    + "AND immeuble.id = " + immeubleId ;
+
+            // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
+            connection = MySQLJDBCUtil.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);  
+
+            while(resultSet.next()) { 
+
+                immeuble = new Immeuble();
+                
+                /* *******contribuable **** */
+                
+                immeuble.setId(resultSet.getInt("Immeuble_ID"));
+                immeuble.setNomAvenue(resultSet.getString("Rue"));  
+
+                immeuble.setIdContribuable(resultSet.getInt("id"));  
+                immeuble.setNomContribuable(resultSet.getString("nom"));  
+                immeuble.setPrenomContribuable(resultSet.getString("prenom"));
+                
+                immeuble.setIdColline(resultSet.getInt("Colline_id"));  
+                immeuble.setNomColline(resultSet.getString("Colline"));  
+                                
+            }   
+
+            sessionMap.put("immeubleMapped", immeuble);
+            connection.close();
+            
+        } catch(SQLException sqlException) {  
+            sqlException.printStackTrace();
+        }
+
+    }
+    
+    //*************************** View data by id *****************/
+    public void ViewById(int immeubleId ) {
         
         Immeuble immeuble = null;
         System.out.println(" findById() : immeuble Id: " + immeubleId);
@@ -224,14 +281,14 @@ public class ImmeubleDbUtil {
                     + "SET "
                     + "id_colline = ?, "
                     + "id_contribuable = ?, "
-                    + "nomAvenue = ? ";
+                    + "nomAvenue = ? "
+                    + "WHERE id = ? ";
 
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, immeuble.getIdColline());
             pstmt.setInt(2, immeuble.getIdContribuable());
             pstmt.setString(3, immeuble.getNomAvenue());
-            
             pstmt.setInt(4,immeuble.getId());
             
             pstmt.execute();

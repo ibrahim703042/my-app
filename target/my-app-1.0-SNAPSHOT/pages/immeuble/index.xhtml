@@ -28,7 +28,7 @@
                     <p:toolbar>
                         <p:toolbarGroup>
                             <p:commandButton 
-                                value="New" 
+                                value="Ajouter" 
                                 icon="pi pi-plus" 
                                 styleClass="ui-button-success"
                                 action="/pages/immeuble/ajouter?faces-redirect=true"
@@ -39,29 +39,6 @@
                         
                         <!-- toolbarGroup for import, excel, pdf-->
                         <p:toolbarGroup align="right">
-                            
-                            <!--Export import -->
-                            <p:fileUpload 
-                                mode="simple" 
-                                skinSimple="true" 
-                                label="Import" 
-                                chooseIcon="pi pi-download" 
-                            />
-                            
-                            <!-- Export data pdf -->
-                            <p:commandButton 
-                                value="PDF" 
-                                icon="pi pi-upload" 
-                                styleClass="ui-button-help" 
-                                ajax="false"
-                                class="mr-2"
-                                >
-                                <p:dataExporter 
-                                    type="pdf" 
-                                    target="dt-immeubles" 
-                                    fileName="admin" 
-                                />
-                            </p:commandButton>
                             
                             <!--Export data excel -->
                             <p:commandButton 
@@ -82,6 +59,7 @@
                     <!--/**  Datatables**/-->
                     
                     <p:dataTable 
+                        id="dt-immeubles"
                         paginator="true" 
                         rows="4" 
                         rowSelectMode="add" 
@@ -90,15 +68,12 @@
                         value="#{immeubleController.immeubleList()}" 
                         var="immeubl"  >
                         
-                        <!--
-                        <p:column headerText="Code">
+                        <p:column headerText="">
                             <h:outputText value="#{table.rowIndex + 1}" />
                         </p:column>
-                        -->
 
-                         
                         <p:column 
-                            headerText="Id" 
+                            headerText="Imm.No" 
                             sortBy="#{immeubl.id}" 
                             filterBy="#{immeubl.id}"
                         >
@@ -107,13 +82,13 @@
                         
                         
                         <p:column 
-                            headerText="Nom" 
-                            sortBy="#{immeubl.nomContribuable}" 
-                            filterBy="#{immeubl.nomContribuable}"
+                            headerText="Nom complet" 
+                            sortBy="#{immeubl.nomContribuable} #{immeubl.prenomContribuable}" 
+                            filterBy="#{immeubl.nomContribuable} #{immeubl.prenomContribuable}"
                         >
-                            <h:outputText value="#{immeubl.nomContribuable}" />
+                            <h:outputText value="#{immeubl.nomContribuable} #{immeubl.prenomContribuable}" />
                         </p:column>
-                        
+                        <!--
                         <p:column 
                             headerText="Prenom" 
                             sortBy="#{immeubl.prenomContribuable}" 
@@ -121,14 +96,18 @@
                         >
                             <h:outputText value="#{immeubl.prenomContribuable}" />
                         </p:column>
+                        -->
                         
+                        <!--
                         <p:column 
                             headerText="Province" 
                             sortBy="#{immeubl.nomProvince}" 
                             filterBy="#{immeubl.nomProvince}"
                         >
+                        
                             <h:outputText value="#{immeubl.nomProvince}" />
                         </p:column>
+                        -->
                         
                         <p:column 
                             headerText="Commune" 
@@ -155,8 +134,8 @@
                         </p:column>
                         
                 
-                    <p:column exportable="false" style="width: 10%" >
-                        <!--
+                    <p:column exportable="false" style="width: 15%" >
+                        
                         <p:commandButton 
                             icon="pi pi-pencil" 
                             styleClass="edit-button rounded-button ui-button-success mr-4" 
@@ -165,7 +144,7 @@
                             >
 
                         </p:commandButton>
-                        -->
+                        
                         <p:commandButton 
                             icon="pi pi-eye" 
                             styleClass="edit-button rounded-button ui-button-info mr-4" 
@@ -173,7 +152,6 @@
                             action="#{immeubleController.detail(immeubl.id)}"
                             >
                         </p:commandButton>
-                        
                         <p:commandButton 
                             class="ui-button-warning rounded-button" 
                             icon="pi pi-trash"

@@ -70,8 +70,7 @@
                         value="#{adminMapped.idRole}"
                         style="height: 41px; "
                     >
-                        <f:selectItem itemLabel="#{adminMapped.nomRole}" itemValue="#{adminMapped.idRole}" />
-                        <!--<f:selectItem itemLabel="Choisir Role" />-->
+                        <f:selectItem itemLabel="Choisir Role" />
                         <f:selectItems var="rol"
                             value="#{roleController.roleList()}"
                             itemLabel="#{rol.nomRole}"

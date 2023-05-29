@@ -19,13 +19,13 @@
                     <div class="field col-12 md:col-12">
                         <p:outputLabel class="font-bold"  value="Contribuable"/>
                         <p:selectOneMenu 
-                            value="#{immeuble.id_immeuble}"
+                            value="#{immeuble.idContribuable}"
                             filter="true" 
                             filterMatchMode="startsWith" 
                             dynamic="true"
                             style="height: 41px; "
                         >
-                            <f:selectItem itemLabel="-------Choisir contribuable-------" />
+                            <f:selectItem itemLabel="Choisir contribuable" />
                             <f:selectItems var="contribuabl"
                                 value="#{contribuableController.contribuableList()}"
                                 itemLabel="#{contribuabl.id} : 
@@ -41,13 +41,13 @@
                     <div class="field col-12 md:col-12">
                         <p:outputLabel class="font-bold"  value="Colline"/>
                         <p:selectOneMenu 
-                            value="#{immeuble.id}"
+                            value="#{immeuble.idColline}"
                             filter="true" 
                             filterMatchMode="startsWith" 
                             dynamic="true"
                             style="height: 41px; "
                         >
-                            <f:selectItem itemLabel="-------Choisir colline-------" />
+                            <f:selectItem itemLabel="Choisir colline" />
                             <f:selectItems var="coll"
                                 value="#{collineController.collineList()}"
                                 itemLabel="#{coll.nomColline} "

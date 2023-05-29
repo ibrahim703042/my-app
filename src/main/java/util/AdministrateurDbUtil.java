@@ -7,6 +7,7 @@ package util;
 /**
  *
  * @author Ibrahim
+ * 
  */
 
 import dbconnection.MySQLJDBCUtil;
@@ -16,7 +17,6 @@ import jakarta.faces.context.FacesContext;
 import model.Administrateur;
 import java.sql.*;
 import java.util.*;
-import model.Immeuble;
 
 @ManagedBean
 @ApplicationScoped
@@ -34,7 +34,13 @@ public class AdministrateurDbUtil {
         ArrayList administrateurList = new ArrayList();
         
         try {
-            String query = "SELECT * FROM administrateur WHERE id IS NOT NULL ORDER BY id DESC";
+            String query = ""
+                    + "SELECT administrateur.*, role.nomRole "
+                    + "FROM administrateur, role "
+                    + "WHERE administrateur.id_role = role.id "
+                    + "AND administrateur.id "
+                    + "IS NOT NULL "
+                    + "ORDER BY administrateur.id DESC";
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
@@ -51,6 +57,8 @@ public class AdministrateurDbUtil {
                 administrateur.setTelephone(resultSet.getInt("telephone"));  
                 administrateur.setBp(resultSet.getString("BP"));  
                 administrateur.setDate(resultSet.getDate("date")); 
+                
+                administrateur.setNomRole(resultSet.getString("nomRole")); 
 
                 administrateurList.add(administrateur);  
             }   
@@ -103,11 +111,11 @@ public class AdministrateurDbUtil {
         try {
            
             String query = ""
-                    + "SELECT A.*, "
-                    + "R.id As role_ID, "
-                    + "R.nomRole AS role_name "
-                    + "FROM administrateur A, role R "
-                    + "WHERE  A.id = " + administrateurId ;
+                    + "SELECT administrateur.*, role.nomRole, role.id as Role_id "
+                    + "FROM administrateur, role "
+                    + "WHERE administrateur.id_role = role.id "
+                    + "AND administrateur.id = " + administrateurId ;
+                    
             
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
@@ -126,8 +134,8 @@ public class AdministrateurDbUtil {
                 
                 /********** Role *********/
                 
-                administrateur.setIdRole(resultSet.getInt("role_ID"));  
-                administrateur.setNomRole(resultSet.getString("role_name")); 
+                administrateur.setIdRole(resultSet.getInt("Role_id"));  
+                administrateur.setNomRole(resultSet.getString("nomRole")); 
 
             }
             
@@ -147,6 +155,7 @@ public class AdministrateurDbUtil {
             var query =" "
                     + "UPDATE administrateur "
                     + "SET "
+                    + "id_role = ?, "
                     + "nom = ?, "
                     + "prenom = ?, "
                     + "email = ?, "
@@ -157,12 +166,13 @@ public class AdministrateurDbUtil {
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
             
-            pstmt.setString(1, administrateur.getNom());
-            pstmt.setString(2, administrateur.getPrenom());
-            pstmt.setString(3, administrateur.getEmail());
-            pstmt.setInt(4, administrateur.getTelephone());
-            pstmt.setString(5, administrateur.getBp());
-            pstmt.setInt(6, administrateur.getId());
+            pstmt.setInt(1, administrateur.getIdRole());
+            pstmt.setString(2, administrateur.getNom());
+            pstmt.setString(3, administrateur.getPrenom());
+            pstmt.setString(4, administrateur.getEmail());
+            pstmt.setInt(5, administrateur.getTelephone());
+            pstmt.setString(6, administrateur.getBp());
+            pstmt.setInt(7, administrateur.getId());
             //pstmt.setInt(7, administrateur.getIdRole());
 
             pstmt.execute();

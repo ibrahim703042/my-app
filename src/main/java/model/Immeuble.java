@@ -5,6 +5,7 @@
 package model;
 
 import jakarta.faces.bean.ManagedBean;
+import jakarta.faces.bean.RequestScoped;
 import java.io.Serializable;
 
 /**
@@ -13,17 +14,16 @@ import java.io.Serializable;
  */
 
 @ManagedBean
+@RequestScoped
+
 public class Immeuble implements Serializable{
 
     private Integer id;
-    private int idColline;
-    private Integer id_immeuble;
     private String nomAvenue;
 
-    private String nomProvince;
-    private String nomCommune;
+    private int idColline;
     private String nomColline;
-    
+       
     private Integer idContribuable;
     private String bpContribuable;
     private String nomContribuable;
@@ -37,7 +37,10 @@ public class Immeuble implements Serializable{
     private String prenomRepresentant;
     private String telephoneRepresentant;
     private String EmailRepresentant;
-
+    
+    private String nomProvince;
+    private String nomCommune;
+    
     public Immeuble() {
     }
 
@@ -49,22 +52,6 @@ public class Immeuble implements Serializable{
         this.id = id;
     }
 
-    public int getIdColline() {
-        return idColline;
-    }
-
-    public void setIdColline(int idColline) {
-        this.idColline = idColline;
-    }
-
-    public Integer getId_immeuble() {
-        return id_immeuble;
-    }
-
-    public void setId_immeuble(Integer id_immeuble) {
-        this.id_immeuble = id_immeuble;
-    }
-
     public String getNomAvenue() {
         return nomAvenue;
     }
@@ -73,20 +60,12 @@ public class Immeuble implements Serializable{
         this.nomAvenue = nomAvenue;
     }
 
-    public String getNomProvince() {
-        return nomProvince;
+    public int getIdColline() {
+        return idColline;
     }
 
-    public void setNomProvince(String nomProvince) {
-        this.nomProvince = nomProvince;
-    }
-
-    public String getNomCommune() {
-        return nomCommune;
-    }
-
-    public void setNomCommune(String nomCommune) {
-        this.nomCommune = nomCommune;
+    public void setIdColline(int idColline) {
+        this.idColline = idColline;
     }
 
     public String getNomColline() {
@@ -191,6 +170,22 @@ public class Immeuble implements Serializable{
 
     public void setEmailRepresentant(String EmailRepresentant) {
         this.EmailRepresentant = EmailRepresentant;
+    }
+
+    public String getNomProvince() {
+        return nomProvince;
+    }
+
+    public void setNomProvince(String nomProvince) {
+        this.nomProvince = nomProvince;
+    }
+
+    public String getNomCommune() {
+        return nomCommune;
+    }
+
+    public void setNomCommune(String nomCommune) {
+        this.nomCommune = nomCommune;
     }
 
     
