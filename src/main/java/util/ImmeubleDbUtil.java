@@ -112,6 +112,88 @@ public class ImmeubleDbUtil {
 
     }
     
+    
+    //*************************** display data *****************/
+    public ArrayList getAllByImmeubleDeclaration() {
+        
+        ArrayList administrateurList = new ArrayList();
+        
+        try {
+            String query = 
+                    "SELECT "
+                    + "contribuable.id As Contribuable_ID, "
+                    + "contribuable.nom As nom_contribuable, "
+                    + "contribuable.prenom AS prenom_contribuable, "
+                    + "contribuable.email AS email_contribuable, "
+                    + "contribuable.telephone AS tel_contribuable, "
+                    + "contribuable.BP AS BP_contribuable, "
+                    + "representant.id As representant_ID, "
+                    + "representant.nomRepresentant As nom_representant, "
+                    + "representant.prenomRepresentant AS prenom_representant, "
+                    + "representant.emailRepresentant AS email_representant, "
+                    + "representant.telephoneRepresentant AS tel_representant, "
+                    + "representant.bpRepresentant AS BP_representant, "
+                    + "immeuble.id as Immeuble_ID, "
+                    + "immeuble.nomAvenue as Rue , "
+                    + "colline.nomColline as Colline,  "
+                    + "commune.nomCommune as Commune "
+                    + "FROM representant,contribuable,immeuble,declaration,colline,commune "
+                    + "WHERE contribuable.id_representant = representant.id "
+                    + "AND immeuble.id_contribuable = contribuable.id "
+                    + "AND declaration.id_immeuble != immeuble.id "
+                    + "AND immeuble.id_colline = colline.id "
+                    + "AND colline.id_commune = commune.id "
+                    + "ORDER BY immeuble.id DESC";
+
+            // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
+            connection = MySQLJDBCUtil.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);  
+
+            while(resultSet.next()) { 
+
+                Immeuble immeuble = new Immeuble();
+                
+                /* *******contribuable **** */
+                
+                immeuble.setId(resultSet.getInt("Immeuble_ID")); 
+                immeuble.setIdContribuable(resultSet.getInt("Contribuable_ID"));  
+                immeuble.setNomContribuable(resultSet.getString("nom_contribuable"));  
+                immeuble.setPrenomContribuable(resultSet.getString("prenom_contribuable"));  
+                immeuble.setNomColline(resultSet.getString("Colline"));  
+                immeuble.setNomCommune(resultSet.getString("Commune"));  
+                //immeuble.setNomProvince(resultSet.getString("Province"));  
+                immeuble.setNomAvenue(resultSet.getString("Rue"));  
+                immeuble.setTelephoneContribuable(resultSet.getString("tel_contribuable"));  
+                immeuble.setBpContribuable(resultSet.getString("BP_contribuable"));  
+                immeuble.setEmailContribuable(resultSet.getString("email_contribuable"));  
+                
+                /* *******representant **** */
+                immeuble.setIdRepresentant(resultSet.getInt("Representant_ID"));  
+                immeuble.setNomRepresentant(resultSet.getString("nom_representant"));  
+                immeuble.setPrenomRepresentant(resultSet.getString("prenom_representant"));  
+                immeuble.setNomColline(resultSet.getString("Colline"));  
+                immeuble.setNomCommune(resultSet.getString("Commune"));  
+                //immeuble.setNomProvince(resultSet.getString("Province"));  
+                immeuble.setNomAvenue(resultSet.getString("Rue"));  
+                immeuble.setTelephoneRepresentant(resultSet.getString("tel_representant"));
+                immeuble.setBpRepresentant(resultSet.getString("BP_representant"));  
+                immeuble.setEmailRepresentant(resultSet.getString("email_representant"));
+                
+
+                administrateurList.add(immeuble);  
+            }   
+
+            System.out.println("Total Records Fetched: " + administrateurList.size());
+            connection.close();
+
+        } catch(SQLException sqlException) {  
+            sqlException.printStackTrace();
+        }
+        return administrateurList;
+
+    }
+    
     //************** Save data **********************************/ 
     public void save(Immeuble immeuble){
         

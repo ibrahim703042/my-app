@@ -4,34 +4,40 @@
  */
 package model;
 
-import jakarta.inject.Named;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.bean.ManagedBean;
+import jakarta.validation.constraints.Future;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
  * @author Ibrahim
+ * 
  */
 
-@Named
+@ManagedBean
 public class Declaration implements Serializable {
 
     private Integer id;
-    private int nif;
-    private int ccf;
-
-    public Declaration() {
+    private Integer idImmeuble;
+    private Integer nif;
+    private Integer ccf;
+   
+    private Date date_1;
+    private LocalDate currentDate;
+    @Future
+    private Date date_2;
+    
+    @PostConstruct
+    public void init() {
+      
+        setCurrentDate(LocalDate.now());
+    date_1 = new Date();
+        
     }
-
-    public Declaration(Integer id) {
-        this.id = id;
-    }
-
-    public Declaration(Integer id, int nif, int ccf) {
-        this.id = id;
-        this.nif = nif;
-        this.ccf = ccf;
-    }
-
+  
     public Integer getId() {
         return id;
     }
@@ -40,19 +46,53 @@ public class Declaration implements Serializable {
         this.id = id;
     }
 
-    public int getNif() {
+    public Integer getIdImmeuble() {
+        return idImmeuble;
+    }
+
+    public void setIdImmeuble(Integer idImmeuble) {
+        this.idImmeuble = idImmeuble;
+    }
+
+    public Integer getNif() {
         return nif;
     }
 
-    public void setNif(int nif) {
+    public void setNif(Integer nif) {
         this.nif = nif;
     }
 
-    public int getCcf() {
+    public Integer getCcf() {
         return ccf;
     }
 
-    public void setCcf(int ccf) {
+    public void setCcf(Integer ccf) {
         this.ccf = ccf;
     }
+
+    public Date getDate_1() {
+        return date_1;
+    }
+
+    public void setDate_1(Date date_1) {
+        this.date_1 = date_1;
+    }
+
+    public Date getDate_2() {
+        return date_2;
+    }
+
+    public void setDate_2(Date date_2) {
+        this.date_2 = date_2;
+    }
+
+    public LocalDate getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(LocalDate currentDate) {
+        this.currentDate = currentDate;
+    }
+    
+    
 }

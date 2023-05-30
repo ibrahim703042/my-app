@@ -132,35 +132,35 @@
                         >
                             <h:outputText value="#{immeubl.nomAvenue}" />
                         </p:column>
-                        
                 
-                    <p:column exportable="false" style="width: 15%" >
-                        
-                        <p:commandButton 
-                            icon="pi pi-pencil" 
-                            styleClass="edit-button rounded-button ui-button-success mr-4" 
-                            ajax="false"
-                            action="#{immeubleController.edit(immeubl.id)}"
-                            >
+                        <p:column exportable="false" style="width: 15%" >
 
-                        </p:commandButton>
-                        
-                        <p:commandButton 
-                            icon="pi pi-eye" 
-                            styleClass="edit-button rounded-button ui-button-info mr-4" 
-                            ajax="false"
-                            action="#{immeubleController.detail(immeubl.id)}"
-                            >
-                        </p:commandButton>
-                        <p:commandButton 
-                            class="ui-button-warning rounded-button" 
-                            icon="pi pi-trash"
-                            ajax="false"
-                            action="#{immeubleController.delete(immeubl.id)}"
-                            >
+                            <p:commandButton 
+                                icon="pi pi-pencil" 
+                                styleClass="edit-button rounded-button ui-button-success mr-4" 
+                                ajax="false"
+                                action="#{immeubleController.edit(immeubl.id)}"
+                                >
 
-                        </p:commandButton>
-                    </p:column>
+                            </p:commandButton>
+
+                            <p:commandButton 
+                                icon="pi pi-eye" 
+                                styleClass="edit-button rounded-button ui-button-info mr-4" 
+                                ajax="false"
+                                action="#{immeubleController.detail(immeubl.id)}"
+                                >
+                            </p:commandButton>
+                            <p:commandButton 
+                                class="ui-button-warning rounded-button" 
+                                icon="pi pi-trash"
+                                ajax="false"
+                                action="#{immeubleController.delete(immeubl.id)}"
+                                >
+
+                            </p:commandButton>
+                        </p:column>
+                        
                     </p:dataTable>
                 </h:form>
                 

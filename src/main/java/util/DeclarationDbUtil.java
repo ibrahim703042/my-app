@@ -10,15 +10,21 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.bean.ApplicationScoped;
+import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
-import jakarta.inject.Named;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import model.Declaration;
-import java.sql.*;
 import java.util.*;
 
-@Named
+
+@ManagedBean
 @ApplicationScoped
 
 public class DeclarationDbUtil {
@@ -29,12 +35,17 @@ public class DeclarationDbUtil {
     public static PreparedStatement pstmt;
 
     //*************************** display data *****************/
-    public static ArrayList findAll() {
+    public ArrayList findAll() {
         
         ArrayList declarationList = new ArrayList();
         
         try {
-            String query = "SELECT * FROM declaration WHERE id IS NOT NULL ORDER BY id DESC";
+            String query = ""
+                    + "SELECT * "
+                    + "FROM declaration "
+                    + "WHERE id IS NOT NULL "
+                    + "ORDER BY id DESC";
+            
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
@@ -44,8 +55,12 @@ public class DeclarationDbUtil {
                 Declaration declaration = new Declaration(); 
 
                 declaration.setId(resultSet.getInt("id"));  
+                declaration.setIdImmeuble(resultSet.getInt("id_immeuble"));  
                 declaration.setNif(resultSet.getInt("NIF"));  
                 declaration.setCcf(resultSet.getInt("CCF")); 
+                declaration.setDate_1(resultSet.getDate("datePlutot")); 
+                declaration.setDate_2(resultSet.getDate("datePlutard")); 
+                 
 
                 declarationList.add(declaration);  
             }   
@@ -60,41 +75,46 @@ public class DeclarationDbUtil {
     }
 
     //************** Save data **********************************/ 
-    public static String save(Declaration declaration){
-        
-        Integer saveResult = 0;
-        String navigationResult = "";
-        String message = "Record Inserted";
+    public void save(Declaration declaration){
         
         try {
 
-            String query = 
-                    "INSERT INTO declaration (NIF, CCF) "
-                    + "values (?, ?)";
+            String query = ""
+                    + "INSERT INTO declaration (id_immeuble, NIF, CCF, datePlutot, datePlutard) "
+                    + "values (?, ?, ?, ?, ?)";
+            
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);         
 
-            pstmt.setInt(1, declaration.getNif());
-            pstmt.setInt(2, declaration.getCcf());
-            //statement.setDate(7, (java.sql.Date) declaration.getDate());
+            Date date_1 = declaration.getDate_1();
+            Date date_2 = declaration.getDate_2();
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String mysqlDate1String = sdf.format(date_1);
+            String mysqlDate2String = sdf.format(date_2);
+            java.sql.Date datePlutot = java.sql.Date.valueOf(mysqlDate1String);
+            java.sql.Date datePlutard = java.sql.Date.valueOf(mysqlDate2String);
 
-            saveResult = pstmt.executeUpdate();
+            
+            pstmt.setInt(1, declaration.getIdImmeuble());
+            pstmt.setInt(2, declaration.getNif());
+            pstmt.setInt(3, declaration.getCcf());
+            pstmt.setDate(4, datePlutot);
+            pstmt.setDate(5, datePlutard);
+
+            pstmt.executeUpdate();
+            
+            pstmt.close();
             connection.close();
 
-        }catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
-        }if(saveResult !=0) {
-            navigationResult = "/pages/admin/template.xhtml?faces-redirect=true";
-            showMessage(message);
-            
-        } else {
-            navigationResult = "";
+        }catch (SQLException e) {
+            // handle the exception
+            System.err.println("Error inserting data: " + e.getMessage());
         }
-        return navigationResult;
     }
 
     //************** find data by ID ***************************/
-    public static String findById(int declarationId) {
+    public void findById(int declarationId) {
         
         Declaration declaration = null;
         System.out.println(" findById() : Province Id: " + declarationId);
@@ -104,7 +124,14 @@ public class DeclarationDbUtil {
 
         try {
            
-            String query = "SELECT * FROM declaration WHERE id =" + declarationId ;
+            String query = ""
+                    + "SELECT "
+                    + "immeuble.id AS Immeuble_id, "
+                    + "declaration.* "
+                    + "FROM immeuble, declaration "
+                    + "WHERE immeuble.id = declaration.id_immeuble "
+                    + "AND declaration.id =" + declarationId ;
+            
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
@@ -113,10 +140,11 @@ public class DeclarationDbUtil {
                 
                 declaration = new Declaration();
                 declaration.setId(resultSet.getInt("id"));  
-                declaration.setNif(resultSet.getInt("nif"));  
-                declaration.setCcf(resultSet.getInt("ccf")); 
-                //declaration.setDate(resultSet.getDate("date"));  
-               //LocalDate date = LocalDate.now();
+                declaration.setIdImmeuble(resultSet.getInt("Immeuble_id"));  
+                declaration.setNif(resultSet.getInt("NIF"));  
+                declaration.setCcf(resultSet.getInt("CCF")); 
+                declaration.setDate_1(resultSet.getDate("datePlutot")); 
+                declaration.setDate_2(resultSet.getDate("datePlutard")); 
 
             }
             
@@ -126,24 +154,42 @@ public class DeclarationDbUtil {
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
-        return "/pages/admin/edit.xhtml";
     }
 	
     //************** update data ******************************/
-    public static String update(Declaration declaration){
-
-        String message = "Updated Successfully";
+    public void update(Declaration declaration){
 
         try {
 
-            String query ="Update declaration SET "
-                    + "nif=?, "
-                    + "ccf=?, ";
+            String query =""
+                    + "UPDATE "
+                    + "declaration SET "
+                    + "id_immeuble = ?,"
+                    + "NIF = ?, "
+                    + "CCF = ?, "
+                    + "datePlutot = ?, "
+                    + "datePlutard = ? "
+                    + "WHERE id = ? ";
 
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, declaration.getNif());
-            pstmt.setInt(2, declaration.getCcf());
+            
+            Date date_1 = declaration.getDate_1();
+            Date date_2 = declaration.getDate_2();
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String mysqlDate1String = sdf.format(date_1);
+            String mysqlDate2String = sdf.format(date_2);
+            java.sql.Date datePlutot = java.sql.Date.valueOf(mysqlDate1String);
+            java.sql.Date datePlutard = java.sql.Date.valueOf(mysqlDate2String);
+
+            
+            pstmt.setInt(1, declaration.getIdImmeuble());
+            pstmt.setInt(2, declaration.getNif());
+            pstmt.setInt(3, declaration.getCcf());
+            pstmt.setDate(4, datePlutot);
+            pstmt.setDate(5, datePlutard);
+            pstmt.setInt(6, declaration.getId());
 
             pstmt.execute();
             connection.close();
@@ -151,12 +197,10 @@ public class DeclarationDbUtil {
         } catch(SQLException sqlException) {
             addErrorMessage(sqlException);
         }
-            showMessage(message);
-            return "/pages/admin/template.xhtml?faces-redirect=true";
     }
 
     //************** delete data ********************************/
-    public static String delete(int declarationId) {
+    public void delete(int declarationId) {
         
         connection = MySQLJDBCUtil.getConnection();
         //System.out.println("delete() : declaration Id: " + declarationId);
@@ -171,18 +215,9 @@ public class DeclarationDbUtil {
         } catch(SQLException sqlException){
             addErrorMessage(sqlException);
         }
-        return "/pages/admin/template.xhtml?faces-redirect=true";
-    }
-    
-    
-    //************** conecxt msg data ***********************/
-    private static void showMessage(String msg){
         
-        FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage message = new FacesMessage("Notice",msg);
-        context.addMessage(null, message);
     }
-    
+     
      //************** error  message from sql ***********************/
     private static void addErrorMessage(SQLException ex) {
         

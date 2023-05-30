@@ -1,0 +1,118 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/dashboardTemplate.xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:define name = "contents">
+            
+        <p:spacer height="90" />
+                    
+        <h:form id="form" class=" py-3">
+            <!--<p:messages id="msgs"/>-->
+            <div class="">
+                <div class="ui-fluid formgrid grid">
+
+                    <div class="field col-12 md:col-7">
+                        <p:outputLabel class="font-bold"  value="Immeuble"/>
+                        <p:selectOneMenu
+                            value="#{declarationMapped.idImmeuble}"
+                            filter="true" 
+                            filterMatchMode="startsWith" 
+                            dynamic="true"
+                            style="height: 41px; "
+                            required="true"
+                        >
+                            <f:selectItem itemLabel=" ------- Choisir Immeuble -------" />
+                            <f:selectItems var="cont"
+                                value="#{immeubleController.immeubleList()}"
+                                itemLabel=" #{cont.id} :              
+                                PROVINCE: #{cont.nomProvince}   -     
+                                COMMUNE: #{cont.nomCommune}     -   
+                                COLLINE: #{cont.nomColline}     -    
+                                AVENUE: #{cont.nomAvenue} "
+                                itemValue="#{cont.id}" 
+                            />
+
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div class="field col-12 md:col-3">
+
+                        <component:inputTextField
+                            label="NIF"
+                            placeholder="NIF"
+                            value="#{declarationMapped.nif}"
+                        />
+
+                    </div>
+
+                    <div class="field col-12 md:col-2">
+
+                        <component:inputTextField
+                            label="CCF"
+                            placeholder="CCF"
+                            value="#{declarationMapped.ccf}"
+                        />
+
+                    </div>
+
+                    <div class="field col-12 md:col-2">
+                        <p:outputLabel class="font-bold"  value="Date plutot"/>
+                        <p:datePicker 
+                            value="#{declarationMapped.date_1}" 
+                            style="height: 41px; "
+                            showIcon="true"
+                            locale="de"
+                            monthNavigator="true"
+                            yearNavigator="true"
+                            pattern="yyyy-MMM-dd"
+                            dir="rtl"
+                            readonly="true"
+                        />
+
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                        <p:outputLabel class="font-bold"  value="Date plutard"/>
+                        <p:datePicker
+                            value="#{declarationMapped.date_2}" 
+                            style="height: 41px; "
+                            showIcon="true"
+                            monthNavigator="true"
+                            yearNavigator="true"
+                            pattern="yyyy-MMM-dd"
+                            dir="rtl"
+                            required="true"
+                        />
+
+                    </div>
+
+                    <div class="field col-12 md:col-4 pt-1">
+                        <p:spacer />
+                        <p:commandButton 
+                            value="Modifier" 
+                            ajax="false"
+                            action="#{declarationController.update(declarationMapped)}"
+                            style="height: 41px; "
+                        />
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+        
+        
+        
+        
+        
+        <ui:insert>
+            <ui:include src="index.xhtml" />
+        </ui:insert>
+            
+    </ui:define>
+        
+</ui:composition>

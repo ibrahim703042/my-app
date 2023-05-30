@@ -38,6 +38,7 @@ public class ImmeubleController implements Serializable{
     @PostConstruct
     public void init() {
         immeubles = immeubleDbUtil.findAll();
+        //immeubles = immeubleDbUtil.getAllByImmeubleDeclaration();
     }
 
     public ArrayList immeubleList() {
@@ -45,6 +46,7 @@ public class ImmeubleController implements Serializable{
         immeubles.clear();
         try {
             immeubles = immeubleDbUtil.findAll();
+            //immeubles = immeubleDbUtil.getAllByImmeubleDeclaration();
         }catch (Exception ex) {
             addErrorMessage ((SQLException) ex);
         }
