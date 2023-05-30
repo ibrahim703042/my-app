@@ -7,100 +7,348 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core">
     
+    
+
+    
     <ui:define name = "contents">
             
+        <style>
+            body .ui-panelgrid .ui-panelgrid-cell {
+                background-color: transparent;
+            }
+
+            
+              
+            .my-panel-grid{
+                border: 1px solid black;
+              }
+              
+            .my-heading-row {
+                background-color: var(--surface-c);
+                font-weight: bold;
+            }
+            
+            table {
+                width: 100%;
+                border-collapse: collapse;
+              }
+
+              th, td {
+                border: 1px solid black;
+                padding: 8px;
+                color:  #007bff;
+                /*text-align: center;*/
+              }
+
+              @media only screen and (max-width: 600px) {
+                table, thead, tbody, th, td, tr {
+                  display: block;
+                }
+
+                th {
+                  position: absolute;
+                  top: -9999px;
+                  left: -9999px;
+                }
+
+                tr {
+                  border: 1px solid black;
+                }
+
+                td {
+                  border: none;
+                  border-bottom: 1px solid black;
+                  position: relative;
+                  padding-left: 50%;
+                }
+
+                td:before {
+                  position: absolute;
+                  top: 6px;
+                  left: 6px;
+                  width: 45%;
+                  padding-right: 10px;
+                  white-space: nowrap;
+                  text-align: left;
+                  font-weight: bold;
+                }
+
+                td:nth-of-type(1):before {
+                  content: "COL 1";
+                }
+
+                td:nth-of-type(2):before {
+                  content: "COL 2";
+                }
+
+                td:nth-of-type(3):before {
+                  content: "COL 3";
+                }
+
+                td:nth-of-type(4):before {
+                  content: "COL 4";
+                }
+
+                td:nth-of-type(5):before {
+                  content: "COL 5";
+                }
+              }
+        </style>
+        
         <p:spacer height="90" />
                     
          <h:form id="form" class=" py-3 mb-4 bg-white shadow-1 px-4">
             <div class="ui-fluid formgrid grid py-3">
                 
-                <p:spacer height="30" />
-                
-                <div class=" field col-12 md:col-6 font-medium text-500 mb-3">
-                    C. REVENUS LOCTIF 
-                </div>
+            <p:spacer height="30" />
 
-                <div class="field col-12 md:col-12">
-                    <p:outputLabel class="font-bold"  value="Immeuble"/>
-                    <p:selectOneMenu
-                        value="#{revenuLocatif.id}"
-                        filter="true" 
-                        filterMatchMode="startsWith" 
-                        dynamic="true"
-                        style="height: 41px; "
-                    >
-                        <f:selectItem itemLabel=" ------- Choisir Immeuble -------" />
-                        <f:selectItems var="cont"
-                            value="#{immeubleController.immeubleList()}"
-                            itemLabel=" #{cont.id} :              
-                            PROVINCE: #{cont.nomProvince}   -     
-                            COMMUNE: #{cont.nomCommune}     -   
-                            COLLINE: #{cont.nomColline}     -    
-                            AVENUE: #{cont.nomAvenue} "
-                            itemValue="#{cont.id}" 
-                        />
+            <div class="field col-12 md:col-12">
+                <p:outputLabel class="font-bold"  value="Immeuble"/>
+                <p:selectOneMenu
+                    value="#{revenuLocatif.id}"
+                    filter="true" 
+                    filterMatchMode="startsWith" 
+                    dynamic="true"
+                    style="height: 41px; "
+                >
+                    <f:selectItem itemLabel=" ------- Choisir Immeuble -------" />
+                    <f:selectItems var="cont"
+                        value="#{immeubleController.immeubleList()}"
+                        itemLabel=" #{cont.id} :              
+                        PROVINCE: #{cont.nomProvince}   -     
+                        COMMUNE: #{cont.nomCommune}     -   
+                        COLLINE: #{cont.nomColline}     -    
+                        AVENUE: #{cont.nomAvenue} "
+                        itemValue="#{cont.id}" 
+                    />
 
-                    </p:selectOneMenu>
-                </div>
-                    
-                <div class="field col-12 md:col-6">
-                    <component:inputNumberField
-                        label="Loyer exonere"
+                </p:selectOneMenu>
+            </div>
+               
+            <!-- ======================Revenus Sous Sous Location===========================-->
+            <div class="field col-12 md:col-12">
+                <p:panelGrid 
+                    columns="2" 
+                    columnClasses="ui-grid-col-12,ui-grid-col-4,ui-grid-col-12,ui-grid-col-4"
+                    layout="grid"
+                    styleClass="ui-panelgrid-blank ui-fluid my-panel-grid"
+                    style="border:0px none; background-color:transparent;"
+
+                >
+
+                     <p:row id="my-row-id" styleClass="my-heading-row" >
+                        C. REVENUS LOCTIF
+                    </p:row>
+
+                     <p:outputLabel>
+                        <span>1. Loyers encaissés exonérés</span>
+                    </p:outputLabel>
+                    <p:inputText 
+                        placeholder="......" 
                         value="#{revenuLocatif.loyerExonere}"
                     />
-                </div>
-                
-                <div class="field col-12 md:col-6">
-                    <component:inputNumberField
-                        label="Loyer imposable"
+
+                     <p:outputLabel>
+                        <span>2. Loyers encaissés imposables  (Annexes II) </span>
+                    </p:outputLabel>
+                    <p:inputText 
+                        placeholder="......" 
                         value="#{revenuLocatif.loyerImposable}"
                     />
-                </div>
-                
-                <div class="field col-12 md:col-6">
-                    <component:inputNumberField
-                        label="Charge"
+
+                    <h:outputLabel>
+                        <span>3. Charges incombant au propriétaire, payées par les locataires</span>
+                    </h:outputLabel>
+                    <p:inputText 
+                        placeholder="......" 
                         value="#{revenuLocatif.chargeIncombat}"
                     />
-                </div>
-                
-                <div class="field col-12 md:col-6">
-                    <component:inputNumberField
-                        label="Revenu Brut"
+
+                    <h:outputLabel>
+                        <span>4. Revenu brut (Ligne 2 + Ligne3)</span>
+                    </h:outputLabel>
+                    <p:inputText 
+                        placeholder="......" 
                         value="#{revenuLocatif.revenuBrut}"
                     />
-                </div>
-                
-                <div class="field col-12 md:col-6">
-                    <component:inputNumberField
-                        label="Loyer imposable"
-                        value="#{revenuLocatif.revenuBrut}"
-                    />
-                </div>
-                
-                <div class="field col-12 md:col-6">
-                    <component:inputNumberField
-                        label="Deduction depenses"
+
+                    <h:outputLabel>
+                        <span>5.Déduction pour dépenses d’entretien (Ligne 4 × 40%) )</span>
+                    </h:outputLabel>
+                    <p:inputText 
+                        placeholder="......" 
                         value="#{revenuLocatif.deductionDepenses}"
                     />
-                </div>
-                
-                <div class="field col-12 md:col-6">
-                    <component:inputNumberField
-                        label="Interet emprunt"
+
+                    <h:outputLabel>
+                        <span>6. Intérêts des emprunts contractés pour l’acquisition,
+                            la construction ou le renouvellement des immeubles productifs
+                            du revenu imposable effectivement payés durant l’exercice d’imposition  
+                        </span>
+                    </h:outputLabel>
+                    <p:inputText 
+                        placeholder="......" 
                         value="#{revenuLocatif.interetEmprunt}"
                     />
-                </div>
-                
-                <div class="field col-12 md:col-6">
-                    <component:inputNumberField
-                        label="Revenu Net imposable"
+
+                    <h:outputLabel>
+                        <b>
+                            7. Revenus nets imposables (Ligne 4 – Ligne 5– Ligne 6) 
+                        </b>
+                    </h:outputLabel>
+                    <p:inputText 
+                        placeholder="......" 
                         value="#{revenuLocatif.revenuNetImposable}"
                     />
-                </div>
 
-                
-                <div class="field col-12 md:col-10"></div>
+
+                </p:panelGrid>
+            </div>
+            
+            <!-- ======================D. REVENUS DES SOUS-LOCATIONS ===========================-->
+            <div class="field col-12 md:col-12">
+                <p:panelGrid 
+                    columns="2" 
+                    columnClasses="ui-grid-col-12,ui-grid-col-4,ui-grid-col-12,ui-grid-col-4"
+                    layout="grid"
+                    styleClass="ui-panelgrid-blank ui-fluid my-panel-grid"
+                    style="border:0px none; background-color:transparent;"
+
+                >
+
+                     <p:row styleClass="my-heading-row" >
+                        D. REVENUS DES SOUS-LOCATIONS 
+                    </p:row>
+
+                     <p:outputLabel>
+                        <span>8. Recettes des sous-locations</span>
+                    </p:outputLabel>
+                    <p:inputText 
+                        placeholder="......" 
+                        value="#{revenuSousLocation.recetteSousLocation}"
+                    />
+
+                     <p:outputLabel>
+                        <span>9. Loyers payés pour la location des immeubles et terrains donnés en sous-location</span>
+                    </p:outputLabel>
+                    <p:inputText 
+                        placeholder="......" 
+                        value="#{revenuSousLocation.loyerPayes}"
+                    />
+
+                    <h:outputLabel>
+                        <b>10. Revenus nets imposables (Ligne 8 – Ligne 9) </b>
+                    </h:outputLabel>
+                    <p:inputText 
+                        placeholder="......" 
+                        value="#{revenuSousLocation.revenusNetsImposables}"
+                    />
+
+                    <h:outputLabel>
+                        <b>11. Total revenus nets imposables (Ligne 7+Ligne 10)  </b>
+                    </h:outputLabel>
+                    <p:inputText 
+                        placeholder="......" 
+                        value="#{revenuSousLocation.totalRevenusNetsImposables}"
+                    />
+
+                    <h:outputLabel>
+                        <span>12. Abattements </span>
+                    </h:outputLabel>
+                    <p:inputText 
+                        placeholder="......" 
+                        value="#{revenuSousLocation.abbattements}"
+                    />
+
+                    <h:outputLabel>
+                        <span class="text-primary">
+                            13. REVENU NET IMPOSABLE (Ligne 11- Ligne 12)
+                        </span>
+                    </h:outputLabel>
+                    <p:inputText 
+                        placeholder="......" 
+                        value="#{revenuSousLocation.revenuNetImposable}"
+                    />
+
+                </p:panelGrid>
+            </div>
+            
+            <!-- ======================E. DETERMINATION DE L’IMPOT DU  ===========================-->
+            
+            <div class="field col-12 md:col-12">
+                <p:panelGrid
+                    >
+
+                     <p:row styleClass="my-heading-row" >
+                        E. DETERMINATION DE L’IMPOT DU 
+                    </p:row>
+
+                    <table>
+                        <thead>
+                          <tr>
+                            <th>COL 1</th>
+                            <th>COL 2</th>
+                            <th>COL 3</th>
+                            <th>COL 4</th>
+                            <th>COL 5</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th>Lignes</th>
+                            <th>Tranches de revenus annuels nets imposables </th>
+                            <th>Montant</th>
+                            <th>Taux d’imposition </th>
+                            <th>Impôt correspondant </th>
+
+                          </tr>
+                          <tr>
+                            <td>14</td>
+                            <td> 0 – 1 800 000 FBU </td>
+                            <td><p:inputText placeholder="......."/></td>
+                            <td>0%</td>
+                            <td><p:inputText placeholder="......."/></td>
+                          </tr>
+                          <tr>
+                            <td>15</td>
+                            <td> 1 800 001 – 3 600 000 FBU </td>
+                            <td><p:inputText placeholder="......."/></td>
+                            <td>20% de la part qui dépasse 1 800 000 FBU</td>
+                            <td><p:inputText placeholder="......."/></td>
+                          </tr>
+                          <tr>
+                            <td>16</td>
+                            <td> Plus de 3 600 000 FBU  </td>
+                            <td><p:inputText placeholder="......."/></td>
+                            <td>30% de la part qui dépasse 3600 000 FBU </td>
+                            <td><p:inputText placeholder="......."/></td>
+                          </tr>
+                          <tr>
+                            <td>17</td>
+                            <td colspan="3" ><b> Impôt total dû (Ligne 14+ Ligne 15+ Ligne 16) </b> </td>
+
+                            <td><p:inputText placeholder="......."/></td>
+                          </tr>
+                          <tr>
+                            <td>18</td>
+                            <td colspan="3"> <b> Acomptes sur l’impôt locatif déjà payés</b> </td>
+
+                            <td><p:inputText placeholder="......."/></td>
+                          </tr>
+                          <tr>
+                            <td>19</td>
+                            <td colspan="3"> <b>Total restant dû (Ligne 17- Ligne 18)</b> </td>
+
+                            <td><p:inputText placeholder="......." styleClass="my-inputtext"/></td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+
+                </p:panelGrid>
+            </div>
+
+         <div class="field col-12 md:col-10"></div>
                 <div class="field col-12 md:col-2">
                     <p:commandButton 
                         value="Enregistrer"
@@ -110,6 +358,7 @@
                     />
                 </div>
             </div>
+             
 
         </h:form>
             

@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+      
+    <!-- ======================D. REVENUS DES SOUS-LOCATIONS ===========================-->
+    <p:panelGrid
+        style="border:0px none; background-color:transparent;"
+    >
+
+         <p:row styleClass="my-heading-row" >
+            E. DETERMINATION DE L’IMPOT DU 
+        </p:row>
+
+        <table>
+            <thead>
+              <tr>
+                <th>COL 1</th>
+                <th>COL 2</th>
+                <th>COL 3</th>
+                <th>COL 4</th>
+                <th>COL 5</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Lignes</th>
+                <th>Tranches de revenus annuels nets imposables </th>
+                <th>Montant</th>
+                <th>Taux d’imposition </th>
+                <th>Impôt correspondant </th>
+
+              </tr>
+              <tr>
+                <td>14</td>
+                <td> 0 – 1 800 000 FBU </td>
+                <td><p:inputText placeholder="......."/></td>
+                <td>0%</td>
+                <td><p:inputText placeholder="......."/></td>
+              </tr>
+              <tr>
+                <td>15</td>
+                <td> 1 800 001 – 3 600 000 FBU </td>
+                <td><p:inputText placeholder="......."/></td>
+                <td>20% de la part qui dépasse 1 800 000 FBU</td>
+                <td><p:inputText placeholder="......."/></td>
+              </tr>
+              <tr>
+                <td>16</td>
+                <td> Plus de 3 600 000 FBU  </td>
+                <td><p:inputText placeholder="......."/></td>
+                <td>30% de la part qui dépasse 3600 000 FBU </td>
+                <td><p:inputText placeholder="......."/></td>
+              </tr>
+              <tr>
+                <td>17</td>
+                <td colspan="3" ><b> Impôt total dû (Ligne 14+ Ligne 15+ Ligne 16) </b> </td>
+
+                <td><p:inputText placeholder="......."/></td>
+              </tr>
+              <tr>
+                <td>18</td>
+                <td colspan="3"> <b> Acomptes sur l’impôt locatif déjà payés</b> </td>
+
+                <td><p:inputText placeholder="......."/></td>
+              </tr>
+              <tr>
+                <td>19</td>
+                <td colspan="3"> <b>Total restant dû (Ligne 17- Ligne 18)</b> </td>
+
+                <td><p:inputText placeholder="......." styleClass="my-inputtext"/></td>
+              </tr>
+
+            </tbody>
+          </table>
+
+    </p:panelGrid>
+
+</ui:composition>

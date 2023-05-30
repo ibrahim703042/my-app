@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+      
+    <!-- ======================D. REVENUS DES SOUS-LOCATIONS ===========================-->
+    <p:panelGrid 
+        columns="2" 
+        columnClasses="ui-grid-col-12,ui-grid-col-4,ui-grid-col-12,ui-grid-col-4"
+        layout="grid"
+        styleClass="ui-panelgrid-blank ui-fluid my-panel-grid"
+        style="border:0px none; background-color:transparent;"
+
+    >
+
+         <p:row styleClass="my-heading-row" >
+            D. REVENUS DES SOUS-LOCATIONS 
+        </p:row>
+
+         <p:outputLabel>
+            <span>8. Recettes des sous-locations</span>
+        </p:outputLabel>
+        <p:inputText 
+            placeholder="......" 
+            value="#{revenuSousLocation.recetteSousLocation}"
+        />
+
+         <p:outputLabel>
+            <span>9. Loyers payés pour la location des immeubles et terrains donnés en sous-location</span>
+        </p:outputLabel>
+        <p:inputText 
+            placeholder="......" 
+            value="#{revenuSousLocation.loyerPayes}"
+        />
+
+        <h:outputLabel>
+            <b>10. Revenus nets imposables (Ligne 8 – Ligne 9) </b>
+        </h:outputLabel>
+        <p:inputText 
+            placeholder="......" 
+            value="#{revenuSousLocation.revenusNetsImposables}"
+        />
+
+        <h:outputLabel>
+            <b>11. Total revenus nets imposables (Ligne 7+Ligne 10)  </b>
+        </h:outputLabel>
+        <p:inputText 
+            placeholder="......" 
+            value="#{revenuSousLocation.totalRevenusNetsImposables}"
+        />
+
+        <h:outputLabel>
+            <span>12. Abattements </span>
+        </h:outputLabel>
+        <p:inputText 
+            placeholder="......" 
+            value="#{revenuSousLocation.abbattements}"
+        />
+
+        <h:outputLabel>
+            <span class="text-primary">
+                13. REVENU NET IMPOSABLE (Ligne 11- Ligne 12)
+            </span>
+        </h:outputLabel>
+        <p:inputText 
+            placeholder="......" 
+            value="#{revenuSousLocation.revenuNetImposable}"
+        />
+
+    </p:panelGrid>
+                
+</ui:composition>
