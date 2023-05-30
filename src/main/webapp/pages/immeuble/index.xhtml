@@ -68,7 +68,7 @@
                         value="#{immeubleController.immeubleList()}" 
                         var="immeubl"  >
                         
-                        <p:column headerText="">
+                        <p:column headerText="" style="width: 5%">
                             <h:outputText value="#{table.rowIndex + 1}" />
                         </p:column>
 
@@ -80,32 +80,13 @@
                             <h:outputText value="#{immeubl.id}" />
                         </p:column>
                         
-                        
+                        <!--
                         <p:column 
-                            headerText="Nom complet" 
+                            headerText="Nom / Raison Sociale" 
                             sortBy="#{immeubl.nomContribuable} #{immeubl.prenomContribuable}" 
                             filterBy="#{immeubl.nomContribuable} #{immeubl.prenomContribuable}"
                         >
-                            <h:outputText value="#{immeubl.nomContribuable} #{immeubl.prenomContribuable}" />
-                        </p:column>
-                        <!--
-                        <p:column 
-                            headerText="Prenom" 
-                            sortBy="#{immeubl.prenomContribuable}" 
-                            filterBy="#{immeubl.prenomContribuable}"
-                        >
-                            <h:outputText value="#{immeubl.prenomContribuable}" />
-                        </p:column>
-                        -->
-                        
-                        <!--
-                        <p:column 
-                            headerText="Province" 
-                            sortBy="#{immeubl.nomProvince}" 
-                            filterBy="#{immeubl.nomProvince}"
-                        >
-                        
-                            <h:outputText value="#{immeubl.nomProvince}" />
+                            <h:outputText value="#{immeubl.nomContribuable} "/>
                         </p:column>
                         -->
                         

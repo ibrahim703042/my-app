@@ -39,7 +39,6 @@ public class ImmeubleDbUtil {
                     "SELECT "
                     + "contribuable.id As Contribuable_ID, "
                     + "contribuable.nom As nom_contribuable, "
-                    + "contribuable.prenom AS prenom_contribuable, "
                     + "contribuable.email AS email_contribuable, "
                     + "contribuable.telephone AS tel_contribuable, "
                     + "contribuable.BP AS BP_contribuable, "
@@ -77,7 +76,6 @@ public class ImmeubleDbUtil {
                 immeuble.setId(resultSet.getInt("Immeuble_ID")); 
                 immeuble.setIdContribuable(resultSet.getInt("Contribuable_ID"));  
                 immeuble.setNomContribuable(resultSet.getString("nom_contribuable"));  
-                immeuble.setPrenomContribuable(resultSet.getString("prenom_contribuable"));  
                 immeuble.setNomColline(resultSet.getString("Colline"));  
                 immeuble.setNomCommune(resultSet.getString("Commune"));  
                 //immeuble.setNomProvince(resultSet.getString("Province"));  
@@ -123,7 +121,6 @@ public class ImmeubleDbUtil {
                     "SELECT "
                     + "contribuable.id As Contribuable_ID, "
                     + "contribuable.nom As nom_contribuable, "
-                    + "contribuable.prenom AS prenom_contribuable, "
                     + "contribuable.email AS email_contribuable, "
                     + "contribuable.telephone AS tel_contribuable, "
                     + "contribuable.BP AS BP_contribuable, "
@@ -159,7 +156,6 @@ public class ImmeubleDbUtil {
                 immeuble.setId(resultSet.getInt("Immeuble_ID")); 
                 immeuble.setIdContribuable(resultSet.getInt("Contribuable_ID"));  
                 immeuble.setNomContribuable(resultSet.getString("nom_contribuable"));  
-                immeuble.setPrenomContribuable(resultSet.getString("prenom_contribuable"));  
                 immeuble.setNomColline(resultSet.getString("Colline"));  
                 immeuble.setNomCommune(resultSet.getString("Commune"));  
                 //immeuble.setNomProvince(resultSet.getString("Province"));  
@@ -259,7 +255,6 @@ public class ImmeubleDbUtil {
 
                 immeuble.setIdContribuable(resultSet.getInt("id"));  
                 immeuble.setNomContribuable(resultSet.getString("nom"));  
-                immeuble.setPrenomContribuable(resultSet.getString("prenom"));
                 
                 immeuble.setIdColline(resultSet.getInt("Colline_id"));  
                 immeuble.setNomColline(resultSet.getString("Colline"));  

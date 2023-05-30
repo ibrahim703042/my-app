@@ -22,10 +22,10 @@
                             style="height: 41px; "
                         >
                             <f:selectItem itemLabel=" ------- Choisir contribuable -------" />
-                            <f:selectItems var="cont"
+                            <f:selectItems var="contribuable"
                                 value="#{contribuableController.contribuableList()}"
-                                itemLabel="#{cont.id} : #{cont.nom} #{cont.prenom}"
-                                itemValue="#{cont.id}" 
+                                itemLabel="#{contribuable.id} : #{contribuable.nom}"
+                                itemValue="#{contribuable.id}" 
                             />
 
                         </p:selectOneMenu>

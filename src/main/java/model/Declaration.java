@@ -24,20 +24,20 @@ public class Declaration implements Serializable {
     private Integer idImmeuble;
     private Integer nif;
     private Integer ccf;
+    private String contribuable;
    
     private Date date_1;
-    private LocalDate currentDate;
     @Future
     private Date date_2;
     
     @PostConstruct
     public void init() {
       
-        setCurrentDate(LocalDate.now());
-    date_1 = new Date();
+        date_1 = new Date();
         
     }
-  
+
+    
     public Integer getId() {
         return id;
     }
@@ -70,6 +70,14 @@ public class Declaration implements Serializable {
         this.ccf = ccf;
     }
 
+    public String getContribuable() {
+        return contribuable;
+    }
+
+    public void setContribuable(String contribuable) {
+        this.contribuable = contribuable;
+    }
+
     public Date getDate_1() {
         return date_1;
     }
@@ -84,15 +92,6 @@ public class Declaration implements Serializable {
 
     public void setDate_2(Date date_2) {
         this.date_2 = date_2;
-    }
-
-    public LocalDate getCurrentDate() {
-        return currentDate;
-    }
-
-    public void setCurrentDate(LocalDate currentDate) {
-        this.currentDate = currentDate;
-    }
-    
+    }  
     
 }

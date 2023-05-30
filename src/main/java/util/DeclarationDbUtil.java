@@ -40,11 +40,21 @@ public class DeclarationDbUtil {
         ArrayList declarationList = new ArrayList();
         
         try {
-            String query = ""
+            String quer = ""
                     + "SELECT * "
                     + "FROM declaration "
                     + "WHERE id IS NOT NULL "
                     + "ORDER BY id DESC";
+            
+            String query = ""
+                    + "SELECT "
+                    + "contribuable.nom AS Contribuable, "
+                    + "immeuble.id AS Immeuble_id, "
+                    + "declaration.* "
+                    + "FROM contribuable, declaration, immeuble "
+                    + "WHERE contribuable.id = immeuble.id_contribuable "
+                    + "AND immeuble.id = declaration.id_immeuble";
+                   
             
             connection = MySQLJDBCUtil.getConnection();
             statement = connection.createStatement();
@@ -55,7 +65,8 @@ public class DeclarationDbUtil {
                 Declaration declaration = new Declaration(); 
 
                 declaration.setId(resultSet.getInt("id"));  
-                declaration.setIdImmeuble(resultSet.getInt("id_immeuble"));  
+                declaration.setIdImmeuble(resultSet.getInt("Immeuble_id"));  
+                declaration.setContribuable(resultSet.getString("Contribuable"));  
                 declaration.setNif(resultSet.getInt("NIF"));  
                 declaration.setCcf(resultSet.getInt("CCF")); 
                 declaration.setDate_1(resultSet.getDate("datePlutot")); 

@@ -85,34 +85,16 @@
                         </f:facet>
                         -->
                         
-                        <!--
-                        <p:column headerText="">
+                        
+                        <p:column headerText="" style="width: 5%">
                             <h:outputText value="#{table.rowIndex + 1}" />
                         </p:column>
-                        -->
-                        
-                        <!--
-                        <p:column 
-                            headerText="Contribuable"
-                            sortBy="#{declaration.nom} #{declaration.prenom}" 
-                            filterBy="#{declaration.nom} #{declaration.prenom}"
-                        >
-                            <h:outputText value="#{declaration.nom} #{declaration.prenom}" />
-                        </p:column>
-                        -->
-
-                        <p:column 
-                            headerText="Immeuble No"
-                            sortBy="#{declaration.idImmeuble}" 
-                            filterBy="#{declaration.idImmeuble}"
-                        >
-                            <h:outputText value="#{declaration.idImmeuble}" />
-                        </p:column>
-
+                       
                         <p:column 
                             headerText="NIF"
                             sortBy="#{declaration.nif}" 
                             filterBy="#{declaration.nif}"
+                            style="width: 10%"
                         >
                             <h:outputText value="#{declaration.nif}" />
                         </p:column>
@@ -121,14 +103,25 @@
                             headerText="CCF"
                             sortBy="#{declaration.ccf}" 
                             filterBy="#{declaration.ccf}"
+                            style="width: 5%"
                         >
                             <h:outputText value="#{declaration.ccf}" />
+                        </p:column>
+                        
+                        
+                        <p:column 
+                            headerText="Nom / Raison Sociale"
+                            sortBy="#{declaration.contribuable}" 
+                            filterBy="#{declaration.contribuable}"
+                        >
+                            <h:outputText value="#{declaration.contribuable}" />
                         </p:column>
                         
                         <p:column 
                             headerText="Date plutot"
                             sortBy="#{declaration.date_1}" 
                             filterBy="#{declaration.date_1}"
+                            style="width: 10%"
                         >
                             <h:outputText value="#{declaration.date_1}" />
                         </p:column>
@@ -137,6 +130,7 @@
                             headerText="Date plutard"
                             sortBy="#{declaration.date_2}" 
                             filterBy="#{declaration.date_2}"
+                            style="width: 11%"
                         >
                             <h:outputText value="#{declaration.date_2}" />
                         </p:column>

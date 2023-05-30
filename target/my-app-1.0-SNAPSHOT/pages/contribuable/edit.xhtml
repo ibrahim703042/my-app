@@ -14,22 +14,14 @@
         <h:form id="form" class=" py-3 mb-4 shadow-1 px-4">
         <div class="">
             <div class="ui-fluid formgrid grid">
-                <div class="field col-12 md:col-6">
+                <div class="field col-12 md:col-12">
                     <component:inputTextField
-                        label="Nom"
-                        placeholder="Entrer nom"
+                        label="Nom ou Raison Sociale"
+                        placeholder="Entrer nom ou raison sociale"
                         value="#{contribuableMapped.nom}"
                     />
                 </div>
-
-                <div class="field col-12 md:col-6">
-                    <component:inputTextField
-                        label="Prenom"
-                        placeholder="Entrer prenom"
-                        value="#{contribuableMapped.prenom}"
-                    />
-                </div>
-
+                
                 <div class="field col-12 md:col-6">
                 <component:inputTextField
                     label="E-mail"

@@ -20,19 +20,11 @@
                     B. IDENTIFICATION DU CONTRIBUABLE
                 </div>
                     
-                <div class="field col-12 md:col-6">
+                <div class="field col-12 md:col-12">
                     <component:inputTextField
-                        label="Nom"
-                        placeholder="Entrer nom"
+                        label="Nom ou Raison Sociale"
+                        placeholder="Entrer nom ou raison Sociale"
                         value="#{contribuable.nom}"
-                    />
-                </div>
-
-                <div class="field col-12 md:col-6">
-                    <component:inputTextField
-                        label="Prenom"
-                        placeholder="Entrer prenom"
-                        value="#{contribuable.prenom}"
                     />
                 </div>
 
@@ -63,7 +55,7 @@
                 </div>
 
                 <div class="field col-12 md:col-6">
-                    <component:inputPhoneNumber
+                    <component:inputTextField
                         label="Telephone"
                         placeholder="+25771204778"
                         value="#{contribuable.telephone}"

@@ -46,7 +46,7 @@ public class ContribuableDbUtil {
 
                contribuable.setId(resultSet.getInt("id"));  
                contribuable.setNom(resultSet.getString("nom"));  
-               contribuable.setPrenom(resultSet.getString("prenom"));  
+               //contribuable.setPrenom(resultSet.getString("prenom"));  
                contribuable.setEmail(resultSet.getString("email"));  
                contribuable.setMotPasse(resultSet.getString("motPasse"));  
                contribuable.setTelephone(resultSet.getInt("telephone"));  
@@ -71,18 +71,17 @@ public class ContribuableDbUtil {
         try {
 
             String query = 
-                    "INSERT INTO contribuable (id_representant, nom, prenom, email, motPasse, telephone, BP) "
-                    + "values (?, ?, ?, ?, ?, ?, ?)";
+                    "INSERT INTO contribuable (id_representant, nom, email, motPasse, telephone, BP) "
+                    + "values (?, ?, ?, ?, ?, ?)";
             connection = MySQLJDBCUtil.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setInt(1, contribuable.getIdRepresentant());
             pstmt.setString(2, contribuable.getNom());
-            pstmt.setString(3, contribuable.getPrenom());
-            pstmt.setString(4, contribuable.getEmail());
-            pstmt.setString(5, contribuable.getMotPasse());
-            pstmt.setInt(6, contribuable.getTelephone());
-            pstmt.setString(7, contribuable.getBp());
+            pstmt.setString(3, contribuable.getEmail());
+            pstmt.setString(4, contribuable.getMotPasse());
+            pstmt.setInt(5, contribuable.getTelephone());
+            pstmt.setString(6, contribuable.getBp());
             
             pstmt.executeUpdate();
             connection.close();
@@ -121,7 +120,7 @@ public class ContribuableDbUtil {
                 contribuable = new Contribuable();
                 contribuable.setId(resultSet.getInt("id"));  
                 contribuable.setNom(resultSet.getString("nom"));  
-                contribuable.setPrenom(resultSet.getString("prenom"));  
+                //contribuable.setPrenom(resultSet.getString("prenom"));  
                 contribuable.setEmail(resultSet.getString("email"));  
                 contribuable.setMotPasse(resultSet.getString("motPasse"));  
                 contribuable.setTelephone(resultSet.getInt("telephone"));  
@@ -151,7 +150,6 @@ public class ContribuableDbUtil {
                     + "SET "
                     + "id_representant = ?, "
                     + "nom = ?, "
-                    + "prenom = ?, "
                     + "email = ?, "
                     + "telephone = ?, "
                     + "BP = ? "
@@ -162,11 +160,11 @@ public class ContribuableDbUtil {
             
             pstmt.setInt(1, contribuable.getIdRepresentant());
             pstmt.setString(2, contribuable.getNom());
-            pstmt.setString(3, contribuable.getPrenom());
-            pstmt.setString(4, contribuable.getEmail());
-            pstmt.setInt(5, contribuable.getTelephone());
-            pstmt.setString(6, contribuable.getBp());
-            pstmt.setInt(7, contribuable.getId());
+           // pstmt.setString(3, contribuable.getPrenom());
+            pstmt.setString(3, contribuable.getEmail());
+            pstmt.setInt(4, contribuable.getTelephone());
+            pstmt.setString(5, contribuable.getBp());
+            pstmt.setInt(6, contribuable.getId());
 
             pstmt.execute();
             connection.close();
