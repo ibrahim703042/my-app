@@ -4,7 +4,7 @@
  */
 package model;
 
-import jakarta.inject.Named;
+import jakarta.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,26 +14,22 @@ import java.util.Date;
  * @author Ibrahim
  */
 
-@Named
+@ManagedBean
 public class Impot implements Serializable{
 
     private Integer id;
     private int idSLocation;
     private Date impDPaye;
-    private int impotTotal;
+    
+    private double tranche_1;
+    private double tranche_2;
+    private double tranche_3;
+    
+    private double impotTotalDu;
+    private double accompteImpotDejaPaye;
+    private double totalRestantDu;
 
     public Impot() {
-    }
-
-    public Impot(Integer id) {
-        this.id = id;
-    }
-
-    public Impot(Integer id, int idSLocation, Date impDPaye, int impotTotal) {
-        this.id = id;
-        this.idSLocation = idSLocation;
-        this.impDPaye = impDPaye;
-        this.impotTotal = impotTotal;
     }
 
     public Integer getId() {
@@ -60,12 +56,52 @@ public class Impot implements Serializable{
         this.impDPaye = impDPaye;
     }
 
-    public int getImpotTotal() {
-        return impotTotal;
+    public double getTranche_1() {
+        return tranche_1;
     }
 
-    public void setImpotTotal(int impotTotal) {
-        this.impotTotal = impotTotal;
+    public void setTranche_1(double tranche_1) {
+        this.tranche_1 = tranche_1;
+    }
+
+    public double getTranche_2() {
+        return tranche_2;
+    }
+
+    public void setTranche_2(double tranche_2) {
+        this.tranche_2 = tranche_2;
+    }
+
+    public double getTranche_3() {
+        return tranche_3;
+    }
+
+    public void setTranche_3(double tranche_3) {
+        this.tranche_3 = tranche_3;
+    }
+
+    public double getImpotTotalDu() {
+        return impotTotalDu;
+    }
+
+    public void setImpotTotalDu(double impotTotalDu) {
+        this.impotTotalDu = impotTotalDu;
+    }
+
+    public double getAccompteImpotDejaPaye() {
+        return accompteImpotDejaPaye;
+    }
+
+    public void setAccompteImpotDejaPaye(double accompteImpotDejaPaye) {
+        this.accompteImpotDejaPaye = accompteImpotDejaPaye;
+    }
+
+    public double getTotalRestantDu() {
+        return totalRestantDu;
+    }
+
+    public void setTotalRestantDu(double totalRestantDu) {
+        this.totalRestantDu = totalRestantDu;
     }
 
 }

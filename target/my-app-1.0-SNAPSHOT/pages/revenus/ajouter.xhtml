@@ -7,92 +7,25 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core">
     
-    
-
-    
     <ui:define name = "contents">
             
         <style>
+            
             body .ui-panelgrid .ui-panelgrid-cell {
                 background-color: transparent;
             }
-
+              
+            body .ui-panelgrid .ui-panelgrid-cell .ui-inputtext {
+                background-color: transparent;
+                border-color: transparent;
+            }
             
-              
-            .my-panel-grid{
-                border: 1px solid black;
-              }
-              
             .my-heading-row {
                 background-color: var(--surface-c);
                 font-weight: bold;
             }
             
-            table {
-                width: 100%;
-                border-collapse: collapse;
-              }
-
-              th, td {
-                border: 1px solid black;
-                padding: 8px;
-                color:  #007bff;
-                /*text-align: center;*/
-              }
-
-              @media only screen and (max-width: 600px) {
-                table, thead, tbody, th, td, tr {
-                  display: block;
-                }
-
-                th {
-                  position: absolute;
-                  top: -9999px;
-                  left: -9999px;
-                }
-
-                tr {
-                  border: 1px solid black;
-                }
-
-                td {
-                  border: none;
-                  border-bottom: 1px solid black;
-                  position: relative;
-                  padding-left: 50%;
-                }
-
-                td:before {
-                  position: absolute;
-                  top: 6px;
-                  left: 6px;
-                  width: 45%;
-                  padding-right: 10px;
-                  white-space: nowrap;
-                  text-align: left;
-                  font-weight: bold;
-                }
-
-                td:nth-of-type(1):before {
-                  content: "COL 1";
-                }
-
-                td:nth-of-type(2):before {
-                  content: "COL 2";
-                }
-
-                td:nth-of-type(3):before {
-                  content: "COL 3";
-                }
-
-                td:nth-of-type(4):before {
-                  content: "COL 4";
-                }
-
-                td:nth-of-type(5):before {
-                  content: "COL 5";
-                }
-              }
+            
         </style>
         
         <p:spacer height="90" />
@@ -273,85 +206,196 @@
                 </p:panelGrid>
             </div>
             
-            <!-- ======================E. DETERMINATION DE L’IMPOT DU  ===========================-->
-            
+            <!-- ====================== E. DETERMINATION DE L’IMPOT DU ===========================-->
             <div class="field col-12 md:col-12">
-                <p:panelGrid
-                    >
+                <p:panelGrid style="margin-top:20px">
+                    <f:facet name="header">
+                        <p:row styleClass="ui-primary">
+                            <p:column colspan="9">
+                                
+                                <h3>E. DETERMINATION DE L’IMPOT DU </h3>
+                                <p:spacer height="10" />
+                                <h5>1. Personnes Physiques et Morales </h5>
+                            </p:column>
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column styleClass="text-primary" >COL 1</p:column>
+                            <p:column styleClass="text-primary" colspan="2">COL 2</p:column>
+                            <p:column styleClass="text-primary" colspan="2">COL 3</p:column>
+                            <p:column styleClass="text-primary" colspan="2">COL 4</p:column>
+                            <p:column styleClass="text-primary" colspan="2">COL 5</p:column>
+                        </p:row>
 
-                     <p:row styleClass="my-heading-row" >
-                        E. DETERMINATION DE L’IMPOT DU 
+                    </f:facet>
+
+                    <p:row>
+                        <p:column styleClass="text-primary" style="font-weight: bold;">
+                            Lignes
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                            Tranches de revenus annuels nets imposables
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                            Montant
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                            Taux d’imposition
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                            Impôt correspondant
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column colspan="" styleClass="text-primary" >14</p:column>
+                        <p:column colspan="2" styleClass="text-primary" >0 – 1 800 000 FBU</p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            <p:inputText placeholder="......." value="#{impot.tranche_1}" rendered="true"/>
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" >0%</p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            <p:inputText placeholder="......."/>
+                        </p:column>
                     </p:row>
 
-                    <table>
-                        <thead>
-                          <tr>
-                            <th>COL 1</th>
-                            <th>COL 2</th>
-                            <th>COL 3</th>
-                            <th>COL 4</th>
-                            <th>COL 5</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th>Lignes</th>
-                            <th>Tranches de revenus annuels nets imposables </th>
-                            <th>Montant</th>
-                            <th>Taux d’imposition </th>
-                            <th>Impôt correspondant </th>
+                    <p:row>
+                        <p:column colspan="" styleClass="text-primary" >15</p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            1 800 001 – 3 600 000 FBU 
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            <p:inputText placeholder="......." value="#{impot.tranche_2}" rendered="true"/>
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            20% de la part qui dépasse 1 800 000 FBU
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            <p:inputText placeholder="......."/>
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column colspan="" styleClass="text-primary" >16</p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            Plus de 3 600 000 FBU
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            <p:inputText placeholder="......." value="#{impot.tranche_3}" rendered="true"/>
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            30% de la part qui dépasse 3600 000 FBU 
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            <p:inputText placeholder="......."/>
+                        </p:column>
+                    </p:row>
+                    
 
-                          </tr>
-                          <tr>
-                            <td>14</td>
-                            <td> 0 – 1 800 000 FBU </td>
-                            <td><p:inputText placeholder="......."/></td>
-                            <td>0%</td>
-                            <td><p:inputText placeholder="......."/></td>
-                          </tr>
-                          <tr>
-                            <td>15</td>
-                            <td> 1 800 001 – 3 600 000 FBU </td>
-                            <td><p:inputText placeholder="......."/></td>
-                            <td>20% de la part qui dépasse 1 800 000 FBU</td>
-                            <td><p:inputText placeholder="......."/></td>
-                          </tr>
-                          <tr>
-                            <td>16</td>
-                            <td> Plus de 3 600 000 FBU  </td>
-                            <td><p:inputText placeholder="......."/></td>
-                            <td>30% de la part qui dépasse 3600 000 FBU </td>
-                            <td><p:inputText placeholder="......."/></td>
-                          </tr>
-                          <tr>
-                            <td>17</td>
-                            <td colspan="3" ><b> Impôt total dû (Ligne 14+ Ligne 15+ Ligne 16) </b> </td>
-
-                            <td><p:inputText placeholder="......."/></td>
-                          </tr>
-                          <tr>
-                            <td>18</td>
-                            <td colspan="3"> <b> Acomptes sur l’impôt locatif déjà payés</b> </td>
-
-                            <td><p:inputText placeholder="......."/></td>
-                          </tr>
-                          <tr>
-                            <td>19</td>
-                            <td colspan="3"> <b>Total restant dû (Ligne 17- Ligne 18)</b> </td>
-
-                            <td><p:inputText placeholder="......." styleClass="my-inputtext"/></td>
-                          </tr>
-
-                        </tbody>
-                      </table>
+                    <p:row>
+                        <p:column colspan="" styleClass="text-primary" >17</p:column>
+                        <p:column colspan="6" styleClass="text-primary" style="font-weight: bold;" >
+                            Impôt total dû (Ligne 14+ Ligne 15+ Ligne 16)
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;" >
+                            <p:inputText placeholder="......."/>
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column colspan="" styleClass="text-primary" >18</p:column>
+                        <p:column colspan="6" styleClass="text-primary" style="font-weight: bold;" >
+                            Acomptes sur l’impôt locatif déjà payés
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;" >
+                            <p:inputText placeholder="......."/>
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column colspan="" styleClass="text-primary" >19</p:column>
+                        <p:column colspan="6" styleClass="text-primary" style="font-weight: bold;">
+                           Total restant dû (Ligne 17- Ligne 18)
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                            <p:inputText placeholder="......."/>
+                        </p:column>
+                    </p:row>
 
                 </p:panelGrid>
-            </div>
 
-         <div class="field col-12 md:col-10"></div>
+            </div>
+            
+            <!-- ======================F. RESERVE A L’ADMINISTRATION FISCALE ===========================-->
+            <p:spacer height="30"/>
+            <div class="field col-12 md:col-12">
+                <p:panelGrid style="margin-top:20px; width: 100%">
+                    
+                    <!--======================= Amande =====================-->
+                    <f:facet name="header">
+                        <p:row styleClass="ui-primary">
+                            <p:column colspan="3" style="text-align: left">
+                                <h3>F. RESERVE A L’ADMINISTRATION FISCALE </h3>
+                            </p:column>
+                        </p:row>
+                        
+                    </f:facet>
+
+                    <p:row>
+                        <p:column colspan="" style="font-weight: bold;">
+                           Amende fixe pour retard de déclaration et pénalités pour retard de paiement (BIF) :
+                        </p:column>
+                        <p:column colspan="2"/>
+                            
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column colspan="" >
+                            20. Base (Ligne 19)
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            <p:inputText placeholder="......."/>
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column colspan="" >
+                            21. Amende fixe
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            <p:inputText placeholder="......."/>
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column colspan="" >
+                            22. Pénalités pour paiement tardif (10%)
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            <p:inputText placeholder="......."/>
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column colspan="" style="font-weight: bold;" >
+                            23. Total amendes et pénalités (Lignes 21 + 22)
+                        </p:column>
+                        <p:column colspan="2" styleClass="text-primary" >
+                            <p:inputText placeholder="......."/>
+                        </p:column>
+                    </p:row>
+                    
+                </p:panelGrid>
+
+            </div>
+            
+            
+            
+            <!-- ====================== BUTTON  ===========================-->
+            <div class="field col-12 md:col-10"></div>
                 <div class="field col-12 md:col-2">
                     <p:commandButton 
-                        value="Enregistrer"
+                        value="Calculer"
                         ajax="false"
                         action="#{revenusController.save(revenuLocatif)}"
                         style="height: 41px; "
@@ -359,7 +403,6 @@
                 </div>
             </div>
              
-
         </h:form>
             
     </ui:define>

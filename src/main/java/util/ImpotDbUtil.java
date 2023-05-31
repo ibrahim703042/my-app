@@ -53,7 +53,7 @@ public class ImpotDbUtil {
                 impot.setId(resultSet.getInt("id"));  
                 impot.setIdSLocation(resultSet.getInt("id_s_location"));  
                 impot.setImpDPaye(resultSet.getDate("imp_d_paye")); 
-                impot.setImpotTotal(resultSet.getInt("impot_total")); 
+                //impot.setImpotTotal(resultSet.getInt("impot_total")); 
 
                 impotList.add(impot);  
             }   
@@ -84,7 +84,7 @@ public class ImpotDbUtil {
 
             pstmt.setInt(1, impot.getIdSLocation());
             pstmt.setDate(2, (Date) impot.getImpDPaye());
-            pstmt.setInt(3, impot.getImpotTotal());
+            //pstmt.setInt(3, impot.getImpotTotal());
             //statement.setDate(7, (java.sql.Date) impot.getDate());
 
             saveResult = pstmt.executeUpdate();
@@ -124,7 +124,7 @@ public class ImpotDbUtil {
                 impot.setId(resultSet.getInt("id"));  
                 impot.setIdSLocation(resultSet.getInt("id_s_location"));  
                 impot.setImpDPaye(resultSet.getDate("imp_d_paye")); 
-                impot.setImpotTotal(resultSet.getInt("impot_total")); 
+                //impot.setImpotTotal(resultSet.getInt("impot_total")); 
                 //impot.setDate(resultSet.getDate("date"));  
                //LocalDate date = LocalDate.now();
 
@@ -155,7 +155,7 @@ public class ImpotDbUtil {
             pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, impot.getIdSLocation());
             pstmt.setDate(2, (Date) impot.getImpDPaye());
-            pstmt.setInt(3, impot.getImpotTotal());
+            //pstmt.setInt(3, impot.getImpotTotal());
 
             pstmt.execute();
             connection.close();

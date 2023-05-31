@@ -5,76 +5,120 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
       
-    <!-- ======================D. REVENUS DES SOUS-LOCATIONS ===========================-->
-    <p:panelGrid
-        style="border:0px none; background-color:transparent;"
-    >
+    <!-- ======================E. DETERMINATION DE L’IMPOT DU  ===========================-->
+    <p:panelGrid style="margin-top:20px">
+        <f:facet name="header">
+            <p:row styleClass="ui-primary">
+                <p:column colspan="9">
 
-         <p:row styleClass="my-heading-row" >
-            E. DETERMINATION DE L’IMPOT DU 
+                    <h3>E. DETERMINATION DE L’IMPOT DU </h3>
+                    <p:spacer height="10" />
+                    <h5>1. Personnes Physiques et Morales </h5>
+                </p:column>
+            </p:row>
+
+            <p:row>
+                <p:column styleClass="text-primary" >COL 1</p:column>
+                <p:column styleClass="text-primary" colspan="2">COL 2</p:column>
+                <p:column styleClass="text-primary" colspan="2">COL 3</p:column>
+                <p:column styleClass="text-primary" colspan="2">COL 4</p:column>
+                <p:column styleClass="text-primary" colspan="2">COL 5</p:column>
+            </p:row>
+
+        </f:facet>
+
+        <p:row>
+            <p:column styleClass="text-primary" style="font-weight: bold;">
+                Lignes
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                Tranches de revenus annuels nets imposables
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                Montant
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                Taux d’imposition
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                Impôt correspondant
+            </p:column>
         </p:row>
 
-        <table>
-            <thead>
-              <tr>
-                <th>COL 1</th>
-                <th>COL 2</th>
-                <th>COL 3</th>
-                <th>COL 4</th>
-                <th>COL 5</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>Lignes</th>
-                <th>Tranches de revenus annuels nets imposables </th>
-                <th>Montant</th>
-                <th>Taux d’imposition </th>
-                <th>Impôt correspondant </th>
+        <p:row>
+            <p:column colspan="" styleClass="text-primary" >14</p:column>
+            <p:column colspan="2" styleClass="text-primary" >0 – 1 800 000 FBU</p:column>
+            <p:column colspan="2" styleClass="text-primary" >
+                <p:inputText placeholder="......."/>
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" >0%</p:column>
+            <p:column colspan="2" styleClass="text-primary" >
+                <p:inputText placeholder="......."/>
+            </p:column>
+        </p:row>
 
-              </tr>
-              <tr>
-                <td>14</td>
-                <td> 0 – 1 800 000 FBU </td>
-                <td><p:inputText placeholder="......."/></td>
-                <td>0%</td>
-                <td><p:inputText placeholder="......."/></td>
-              </tr>
-              <tr>
-                <td>15</td>
-                <td> 1 800 001 – 3 600 000 FBU </td>
-                <td><p:inputText placeholder="......."/></td>
-                <td>20% de la part qui dépasse 1 800 000 FBU</td>
-                <td><p:inputText placeholder="......."/></td>
-              </tr>
-              <tr>
-                <td>16</td>
-                <td> Plus de 3 600 000 FBU  </td>
-                <td><p:inputText placeholder="......."/></td>
-                <td>30% de la part qui dépasse 3600 000 FBU </td>
-                <td><p:inputText placeholder="......."/></td>
-              </tr>
-              <tr>
-                <td>17</td>
-                <td colspan="3" ><b> Impôt total dû (Ligne 14+ Ligne 15+ Ligne 16) </b> </td>
+        <p:row>
+            <p:column colspan="" styleClass="text-primary" >15</p:column>
+            <p:column colspan="2" styleClass="text-primary" >
+                1 800 001 – 3 600 000 FBU 
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" >
+                <p:inputText placeholder="......."/>
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" >
+                20% de la part qui dépasse 1 800 000 FBU
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" >
+                <p:inputText placeholder="......."/>
+            </p:column>
+        </p:row>
 
-                <td><p:inputText placeholder="......."/></td>
-              </tr>
-              <tr>
-                <td>18</td>
-                <td colspan="3"> <b> Acomptes sur l’impôt locatif déjà payés</b> </td>
+        <p:row>
+            <p:column colspan="" styleClass="text-primary" >16</p:column>
+            <p:column colspan="2" styleClass="text-primary" >
+                Plus de 3 600 000 FBU
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" >
+                <p:inputText placeholder="......."/>
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" >
+                30% de la part qui dépasse 3600 000 FBU 
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" >
+                <p:inputText placeholder="......."/>
+            </p:column>
+        </p:row>
 
-                <td><p:inputText placeholder="......."/></td>
-              </tr>
-              <tr>
-                <td>19</td>
-                <td colspan="3"> <b>Total restant dû (Ligne 17- Ligne 18)</b> </td>
 
-                <td><p:inputText placeholder="......." styleClass="my-inputtext"/></td>
-              </tr>
+        <p:row>
+            <p:column colspan="" styleClass="text-primary" >17</p:column>
+            <p:column colspan="6" styleClass="text-primary" style="font-weight: bold;" >
+                Impôt total dû (Ligne 14+ Ligne 15+ Ligne 16)
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;" >
+                <p:inputText placeholder="......."/>
+            </p:column>
+        </p:row>
 
-            </tbody>
-          </table>
+        <p:row>
+            <p:column colspan="" styleClass="text-primary" >18</p:column>
+            <p:column colspan="6" styleClass="text-primary" style="font-weight: bold;" >
+                Acomptes sur l’impôt locatif déjà payés
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;" >
+                <p:inputText placeholder="......."/>
+            </p:column>
+        </p:row>
+
+        <p:row>
+            <p:column colspan="" styleClass="text-primary" >19</p:column>
+            <p:column colspan="6" styleClass="text-primary" style="font-weight: bold;">
+               Total restant dû (Ligne 17- Ligne 18)
+            </p:column>
+            <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                <p:inputText placeholder="......."/>
+            </p:column>
+        </p:row>
 
     </p:panelGrid>
 

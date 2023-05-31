@@ -29,6 +29,7 @@ util\CollineDbUtil.class
 model\Abbattement.class
 controller\RepresentantController.class
 model\Impot.class
+controller\DeclarationController.class
 util\QuittanceDbUtil.class
 model\Payement.class
 util\AdministrateurDbUtil.class
