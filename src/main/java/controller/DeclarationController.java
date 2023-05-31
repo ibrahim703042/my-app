@@ -74,6 +74,18 @@ public class DeclarationController implements Serializable {
         return "/pages/declaration/edit.xhtml?faces-redirect=true";
     }
     
+    //************************  edit data by Id  **************************/
+    public String calcul(int id) {
+        
+        try {
+            declarationDbUtil.ViewById(id);
+
+        }catch (Exception ex) {
+            addErrorMessage ((SQLException) ex);
+        }
+        return "/pages/declaration/calculRevenu.xhtml?faces-redirect=true";
+    }
+    
     //************************ update data **************************/
     public String update(Declaration c) {
         

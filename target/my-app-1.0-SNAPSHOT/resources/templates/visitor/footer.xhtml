@@ -3,11 +3,75 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns = "http://www.w3.org/1999/xhtml"   
-   xmlns:ui = "http://java.sun.com/jsf/facelets">
+      xmlns:ui = "http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
    
    <body>
       <ui:composition> 
-         <h1>Default Footer</h1>
+           <section class="footer fixed bottom-0">
+                <div class="container text-center text-md-start mt-5">
+
+                  <div class="row mt-3">
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                      <div class="mb-4">
+                        <!--<img src="assets/image/OBR_3.png" class="img-fluid" alt="logo" height="40" width="190">-->
+                        <p:graphicImage name="image/OBR_3.png" style="height:50px; width: 190px;" />
+                      </div>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum ipsam culpa, 
+                        officiis accusantium qui consectetur! Soluta, iste tempora id ab alias minus 
+                        exercitationem possimus, dolor cupiditate sed, animi nemo adipisci.
+                      </p>
+                    </div>
+
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                      <h6 class="text-uppercase fw-bold mb-4">
+                        Title 1
+                      </h6>
+                      <p>
+<!--                        <a class="text-decoration-none" href="#!" class="text-reset">Link 1</a><br/>
+                        <a class="text-decoration-none" href="#!" class="text-reset">Link 2</a><br/>
+                        <a class="text-decoration-none" href="#!" class="text-reset">Link 3</a><br/>
+                        <a class="text-decoration-none" href="#!" class="text-reset">Link 4</a><br/>-->
+                      </p>
+
+                    </div>
+
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-2">
+                      <h6 class="text-uppercase fw-bold mb-4">
+                        Title 2
+                      </h6>
+                      <p>
+<!--                        <a class="text-decoration-none" href="#!" class="text-reset">Link 1</a><br/>
+                        <a class="text-decoration-none" href="#!" class="text-reset">Link 2</a><br/>
+                        <a class="text-decoration-none" href="#!" class="text-reset">Link 3</a><br/>
+                        <a class="text-decoration-none" href="#!" class="text-reset">Link 4</a><br/>-->
+                      </p>
+                    </div>
+
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                      <h6 class="text-uppercase fw-bold mb-4">Title 3</h6>
+                      <p>
+                        <i class="fas fa-home me-3"></i> Bujumbura, Virago 1001, By <br/>
+                        <i class="fas fa-envelope me-3"></i>info@example.com <br/>
+                        <i class="fas fa-phone me-3"></i> + 257 22 34 67 88 <br/>
+                        <i class="fas fa-print me-3"></i> + 257 22 34 67 89
+                      </p>
+                    </div>
+
+                  </div>
+                </div>
+              </section>
+
+              <!-- Copyright -->
+              <div class="text-center bg-black text-white-50 p-2">
+                <div class="col-md-12">
+                  <p class="fw-bold">
+                    Copyright &copy; 2023. All rights reserved
+                    <span>Created by Kwizera Ibrahim</span>
+                  </p>
+                </div>
+              </div>
       </ui:composition>	
    </body>
 </html>

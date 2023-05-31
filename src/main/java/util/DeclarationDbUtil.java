@@ -40,11 +40,6 @@ public class DeclarationDbUtil {
         ArrayList declarationList = new ArrayList();
         
         try {
-            String quer = ""
-                    + "SELECT * "
-                    + "FROM declaration "
-                    + "WHERE id IS NOT NULL "
-                    + "ORDER BY id DESC";
             
             String query = ""
                     + "SELECT "
@@ -128,7 +123,7 @@ public class DeclarationDbUtil {
     public void findById(int declarationId) {
         
         Declaration declaration = null;
-        System.out.println(" findById() : Province Id: " + declarationId);
+        System.out.println(" findById() : Immeuble Id: " + declarationId);
         
         /* Setting The Particular province Details In Session */
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -167,6 +162,96 @@ public class DeclarationDbUtil {
         }
     }
 	
+    //*************************** View data by id *****************/
+    public void ViewById(int declarationId ) {
+        
+        Declaration declaration = null;
+        System.out.println(" findById() : Declaration Id: " + declarationId);
+        
+        /* Setting The Particular province Details In Session */
+        Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        
+        try {
+            String query =
+                    "SELECT "
+                    + "contribuable.id As Contribuable_ID, "
+                    + "contribuable.nom As nom_contribuable, "
+                    + "contribuable.email AS email_contribuable, "
+                    + "contribuable.telephone AS tel_contribuable, "
+                    + "contribuable.BP AS BP_contribuable, "
+                    + "representant.id As representant_ID, "
+                    + "representant.nomRepresentant As nom_representant, "
+                    + "representant.prenomRepresentant AS prenom_representant, "
+                    + "representant.emailRepresentant AS email_representant, "
+                    + "representant.telephoneRepresentant AS tel_representant, "
+                    + "representant.bpRepresentant AS BP_representant, "
+                    + "immeuble.id as Immeuble_ID, "
+                    + "immeuble.nomAvenue as Rue , "
+                    + "colline.nomColline as Colline,  "
+                    + "commune.nomCommune as Commune "
+                    + "declaration.*"
+                    + "FROM representant, declaration "
+                    + "JOIN contribuable "
+                    + "ON contribuable.id_representant = representant.id "
+                    + "JOIN immeuble "
+                    + "ON immeuble.id_contribuable = contribuable.id "
+                    + "JOIN colline "
+                    + "ON immeuble.id_colline = colline.id "
+                    + "JOIN commune ON colline.id_commune = commune.id "
+                    + "WHERE declaration.id = " + declarationId ;
+            
+
+            // String query = "SELECT * FROM declaration WHERE id IS NOT NULL ORDER BY id DESC";
+            connection = MySQLJDBCUtil.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);  
+
+            while(resultSet.next()) { 
+
+                declaration = new Declaration();
+                
+                /* *******contribuable **** */
+                
+                declaration.setId(resultSet.getInt("id"));  
+                declaration.setIdImmeuble(resultSet.getInt("Immeuble_ID"));  
+                declaration.setNif(resultSet.getInt("NIF"));  
+                declaration.setCcf(resultSet.getInt("CCF")); 
+                declaration.setDate_1(resultSet.getDate("datePlutot")); 
+                declaration.setDate_2(resultSet.getDate("datePlutard")); 
+ 
+                declaration.setIdContribuable(resultSet.getInt("Contribuable_ID"));  
+                declaration.setNomContribuable(resultSet.getString("nom_contribuable"));  
+                declaration.setNomColline(resultSet.getString("Colline"));  
+                declaration.setNomCommune(resultSet.getString("Commune"));  
+                declaration.setNomProvince(resultSet.getString("Province"));  
+                declaration.setNomAvenue(resultSet.getString("Rue"));  
+                declaration.setTelephoneContribuable(resultSet.getString("tel_contribuable"));  
+                declaration.setBpContribuable(resultSet.getString("BP_contribuable"));  
+                declaration.setEmailContribuable(resultSet.getString("email_contribuable"));  
+                
+                /* *******representant **** */
+//                declaration.setIdRepresentant(resultSet.getInt("Representant_ID"));  
+//                declaration.setNomRepresentant(resultSet.getString("nom_representant"));  
+//                declaration.setPrenomRepresentant(resultSet.getString("prenom_representant"));  
+//                declaration.setNomColline(resultSet.getString("Colline"));  
+//                declaration.setNomCommune(resultSet.getString("Commune"));  
+//                declaration.setNomProvince(resultSet.getString("Province"));  
+//                declaration.setNomAvenue(resultSet.getString("Rue"));  
+//                declaration.setTelephoneRepresentant(resultSet.getString("tel_representant"));
+//                declaration.setBpRepresentant(resultSet.getString("BP_representant"));  
+//                declaration.setEmailRepresentant(resultSet.getString("email_representant"));
+                
+            }   
+
+            sessionMap.put("declarationMapped", declaration);
+            connection.close();
+            
+        } catch(SQLException sqlException) {  
+            sqlException.printStackTrace();
+        }
+
+    }
+
     //************** update data ******************************/
     public void update(Declaration declaration){
 

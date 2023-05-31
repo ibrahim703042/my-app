@@ -104,14 +104,14 @@
                         />
                     </div>
                     
-                <p:divider styleClass="ui-divider-dashed" />
+                    <p:divider styleClass="ui-divider-dashed" />
                 
-<!-- ==================================== Representant Fiscale============================================= -->
+                    <!-- ==================================== Representant Fiscale============================================= -->
                 
-                <p:spacer height="40" />
-                <div class="field col-12 md:col-6 font-medium text-500 mb-3">
-                    B. REPRESENTANT DU CONTRIBUABLE
-                </div>
+                    <p:spacer height="40" />
+                    <div class="field col-12 md:col-6 font-medium text-500 mb-3">
+                        B. REPRESENTANT DU CONTRIBUABLE
+                    </div>
                 
                     <!-- ======================first name and last name ====================== -->
                     <div class="field col-12 md:col-6">
@@ -200,75 +200,75 @@
                         />
                     </div>
                 
-                <p:divider styleClass="ui-divider-dashed" />
+                    <p:divider styleClass="ui-divider-dashed" />
                 
-<!-- ============================================ Abbattement ============================================= -->
+                    <!-- ================= Abbattement ===================== -->
                 
-                <p:spacer height="30" />
+                    <p:spacer height="30" />
                 
-                <div class="field col-12 md:col-6 font-medium text-500 mb-3">
-                    C. ABBATTEMENT
-                </div>
+                    <div class="field col-12 md:col-6 font-medium text-500 mb-3">
+                        C. ABBATTEMENT
+                    </div>
                     
-                <div class=" flex field col-12 md:col-12">
-                    <p:outputLabel for="@next" >
-                        Bénéficiaire d’abattement (Article 84)2 
-                    </p:outputLabel>
-                    <p:spacer width="20" />
-                    <p:selectOneRadio value="#">
-                        <f:selectItem itemValue="Oui" itemLabel="Oui"/>
-                        <f:selectItem itemValue="No" itemLabel="No"/>
-                    </p:selectOneRadio>
-                    <p:message for="@previous"/>
-                    <h:outputText/>
-                </div>
+                    <div class=" flex field col-12 md:col-12">
+                        <p:outputLabel for="@next" >
+                            Bénéficiaire d’abattement (Article 84)2 
+                        </p:outputLabel>
+                        <p:spacer width="20" />
+                        <p:selectOneRadio value="#">
+                            <f:selectItem itemValue="Oui" itemLabel="Oui"/>
+                            <f:selectItem itemValue="No" itemLabel="No"/>
+                        </p:selectOneRadio>
+                        <p:message for="@previous"/>
+                        <h:outputText/>
+                    </div>
 
-                <div class=" field col-12 md:col-12">
-                    <p:outputLabel class="font-bold" >
-                        Motif d’abattement :  
-                    </p:outputLabel>
-                    
-                    <!--==============================A======================================-->
-                    <div class=" flex field col-12 md:col-12">
-                        <p:outputLabel styleClass="mr-3" >
-                            A. Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à l’âge de 25 ans, orphelin de père et de mère, héritier ou usufruitier
+                    <div class=" field col-12 md:col-12">
+                        <p:outputLabel class="font-bold" >
+                            Motif d’abattement :  
                         </p:outputLabel>
-                        <p:selectBooleanCheckbox value="#"/>
+
+                        <!--==============================A======================================-->
+                        <div class=" flex field col-12 md:col-12">
+                            <p:outputLabel styleClass="mr-3" >
+                                A. Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à l’âge de 25 ans, orphelin de père et de mère, héritier ou usufruitier
+                            </p:outputLabel>
+                            <p:selectBooleanCheckbox value="#"/>
+                        </div>
+
+                        <!--==============================B======================================-->
+                        <div class=" flex field col-12 md:col-12">
+                            <p:outputLabel styleClass="mr-3" >
+                              B. Enfant mineur ou enfant majeur, copropriétaires, cohéritiers et co-usufruitier
+                            </p:outputLabel>
+                            <p:selectBooleanCheckbox value="#"/>
+                        </div>
+
+                        <!--==============================C======================================-->
+                        <div class=" flex field col-12 md:col-12">
+                            <p:outputLabel styleClass="mr-3" >
+                                C. Veuf (veuve) propriétaire, possesseur, titulaire, héritier ou usufruitier
+                            </p:outputLabel>
+                            <p:selectBooleanCheckbox value="#"/>
+                        </div>
+
+                        <!--==============================D======================================-->
+                        <div class=" flex field col-12 md:col-12">
+                            <p:outputLabel styleClass="mr-3">
+                                D. Retraité ou handicapé, personne ayant atteint l’âge légal de la retraite propriétaire, possesseur, titulaire, héritier ou usufruitier <br/>
+                            </p:outputLabel>
+                            <p:selectBooleanCheckbox value="#"/>
+                        </div>
+
+                        <!--==============================E======================================-->
+                        <div class=" flex field col-12 md:col-12">
+                            <p:outputLabel styleClass="mr-3">
+                                E. Démobilisé non en fonction publique, privée ou élective 
+                            </p:outputLabel>
+                            <p:selectBooleanCheckbox value="#"/>
+                        </div>
+
                     </div>
-                    
-                    <!--==============================B======================================-->
-                    <div class=" flex field col-12 md:col-12">
-                        <p:outputLabel styleClass="mr-3" >
-                          B. Enfant mineur ou enfant majeur, copropriétaires, cohéritiers et co-usufruitier
-                        </p:outputLabel>
-                        <p:selectBooleanCheckbox value="#"/>
-                    </div>
-                    
-                    <!--==============================C======================================-->
-                    <div class=" flex field col-12 md:col-12">
-                        <p:outputLabel styleClass="mr-3" >
-                            C. Veuf (veuve) propriétaire, possesseur, titulaire, héritier ou usufruitier
-                        </p:outputLabel>
-                        <p:selectBooleanCheckbox value="#"/>
-                    </div>
-                    
-                    <!--==============================D======================================-->
-                    <div class=" flex field col-12 md:col-12">
-                        <p:outputLabel styleClass="mr-3">
-                            D. Retraité ou handicapé, personne ayant atteint l’âge légal de la retraite propriétaire, possesseur, titulaire, héritier ou usufruitier <br/>
-                        </p:outputLabel>
-                        <p:selectBooleanCheckbox value="#"/>
-                    </div>
-                    
-                    <!--==============================E======================================-->
-                    <div class=" flex field col-12 md:col-12">
-                        <p:outputLabel styleClass="mr-3">
-                            E. Démobilisé non en fonction publique, privée ou élective 
-                        </p:outputLabel>
-                        <p:selectBooleanCheckbox value="#"/>
-                    </div>
-                    
-                </div>
                 
                 
                 <div class="field col-12 md:col-10"></div>
@@ -284,5 +284,4 @@
 
         </h:form>
             
-        
 </ui:composition>
