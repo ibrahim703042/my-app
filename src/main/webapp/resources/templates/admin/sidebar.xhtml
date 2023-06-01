@@ -147,7 +147,7 @@
                     <!-- =============== Declaration section ================= -->
                     
                     <li class="item">
-                      <p:link class="no-underline nav-link" outcome="/pages/declaration/template?faces-redirect=true" >
+                      <p:link class="no-underline nav-link"  outcome="/pages/declaration/template?faces-redirect=true" >
                             <i class="pi pi-th-large mr-2" style="font-size: 1rem"></i>
                             <span class="link_name">Declaration</span>
                         </p:link>
@@ -158,10 +158,11 @@
                     
                     <li class="item" >
                         <h1>#{login.nom}</h1>
-                      <p:link class="no-underline nav-link" >
+                        <p:link class="no-underline nav-link" >
                             <i class="pi pi-th-large mr-2" style="font-size: 1rem"></i>
                             <span class="link_name">Se deconnectez</span>
                         </p:link>
+                        <!--<p:commandButton  ajax="false" value="Se deconnectez" action="#{login.logout}"  />-->
                     </li>
                     
               </ul>

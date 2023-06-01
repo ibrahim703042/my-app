@@ -14,12 +14,11 @@ public class LoginDAO {
     public static Connection connection;
     public static ResultSet resultSet;
     public static PreparedStatement pstmt;
+    private static String query = "SELECT * FROM administrateur WHERE email = ? AND motPasse = ? " ;
     
     public static boolean validate(String email, String motPasse) {
 
     try {
-        
-        String query = "SELECT * FROM administrateur WHERE email = ? AND motPasse = ? " ;
         
         connection = MySQLJDBCUtil.getConnection();
         pstmt = connection.prepareStatement(query);

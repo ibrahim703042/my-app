@@ -13,7 +13,7 @@
 //@SessionScoped
 //public class Login implements Serializable {
 //	
-//    private static final long serialVersionUID = 1094801825228386363L;
+//    private static final long serialVersionUID = 1L;
 //
 //    private String email;
 //    private String nom;
@@ -51,7 +51,8 @@
 //    public void setMessage(String message) {
 //        this.message = message;
 //    }
-//	
+//
+//    
 //    ///******** validate login ****************************//
 //    public String validateUsernamePassword() {
 //        
@@ -65,7 +66,6 @@
 //            HttpSession session = SessionUtils.getSession();
 //            session.setAttribute("email", email);
 //            
-////            return "dashboard?faces-redirect=true";
 //            return "dashboard";
 //            
 //        }else{

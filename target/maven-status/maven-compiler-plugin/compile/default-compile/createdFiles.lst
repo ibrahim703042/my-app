@@ -1,6 +1,7 @@
 model\RevenuLocatif.class
 controller\RevenusController.class
 util\ImmeubleDbUtil.class
+model\Personne.class
 model\Amande.class
 util\RepresentantDbUtil.class
 util\RevenusDbUtil.class
@@ -14,7 +15,9 @@ model\NavigationController.class
 model\Commune.class
 dao\LoginDAO.class
 util\PermissionDbUtil.class
+model\auth\SessionUtils.class
 util\PayementDbUtil.class
+model\auth\Login.class
 model\Contribuable.class
 dbconnection\TestConnection.class
 util\DeclarationDbUtil.class
@@ -40,6 +43,7 @@ model\Administrateur.class
 model\Role.class
 model\Permission.class
 controller\RoleController.class
+filter\AuthorizationFilter.class
 model\RevenuSousLocation.class
 controller\AbbattementController.class
 com\obr\app\resources\JakartaEE91Resource.class

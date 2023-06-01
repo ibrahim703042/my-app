@@ -8,7 +8,6 @@
 //import jakarta.servlet.http.HttpSession;
 //
 //@WebFilter(filterName = "AuthFilter", urlPatterns = { "*.xhtml" })
-//@SuppressWarnings("IndexOfReplaceableByContains")
 //
 //public class AuthorizationFilter implements Filter {
 //
@@ -22,24 +21,31 @@
 //
 //    @Override
 //    public void doFilter(ServletRequest request, ServletResponse response,FilterChain chain) throws IOException, ServletException {
-//
+//        
 //    try {
 //
-//        HttpServletRequest reqt = (HttpServletRequest) request;
+//        
+//        HttpServletRequest req = (HttpServletRequest) request;
+//        HttpSession session = req.getSession(false);
 //        HttpServletResponse resp = (HttpServletResponse) response;
-//        HttpSession ses = reqt.getSession(false);
+//        
+//        //Administrateur loggedUser = (Administrateur) session.getAttribute("loggedUser");
 //
-//        String reqURI = reqt.getRequestURI();
+//        String reqURI = req.getRequestURI();
+//        
+//        
 //        if (
-//            reqURI.indexOf("/login.xhtml") >= 0
-//            || (ses != null && ses.getAttribute("username") != null)
-//            || reqURI.indexOf("/public/") >= 0
-//            || reqURI.contains("javax.faces.resource")){
+//            reqURI.contains("/login.xhtml")
+//            || (session != null && session.getAttribute("username") != null)
+//            || reqURI.contains("javax.faces.resource")
+//        ){
 //            
 //            chain.doFilter(request, response);
+//           
 //            
 //        }else{
-//            resp.sendRedirect(reqt.getContextPath() + "/faces/login.xhtml");
+//            resp.sendRedirect(req.getContextPath() + "/faces/login.xhtml");
+//            
 //        }
 //
 //        } catch (ServletException | IOException e) {
