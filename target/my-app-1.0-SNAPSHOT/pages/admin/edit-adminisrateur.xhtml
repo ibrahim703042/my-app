@@ -5,10 +5,10 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
                 
-   <h:form id="dialogs-admin" >
+   <h:form id="dialogs-edit-admin" >
        <p:growl id="messages" showDetail="true" />
-        <p:dialog header="Administrateur Details" widgetVar="manageAdminDialog" minHeight="40" width="750" showEffect="fade">
-            <p:outputPanel id="manage-admin-content" class="ui-fluid">
+        <p:dialog header="Edit Administrateur Details" widgetVar="manageAdminDialog" minHeight="40" width="750" showEffect="fade">
+            <p:outputPanel id="manage-edit-admin-content" class="ui-fluid">
                 
                 <p:outputPanel rendered="#{not empty adminController.administrateur}">
 
@@ -51,7 +51,7 @@
                         
                         <div class="field col-12 md:col-6">
                             <p:outputLabel class="font-bold"  value="Role"/>
-                            <p:selectOneMenu value="#{adminController.administrateur.roleId}" id="idRole" style="height: 41px;" >
+                            <p:selectOneMenu value="#{administrateur.roleId}" id="idRole" style="height: 41px;" >
                                 
                                 <f:selectItem itemLabel="Choisir Role" />
                                 <f:selectItems var="role" value="#{adminController.listRole}"
@@ -79,15 +79,15 @@
                 <p:commandButton 
                     value="Modifier" 
                     actionListener="#{adminController.update}"
-                    update="manage-admin-content" 
-                    process="manage-admin-content @this" 
+                    update="manage-edit-admin-content" 
+                    process="manage-edit-admin-content @this" 
                 />
                 
                 <p:commandButton 
                     value="Enregistrer" 
                     actionListener="#{adminController.create}"
-                    update="manage-admin-content messages" 
-                    process="manage-admin-content @this" 
+                    update="manage-edit-admin-content messages" 
+                    process="manage-edit-admin-content @this" 
                 />
                 
                 <p:commandButton 

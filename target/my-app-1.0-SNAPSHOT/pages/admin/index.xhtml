@@ -69,9 +69,11 @@
                         <h:outputText value="#{administrateur.bp}" />
                     </p:column>
                     
+                    
                     <p:column headerText="Role" sortBy="#{administrateur.nomRole}" filterBy="#{administrateur.nomRole}" style="width: 10%">
                         <h:outputText value="#{administrateur.nomRole}" />
                     </p:column>
+                   
 
                     <!--
                      <p:column headerText="Date" sortBy="#{administrateur.date}" filterBy="#{administrateur.date}" >
@@ -88,8 +90,8 @@
                             update=":dialogs-permission:manage-permission-content"
                             process="@this"
                         >
-                            <!--<f:setPropertyActionListener value="#{administrateur}" target="#{adminController.administrateur}" />-->
-                            <!--<p:resetInput target=":dialogs-permission:manage-permission-content" />-->
+                            <f:setPropertyActionListener value="#{administrateur}" target="#{adminController.administrateur}" />
+                            <p:resetInput target=":dialogs-permission:manage-permission-content" />
                         </p:commandButton>
                         
                         <p:commandButton
@@ -117,6 +119,7 @@
                 </p:dataTable>
             </h:form>
             <ui:include src="ajouter.xhtml" />
+            <ui:include src="edit-adminisrateur.xhtml" />
             <ui:include src="permission.xhtml" />
         </div>
             
