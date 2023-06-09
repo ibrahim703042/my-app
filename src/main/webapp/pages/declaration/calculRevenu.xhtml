@@ -78,14 +78,14 @@
                             <div class="field col-12 md:col-4">
                                 <component:inputTextField
                                     label="Avenue/Rue"
-                                    value="#{avenue.nomAvenue}"
+                                    value="#{declarationMapped.nomAvenue}"
                                 />
                             </div>
 
                             <div class="field col-12 md:col-4">
                                 <component:inputTextField
                                     label="Colline/Quartier"
-                                    value="#{colline.nomColline}"
+                                    value="#{declarationMapped.nomColline}"
                                 />
                             </div>
 
@@ -93,14 +93,14 @@
                             <div class="field col-12 md:col-6">
                                 <component:inputTextField
                                     label="Commune"
-                                    value="#{commune.nomCommune}"
+                                    value="#{declarationMapped.nomCommune}"
                                 />
                             </div>
 
                             <div class="field col-12 md:col-6">
                                 <component:inputTextField
                                     label="Province"
-                                    value="#{province.nomProvince}"
+                                    value="#{declarationMapped.nomProvince}"
                                 />
                             </div>
 
@@ -158,14 +158,14 @@
                             <div class="field col-12 md:col-4">
                                 <component:inputTextField
                                     label="Avenue/Rue"
-                                    value="#{avenue.nomAvenue}"
+                                    value="#{declarationMapped.nomAvenue}"
                                 />
                             </div>
 
                             <div class="field col-12 md:col-4">
                                 <component:inputTextField
                                     label="Colline/Quartier"
-                                    value="#{colline.nomColline}"
+                                    value="#{declarationMapped.nomColline}"
                                 />
                             </div>
 
@@ -173,14 +173,14 @@
                             <div class="field col-12 md:col-6">
                                 <component:inputTextField
                                     label="Commune"
-                                    value="#{commune.nomCommune}"
+                                    value="#{declarationMapped.nomCommune}"
                                 />
                             </div>
 
                             <div class="field col-12 md:col-6">
                                 <component:inputTextField
                                     label="Province"
-                                    value="#{province.nomProvince}"
+                                    value="#{declarationMapped.nomProvince}"
                                 />
                             </div>
 
@@ -237,7 +237,7 @@
                                  <p:outputLabel>
                                     <span>1. Loyers encaissés exonérés</span>
                                 </p:outputLabel>
-                                <p:inputText 
+                                <p:inputNumber 
                                     placeholder="......" 
                                     value="#{revenuLocatif.loyerExonere}"
                                 />
@@ -245,7 +245,7 @@
                                  <p:outputLabel>
                                     <span>2. Loyers encaissés imposables  (Annexes II) </span>
                                 </p:outputLabel>
-                                <p:inputText 
+                                <p:inputNumber 
                                     placeholder="......" 
                                     value="#{revenuLocatif.loyerImposable}"
                                 />
@@ -253,7 +253,7 @@
                                 <h:outputLabel>
                                     <span>3. Charges incombant au propriétaire, payées par les locataires</span>
                                 </h:outputLabel>
-                                <p:inputText 
+                                <p:inputNumber 
                                     placeholder="......" 
                                     value="#{revenuLocatif.chargeIncombat}"
                                 />
@@ -261,7 +261,7 @@
                                 <h:outputLabel>
                                     <span>4. Revenu brut (Ligne 2 + Ligne3)</span>
                                 </h:outputLabel>
-                                <p:inputText 
+                                <p:inputNumber 
                                     placeholder="......" 
                                     value="#{revenuLocatif.revenuBrut}"
                                 />
@@ -269,7 +269,7 @@
                                 <h:outputLabel>
                                     <span>5.Déduction pour dépenses d’entretien (Ligne 4 × 40%) )</span>
                                 </h:outputLabel>
-                                <p:inputText 
+                                <p:inputNumber 
                                     placeholder="......" 
                                     value="#{revenuLocatif.deductionDepenses}"
                                 />
@@ -280,7 +280,7 @@
                                         du revenu imposable effectivement payés durant l’exercice d’imposition  
                                     </span>
                                 </h:outputLabel>
-                                <p:inputText 
+                                <p:inputNumber 
                                     placeholder="......" 
                                     value="#{revenuLocatif.interetEmprunt}"
                                 />
@@ -290,7 +290,7 @@
                                         7. Revenus nets imposables (Ligne 4 – Ligne 5– Ligne 6) 
                                     </b>
                                 </h:outputLabel>
-                                <p:inputText 
+                                <p:inputNumber 
                                     placeholder="......" 
                                     value="#{revenuLocatif.revenuNetImposable}"
                                 />
@@ -317,7 +317,7 @@
                                  <p:outputLabel>
                                     <span>8. Recettes des sous-locations</span>
                                 </p:outputLabel>
-                                <p:inputText 
+                                <p:inputNumber 
                                     placeholder="......" 
                                     value="#{revenuSousLocation.recetteSousLocation}"
                                 />
@@ -325,7 +325,7 @@
                                  <p:outputLabel>
                                     <span>9. Loyers payés pour la location des immeubles et terrains donnés en sous-location</span>
                                 </p:outputLabel>
-                                <p:inputText 
+                                <p:inputNumber 
                                     placeholder="......" 
                                     value="#{revenuSousLocation.loyerPayes}"
                                 />
@@ -333,7 +333,7 @@
                                 <h:outputLabel>
                                     <b>10. Revenus nets imposables (Ligne 8 – Ligne 9) </b>
                                 </h:outputLabel>
-                                <p:inputText 
+                                <p:inputNumber 
                                     placeholder="......" 
                                     value="#{revenuSousLocation.revenusNetsImposables}"
                                 />
@@ -341,7 +341,7 @@
                                 <h:outputLabel>
                                     <b>11. Total revenus nets imposables (Ligne 7+Ligne 10)  </b>
                                 </h:outputLabel>
-                                <p:inputText 
+                                <p:inputNumber 
                                     placeholder="......" 
                                     value="#{revenuSousLocation.totalRevenusNetsImposables}"
                                 />
@@ -349,7 +349,7 @@
                                 <h:outputLabel>
                                     <span>12. Abattements </span>
                                 </h:outputLabel>
-                                <p:inputText 
+                                <p:inputNumber 
                                     placeholder="......" 
                                     value="#{revenuSousLocation.abbattements}"
                                 />
@@ -359,9 +359,9 @@
                                         13. REVENU NET IMPOSABLE (Ligne 11- Ligne 12)
                                     </span>
                                 </h:outputLabel>
-                                <p:inputText 
+                                <p:inputNumber 
                                     placeholder="......" 
-                                    value="#{revenuSousLocation.revenuNetImposable}"
+                                    value="#{revenuSousLocation.revenuSousNetImposable}"
                                 />
 
                             </p:panelGrid>
@@ -412,11 +412,11 @@
                                     <p:column colspan="" styleClass="text-primary" >14</p:column>
                                     <p:column colspan="2" styleClass="text-primary" >0 – 1 800 000 FBU</p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputText placeholder="......." value="#{impot.tranche_1}" rendered="true"/>
+                                        <p:inputNumber placeholder="......." value="#{impot.montant_Col_3}" rendered="true"/>
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >0%</p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputText placeholder="......."/>
+                                        <p:inputNumber placeholder="....... " value="#{impot.tranche_1_Col_5}" />
                                     </p:column>
                                 </p:row>
 
@@ -426,13 +426,13 @@
                                         1 800 001 – 3 600 000 FBU 
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputText placeholder="......." value="#{impot.tranche_2}" rendered="true"/>
+                                        <p:inputNumber placeholder="......." value="#{impot.montant_Col_3}" rendered="true"/>
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
                                         20% de la part qui dépasse 1 800 000 FBU
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputText placeholder="......."/>
+                                        <p:inputNumber placeholder="......." value="#{impot.tranche_2_Col_5}"/>
                                     </p:column>
                                 </p:row>
 
@@ -442,13 +442,13 @@
                                         Plus de 3 600 000 FBU
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputText placeholder="......." value="#{impot.tranche_3}" rendered="true"/>
+                                        <p:inputNumber placeholder="......." value="#{impot.montant_Col_3}" rendered="true"/>
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
                                         30% de la part qui dépasse 3600 000 FBU 
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputText placeholder="......."/>
+                                        <p:inputNumber placeholder="......." value="#{impot.tranche_3_Col_5}"/>
                                     </p:column>
                                 </p:row>
 
@@ -459,7 +459,7 @@
                                         Impôt total dû (Ligne 14+ Ligne 15+ Ligne 16)
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;" >
-                                        <p:inputText placeholder="......."/>
+                                        <p:inputNumber placeholder="......." value="#{impot.impotTotalDu}"/>
                                     </p:column>
                                 </p:row>
 
@@ -469,7 +469,7 @@
                                         Acomptes sur l’impôt locatif déjà payés
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;" >
-                                        <p:inputText placeholder="......."/>
+                                        <p:inputNumber placeholder="......." value="#{impot.accompteImpotDejaPaye}"/>
                                     </p:column>
                                 </p:row>
 
@@ -479,7 +479,7 @@
                                        Total restant dû (Ligne 17- Ligne 18)
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
-                                        <p:inputText placeholder="......."/>
+                                        <p:inputNumber placeholder="......." value="#{impot.totalRestantDu}"/>
                                     </p:column>
                                 </p:row>
 
@@ -515,7 +515,7 @@
                                         20. Base (Ligne 19)
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputText placeholder="......."/>
+                                        <p:inputNumber placeholder="......."/>
                                     </p:column>
                                 </p:row>
 
@@ -524,7 +524,7 @@
                                         21. Amende fixe
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputText placeholder="......."/>
+                                        <p:inputNumber placeholder="......."/>
                                     </p:column>
                                 </p:row>
 
@@ -533,7 +533,7 @@
                                         22. Pénalités pour paiement tardif (10%)
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputText placeholder="......."/>
+                                        <p:inputNumber placeholder="......."/>
                                     </p:column>
                                 </p:row>
 
@@ -542,7 +542,7 @@
                                         23. Total amendes et pénalités (Lignes 21 + 22)
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputText placeholder="......."/>
+                                        <p:inputNumber placeholder="......."/>
                                     </p:column>
                                 </p:row>
 

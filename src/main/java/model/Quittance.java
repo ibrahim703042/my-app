@@ -15,22 +15,12 @@ import java.util.Date;
 public class Quittance implements Serializable {
 
     private Integer id;
-    private int idPayement;
+    private double montantPaye;
     private Date dateQuittance;
-    private int montantRestante;
+    private double montantRestanteDu;
+    private Impot idImpot;
 
     public Quittance() {
-    }
-
-    public Quittance(Integer id) {
-        this.id = id;
-    }
-
-    public Quittance(Integer id, int idPayement, Date dateQuittance, int montantRestante) {
-        this.id = id;
-        this.idPayement = idPayement;
-        this.dateQuittance = dateQuittance;
-        this.montantRestante = montantRestante;
     }
 
     public Integer getId() {
@@ -41,12 +31,12 @@ public class Quittance implements Serializable {
         this.id = id;
     }
 
-    public int getIdPayement() {
-        return idPayement;
+    public double getMontantPaye() {
+        return montantPaye;
     }
 
-    public void setIdPayement(int idPayement) {
-        this.idPayement = idPayement;
+    public void setMontantPaye(double montantPaye) {
+        this.montantPaye = montantPaye;
     }
 
     public Date getDateQuittance() {
@@ -57,13 +47,23 @@ public class Quittance implements Serializable {
         this.dateQuittance = dateQuittance;
     }
 
-    public int getMontantRestante() {
-        return montantRestante;
+    public double getMontantRestanteDu() {
+        return montantRestanteDu;
     }
 
-    public void setMontantRestante(int montantRestante) {
-        this.montantRestante = montantRestante;
+    public void setMontantRestanteDu(double montantRestanteDu) {
+        this.montantRestanteDu = montantRestanteDu;
     }
+
+    public Impot getIdImpot() {
+        return idImpot;
+    }
+
+    public void setIdImpot(Impot idImpot) {
+        this.idImpot = idImpot;
+    }
+    
+    
 
     
 }

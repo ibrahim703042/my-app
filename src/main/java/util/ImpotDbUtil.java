@@ -9,7 +9,7 @@ package util;
  * @author Ibrahim
  */
 
-import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -42,7 +42,7 @@ public class ImpotDbUtil {
         
         try {
             String query = "SELECT * FROM impot WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -79,7 +79,7 @@ public class ImpotDbUtil {
             String query = 
                     "INSERT INTO impot (id_s_location, id_avenue, impot_total) "
                     + "values (?, ?,?)";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setInt(1, impot.getIdSLocation());
@@ -114,7 +114,7 @@ public class ImpotDbUtil {
         try {
            
             String query = "SELECT * FROM impot WHERE id =" + impotId ;
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
@@ -151,7 +151,7 @@ public class ImpotDbUtil {
                     + "imp_d_paye=?, "
                     + "impot_total=?, ";
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, impot.getIdSLocation());
             pstmt.setDate(2, (Date) impot.getImpDPaye());
@@ -170,11 +170,10 @@ public class ImpotDbUtil {
     //************** delete data ********************************/
     public static String delete(int impotId) {
         
-        connection = MySQLJDBCUtil.getConnection();
         //System.out.println("delete() : impot Id: " + impotId);
 
         try {
-
+            connection = dataSource.getConnection();
             String query = "DELETE FROM impot WHERE id = " + impotId ;
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  

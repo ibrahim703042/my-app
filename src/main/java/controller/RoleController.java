@@ -6,15 +6,13 @@
 package controller;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import model.Role;
+import org.primefaces.PrimeFaces;
 import util.RoleDbUtil;
 
 /**
@@ -26,77 +24,139 @@ import util.RoleDbUtil;
 @ManagedBean
 @SessionScoped
 
-public class RoleController implements Serializable{
+public class RoleController extends MessageContoller implements Serializable{
 
-    public ArrayList roles;
+    private List<Role> roles;
+    private Role selectedRole;
+    private List<Role> selectedRoles;
     
     @Inject
     private RoleDbUtil roleDbUtil;
-    
+
     //************************ display data **************************/
     @PostConstruct
     public void init() {
-        roles = roleDbUtil.findAll();
+        this.roles = this.roleDbUtil.findAll();
     }
-
-    public ArrayList roleList() {
-        roles.clear();
-        try {
-            roles = roleDbUtil.findAll();
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
+       
+    public List<Role> getRoles() {
         return roles;
     }
+    
+    public Role getSelectedRole() {
+        return selectedRole;
+    }
+
+    public void setSelectedRole(Role selectedRole) {
+        this.selectedRole = selectedRole;
+    }
+
+    public List<Role> getSelectedRoles() {
+        return selectedRoles;
+    }
+
+    public void setSelectedRoles(List<Role> selectedRoles) {
+        this.selectedRoles = selectedRoles;
+    }
+    
+    public void openNew() {
+        this.selectedRole = new Role();
+    }
+
+    public void saveRole() {
         
-    //************************ save data **************************/
-    public void save(Role role) {
-        try {
-            roleDbUtil.save(role);
+        if(IsValid()){
+            
+            if (this.selectedRole.getId() == null) {
 
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+                this.roleDbUtil.save(this.selectedRole);
+                this.init();
+                showInfo("Inserted","Role Added");
+                PrimeFaces.current().executeScript("PF('manageRoleDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");
+                
+            }else
+                if (this.selectedRole.getId() != null) {
+
+                    warningMessage("Exist","Data already exist!!!");
+                   // PrimeFaces.current().executeScript("PF('manageRoleDialog').hide()");
+                    PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");
+                
+            
+            } 
+        }else{
+            warningMessage("Required","Required");
+            PrimeFaces.current().ajax().update("form:messages", "form:dialogs");
         }
-        //return "/pages/role/template.xhtml?faces-redirect=true";
+
     }
-    	
-    //************************  edit data by Id  **************************/
-    public String edit(int id) {
+    public void updateRole() {
         
-        try {
-            roleDbUtil.findById(id);
+        if(IsValid()){
+            
+            if (this.selectedRole.getId() != null) {
 
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+                this.roleDbUtil.update(this.selectedRole);
+                this.init();
+                showInfo("Updated","Role Updated");
+                PrimeFaces.current().executeScript("PF('manageRoleDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");
+            }else{
+                showError("Exist","Data exist");
+                PrimeFaces.current().ajax().update("form:messages", "form:dialogs");
+            } 
+            
+        }else{
+            warningMessage("Invalid","Invalide data!!!");
+            PrimeFaces.current().ajax().update("form:messages", "form:dialogs");
         }
-        return "/pages/role/edit.xhtml?faces-redirect=true";
+
     }
     
-    //************************ update data **************************/
-    public String update(Role role) {
-        try {
-            roleDbUtil.update(role);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+    // ******   Input Validation ******/
+    private boolean IsValid(){
+        if (this.selectedRole.getNomRole().isEmpty())
+        {
+            showError("Failed","Role name is required");
+            return false;
         }
-        return "/pages/role/template.xhtml?faces-redirect=true";
+        if (this.selectedRole.getDescription().isEmpty())
+        {
+            showError("Failed","Description is required");
+            return false;
+        }
+        return true;
     }
     
-    ///************************ delete data **************************/
-    public String delete(int id) {
-        try {
-            roleDbUtil.delete(id);
+    // ******   Delete data ******/
+    public void deleteRole() {
+        this.roleDbUtil.delete(this.selectedRole);
+        this.selectedRole = null;
+        showInfo("Deleted","Role deleted");
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");
+    }
 
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+    public String getDeleteButtonMessage() {
+        
+        if (hasSelectedRoles()) {
+            int size = this.selectedRoles.size();
+            return size > 1 ? size + " roles selected" : "1 role selected";
         }
-        return "/pages/role/template.xhtml?faces-redirect=true";
+
+        return "Delete";
+    }
+
+    public boolean hasSelectedRoles() {
+        return this.selectedRoles != null && !this.selectedRoles.isEmpty();
     }
     
-     //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
+    public void deleteSelectedRoles() {
+        this.roleDbUtil.delete(this.selectedRole);
+        this.init();
+        this.selectedRoles = null;
+        showInfo("Deleted","Role deleted");
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");
+        PrimeFaces.current().executeScript("PF('dtRoles').clearFilters()");
     }
+    
 }

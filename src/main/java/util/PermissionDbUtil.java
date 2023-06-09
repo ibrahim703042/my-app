@@ -9,7 +9,7 @@ package util;
  * @author Ibrahim
  */
 
-import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
@@ -35,7 +35,7 @@ public class PermissionDbUtil {
         
         try {
             String query = "SELECT * FROM permission WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -44,10 +44,10 @@ public class PermissionDbUtil {
                 Permission permission = new Permission(); 
 
                 permission.setId(resultSet.getInt("id"));  
-                permission.setAjouter(resultSet.getShort("ajouter"));  
-                permission.setSupprimer(resultSet.getShort("supprimer"));  
-                permission.setModifier(resultSet.getShort("modifier"));  
-                permission.setAfficher(resultSet.getShort("afficher")); 
+                permission.setAjouter(resultSet.getBoolean("ajouter"));  
+                permission.setSupprimer(resultSet.getBoolean("supprimer"));  
+                permission.setModifier(resultSet.getBoolean("modifier"));  
+                permission.setAfficher(resultSet.getBoolean("afficher")); 
                 
                 permissionList.add(permission);  
             }   
@@ -73,13 +73,13 @@ public class PermissionDbUtil {
             String query = 
                     "INSERT INTO permission (ajouter, supprimer, modifier, afficher) "
                     + "values (?, ?, ?, ?)";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
-            pstmt.setShort(1, permission.getAjouter());
-            pstmt.setShort(2, permission.getSupprimer());
-            pstmt.setShort(3, permission.getModifier());
-            pstmt.setShort(4, permission.getAfficher());
+            pstmt.setBoolean(1, permission.getAjouter());
+            pstmt.setBoolean(2, permission.getSupprimer());
+            pstmt.setBoolean(3, permission.getModifier());
+            pstmt.setBoolean(4, permission.getAfficher());
             //statement.setDate(7, (java.sql.Date) permission.getDate());
 
             saveResult = pstmt.executeUpdate();
@@ -109,7 +109,7 @@ public class PermissionDbUtil {
         try {
            
             String query = "SELECT * FROM permission WHERE id =" + permissionId ;
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
@@ -117,10 +117,10 @@ public class PermissionDbUtil {
                 
                 permission = new Permission();
                 permission.setId(resultSet.getInt("id"));  
-                permission.setAjouter(resultSet.getShort("ajouter"));  
-                permission.setSupprimer(resultSet.getShort("supprimer"));  
-                permission.setModifier(resultSet.getShort("modifier"));  
-                permission.setAfficher(resultSet.getShort("afficher")); 
+                permission.setAjouter(resultSet.getBoolean("ajouter"));  
+                permission.setSupprimer(resultSet.getBoolean("supprimer"));  
+                permission.setModifier(resultSet.getBoolean("modifier"));  
+                permission.setAfficher(resultSet.getBoolean("afficher")); 
                 //permission.setDate(resultSet.getDate("date"));  
                //LocalDate date = LocalDate.now();
 
@@ -151,13 +151,13 @@ public class PermissionDbUtil {
                     + "afficher = ? "
                     + "where id = ? ";
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             
-            pstmt.setShort(1, permission.getAjouter());
-            pstmt.setShort(2, permission.getSupprimer());
-            pstmt.setShort(3, permission.getModifier());
-            pstmt.setShort(4, permission.getAfficher());
+            pstmt.setBoolean(1, permission.getAjouter());
+            pstmt.setBoolean(2, permission.getSupprimer());
+            pstmt.setBoolean(3, permission.getModifier());
+            pstmt.setBoolean(4, permission.getAfficher());
             pstmt.setInt(5, permission.getId());
 
             pstmt.execute();
@@ -173,12 +173,12 @@ public class PermissionDbUtil {
     //************** delete data ********************************/
     public static String delete(int permissionId) {
         
-        connection = MySQLJDBCUtil.getConnection();
-        //System.out.println("delete() : permission Id: " + permissionId);
+        System.out.println("delete() : permission Id: " + permissionId);
 
         try {
-
+            
             String query = "DELETE FROM permission WHERE id = " + permissionId ;
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  
             connection.close();

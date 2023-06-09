@@ -5,8 +5,12 @@
 package model;
 
 import jakarta.faces.bean.ManagedBean;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.annotation.XmlTransient;
+
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -18,22 +22,19 @@ import java.util.Collection;
 public class Role implements Serializable{
 
     private Integer id;
+    
     private String nomRole;
-    private Permission permission;
-    private Integer idPermission;
+    private String description;
+    private String creerPar;
+
+    @OneToMany(mappedBy = "idRole")
+    private List<Administrateur> administrateurList;
 
     public Role() {
+        
     }
-
-    public Role(Integer id) {
-        this.id = id;
-    }
-
-    public Role(Integer id, String nomRole) {
-        this.id = id;
-        this.nomRole = nomRole;
-    }
-
+    
+    
     public Integer getId() {
         return id;
     }
@@ -50,20 +51,30 @@ public class Role implements Serializable{
         this.nomRole = nomRole;
     }
 
-    public Permission getPermission() {
-        return permission;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPermission(Permission permission) {
-        this.permission = permission;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Integer getIdPermission() {
-        return idPermission;
+    public String getCreerPar() {
+        return creerPar;
     }
 
-    public void setIdPermission(Integer idPermission) {
-        this.idPermission = idPermission;
+    public void setCreerPar(String creerPar) {
+        this.creerPar = creerPar;
     }
+
+    @XmlTransient
+    public List<Administrateur> getAdministrateurList() {
+        return administrateurList;
+    }
+
+    public void setAdministrateurList(List<Administrateur> administrateurList) {
+        this.administrateurList = administrateurList;
+    }
+
     
 }

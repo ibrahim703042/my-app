@@ -1,46 +1,28 @@
-<?xml version = "1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns = "http://www.w3.org/1999/xhtml"   
-      xmlns:ui = "http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-   
-   <body>
-        <ui:composition> 
+<ui:composition xmlns = "http://www.w3.org/1999/xhtml" xmlns:ui = "http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"> 
+
+    <!-- =============== Header =============== -->
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-item-center justify-content-lg-between">
+            <h1 class="logo me-auto me-lg-0">
+                <a href="" class="text-decoration-none">OBR</a>
+            </h1>
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="#hero">Acceuil</a></li>
+                    <li><a class="nav-link scrollto" href="#about">Apropos</a></li>
+                    <li><a class="nav-link scrollto" href="#declaration">Declaration</a></li>
+
+                    <li><a class="nav-link scrollto" href="#contact">Contactez nous</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
             
-            <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow mb-4">
-                <div class="container">
-                    
-                    <!-- <img src="assets/image/OBR.png" class="img-fluid" alt="" height="40" width="40"> -->
-                    <p:graphicImage name="image/OBR_3.png" style="height:50px; width: 190px;" />
-                    
-                    <button class="navbar-toggler" 
-                          type="button" data-bs-toggle="collapse" 
-                          data-bs-target="#navbarSupportedContent" 
-                          aria-controls="navbarSupportedContent" 
-                          aria-expanded="false" 
-                          aria-label="Toggle navigation"
-                    >
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item active">
-                                <!--<h:link class="nav-link active" outcome = "/welcome">Acceuil</h:link>-->
-                            </li>
-                            <li class="nav-item">
-                                <!--<h:link class="nav-link" value="Contactez nous" outcome = "/pages/contact" />-->
-                            </li>
-                            <li class="nav-item">
-                                <!--<h:link class="nav-link" value="Se connectez" outcome = "/pages/auth/connexion" />-->
-                            </li>         
-                        </ul>
-                    </div>
-                </div>
-              </nav>
+        </div>
+    </header>
+    <!-- =============== End Header =============== -->
 
-        </ui:composition>
-   </body>
-</html>
+
+</ui:composition>
+  

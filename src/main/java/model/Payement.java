@@ -20,6 +20,7 @@ public class Payement implements Serializable {
     private Date datePayement;
     
     private Amande idAmande;
+    private Quittance  idQuittance;
 
     public Payement() {
     }

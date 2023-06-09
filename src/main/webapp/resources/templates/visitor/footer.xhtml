@@ -1,77 +1,148 @@
-<?xml version = "1.0" encoding = "UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui = "http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"> 
+    
+    <footer id="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-lg-6 col-md-6">
+                        <div class="footer-info">
 
-<html xmlns = "http://www.w3.org/1999/xhtml"   
-      xmlns:ui = "http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-   
-   <body>
-      <ui:composition> 
-           <section class="footer fixed bottom-0">
-                <div class="container text-center text-md-start mt-5">
+                            <h3 >OBR</h3>
 
-                  <div class="row mt-3">
-                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                      <div class="mb-4">
-                        <!--<img src="assets/image/OBR_3.png" class="img-fluid" alt="logo" height="40" width="190">-->
-                        <p:graphicImage name="image/OBR_3.png" style="height:50px; width: 190px;" />
-                      </div>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum ipsam culpa, 
-                        officiis accusantium qui consectetur! Soluta, iste tempora id ab alias minus 
-                        exercitationem possimus, dolor cupiditate sed, animi nemo adipisci.
-                      </p>
+                            <h4 class="mb-2 mt-5 ">Vision</h4>
+                            <p class="text-justify">
+                                Devenir une administration fiscale moderne, 
+                                efficienteet orientée client.
+                            </p>
+
+                            <h4 class="mb-2 mt-3">Mission</h4>
+                            <p class="text-justify">
+                                
+                                Etablir, recouvrer, administrer au sens large et comptabiliser 
+                                les recettes publiques pour le compte du Trésor Public .<br/>
+                                
+                                Conseiller le Gouvernement sur toutes les questions concernant 
+                                tous les aspects de politique fiscale .<br/>
+                                
+                                Promouvoir et veiller au respect des obligations fiscales 
+                                et douanières .<br/>
+                                
+                                Conseiller et sensibiliser les autorités locales décentralisées 
+                                en matière d’établissement et de collecte de leurs recettes .<br/>
+                                
+                                Promouvoir le civisme fiscal de la population .<br/>
+
+                            </p>
+
+                            <h4 class="mb-2 mt-3">Valeurs fondamentales</h4>
+                            <p class="text-justify">
+                                Intégrité,
+                                Tolérance zéro à la corruption,
+                                Professionnalisme,
+                                Innovation,
+                                Dévouement,
+                                Esprit d’Equipe,
+                                Courtoisie, Transparence, Impartialité, Redevabilité
+                            </p>
+
+                        </div>
                     </div>
 
-                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                      <h6 class="text-uppercase fw-bold mb-4">
-                        Title 1
-                      </h6>
-                      <p>
-<!--                        <a class="text-decoration-none" href="#!" class="text-reset">Link 1</a><br/>
-                        <a class="text-decoration-none" href="#!" class="text-reset">Link 2</a><br/>
-                        <a class="text-decoration-none" href="#!" class="text-reset">Link 3</a><br/>
-                        <a class="text-decoration-none" href="#!" class="text-reset">Link 4</a><br/>-->
-                      </p>
+                       
 
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Liens Utiles</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i>
+                                <a href="http://www.burundi.gov.bi/">Gouvernement du Burundi</a>
+                            </li>
+                            <li><i class="bx bx-chevron-right"></i>
+                                <a href="http://www.finances.gov.bi/">Ministère des Finances</a>
+                            </li>
+                            <li><i class="bx bx-chevron-right"></i>
+                                <a href="http://www.eac.bi/">Ministère de l’EAC</a>
+                            </li>
+                            <li><i class="bx bx-chevron-right"></i>
+                                <a href="http://www.brb.bi/">Banque centrale (BRB)</a>
+                            </li>
+                            <li><i class="bx bx-chevron-right"></i>
+                                <a href="https://www.investburundi.bi/">API</a>
+                            </li>
+                            <li><i class="bx bx-chevron-right"></i>
+                                <a href="http://www.cfcib.bi/">CFCIB</a>
+                            </li>
+                            <li><i class="bx bx-chevron-right"></i>
+                                <a href="https://info.commerce.bi/">Portail d'Informations Commerciales au Burundi</a>
+                            </li>
+                            <li><i class="bx bx-chevron-right"></i>
+                                <a href="http://rra.gov.rw/">Rwanda Revenue Authority</a>
+                            </li>
+                            <li><i class="bx bx-chevron-right"></i>
+                                <a href="https://www.tra.go.tz/">Tanzania Revenue Authority</a>
+                            </li>
+                            <li><i class="bx bx-chevron-right"></i>
+                                <a href="https://www.ura.go.ug/">Uganda Revenue Authority</a>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-2">
-                      <h6 class="text-uppercase fw-bold mb-4">
-                        Title 2
-                      </h6>
-                      <p>
-<!--                        <a class="text-decoration-none" href="#!" class="text-reset">Link 1</a><br/>
-                        <a class="text-decoration-none" href="#!" class="text-reset">Link 2</a><br/>
-                        <a class="text-decoration-none" href="#!" class="text-reset">Link 3</a><br/>
-                        <a class="text-decoration-none" href="#!" class="text-reset">Link 4</a><br/>-->
-                      </p>
+                    
+                    <div class="col-lg-3 col-md-6 footer-newsletter">
+                        <h4>Contactez nous</h4>
+                        <p>
+                            Immeuble Virago<br/>Avenue de la Tanzanie
+                            <br/><br/>
+                            <strong>Phone:</strong> +257 22 28 21 32  <br/>
+                            <strong>Email:</strong>obr.direction@obr.gov.bi<br/>
+                        </p>
+                        <div class="social-links mt-3">
+                            <a href="" class="twitter"><i class="bx bxl-twitter"></i></a>
+                            <a href="" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
                     </div>
 
-                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                      <h6 class="text-uppercase fw-bold mb-4">Title 3</h6>
-                      <p>
-                        <i class="fas fa-home me-3"></i> Bujumbura, Virago 1001, By <br/>
-                        <i class="fas fa-envelope me-3"></i>info@example.com <br/>
-                        <i class="fas fa-phone me-3"></i> + 257 22 34 67 88 <br/>
-                        <i class="fas fa-print me-3"></i> + 257 22 34 67 89
-                      </p>
-                    </div>
 
-                  </div>
                 </div>
-              </section>
+            </div>
+        </div>
 
-              <!-- Copyright -->
-              <div class="text-center bg-black text-white-50 p-2">
-                <div class="col-md-12">
-                  <p class="fw-bold">
-                    Copyright &copy; 2023. All rights reserved
-                    <span>Created by Kwizera Ibrahim</span>
-                  </p>
-                </div>
-              </div>
-      </ui:composition>	
-   </body>
-</html>
+        <div class="container">
+            <div class="copyrigh">
+                Copyright <strong><span>OBR</span></strong> All Right Reserved
+            </div>
+        </div>
+    </footer>
+
+    <div id="preloader"></div>
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@srexi/purecounterjs/dist/purecounter_vanilla.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
+        integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
+        integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.2.0/js/glightbox.min.js"
+        integrity="sha512-S/H9RQ6govCzeA7F9D0m8NGfsGf0/HjJEiLEfWGaMCjFzavo+DkRbYtZLSO+X6cZsIKQ6JvV/7Y9YMaYnSGnAA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js"
+        integrity="sha512-Zq2BOxyhvnRFXu0+WE6ojpZLOU2jdnqbrM1hmVdGzyeCa1DgM3X5Q4A/Is9xA1IkbUeDd7755dNNI/PzSf2Pew=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.2.4/swiper-bundle.min.js"
+        integrity="sha512-hJrV+LKHbu+Hxkn/+ZwGOCMUkap0ZfjJbca9WT38z69+MYmRzMlvUd401TOs1b4byAm4fGDESpEcCbG2A6cibQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ 
+    
+</ui:composition>	
+  

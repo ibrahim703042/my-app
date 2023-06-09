@@ -10,6 +10,7 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
@@ -40,7 +41,7 @@ public class CommuneDbUtil {
                     + "WHERE C.id_province = P.id "
                     + "ORDER BY P.nomProvince";
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -73,7 +74,7 @@ public class CommuneDbUtil {
 
             String query = "INSERT INTO commune (id_province, nomCommune) values (?, ?)";
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setInt(1, commune.getIdProvince());
@@ -107,7 +108,7 @@ public class CommuneDbUtil {
            
            // String query = "SELECT * FROM commune C WHERE C.id = " + communeId ;
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
@@ -142,7 +143,7 @@ public class CommuneDbUtil {
                     + "nomCommune = ? "
                     + "WHERE id =? " ;
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, commune.getIdProvince());
             pstmt.setString(2, commune.getNomCommune());
@@ -166,7 +167,7 @@ public class CommuneDbUtil {
         try {
 
             String query = "DELETE FROM commune  WHERE id = " + communeId ;
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  
             connection.close();

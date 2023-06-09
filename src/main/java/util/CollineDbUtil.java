@@ -10,6 +10,7 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
@@ -17,6 +18,7 @@ import jakarta.faces.context.FacesContext;
 import model.Colline;
 import java.sql.*;
 import java.util.*;
+import static util.AbbattementDbUtil.connection;
 
 @ManagedBean
 @ApplicationScoped
@@ -40,7 +42,7 @@ public class CollineDbUtil {
                     + "WHERE C.id_commune = P.id "
                     + "ORDER BY P.nomCommune";
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -72,7 +74,7 @@ public class CollineDbUtil {
 
             String query = "INSERT INTO colline (id_commune, nomColline) values (?, ?)";
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setInt(1, colline.getIdCommune());
@@ -103,7 +105,7 @@ public class CollineDbUtil {
                     + "WHERE commune.id = colline.id_commune "
                     + "AND colline.id = " + collineId ;
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
@@ -133,7 +135,7 @@ public class CollineDbUtil {
 
             String query =" UPDATE colline SET id_commune=?, nomColline=? WHERE id = ? ";
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             
             pstmt.setInt(1, colline.getIdCommune());
@@ -152,11 +154,10 @@ public class CollineDbUtil {
     //************** delete data ********************************/
     public void delete(int collineId) {
         
-        connection = MySQLJDBCUtil.getConnection();
         System.out.println("delete() : colline Id: " + collineId);
 
         try {
-
+            connection = dataSource.getConnection();
             String query = "DELETE FROM colline WHERE id = " + collineId ;
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  

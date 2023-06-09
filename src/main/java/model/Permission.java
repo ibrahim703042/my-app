@@ -17,27 +17,19 @@ import java.io.Serializable;
 public class Permission implements Serializable{
 
     private Integer id;
-    private short ajouter;
-    private short supprimer;
-    private short modifier;
-    private short afficher;
-    private Role idRole;
+    private boolean ajouter;
+    private boolean supprimer;
+    private boolean modifier;
+    private boolean afficher;
+//    private Integer idAdministrateur;
+//    private Administrateur administrateur;
+    
 
     public Permission() {
+        afficher = true;
     }
 
-    public Permission(Integer id) {
-        this.id = id;
-    }
-
-    public Permission(Integer id, short ajouter, short supprimer, short modifier, short afficher) {
-        this.id = id;
-        this.ajouter = ajouter;
-        this.supprimer = supprimer;
-        this.modifier = modifier;
-        this.afficher = afficher;
-    }
-
+    
     public Integer getId() {
         return id;
     }
@@ -46,44 +38,37 @@ public class Permission implements Serializable{
         this.id = id;
     }
 
-    public short getAjouter() {
+    public boolean getAjouter() {
         return ajouter;
     }
 
-    public void setAjouter(short ajouter) {
+    public void setAjouter(boolean ajouter) {
         this.ajouter = ajouter;
     }
 
-    public short getSupprimer() {
+    public boolean getSupprimer() {
         return supprimer;
     }
 
-    public void setSupprimer(short supprimer) {
+    public void setSupprimer(boolean supprimer) {
         this.supprimer = supprimer;
     }
 
-    public short getModifier() {
+    public boolean getModifier() {
         return modifier;
     }
 
-    public void setModifier(short modifier) {
+    public void setModifier(boolean modifier) {
         this.modifier = modifier;
     }
 
-    public short getAfficher() {
+    public boolean getAfficher() {
         return afficher;
     }
 
-    public void setAfficher(short afficher) {
+    public void setAfficher(boolean afficher) {
         this.afficher = afficher;
     }
 
-    public Role getIdRole() {
-        return idRole;
-    }
-
-    public void setIdRole(Role idRole) {
-        this.idRole = idRole;
-    }
     
 }

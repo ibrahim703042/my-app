@@ -1,99 +1,114 @@
-
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-    template="/resources/templates/dashboardTemplate.xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:p="http://primefaces.org/ui"
-    xmlns:component="http://xmlns.jcp.org/jsf/composite/component"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+                
+   <h:form id="dialogs-admin" >
+       <p:growl id="messages" showDetail="true" />
+        <p:dialog header="Administrateur Details" widgetVar="manageAdminDialog" minHeight="40" width="750" showEffect="fade">
+            <p:outputPanel id="manage-admin-content" class="ui-fluid">
+                
+                <p:outputPanel rendered="#{not empty adminController.administrateur}">
+
+                    <div class="field">
+                        <p:inputText  value="#{adminController.administrateur.id}"/>
+                    </div>
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <component:inputTextField id="nom" label="Nom" placeholder="Entrer nom" value="#{adminController.administrateur.nom}"/>
+                        </div>
+                        <div class="field col">
+                            <component:inputTextField id="prnom" label="Prenom" placeholder="Entrer prenom"
+                            value="#{adminController.administrateur.prenom}"
+                        />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                    <component:inputTextField  id="email" label="E-mail" placeholder="Entrer email "
+                            value="#{adminController.administrateur.email}"
+                        />
+                    </div>
+
+                    <div class="field">
+                    <component:inputPasswordField id="motPasse" label="Mot de passe" placeholder="Entrer Mot de passe"
+                            value="#{adminController.administrateur.motPasse}" />
+                    </div>
+                    
+                    <div class="formgrid grid">
+                        
+                        <div class="field col-12 md:col-6">
+                            <component:inputTextField id="bp" label="Boite postal" placeholder="B.P 1023456 "
+                            value="#{adminController.administrateur.bp}"/>
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <component:inputTextField id="telephone" label="Telephone" placeholder="+257 71 20 47 78"
+                                value="#{adminController.administrateur.telephone}" />
+                        </div>
+                        
+                        <div class="field col-12 md:col-6">
+                            <p:outputLabel class="font-bold"  value="Role"/>
+                            <p:selectOneMenu value="#{administrateur.roleId}" id="idRole" style="height: 41px;" >
+                                
+                                <f:selectItem itemLabel="Choisir Role" />
+                                <f:selectItems var="role" value="#{roleController.roles}"
+                                    itemLabel="#{role.nomRole}" itemValue="#{role.id}" />
+
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            <p:outputLabel class="font-bold" >Status</p:outputLabel>
+                            <p:selectOneRadio value="#{adminController.administrateur.isActive}" id="isActive" style="height: 41px;">
+                                <f:selectItem itemLabel="Actif" itemValue="Actif" />
+                                <f:selectItem itemLabel="Inactif" itemValue="Inactif" />
+                                
+                            </p:selectOneRadio>
+                        </div>
+                        
+                    </div>
+                    
+                </p:outputPanel>
+
+            </p:outputPanel>
+            
+            <f:facet name="footer">
+                
+                <p:commandButton 
+                    value="Modifier" 
+                    actionListener="#{adminController.update}"
+                    update="manage-admin-content" 
+                    process="manage-admin-content @this" 
+                />
+                
+                <p:commandButton 
+                    value="Enregistrer" 
+                    actionListener="#{adminController.create}"
+                    update="manage-admin-content messages" 
+                    process="manage-admin-content @this" 
+                />
+                
+                <p:commandButton 
+                    value="Cancel" 
+                    icon="pi pi-times" 
+                    onclick="PF('manageAdminDialog').hide()"
+                    class="ui-button-secondary" 
+                    type="button" />
+            </f:facet>
+
+        </p:dialog>
+
+
+
+        <p:confirmDialog global="true" showEffect="fade" width="300">
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                icon="pi pi-times" />
+        </p:confirmDialog>
+       
+       
+    </h:form>   
     
-    <ui:define name = "contents">
-            
-        <p:spacer height="90" />
-                    
-        <h:form id="form" class=" py-3 mb-4 shadow-1 px-4">
-            <div class="">
-                <div class="ui-fluid formgrid grid">
-                    <div class="field col-12 md:col-6">
-                        <component:inputTextField
-                            label="Nom"
-                            placeholder="Entrer nom"
-                            value="#{administrateur.nom}"
-                        />
-                    </div>
-
-                    <div class="field col-12 md:col-6">
-                        <component:inputTextField
-                            label="Prenom"
-                            placeholder="Entrer prenom"
-                            value="#{administrateur.prenom}"
-                        />
-                    </div>
-
-                    <div class="field col-12 md:col-6">
-                    <component:inputTextField
-                        label="E-mail"
-                        placeholder="Entrer email "
-                        value="#{administrateur.email}"
-                    />
-
-                    </div>
-
-                    <div class="field col-12 md:col-6">
-                        <component:inputPasswordField
-                            label="Mot de passe"
-                            placeholder="Entrer Mot de passe"
-                            value="#{administrateur.motPasse}"
-                        />
-                    </div>
-
-                    <div class="field col-12 md:col-6">
-                        <component:inputTextField
-                            label="Boite postal"
-                            placeholder="B.P 1023456 "
-                            value="#{administrateur.bp}"
-                        />
-
-                    </div>
-
-                    <div class="field col-12 md:col-6">
-                        <component:inputTextField
-                            label="Telephone"
-                            placeholder="+257 71 20 47 78"
-                            value="#{administrateur.telephone}"
-                        />
-                    </div>
-                    
-                    <div class="field col-12 md:col-12">
-                        <p:outputLabel class="font-bold"  value="Representant"/>
-                        <p:selectOneMenu 
-                            value="#{administrateur.idRole}"
-                            style="height: 41px; "
-                        >
-                            <f:selectItem itemLabel="Choisir Role" />
-                            <f:selectItems var="rol"
-                                value="#{roleController.roleList()}"
-                                itemLabel="#{rol.nomRole}"
-                                itemValue="#{rol.id}" 
-                            />
-
-                        </p:selectOneMenu>
-                    </div>
-
-                    <div class="field col-12 md:col-10"></div>
-                    <div class="field col-12 md:col-2">
-                        <p:commandButton
-                            ajax="false"
-                            value="Enregistrer" 
-                            action="#{administrateurController.save(administrateur)}"
-                            style="height: 41px; "
-                        />
-                    </div>
-                </div>
-            </div>
-
-        </h:form>
-            
-    </ui:define>
-        
 </ui:composition>

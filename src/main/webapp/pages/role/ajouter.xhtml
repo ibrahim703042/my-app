@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+                
+   <h:form id="dialogs" >
+       <p:growl id="messages" showDetail="true" />
+        <p:dialog header="Role Details" widgetVar="manageRoleDialog" minHeight="40" width="450" showEffect="fade">
+            <p:outputPanel id="manage-role-content" class="ui-fluid">
+                
+                <p:outputPanel rendered="#{not empty roleController.selectedRole}">
+                    <div class="field">
+                        <p:outputLabel >ID</p:outputLabel>
+                        <p:inputText  value="#{roleController.selectedRole.id}" />
+                    </div>
+                    
+                    <div class="field">
+                        <p:outputLabel for="nom">Nom</p:outputLabel>
+                        <p:inputText id="nom" value="#{roleController.selectedRole.nomRole}"  />
+                    </div>
+                    
+                    <div class="field">
+                        <p:outputLabel for="description">Description</p:outputLabel>
+                        <p:inputTextarea id="description" value="#{roleController.selectedRole.description}"  />
+                    </div>
+
+                </p:outputPanel>
+            </p:outputPanel>
+            
+            <f:facet name="footer">
+                
+                <p:commandButton 
+                    value="Modifier" 
+                    icon="pi pi-check" 
+                    actionListener="#{roleController.updateRole}"
+                    update="manage-role-content" 
+                    process="manage-role-content @this" 
+                />
+                
+                <p:commandButton 
+                    value="Enregistrer" 
+                    actionListener="#{roleController.saveRole}"
+                    update="manage-role-content" 
+                    process="manage-role-content @this" 
+                />
+                
+                <p:commandButton 
+                    value="Cancel" 
+                    onclick="PF('manageRoleDialog').hide()"
+                    class="ui-button-secondary" 
+                    type="button" />
+            </f:facet>
+
+        </p:dialog>
+
+        <p:confirmDialog 
+            widgetVar="deleteRoleDialog" 
+            showEffect="fade" width="300"
+            message="Are you sure?" 
+            header="Confirm" 
+            severity="warn">
+            <p:commandButton 
+                value="Yes" 
+                icon="pi pi-check" 
+                actionListener="#{roleController.deleteRole}"
+                process="@this" 
+                update=":form:delete-roles-button"
+                oncomplete="PF('deleteRoleDialog').hide()" />
+            <p:commandButton
+                value="No" 
+                type="button" 
+                styleClass="ui-button-secondary" 
+                icon="pi pi-times"
+                onclick="PF('deleteRoleDialog').hide()" />
+        </p:confirmDialog>
+        
+        
+        <p:confirmDialog global="true" showEffect="fade" width="300">
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                icon="pi pi-times" />
+        </p:confirmDialog>
+       
+       
+    </h:form>   
+    
+</ui:composition>

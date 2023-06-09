@@ -6,14 +6,11 @@
 package controller;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.*;
 import model.RevenuLocatif;
 import util.RevenusDbUtil;
 
@@ -28,7 +25,9 @@ import util.RevenusDbUtil;
 
 public class RevenusController implements Serializable {
 
-    public ArrayList revenus;
+    public List<RevenuLocatif> revenus;
+    public RevenuLocatif model;
+    public List<RevenuLocatif> listOfRevenus;
     
     @Inject
     private RevenusDbUtil revenuDbUtil;
@@ -37,70 +36,36 @@ public class RevenusController implements Serializable {
     @PostConstruct
     public void init() {
         revenus = revenuDbUtil.findAll();
+        model = new RevenuLocatif();
+        listOfRevenus = new ArrayList<>();
     }
 
-    public ArrayList revenuList() {
+    public List<RevenuLocatif> getRevenus() {
+        return revenus;
+    }
+
+    public RevenuLocatif getModel() {
+        return model;
+    }
+
+    public List<RevenuLocatif> getListOfRevenus() {
+        return listOfRevenus;
+    }
+    
+    public List<RevenuLocatif> revenuList() {
         
         revenus.clear();
         try {
             revenus = revenuDbUtil.findAll();
         }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+            ex.printStackTrace();
         }
         return revenus;
     }
-        
-    //************************ save data **************************/
-    public String save(RevenuLocatif revenu) {
-        
-        try {
-            //revenuDbUtil.save(revenu);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
-        return "/pages/pays/revenus/template.xhtml?faces-redirect=true";
-    }
-    	
-    //************************  edit data by Id  **************************/
-    public String edit(int id) {
-        
-        try {
-            revenuDbUtil.findById(id);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
-        return "/pages/pays/revenu/edit.xhtml?faces-redirect=true";
-    }
     
-    //************************ update data **************************/
-    public String update(RevenuLocatif revenu) {
+    // ***********************Checked input Validation **************************
+    public boolean hasSelectedRoles() {
+        return this.listOfRevenus != null && !this.listOfRevenus.isEmpty();
+    }
         
-        try {
-            //revenuDbUtil.update(revenu);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
-        return "/pages/pays/revenus/template.xhtml?faces-redirect=true";
-    }
-    
-    ///************************ delete data **************************/
-    public String delete(int id) {
-        
-        try {
-            revenuDbUtil.delete(id);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
-        return "/pages/pays/revenus/template.xhtml?faces-redirect=true";
-    }
-    
-    //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
 }

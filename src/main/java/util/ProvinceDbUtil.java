@@ -6,6 +6,7 @@ package util;
 
 
 import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
@@ -37,7 +38,7 @@ public class ProvinceDbUtil implements Serializable {
         ArrayList provinceList = new ArrayList();  
         
         try {
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             String query = "SELECT * FROM province P WHERE P.id IS NOT NULL ORDER BY P.nomProvince";
             resultSet = statement.executeQuery(query);  
@@ -68,7 +69,7 @@ public class ProvinceDbUtil implements Serializable {
         try {   
             
             String query = "INSERT INTO province (nomProvince) VALUES (?)";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
             pstmt.setString(1, province.getNomProvince());
             
@@ -92,7 +93,7 @@ public class ProvinceDbUtil implements Serializable {
         try {
             
             String query = "SELECT * FROM province WHERE id = " + provinceId ;
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
@@ -117,7 +118,7 @@ public class ProvinceDbUtil implements Serializable {
         try {
             String query = "UPDATE province SET nomProvince = ? WHERE id = ? ";
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1,province.getNomProvince());
             pstmt.setInt(2,province.getId());
@@ -139,7 +140,7 @@ public class ProvinceDbUtil implements Serializable {
         try {
             
             String query = "DELETE FROM province WHERE id = " + provinceId ;
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate(); 
             

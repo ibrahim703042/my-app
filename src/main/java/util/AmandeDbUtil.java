@@ -10,6 +10,7 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -17,6 +18,7 @@ import jakarta.inject.Named;
 import model.Amande;
 import java.sql.*;
 import java.util.*;
+import static util.AbbattementDbUtil.connection;
 
 @Named
 @ApplicationScoped
@@ -35,7 +37,7 @@ public class AmandeDbUtil {
         
         try {
             String query = "SELECT * FROM amande WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -73,7 +75,7 @@ public class AmandeDbUtil {
             String query = 
                     "INSERT INTO amande (id_impot, amande_fixe, penalite, total) "
                     + "values (?, ?, ?, ?)";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setInt(1, amande.getIdImpot());
@@ -109,7 +111,7 @@ public class AmandeDbUtil {
         try {
            
             String query = "SELECT * FROM amande WHERE id =" + amandeId ;
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
@@ -149,7 +151,7 @@ public class AmandeDbUtil {
                     + "total=? "
                     + "where id= ? ";
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, amande.getIdImpot());
             pstmt.setInt(2, amande.getAmandeFixe());
@@ -169,11 +171,10 @@ public class AmandeDbUtil {
     //************** delete data ********************************/
     public static String delete(int amandeId) {
         
-        connection = MySQLJDBCUtil.getConnection();
         //System.out.println("delete() : amande Id: " + amandeId);
 
         try {
-
+            connection = dataSource.getConnection();
             String query = "DELETE FROM amande WHERE id = " + amandeId ;
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  

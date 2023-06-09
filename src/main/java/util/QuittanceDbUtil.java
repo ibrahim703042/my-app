@@ -10,6 +10,7 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -23,9 +24,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
+import static util.PermissionDbUtil.connection;
 
 @Named
-@ApplicationScoped
 
 public class QuittanceDbUtil {
     
@@ -41,7 +42,7 @@ public class QuittanceDbUtil {
         
         try {
             String query = "SELECT * FROM quittance WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -50,9 +51,9 @@ public class QuittanceDbUtil {
                 Quittance quittance = new Quittance(); 
 
                 quittance.setId(resultSet.getInt("id"));  
-                quittance.setIdPayement(resultSet.getInt("idPayement"));  
+                //quittance.setIdPayement(resultSet.getInt("idPayement"));  
                 quittance.setDateQuittance(resultSet.getDate("dateQuittance")); 
-                quittance.setMontantRestante(resultSet.getInt("montantRestante")); 
+                //quittance.setMontantRestante(resultSet.getInt("montantRestante")); 
 
                 quittanceList.add(quittance);  
             }   
@@ -78,12 +79,12 @@ public class QuittanceDbUtil {
             String query = 
                     "INSERT INTO quittance (idPayement, dateQuittance, montantRestante) "
                     + "values (?, ?,?)";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
-            pstmt.setInt(1, quittance.getIdPayement());
+            //pstmt.setInt(1, quittance.getIdPayement());
             pstmt.setDate(2, (Date) quittance.getDateQuittance());
-            pstmt.setInt(3, quittance.getMontantRestante());
+            //pstmt.setInt(3, quittance.getMontantRestante());
             //statement.setDate(7, (java.sql.Date) quittance.getDate());
 
             saveResult = pstmt.executeUpdate();
@@ -113,7 +114,7 @@ public class QuittanceDbUtil {
         try {
            
             String query = "SELECT * FROM quittance WHERE id =" + quittanceId ;
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
@@ -121,9 +122,9 @@ public class QuittanceDbUtil {
                 
                 quittance = new Quittance();
                 quittance.setId(resultSet.getInt("id"));  
-                quittance.setIdPayement(resultSet.getInt("idPayement"));  
+                //quittance.setIdPayement(resultSet.getInt("idPayement"));  
                 quittance.setDateQuittance(resultSet.getDate("dateQuittance")); 
-                quittance.setMontantRestante(resultSet.getInt("montantRestante")); 
+                //quittance.setMontantRestante(resultSet.getInt("montantRestante")); 
                 //quittance.setDate(resultSet.getDate("date"));  
                //LocalDate date = LocalDate.now();
 
@@ -150,11 +151,11 @@ public class QuittanceDbUtil {
                     + "dateQuittance=?, "
                     + "montantRestante=?, ";
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, quittance.getIdPayement());
+            //pstmt.setInt(1, quittance.getIdPayement());
             pstmt.setDate(2, (Date) quittance.getDateQuittance());
-            pstmt.setInt(3, quittance.getMontantRestante());
+            //pstmt.setInt(3, quittance.getMontantRestante());
 
             pstmt.execute();
             connection.close();
@@ -169,12 +170,12 @@ public class QuittanceDbUtil {
     //************** delete data ********************************/
     public static String delete(int quittanceId) {
         
-        connection = MySQLJDBCUtil.getConnection();
-        //System.out.println("delete() : quittance Id: " + quittanceId);
+        System.out.println("delete() : quittance Id: " + quittanceId);
 
         try {
 
             String query = "DELETE FROM quittance WHERE id = " + quittanceId ;
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  
             connection.close();

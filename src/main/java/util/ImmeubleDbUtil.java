@@ -11,6 +11,7 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
@@ -18,6 +19,7 @@ import jakarta.faces.context.FacesContext;
 import java.sql.*;
 import java.util.*;
 import model.Immeuble;
+import static util.AbbattementDbUtil.connection;
 
 @ManagedBean
 @ApplicationScoped
@@ -63,7 +65,7 @@ public class ImmeubleDbUtil {
                     + "ORDER BY immeuble.id DESC";
 
             // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -143,7 +145,7 @@ public class ImmeubleDbUtil {
                     + "ORDER BY immeuble.id DESC";
 
             // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -197,7 +199,7 @@ public class ImmeubleDbUtil {
 
             String query ="INSERT INTO immeuble (id_colline, id_contribuable, nomAvenue) values (?, ?, ?)";
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setInt(1, immeuble.getIdColline());
@@ -240,7 +242,7 @@ public class ImmeubleDbUtil {
                     + "AND immeuble.id = " + immeubleId ;
 
             // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -303,7 +305,7 @@ public class ImmeubleDbUtil {
                     + "WHERE contribuable.id = " +immeubleId;
 
             // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -361,7 +363,7 @@ public class ImmeubleDbUtil {
                     + "nomAvenue = ? "
                     + "WHERE id = ? ";
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, immeuble.getIdColline());
             pstmt.setInt(2, immeuble.getIdContribuable());
@@ -380,11 +382,10 @@ public class ImmeubleDbUtil {
     //************** delete data ********************************/
     public void delete(int immeubleId) {
         
-        connection = MySQLJDBCUtil.getConnection();
         System.out.println("delete() : Immeuble Id: " + immeubleId);
 
         try {
-
+            connection = dataSource.getConnection();
             String query = "DELETE FROM immeuble WHERE id = " + immeubleId ;
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  

@@ -25,13 +25,17 @@ public class RevenuSousLocation {
     private double revenusNetsImposables;
     private double totalRevenusNetsImposables;
     private double abbattements ;
-    private double revenuNetImposable;
-    private RevenuLocatif revenuLocatif;
+    private double revenuSousNetImposable;
     
-    private List <RevenuLocatif> ListRevenuLocatif;
+    private RevenuLocatif revenuLocatif;
+    private List<RevenuLocatif> revenuLocatifList;
     
     
     public RevenuSousLocation() {
+//        this.revenuLocatif = new RevenuLocatif ();
+//        this.recetteSousLocation = 100000;
+//        this.loyerPayes = 20000;
+//        this.abbattements = 9000;
     }
 
     public Integer getId() {
@@ -59,7 +63,6 @@ public class RevenuSousLocation {
     }
 
     public double getRevenusNetsImposables() {
-        revenusNetsImposables = recetteSousLocation-loyerPayes;
         return revenusNetsImposables;
     }
 
@@ -68,8 +71,6 @@ public class RevenuSousLocation {
     }
 
     public double getTotalRevenusNetsImposables() {
-        revenuLocatif = new RevenuLocatif();
-        totalRevenusNetsImposables = (revenuLocatif.getRevenuNetImposable()+revenusNetsImposables);
         return totalRevenusNetsImposables;
     }
 
@@ -85,14 +86,28 @@ public class RevenuSousLocation {
         this.abbattements = abbattements;
     }
 
-    public double getRevenuNetImposable() {
-        revenuNetImposable = totalRevenusNetsImposables-abbattements;
-        return revenuNetImposable;
+    public double getRevenuSousNetImposable() {
+        return revenuSousNetImposable;
     }
 
-    public void setRevenuNetImposable(double revenuNetImposable) {
-        this.revenuNetImposable = revenuNetImposable;
+    public void setRevenuSousNetImposable(double revenuSousNetImposable) {
+        this.revenuSousNetImposable = revenuSousNetImposable;
     }
 
-        
+    public RevenuLocatif getRevenuLocatif() {
+        return revenuLocatif;
+    }
+
+    public void setRevenuLocatif(RevenuLocatif revenuLocatif) {
+        this.revenuLocatif = revenuLocatif;
+    }
+
+    public List<RevenuLocatif> getRevenuLocatifList() {
+        return revenuLocatifList;
+    }
+
+    public void setRevenuLocatifList(List<RevenuLocatif> revenuLocatifList) {
+        this.revenuLocatifList = revenuLocatifList;
+    }
+    
 }

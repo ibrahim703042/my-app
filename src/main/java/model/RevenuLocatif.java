@@ -6,7 +6,6 @@ package model;
 
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.RequestScoped;
-import jakarta.faces.event.ValueChangeEvent;
 import java.io.Serializable;
 
 
@@ -19,27 +18,35 @@ import java.io.Serializable;
 public class RevenuLocatif implements Serializable {
 
     private Integer id;
+    
     private double loyerExonere;
     private double loyerImposable;
     private double chargeIncombat;
+    
     //chargeIncombat + loyerImposable
     private double revenuBrut;
+    
     //revenuBrut * 40%
     private double deductionDepenses;
+    
     private double interetEmprunt;
+    
     //revenuBrut-deduction-interetEmprunt
     private double revenuNetImposable;
-    private Immeuble idImmeuble ;
     
-    public void changeListener(ValueChangeEvent event) {
-        String newValue = (String) event.getNewValue();
-        // Perform some logic to update the value of input2
+    private Integer idImmeuble ;
+    private Immeuble immeuble ;
+    
+    
+    public RevenuLocatif(){
         
-        revenuBrut = (chargeIncombat + loyerImposable);
-        deductionDepenses = (revenuBrut*40)/100;
-        revenuNetImposable = (revenuBrut-deductionDepenses-interetEmprunt) ;
-        
-        String input2 = newValue + " updated";
+//        loyerExonere = 100000;
+//        loyerImposable = 300000000;
+//        chargeIncombat = 5000000;
+//        revenuBrut = loyerImposable + chargeIncombat ;
+//        deductionDepenses = (revenuBrut * 40)/100;
+//        interetEmprunt = 1000000;
+//        revenuNetImposable = revenuBrut - deductionDepenses - interetEmprunt;
     }
     
     
@@ -107,12 +114,21 @@ public class RevenuLocatif implements Serializable {
         this.revenuNetImposable = revenuNetImposable;
     }
 
-    public Immeuble getIdImmeuble() {
+    public Immeuble getImmeuble() {
+        return immeuble;
+    }
+
+    public void setImmeuble(Immeuble immeuble) {
+        this.immeuble = immeuble;
+    }
+
+    public Integer getIdImmeuble() {
+        idImmeuble = immeuble.getId();
         return idImmeuble;
     }
 
-    public void setIdImmeuble(Immeuble idImmeuble) {
+    public void setIdImmeuble(Integer idImmeuble) {
         this.idImmeuble = idImmeuble;
     }
-        
+    
 }

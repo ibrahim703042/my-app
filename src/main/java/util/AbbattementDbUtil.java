@@ -9,7 +9,7 @@ package util;
  * @author Ibrahim
  */
 
-import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
@@ -35,7 +35,7 @@ public class AbbattementDbUtil {
         
         try {
             String query = "SELECT * FROM abbattement WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -65,7 +65,7 @@ public class AbbattementDbUtil {
         try {
 
             String query = "INSERT INTO abbattement (id_contribuable, benificiare, motif) VALUES (?, ?, ?)";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setInt(1, abbattement.getId());
@@ -93,7 +93,7 @@ public class AbbattementDbUtil {
         try {
            
             String query = "SELECT * FROM abbattement WHERE id =" + abbattementId ;
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
@@ -128,7 +128,7 @@ public class AbbattementDbUtil {
                     + "motif=? "
                     + "WHERE id = ?";
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, abbattement.getBeneficiaire());
             //pstmt.setString(2, abbattement.getMotif());
@@ -146,11 +146,10 @@ public class AbbattementDbUtil {
     //************** delete data ********************************/
     public void delete(int abbattementId) {
         
-        connection = MySQLJDBCUtil.getConnection();
         System.out.println("delete() : Abbattement Id: " + abbattementId);
 
         try {
-
+            connection = dataSource.getConnection();
             String query = "DELETE FROM abbattement WHERE id = " + abbattementId ;
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  

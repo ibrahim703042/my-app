@@ -6,6 +6,7 @@
 package dbconnection;
 
 import java.sql.*;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 
 /**
@@ -15,35 +16,26 @@ import java.sql.*;
  */
 
 public class MySQLJDBCUtil {
-
-   public static final String DB_URL = "jdbc:mysql://localhost:3306/db_impotfiscal";
-   public static final String USER = "root";
-   public static final String PASS = "";
-   public static Statement statement;
-   public static Connection connection;
    
-    public static Connection getConnection() {
+   private static final String DB_URL = "jdbc:mysql://localhost:3306/db_impotfiscal";
+   private static final String USER = "root";
+   private static final String PASS = "";
+   private static final String DRIVER= "com.mysql.cj.jdbc.Driver";
+   public static final BasicDataSource dataSource = new BasicDataSource();
+
+    static {
         
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(DB_URL, USER,PASS);
-
-        } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println("Database.getConnection() Error -->"+ ex.getMessage());
-        }
-        return connection;
+        dataSource.setUrl(DB_URL);
+        dataSource.setUsername(USER);
+        dataSource.setPassword(PASS);
+        dataSource.setDriverClassName(DRIVER);
+        dataSource.setMinIdle(5);
+        dataSource.setMaxIdle(10);
+        dataSource.setMaxOpenPreparedStatements(100);
+        
     }
-    
-    
-    public static void close(Connection connection) {
-        try {
 
-            connection.close();
-
-        }catch (SQLException ex) {
-
-            ex.printStackTrace();
-        }
+    public static Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
     }
-    
 }

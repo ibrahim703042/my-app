@@ -5,8 +5,10 @@
 package model;
 
 import jakarta.faces.bean.ManagedBean;
+import jakarta.validation.constraints.Email;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 /**
  *
@@ -17,33 +19,40 @@ import java.sql.Date;
 public class Administrateur implements Serializable{
 
     private Integer id;
-    private Integer idRole;
-    private String nomRole;
     private String nom;
     private String prenom;
+    private String ceerPar;
+    
+    @Email
     private String email;
     private String motPasse;
-    private int telephone;
+    private Integer telephone;
+    
+    private String isActive;
     private String bp;
-   
+    
+    public List<Role> roleList;
+    public Role role;
+    
+    private List<Permission> permissionList;
+    private Permission permission;
+    
+    private Integer permissionId;
+    private boolean ajouter;
+    private boolean supprimer;
+    private boolean modifier;
+    private boolean afficher;
+            
+    private Integer roleId;
+    private String nomRole;
+    private String descriptionRole;
+    
     private Date date;
 
     public Administrateur() {
-    }
-
-    public Administrateur(Integer id) {
-        this.id = id;
-    }
-
-    public Administrateur(Integer id, String nom, String prenom, String email, String motPasse, int telephone, String bp, Date date) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-        this.motPasse = motPasse;
-        this.telephone = telephone;
-        this.bp = bp;
-        this.date = date;
+        //nom="Ibrahim";
+        email="Kwizera.ibrahim@gmail.com";
+        motPasse="1234567890";
     }
 
     public Integer getId() {
@@ -70,6 +79,14 @@ public class Administrateur implements Serializable{
         this.prenom = prenom;
     }
 
+    public String getCeerPar() {
+        return ceerPar;
+    }
+
+    public void setCeerPar(String ceerPar) {
+        this.ceerPar = ceerPar;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -86,12 +103,20 @@ public class Administrateur implements Serializable{
         this.motPasse = motPasse;
     }
 
-    public int getTelephone() {
+    public Integer getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(Integer telephone) {
         this.telephone = telephone;
+    }
+
+    public String getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
     }
 
     public String getBp() {
@@ -102,20 +127,12 @@ public class Administrateur implements Serializable{
         this.bp = bp;
     }
 
-    public Date getDate() {
-        return date;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Integer getIdRole() {
-        return idRole;
-    }
-
-    public void setIdRole(Integer idRole) {
-        this.idRole = idRole;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     public String getNomRole() {
@@ -125,5 +142,78 @@ public class Administrateur implements Serializable{
     public void setNomRole(String nomRole) {
         this.nomRole = nomRole;
     }
- 
+
+    public String getDescriptionRole() {
+        return descriptionRole;
+    }
+
+    public void setDescriptionRole(String descriptionRole) {
+        this.descriptionRole = descriptionRole;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public List<Permission> getPermissionList() {
+        return permissionList;
+    }
+
+    public void setPermissionList(List<Permission> permissionList) {
+        this.permissionList = permissionList;
+    }
+
+    public Permission getPermission() {
+        return permission;
+    }
+
+    public void setPermission(Permission permission) {
+        this.permission = permission;
+    }
+
+    public Integer getPermissionId() {
+        return permissionId;
+    }
+
+    public void setPermissionId(Integer permissionId) {
+        this.permissionId = permissionId;
+    }
+
+    public boolean isAjouter() {
+        return ajouter;
+    }
+
+    public void setAjouter(boolean ajouter) {
+        this.ajouter = ajouter;
+    }
+
+    public boolean isSupprimer() {
+        return supprimer;
+    }
+
+    public void setSupprimer(boolean supprimer) {
+        this.supprimer = supprimer;
+    }
+
+    public boolean isModifier() {
+        return modifier;
+    }
+
+    public void setModifier(boolean modifier) {
+        this.modifier = modifier;
+    }
+
+    public boolean isAfficher() {
+        return afficher;
+    }
+
+    public void setAfficher(boolean afficher) {
+        this.afficher = afficher;
+    }
+
+        
 }

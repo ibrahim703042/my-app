@@ -10,6 +10,7 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
@@ -18,6 +19,7 @@ import java.io.Serializable;
 import model.Representant;
 import java.sql.*;
 import java.util.*;
+import static util.PermissionDbUtil.connection;
 
 @ManagedBean
 @ApplicationScoped
@@ -45,7 +47,7 @@ public class RepresentantDbUtil implements Serializable {
         
         try {
             String query = "SELECT * FROM representant WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -87,7 +89,7 @@ public class RepresentantDbUtil implements Serializable {
                     + "bpRepresentant"
                     + ") "
                     + "values (?, ?, ?, ?, ?)";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setString(1, representant.getNomRepresentant());
@@ -121,7 +123,7 @@ public class RepresentantDbUtil implements Serializable {
                     + "FROM representant "
                     + "WHERE id = " + representantId ;
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
@@ -161,7 +163,7 @@ public class RepresentantDbUtil implements Serializable {
                     + "bpRepresentant = ? "
                     + "WHERE id = ? ";
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             
             pstmt.setString(1, representant.getNomRepresentant());
@@ -182,12 +184,12 @@ public class RepresentantDbUtil implements Serializable {
     //************** delete data ********************************/
     public void delete(int representantId) {
         
-        connection = MySQLJDBCUtil.getConnection();
         System.out.println("delete() : Representant Id: " + representantId);
 
         try {
 
             String query = "DELETE FROM representant WHERE id = " + representantId ;
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  
             connection.close();

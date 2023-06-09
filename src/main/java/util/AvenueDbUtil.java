@@ -10,6 +10,7 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
@@ -17,6 +18,7 @@ import jakarta.faces.context.FacesContext;
 import model.Avenue;
 import java.sql.*;
 import java.util.*;
+import static util.AbbattementDbUtil.connection;
 
 @ManagedBean
 @ApplicationScoped
@@ -36,7 +38,7 @@ public class AvenueDbUtil {
         try {
             String query = "SELECT * FROM avenue,colline WHERE avenue.id_colline = colline.id ";
                     
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -67,7 +69,7 @@ public class AvenueDbUtil {
         try {
 
             String query = "INSERT INTO avenue (id_colline, nomAvenue) values (?, ?)";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setInt(1, avenue.getIdColline());
@@ -99,7 +101,7 @@ public class AvenueDbUtil {
 //                    + "ORDER BY C.nomColline";
             String query = "SELECT * FROM avenue,colline WHERE avenue.id_colline = colline.id ";
                     
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -135,7 +137,7 @@ public class AvenueDbUtil {
                     + "id_colline = ? "
                     + "WHERE id = ?";
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             
             pstmt.setInt(1, avenue.getIdColline());
@@ -153,11 +155,10 @@ public class AvenueDbUtil {
     //************** delete data ********************************/
     public void delete(int avenueId) {
         
-        connection = MySQLJDBCUtil.getConnection();
         System.out.println("delete() : Avenue Id: " + avenueId);
 
         try {
-
+            connection = dataSource.getConnection();
             String query = "DELETE FROM avenue WHERE id = " + avenueId ;
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  

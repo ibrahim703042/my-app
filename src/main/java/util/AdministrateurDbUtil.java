@@ -10,44 +10,64 @@ package util;
  * 
  */
 
-import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
-import jakarta.faces.bean.*;
+import jakarta.faces.bean.ApplicationScoped;
+import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
 import model.Administrateur;
+
 import java.sql.*;
 import java.util.*;
+import model.Permission;
+import model.Role;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.primefaces.PrimeFaces;
 
 @ManagedBean
 @ApplicationScoped
 
-public class AdministrateurDbUtil {
+public class AdministrateurDbUtil{
     
     public static Statement statement;
     public static Connection connection;
     public static ResultSet resultSet;
     public static PreparedStatement pstmt;
 
+    protected List<Administrateur> administrateurs;
+    protected Administrateur administrateur;
+    
+    private String query;
+    
+
     //*************************** display data *****************/
-    public ArrayList findAll() {
+    
+    
+    public List<Administrateur> getAdministrateurs() {
         
-        ArrayList administrateurList = new ArrayList();
+        administrateurs = new ArrayList<>();
+        query = ""
+                + "SELECT administrateur.*, "
+                + "role.id AS RoleID, "
+                + "role.nomRole, "
+                + "permission.ajouter, "
+                + "permission.afficher, "
+                + "permission.supprimer, "
+                + "permission.modifier "
+                + "FROM administrateur, role, permission "
+                + "WHERE administrateur.id_role = role.id "
+                + "AND administrateur.id = permission.id_administrateur "
+                + "ORDER BY administrateur.id DESC";
         
         try {
-            String query = ""
-                    + "SELECT administrateur.*, role.nomRole "
-                    + "FROM administrateur, role "
-                    + "WHERE administrateur.id_role = role.id "
-                    + "AND administrateur.id "
-                    + "IS NOT NULL "
-                    + "ORDER BY administrateur.id DESC";
-            connection = MySQLJDBCUtil.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);  
-
+            connection = dataSource.getConnection();
+            //connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);
+            resultSet = pstmt.executeQuery();  
+            
             while(resultSet.next()) { 
-
-                Administrateur administrateur = new Administrateur(); 
+                
+                administrateur = new Administrateur(); 
 
                 administrateur.setId(resultSet.getInt("id"));  
                 administrateur.setNom(resultSet.getString("nom"));  
@@ -55,71 +75,124 @@ public class AdministrateurDbUtil {
                 administrateur.setEmail(resultSet.getString("email"));  
                 administrateur.setMotPasse(resultSet.getString("motPasse"));  
                 administrateur.setTelephone(resultSet.getInt("telephone"));  
-                administrateur.setBp(resultSet.getString("BP"));  
-                administrateur.setDate(resultSet.getDate("date")); 
+                administrateur.setBp(resultSet.getString("BP"));
+                administrateur.setIsActive(resultSet.getString("isActive"));
+                administrateur.setDate(resultSet.getDate("date"));
+                
+                //administrateur.setPermissionId(resultSet.getInt(" PermissionID"));
+                administrateur.setAfficher(resultSet.getBoolean("afficher"));
+                administrateur.setAjouter(resultSet.getBoolean("ajouter"));
+                administrateur.setSupprimer(resultSet.getBoolean("supprimer"));
+                administrateur.setModifier(resultSet.getBoolean("modifier"));
                 
                 administrateur.setNomRole(resultSet.getString("nomRole")); 
+                administrateur.setRoleId(resultSet.getInt("RoleID")); 
 
-                administrateurList.add(administrateur);  
-            }   
-
-            System.out.println("Total Records Fetched: " + administrateurList.size());
-            connection.close();
-
-        } catch(SQLException sqlException) {  
-            sqlException.printStackTrace();
+                administrateurs.add(administrateur);  
+                //connection.commit();
+            }
+           
+            
+        } catch (SQLException ex) {
+            //connection.rollback();
+            printSQLException(ex);
+        }finally {
+            //connection.setAutoCommit(true);
         }
-        return administrateurList;
+        return new ArrayList<>(administrateurs);
+    }
+    
+    //*************************** load data into dropdown *****************/
+    
+    public List<Role> loadDropDown() {
+        
+        List<Role>  roleList = new ArrayList<>();
+        query = "SELECT id, nomRole from role ";
+        
+        try {
+            connection = dataSource.getConnection();
+            //connection.setAutoCommit(false);
+		    pstmt = connection.prepareStatement(query);
+            resultSet = pstmt.executeQuery();  
+            
+            while(resultSet.next()) { 
+                //this.role = new Role();
+                Role role = new Role();
+                role.setNomRole(resultSet.getString("nomRole")); 
+                role.setId(resultSet.getInt("id_role")); 
+
+                roleList.add(role);  
+                //connection.commit();
+            }
+           
+            
+        } catch (SQLException ex) {
+            //connection.rollback();
+            printSQLException(ex);
+        }finally {
+            //connection.setAutoCommit(true);
+        }
+        return new ArrayList<>(roleList);
     }
     
     //************** Save data **********************************/ 
-    public void save(Administrateur administrateur){
-        
+    public Administrateur save(Administrateur administrateur){
+        Administrateur model = null;
         try {
 
-            String query = 
-                    "INSERT INTO administrateur (id_Role, nom, prenom, email, motPasse, telephone, BP) "
-                    + "values (?, ?, ?, ?, ?, ?, ?)";
-            connection = MySQLJDBCUtil.getConnection();
+            query = ""
+                    + "INSERT INTO administrateur (id_Role, nom, prenom, email, motPasse, telephone, BP, isActive, creerPar) "
+                    + "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
-            pstmt.setInt(1, administrateur.getIdRole());
+            String motPasse = DigestUtils.shaHex(administrateur.getMotPasse());
+            String admin = "administrateur";
+            
+            pstmt.setInt(1, administrateur.getRoleId());
             pstmt.setString(2, administrateur.getNom());
             pstmt.setString(3, administrateur.getPrenom());
             pstmt.setString(4, administrateur.getEmail());
-            pstmt.setString(5, administrateur.getMotPasse());
+            pstmt.setString(5, motPasse);
             pstmt.setInt(6, administrateur.getTelephone());
             pstmt.setString(7, administrateur.getBp());
+            pstmt.setString(8, administrateur.getIsActive());
+//            pstmt.setString(9, administrateur.getCeerPar());
+            pstmt.setString(9, admin);
 
             pstmt.executeUpdate();
+            
             connection.close();
 
         }catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
+        return model;
     }
 
     //************** find data by ID ***************************/
-    public void findById(int administrateurId) {
-        
+    public Administrateur findById(Integer administrateurId) {
+
         Administrateur administrateur = null;
-        System.out.println(" findById() : Province Id: " + administrateurId);
+        System.out.println(" findById() : Administrateur Id: " + administrateurId);
         
         /* Setting The Particular administrateur Details In Session */
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        sessionMap.put("administrateur", administrateur);
 
         try {
-           
-            String query = ""
-                    + "SELECT administrateur.*, role.nomRole, role.id as Role_id "
-                    + "FROM administrateur, role "
-                    + "WHERE administrateur.id_role = role.id "
-                    + "AND administrateur.id = " + administrateurId ;
+           query = ""
+                + "SELECT administrateur.*, role.nomRole, role.id as Role_id "
+                + "FROM administrateur, role "
+                + "WHERE administrateur.id_role = role.id "
+                + "AND administrateur.id = ?" ;
                     
             
-            connection = MySQLJDBCUtil.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);    
+            connection = dataSource.getConnection();
+
+            pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, administrateurId);
+            resultSet = pstmt.executeQuery(query);    
             
             if(resultSet.next()) {
                 
@@ -130,29 +203,29 @@ public class AdministrateurDbUtil {
                 administrateur.setEmail(resultSet.getString("email"));  
                 administrateur.setMotPasse(resultSet.getString("motPasse"));  
                 administrateur.setTelephone(resultSet.getInt("telephone"));  
-                administrateur.setBp(resultSet.getString("BP"));  
+                administrateur.setBp(resultSet.getString("BP")); 
+                administrateur.setIsActive(resultSet.getString("isActive"));  
                 
                 /********** Role *********/
                 
-                administrateur.setIdRole(resultSet.getInt("Role_id"));  
+                administrateur.setRoleId(resultSet.getInt("Role_id"));  
                 administrateur.setNomRole(resultSet.getString("nomRole")); 
 
             }
             
-            sessionMap.put("adminMapped", administrateur);
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
+        return administrateur;
     }
-	
+    
     //************** update data ******************************/
-    public void update(Administrateur administrateur){
-
+    public Administrateur update(Administrateur administrateur){
+        
         try {
-
-            var query =" "
+            query =" "
                     + "UPDATE administrateur "
                     + "SET "
                     + "id_role = ?, "
@@ -160,52 +233,169 @@ public class AdministrateurDbUtil {
                     + "prenom = ?, "
                     + "email = ?, "
                     + "telephone = ?, "
-                    + "BP = ? "
+                    + "BP = ?, "
+                    + "isActive = ? "
                     + "where id = ? ";
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             
-            pstmt.setInt(1, administrateur.getIdRole());
+            pstmt.setInt(1, administrateur.getRoleId());
             pstmt.setString(2, administrateur.getNom());
             pstmt.setString(3, administrateur.getPrenom());
             pstmt.setString(4, administrateur.getEmail());
             pstmt.setInt(5, administrateur.getTelephone());
             pstmt.setString(6, administrateur.getBp());
-            pstmt.setInt(7, administrateur.getId());
+            pstmt.setString(7, administrateur.getIsActive());
+            pstmt.setInt(8, administrateur.getId());
             //pstmt.setInt(7, administrateur.getIdRole());
 
             pstmt.execute();
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+           printSQLException(sqlException);
         }
+        return administrateur;
     }
 
     //************** delete data ********************************/
-    public void delete(int administrateurId) {
+    public Administrateur delete(Administrateur administrateur) {
         
-        connection = MySQLJDBCUtil.getConnection();
-        //System.out.println("delete() : Administrateur Id: " + administrateurId);
+        System.out.println("delete() : Administrateur Id: " + administrateur.getId());
 
         try {
-
-            String query = "DELETE FROM administrateur WHERE id = " + administrateurId ;
+            connection = dataSource.getConnection();
+            query = "DELETE FROM administrateur WHERE id = ? " ;
             pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, administrateur.getId());
             pstmt.executeUpdate();  
             connection.close();
             
         } catch(SQLException sqlException){
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
-        
+        return administrateur;
     }
 
-    //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
+    
+    
+    //************** authentification  ***********************/
+    
+    public static boolean validate(String email,String motPasse) throws SQLException {
         
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        Integer isActive= 1;
+        connection = dataSource.getConnection();
+        String sql = "SELECT * FROM administrateur WHERE email = ? AND motPasse = ? AND isActive = " + isActive ;
+       String sqlc = ""
+                + "SELECT administrateur.*, "
+                + "role.nomRole, "
+                + "role.description "
+                + "FROM administrateur, role "
+                + "WHERE email = ? AND motPasse = ? AND isActive = " + isActive ;
+        
+        boolean status = false;
+            
+        
+        try {
+            
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, email);
+            pstmt.setString(2, motPasse);
+
+            resultSet = pstmt.executeQuery();
+            status = resultSet.next();
+            
+            while(status) { 
+                
+               Administrateur administrateur = new Administrateur(); 
+
+                administrateur.setId(resultSet.getInt("id"));  
+                administrateur.setNom(resultSet.getString("nom"));  
+                administrateur.setPrenom(resultSet.getString("prenom"));  
+                administrateur.setEmail(resultSet.getString("email"));  
+                administrateur.setMotPasse(resultSet.getString("motPasse"));  
+                administrateur.setTelephone(resultSet.getInt("telephone"));  
+                administrateur.setBp(resultSet.getString("BP"));  
+                administrateur.setDate(resultSet.getDate("date")); 
+                
+//                administrateur.setNomRole(resultSet.getString("nomRole")); 
+//                administrateur.setDescriptionRole(resultSet.getString("description")); 
+                //administrateur.setRole(resultSet.getObject("nomRole", role.getClass())); 
+
+                //connection.commit();
+            }
+
+        }catch (SQLException ex) {
+            printSQLException(ex);
+        } finally {
+            connection.close();
+        }
+        return status;
+    }
+    
+    public List<Administrateur> findByEmailPassword(String email,String motPasse) {
+        
+        administrateurs = new ArrayList<>();
+        query = ""
+                + "SELECT administrateur.*, role.nomRole "
+                + "FROM administrateur, role "
+                + "WHERE email = " + motPasse + " ,"
+                + "AND motPasse = "  + email + ","
+                + "AND isActive = " + 1 ;
+                
+        
+        try {
+            
+            connection = dataSource.getConnection();
+            //connection.setAutoCommit(false);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            
+            connection = dataSource.getConnection();
+            pstmt = connection.prepareStatement(query);
+            
+            while(resultSet.next()) { 
+                
+                administrateur = new Administrateur(); 
+
+                administrateur.setId(resultSet.getInt("id"));  
+                administrateur.setNom(resultSet.getString("nom"));  
+                administrateur.setPrenom(resultSet.getString("prenom"));  
+                administrateur.setEmail(resultSet.getString("email"));  
+                administrateur.setMotPasse(resultSet.getString("motPasse"));  
+                administrateur.setTelephone(resultSet.getInt("telephone"));  
+                administrateur.setBp(resultSet.getString("BP"));  
+                administrateur.setDate(resultSet.getDate("date")); 
+                
+//                administrateur.setNomRole(resultSet.getString("nomRole")); 
+
+                //connection.commit();
+            }
+           
+            
+        } catch (SQLException ex) {
+            //connection.rollback();
+            printSQLException(ex);
+        }finally {
+            //connection.setAutoCommit(true);
+        }
+        return administrateurs;
+    }
+    
+      public static void printSQLException(SQLException ex) {
+        for (Throwable e : ex) {
+            if (e instanceof SQLException) {
+                e.printStackTrace(System.err);
+                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+                System.err.println("Message: " + e.getMessage());
+                Throwable t = ex.getCause();
+                while (t != null) {
+                        System.out.println("Cause: " + t);
+                        t = t.getCause();
+                }
+            }
+        }
     }
 }

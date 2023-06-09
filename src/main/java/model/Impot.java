@@ -25,11 +25,31 @@ public class Impot implements Serializable{
     private double tranche_2;
     private double tranche_3;
     
+    private double montant_Col_3;
+    
+    private double tranche_1_Col_5;
+    private double tranche_2_Col_5;
+    private double tranche_3_Col_5;
+    
     private double impotTotalDu;
     private double accompteImpotDejaPaye;
     private double totalRestantDu;
+    
+    private RevenuSousLocation idrevenuSousLocation;
 
     public Impot() {
+    
+    tranche_1 = 1;
+    tranche_2=2;
+    tranche_3=3;
+    
+    tranche_1_Col_5=51;
+    tranche_2_Col_5=52;
+    tranche_3_Col_5=53;
+    
+    impotTotalDu=11111;
+    accompteImpotDejaPaye=2222;
+    totalRestantDu=333;
     }
 
     public Integer getId() {
@@ -80,6 +100,38 @@ public class Impot implements Serializable{
         this.tranche_3 = tranche_3;
     }
 
+    public double getMontant_Col_3() {
+        return montant_Col_3;
+    }
+
+    public void setMontant_Col_3(double montant_Col_3) {
+        this.montant_Col_3 = montant_Col_3;
+    }
+
+    public double getTranche_1_Col_5() {
+        return tranche_1_Col_5;
+    }
+
+    public void setTranche_1_Col_5(double tranche_1_Col_5) {
+        this.tranche_1_Col_5 = tranche_1_Col_5;
+    }
+
+    public double getTranche_2_Col_5() {
+        return tranche_2_Col_5;
+    }
+
+    public void setTranche_2_Col_5(double tranche_2_Col_5) {
+        this.tranche_2_Col_5 = tranche_2_Col_5;
+    }
+
+    public double getTranche_3_Col_5() {
+        return tranche_3_Col_5;
+    }
+
+    public void setTranche_3_Col_5(double tranche_3_Col_5) {
+        this.tranche_3_Col_5 = tranche_3_Col_5;
+    }
+
     public double getImpotTotalDu() {
         return impotTotalDu;
     }
@@ -104,4 +156,14 @@ public class Impot implements Serializable{
         this.totalRestantDu = totalRestantDu;
     }
 
+    public RevenuSousLocation getIdrevenuSousLocation() {
+        return idrevenuSousLocation;
+    }
+
+    public void setIdrevenuSousLocation(RevenuSousLocation idrevenuSousLocation) {
+        this.idrevenuSousLocation = idrevenuSousLocation;
+    }
+
+    
+    
 }

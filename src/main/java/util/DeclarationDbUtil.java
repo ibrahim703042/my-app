@@ -10,6 +10,7 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
@@ -22,6 +23,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import model.Declaration;
 import java.util.*;
+import static util.AbbattementDbUtil.connection;
 
 
 @ManagedBean
@@ -51,7 +53,7 @@ public class DeclarationDbUtil {
                     + "AND immeuble.id = declaration.id_immeuble";
                    
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -89,7 +91,7 @@ public class DeclarationDbUtil {
                     + "INSERT INTO declaration (id_immeuble, NIF, CCF, datePlutot, datePlutard) "
                     + "values (?, ?, ?, ?, ?)";
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             Date date_1 = declaration.getDate_1();
@@ -138,7 +140,7 @@ public class DeclarationDbUtil {
                     + "WHERE immeuble.id = declaration.id_immeuble "
                     + "AND declaration.id =" + declarationId ;
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
@@ -173,36 +175,34 @@ public class DeclarationDbUtil {
         
         try {
             String query =
-                    "SELECT "
-                    + "contribuable.id As Contribuable_ID, "
-                    + "contribuable.nom As nom_contribuable, "
-                    + "contribuable.email AS email_contribuable, "
-                    + "contribuable.telephone AS tel_contribuable, "
-                    + "contribuable.BP AS BP_contribuable, "
-                    + "representant.id As representant_ID, "
-                    + "representant.nomRepresentant As nom_representant, "
-                    + "representant.prenomRepresentant AS prenom_representant, "
-                    + "representant.emailRepresentant AS email_representant, "
-                    + "representant.telephoneRepresentant AS tel_representant, "
-                    + "representant.bpRepresentant AS BP_representant, "
-                    + "immeuble.id as Immeuble_ID, "
-                    + "immeuble.nomAvenue as Rue , "
-                    + "colline.nomColline as Colline,  "
-                    + "commune.nomCommune as Commune "
-                    + "declaration.*"
-                    + "FROM representant, declaration "
-                    + "JOIN contribuable "
-                    + "ON contribuable.id_representant = representant.id "
-                    + "JOIN immeuble "
-                    + "ON immeuble.id_contribuable = contribuable.id "
-                    + "JOIN colline "
-                    + "ON immeuble.id_colline = colline.id "
-                    + "JOIN commune ON colline.id_commune = commune.id "
-                    + "WHERE declaration.id = " + declarationId ;
+            "SELECT "
+            + "contribuable.id As Contribuable_ID, "
+            + "contribuable.nom As nom_contribuable, "
+            + "contribuable.email AS email_contribuable, "
+            + "contribuable.telephone AS tel_contribuable, "
+            + "contribuable.BP AS BP_contribuable, "
+            + "representant.id As representant_ID, "
+            + "representant.nomRepresentant As nom_representant, "
+            + "representant.prenomRepresentant AS prenom_representant, "
+            + "representant.emailRepresentant AS email_representant, "
+            + "representant.telephoneRepresentant AS tel_representant, "
+            + "representant.bpRepresentant AS BP_representant, "
+            + "immeuble.id as Immeuble_ID, "
+            + "immeuble.nomAvenue as Rue , "
+            + "colline.nomColline as Colline,  "
+            + "commune.nomCommune as Commune, "
+            + "province.nomProvince as province, "
+            + "declaration.* "
+            + "FROM representant, declaration , contribuable, immeuble, colline, commune, province "
+            + "WHERE contribuable.id_representant = representant.id "
+            + "AND immeuble.id_contribuable = contribuable.id "
+            + "AND immeuble.id_colline = colline.id "
+            + "AND colline.id_commune = commune.id "
+            + "AND declaration.id = " + declarationId ;
             
 
             // String query = "SELECT * FROM declaration WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -230,16 +230,16 @@ public class DeclarationDbUtil {
                 declaration.setEmailContribuable(resultSet.getString("email_contribuable"));  
                 
                 /* *******representant **** */
-//                declaration.setIdRepresentant(resultSet.getInt("Representant_ID"));  
-//                declaration.setNomRepresentant(resultSet.getString("nom_representant"));  
-//                declaration.setPrenomRepresentant(resultSet.getString("prenom_representant"));  
-//                declaration.setNomColline(resultSet.getString("Colline"));  
-//                declaration.setNomCommune(resultSet.getString("Commune"));  
-//                declaration.setNomProvince(resultSet.getString("Province"));  
-//                declaration.setNomAvenue(resultSet.getString("Rue"));  
-//                declaration.setTelephoneRepresentant(resultSet.getString("tel_representant"));
-//                declaration.setBpRepresentant(resultSet.getString("BP_representant"));  
-//                declaration.setEmailRepresentant(resultSet.getString("email_representant"));
+               declaration.setIdRepresentant(resultSet.getInt("Representant_ID"));  
+               declaration.setNomRepresentant(resultSet.getString("nom_representant"));  
+               declaration.setPrenomRepresentant(resultSet.getString("prenom_representant"));  
+               declaration.setNomColline(resultSet.getString("Colline"));  
+               declaration.setNomCommune(resultSet.getString("Commune"));  
+               declaration.setNomProvince(resultSet.getString("Province"));  
+               declaration.setNomAvenue(resultSet.getString("Rue"));  
+               declaration.setTelephoneRepresentant(resultSet.getString("tel_representant"));
+               declaration.setBpRepresentant(resultSet.getString("BP_representant"));  
+               declaration.setEmailRepresentant(resultSet.getString("email_representant"));
                 
             }   
 
@@ -267,7 +267,7 @@ public class DeclarationDbUtil {
                     + "datePlutard = ? "
                     + "WHERE id = ? ";
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             
             Date date_1 = declaration.getDate_1();
@@ -298,11 +298,10 @@ public class DeclarationDbUtil {
     //************** delete data ********************************/
     public void delete(int declarationId) {
         
-        connection = MySQLJDBCUtil.getConnection();
-        //System.out.println("delete() : declaration Id: " + declarationId);
+        System.out.println("delete() : declaration Id: " + declarationId);
 
         try {
-
+            connection = dataSource.getConnection();
             String query = "DELETE FROM declaration WHERE id = " + declarationId ;
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  

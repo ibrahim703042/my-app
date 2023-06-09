@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package dbconnection;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import java.sql.*;
 
 /**
@@ -21,13 +22,13 @@ public class TestConnection {
         
         String msg = "Connected to database %s successfully.";
         
-        // create a new connection from MySQLJDBCUtil
-        try (
-                Connection connection = MySQLJDBCUtil.getConnection()) {
-            
-            // print out a message
-            System.out.println(String.format(msg, connection.getCatalog()));
-            
+        try {
+                Connection connection = dataSource.getConnection();
+                connection.setAutoCommit(false);
+                
+                // print out a message
+                System.out.println(String.format(msg, connection.getCatalog()));
+                connection.commit();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

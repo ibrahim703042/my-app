@@ -22,8 +22,7 @@
                     <!-- =============== Dashboard ================= -->
 
                     <li class="item">
-                      <p:link class="no-underline nav-link"   outcome="/dashboard?faces-redirect=true"
-                              >
+                      <p:link class="no-underline nav-link">
                             <i class="pi pi-th-large mr-2" style="font-size: 1rem"></i>
                             <span class="link_name">Dashboard</span>
                         </p:link>
@@ -55,7 +54,16 @@
                                     </span>
                                 </p:link>
                             </li>
-
+                            
+                            <li class="item">
+                                <p:link class="no-underline nav-link" outcome="/pages/role/template?faces-redirect=true" >
+                                    <i class="pi pi pi-users mr-2" style="font-size: 1rem"></i>
+                                    <span class="link_name">
+                                         Role
+                                    </span>
+                                </p:link>
+                            </li>
+                            
                             <li class="item">
                                 <p:link class="no-underline nav-link" outcome="/pages/pays/province/template?faces-redirect=true" >
                                     <i class="pi pi-flag mr-2" style="font-size: 1rem"></i>
@@ -161,8 +169,9 @@
                         <p:link class="no-underline nav-link" >
                             <i class="pi pi-th-large mr-2" style="font-size: 1rem"></i>
                             <span class="link_name">Se deconnectez</span>
+                            <p:commandButton  ajax="false" value="Se deconnectez" action="#{authController.logout}"  />
                         </p:link>
-                        <!--<p:commandButton  ajax="false" value="Se deconnectez" action="#{login.logout}"  />-->
+                        
                     </li>
                     
               </ul>

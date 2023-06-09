@@ -11,12 +11,14 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
 import java.sql.*;
 import java.util.*;
 import model.Contribuable;
+import static util.AbbattementDbUtil.connection;
 
 @ManagedBean
 @ApplicationScoped
@@ -36,7 +38,7 @@ public class ContribuableDbUtil {
         try {
 
             String query = "SELECT * FROM contribuable WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -73,7 +75,7 @@ public class ContribuableDbUtil {
             String query = 
                     "INSERT INTO contribuable (id_representant, nom, email, motPasse, telephone, BP) "
                     + "values (?, ?, ?, ?, ?, ?)";
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setInt(1, contribuable.getIdRepresentant());
@@ -111,7 +113,7 @@ public class ContribuableDbUtil {
                     + "AND contribuable.id = " + contribuableId ;
             
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
@@ -155,7 +157,7 @@ public class ContribuableDbUtil {
                     + "BP = ? "
                     + "where id = ? ";
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             
             pstmt.setInt(1, contribuable.getIdRepresentant());
@@ -177,11 +179,10 @@ public class ContribuableDbUtil {
     //************** delete data ********************************/
     public void delete(int contribuableId) {
         
-        connection = MySQLJDBCUtil.getConnection();
         System.out.println("delete() : Contribuable Id: " + contribuableId);
 
         try {
-
+            connection = dataSource.getConnection();
             String query = "DELETE FROM contribuable WHERE id = " + contribuableId ;
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  

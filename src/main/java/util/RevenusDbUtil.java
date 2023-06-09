@@ -10,6 +10,7 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
@@ -31,10 +32,11 @@ public class RevenusDbUtil {
     //*************************** display data *****************/
     public ArrayList findAll() {
         ArrayList revenuLocatifList = new ArrayList();
-        String query = "SELECT * FROM revenulocatif WHERE id IS NOT NULL ORDER BY id DESC";
-        connection = MySQLJDBCUtil.getConnection();
+        
         
         try {
+            String query = "SELECT * FROM revenulocatif WHERE id IS NOT NULL ORDER BY id DESC";
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
@@ -71,7 +73,7 @@ public class RevenusDbUtil {
             String query ="INSERT INTO revenulocatif (id_immeuble, loyerExonere, loyerImposable, interetEmprunt) "
                     + "values (?, ?, ?, ?)";
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setInt(1, revenuLocatif.getId());
@@ -104,7 +106,7 @@ public class RevenusDbUtil {
                     + "FROM revenuLocatif "
                     + "WHERE id = " + revenuId ;
             
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
@@ -142,7 +144,7 @@ public class RevenusDbUtil {
                     + "interetEmprunt = ? " 
                     + "where id = ? ";
 
-            connection = MySQLJDBCUtil.getConnection();
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             
             pstmt.setInt(1, revenuLocatif.getId());
@@ -163,12 +165,12 @@ public class RevenusDbUtil {
     //************** delete data ********************************/
     public void delete(int revenuId) {
         
-        connection = MySQLJDBCUtil.getConnection();
-        //System.out.println("delete() : Administrateur Id: " + administrateurId);
+        System.out.println("delete() : Administrateur Id: " + revenuId);
 
         try {
-
+            
             String query = "DELETE FROM revenuLocatif WHERE id = " + revenuId ;
+            connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  
             connection.close();

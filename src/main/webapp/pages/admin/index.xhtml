@@ -5,164 +5,119 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
     
-    <f:metadata>
-        <f:event  type="preRenderView" listener="#{administrateurController.administrateurList()}" />
-    </f:metadata>
-    
-    <div class="surface-card p-4 shadow-1 border-round">
-        <div class="text-3xl font-medium text-900 mb-3">
-            Administrateur
-        </div>
-        <div class="font-medium text-500 mb-3">
-            Listes
-        </div>
-       <div  class="border-2 border-dashed surface-border">
+        <div class="surface-card p-4 border-round">
+        
+            <h:form id="form">
+                <p:growl id="messages" showDetail="true" />
+                <!--
+                <p:messages id="messages" showDetail="true" closable="true">
+                    <p:autoUpdate/>
+                </p:messages>
+                -->
 
-           <div class="card ">
-             
-                <h:form>
-                    <p:growl id="message" showDetail="true"/>
-                    
-                    <p:toolbar>
-                        <p:toolbarGroup>
-                            <p:commandButton 
-                                value="Ajouter" 
-                                icon="pi pi-plus" 
-                                styleClass="ui-button-success"
-                                action="/pages/admin/ajouter?faces-redirect=true"
-                                ajax="false"
-                                style="margin-right: .5rem">
-                            </p:commandButton>
-                        </p:toolbarGroup>
+                <p:toolbar>
+                    <p:toolbarGroup>
                         
-                        <!-- toolbarGroup for import, excel, pdf-->
-                        <p:toolbarGroup align="right">
-                            
-                            <!--Export data excel -->
-                            <p:commandButton 
-                                value="EXCEL" 
-                                icon="pi pi-upload" 
-                                styleClass="ui-button-help" 
-                                ajax="false">
-                                <p:dataExporter 
-                                    type="xls" 
-                                    target="dt-administrateurs" 
-                                    fileName="Gestion administrateurs" 
-                                />
-                            </p:commandButton>
-                            
-                        </p:toolbarGroup>
-                    </p:toolbar>
-                    
-                    <p:dataTable
-                        id="dt-administrateurs"
-                        paginator="true" 
-                        rows="4" 
-                        rowSelectMode="add" 
-                        paginatorPosition="bottom"
-                        binding="#{table}" 
-                        value="#{administrateurController.administrateurList()}" 
-                        var="admin"  
+                        <p:commandButton 
+                            value="Ajouter" 
+                            icon="pi pi-plus" 
+                            actionListener="#{adminController.clearForm}"
+                            update=":dialogs-admin:manage-admin-content"
+                            oncomplete="PF('manageAdminDialog').show()"
+                            styleClass="ui-button-success" 
+                            style="margin-right: .5rem"
                         >
+                            <p:resetInput target=":dialogs-admin:manage-admin-content" />
+                        </p:commandButton>
+                        
+                    </p:toolbarGroup>
+                </p:toolbar>
 
-                        <p:column 
-                            headerText="" 
-                            style="width: 5%">
-                             <h:outputText value="#{table.rowIndex + 1}" />
-                         </p:column>
-                        
-                        <!--
-                        <p:column 
-                            headerText="Matricule"
-                            sortBy="#{admin.id}" 
-                            filterBy="#{admin.id}"
-                            style="width: 17%"
-                            >
-                             <h:outputText value="#{admin.id}" />
-                         </p:column>
-                        -->
-
-                         <p:column 
-                            headerText="Nom" 
-                            sortBy="#{admin.nom}" 
-                            filterBy="#{admin.nom}"
-                            style="width: 10%"
-                            
-                            >
-                            <h:outputText value="#{admin.nom}" />
-                         </p:column>
-                        
-                         <p:column 
-                            headerText="Prenom" 
-                            sortBy="#{admin.prenom}" 
-                            filterBy="#{admin.prenom}"
-                            style="width: 15%"
-                            >
-                            <h:outputText value="#{admin.prenom}" />
-                         </p:column>
-                        
-                        
-                         <p:column 
-                            headerText="Email" 
-                            sortBy="#{admin.email}" 
-                            filterBy="#{admin.email}"
-                            >
-                            <h:outputText value="#{admin.email}" />
-                         </p:column>
-                        
-                        <p:column 
-                            headerText="B.P" 
-                            sortBy="#{admin.bp}" 
-                            filterBy="#{admin.bp}"
-                            style="width: 10%"
-                            >
-                            <h:outputText value="#{admin.bp}" />
-                        </p:column>
-                        
-                        <p:column 
-                            headerText="Role" 
-                            sortBy="#{admin.nomRole}" 
-                            filterBy="#{admin.nomRole}"
-                            style="width: 10%"
-                            >
-                            <h:outputText value="#{admin.nomRole}" />
-                        </p:column>
-                        
-                        <!--
-                         <p:column 
-                            headerText="Date" 
-                            sortBy="#{admin.date}" 
-                            filterBy="#{admin.date}"
-                            >
-                            <h:outputText value="#{admin.date}" />
-                         </p:column>
-                        -->
-
-                     <p:column exportable="false" style="width: 10%" >
-                         <p:commandButton 
-                             icon="pi pi-pencil" 
-                             styleClass="edit-button rounded-button ui-button-success mr-4" 
-                             ajax="false"
-                             action="#{administrateurController.edit(admin.id)}"
-                             >
-
-                         </p:commandButton>
-                         <p:commandButton 
-                             class="ui-button-warning rounded-button" 
-                             icon="pi pi-trash"
-                             ajax="false"
-                             action="#{administrateurController.delete(admin.id)}"
-                             >
-
-                         </p:commandButton>
+                <p:dataTable
+                    id="dt-administrateurs"
+                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="5,10,15"
+                    paginator="true"
+                    value="#{adminController.administrateurs}" 
+                    var="administrateur" 
+                    rowKey="#{administrateur.id}"
+                    rows="4" 
+                    paginatorPosition="bottom"
+                    binding="#{table}" 
+                    
+                >
+                    
+                    <!--
+                    <p:column headerText="" style="width: 5%">
+                         <h:outputText value="#{table.rowIndex + 1}" />
                      </p:column>
-                        
-                     </p:dataTable>
-                 </h:form>
-               
-            </div>
+                    -->
 
-       </div>
-    </div>
+                     <p:column headerText="#"  style="width: 5%">
+                        <h:outputText value="#{administrateur.id}" />
+                     </p:column>
+                    
+                    <p:column headerText="Prenom" sortBy="#{administrateur.prenom}" filterBy="#{administrateur.prenom}" style="width: 15%">
+                       <h:outputText value="#{administrateur.prenom}" />
+                    </p:column>
+                    
+                     <p:column headerText="Email" sortBy="#{administrateur.email}" filterBy="#{administrateur.email}">
+                        <h:outputText value="#{administrateur.email}" />
+                     </p:column>
+
+                    <p:column headerText="B.P" sortBy="#{administrateur.bp}" filterBy="#{administrateur.bp}" style="width: 10%">
+                        <h:outputText value="#{administrateur.bp}" />
+                    </p:column>
+                    
+                    <p:column headerText="Role" sortBy="#{administrateur.nomRole}" filterBy="#{administrateur.nomRole}" style="width: 10%">
+                        <h:outputText value="#{administrateur.nomRole}" />
+                    </p:column>
+
+                    <!--
+                     <p:column headerText="Date" sortBy="#{administrateur.date}" filterBy="#{administrateur.date}" >
+                        <h:outputText value="#{administrateur.date}" />
+                     </p:column>
+                    -->
+                    
+                    <p:column exportable="false" class="flex justify-content-end" >
+                        
+                        <p:commandButton 
+                            styleClass="permission-button ui-button-info mr-4"
+                            value="Permission"
+                            oncomplete="PF('managePermissionDialog').show()"
+                            update=":dialogs-permission:manage-permission-content"
+                            process="@this"
+                        >
+                            <!--<f:setPropertyActionListener value="#{administrateur}" target="#{adminController.administrateur}" />-->
+                            <!--<p:resetInput target=":dialogs-permission:manage-permission-content" />-->
+                        </p:commandButton>
+                        
+                        <p:commandButton
+                            icon="pi pi-pencil" 
+                            styleClass="edit-button rounded-button ui-button-success mr-4"
+                            oncomplete="PF('manageAdminDialog').show()"
+                            update=":dialogs-admin:manage-edit-admin-content"
+                            process="@this"
+                        >
+                            <f:setPropertyActionListener value="#{administrateur}" target="#{adminController.administrateur}" />
+                            <p:resetInput target=":dialogs-admin:manage-admin-content" />
+                        </p:commandButton>
+
+                        
+                        <p:commandButton
+                            class="ui-button-warning rounded-button" 
+                            icon="pi pi-trash"
+                             ajax="false"
+                            action="#{adminController.delete(administrateur.id)}"
+                        >  
+                        </p:commandButton>
+
+                     </p:column>
+
+                </p:dataTable>
+            </h:form>
+            <ui:include src="ajouter.xhtml" />
+            <ui:include src="permission.xhtml" />
+        </div>
             
 </ui:composition>

@@ -1,49 +1,80 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Login Admin</title>
-        <h:outputStylesheet library="webjars" name="primeflex/3.3.0/primeflex.min.css" />
-        <h:outputStylesheet library="css" name="login.css"/>
-    </h:head>
-    <h:body id="body">
-        <!--<p:graphicImage name="image_1.png" library="image" alt="Image" class="min-h" />-->
-        <div class="mt-5 pt-5">
-            <div class="flex align-items-center justify-content-center">
-                <div class="surface-card p-4 shadow-2 border-round w-full lg:w-4">
-                    <h:form>
-                        <div class="text-center mb-5">
-                            <p:graphicImage name="image_1.png" library="image" alt="Image" height="50" styleClass="mb-3"/>
-                            <div class="text-900 text-3xl font-medium mb-3">Authentification</div>
-                            <p:spacer height="20"/>
-                            
-                        </div>
-
-                        <div>
-                            <label for="email" class="block text-900 font-medium mb-2">Email</label>
-                            <p:inputText id="email" value="#{login.email}" placeholder="example@outlook.com" styleClass="w-full mb-3" />
-
-                            <label for="motPasse" class="block text-900 font-medium mb-2">Mot de passe</label>
-                            <p:inputText id="motPasse" value="#{login.motPasse}" type="password" placeholder="**********" styleClass="w-full mb-3"/>
-
-                            <p:spacer height="20"/>
-                            
-                            <p:commandButton 
-                                ajax="false"
-                                value="Se connectez" 
-                                icon="pi pi-user"
-                                styleClass="w-full"
-                                action="#{login.validateUsernamePassword}"
-                                />
-                        </div>
-                        
-                    </h:form>
-                </div>
-            </div>
-        </div>
-
+<html xmlns = "http://www.w3.org/1999/xhtml"   
+   xmlns:h = "http://java.sun.com/jsf/html"
+   xmlns:ui = "http://java.sun.com/jsf/facelets"
+   xmlns:f="http://xmlns.jcp.org/jsf/core">
         
-    </h:body>
-</html>
+   <h:body>
+      <ui:composition template = "/resources/templates/welcomeTemplate.xhtml">
+
+         <!-- <ui:define name = "hero">
+            
+         </ui:define> -->
+         
+        <ui:define name = "content">
+            
+            
+            <section id="login" class="login">
+
+                <div class="container" data-aos="fade-up">
+                    
+                    <div class="cover" data-aos="fade-up" data-aos-delay="100">
+
+                        <div class="cover-img">
+                            <h:graphicImage name="image/formLoginImg.jpg"  class="img" />
+                        </div>
+
+                    </div>
+
+                    <div class="forms">
+                        <div class="form-content">
+                            <div class="login-form">
+
+                                <div class="title">S'authentifier</div>
+
+                                <h:form id="login">
+
+                                    <div class="input-boxes">
+                                        <div class="input-box">
+                                            <i class="ri-mail-line"></i>
+                                            <h:inputText  required="true" class="input" >
+                                                <f:passThroughAttribute name="type" value="email"/>
+                                                <f:passThroughAttribute name="placeholder" value="Email"/>
+                                            </h:inputText>
+                                        </div>
+                                       
+                                        <div class="input-box">
+                                            <i class="ri-lock-password-line"></i>
+                                             <h:inputSecret required="true" class="input" >
+                                                <f:passThroughAttribute name="type" value="motPasse"/>
+                                                <f:passThroughAttribute name="placeholder" value="Mot de passe"/>
+                                            </h:inputSecret>
+                                        </div>
+
+                                        <div class="button input-box">
+                                            <h:commandButton value="Se connecter" class="btnInput" action="/pages/dashboard.xhtml">
+                                                <f:param name="pageId" value="2"/>
+                                            </h:commandButton>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section> 
+            
+                
+         </ui:define>
+
+         <!-- <ui:define name = "footer">
+
+         </ui:define> -->
+
+      </ui:composition>
+       
+   </h:body>
+</html>	
+  
