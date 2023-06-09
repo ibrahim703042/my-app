@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package model;
 
 import jakarta.faces.bean.ManagedBean;
@@ -21,8 +22,7 @@ public class Permission implements Serializable{
     private boolean supprimer;
     private boolean modifier;
     private boolean afficher;
-//    private Integer idAdministrateur;
-//    private Administrateur administrateur;
+    private Administrateur idadministrateur;
     
 
     public Permission() {
@@ -68,6 +68,14 @@ public class Permission implements Serializable{
 
     public void setAfficher(boolean afficher) {
         this.afficher = afficher;
+    }
+
+    public void setIdadministrateur(Administrateur idadministrateur) {
+        this.idadministrateur = idadministrateur;
+    }
+
+    public Administrateur getIdadministrateur() {
+        return idadministrateur;
     }
 
     

@@ -11,7 +11,6 @@ package util;
  */
 
 import static dbconnection.MySQLJDBCUtil.dataSource;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
@@ -19,10 +18,8 @@ import model.Administrateur;
 
 import java.sql.*;
 import java.util.*;
-import model.Permission;
 import model.Role;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.primefaces.PrimeFaces;
 
 @ManagedBean
 @ApplicationScoped
@@ -36,6 +33,9 @@ public class AdministrateurDbUtil{
 
     protected List<Administrateur> administrateurs;
     protected Administrateur administrateur;
+    
+    protected List<Role> roles;
+    protected Role role;
     
     private String query;
     
@@ -106,7 +106,7 @@ public class AdministrateurDbUtil{
     
     public List<Role> loadDropDown() {
         
-        List<Role>  roleList = new ArrayList<>();
+        this.roles= new ArrayList<>();
         query = "SELECT id, nomRole from role ";
         
         try {
@@ -116,12 +116,11 @@ public class AdministrateurDbUtil{
             resultSet = pstmt.executeQuery();  
             
             while(resultSet.next()) { 
-                //this.role = new Role();
-                Role role = new Role();
-                role.setNomRole(resultSet.getString("nomRole")); 
-                role.setId(resultSet.getInt("id_role")); 
+                this.role = new Role();
+                this.role.setNomRole(resultSet.getString("nomRole")); 
+                this.role.setId(resultSet.getInt("id")); 
 
-                roleList.add(role);  
+                this.roles.add(this.role);  
                 //connection.commit();
             }
            
@@ -132,7 +131,7 @@ public class AdministrateurDbUtil{
         }finally {
             //connection.setAutoCommit(true);
         }
-        return new ArrayList<>(roleList);
+        return new ArrayList<>(this.roles);
     }
     
     //************** Save data **********************************/ 

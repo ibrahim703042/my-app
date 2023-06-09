@@ -1,6 +1,7 @@
 package calcul;
 
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.List;
@@ -17,6 +18,7 @@ import model.Representant;
 import model.RevenuLocatif;
 import model.RevenuSousLocation;
 
+@ManagedBean
 public class CalculRevenus implements Serializable {
     
     private Contribuable modelContribuable;

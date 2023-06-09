@@ -54,7 +54,7 @@
                             <p:selectOneMenu value="#{administrateur.roleId}" id="idRole" style="height: 41px;" >
                                 
                                 <f:selectItem itemLabel="Choisir Role" />
-                                <f:selectItems var="role" value="#{roleController.roles}"
+                                <f:selectItems var="role" value="#{adminController.listRole}"
                                     itemLabel="#{role.nomRole}" itemValue="#{role.id}" />
 
                             </p:selectOneMenu>

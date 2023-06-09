@@ -12,6 +12,7 @@ import jakarta.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
 import model.Administrateur;
+import model.Permission;
 import model.Role;
 
 import org.primefaces.PrimeFaces;
@@ -28,8 +29,11 @@ import util.AdministrateurDbUtil;
 
 public class AdminController extends MessageContoller implements Serializable{
 
-    private List<Role> roles;
-    private Role role;
+    private List<Role> listRole;
+    private Role modelRole;
+    
+    private List<Permission> ListPermission;
+    private Permission modelPermission;
     
     private List<Administrateur> administrateurs;
     private Administrateur administrateur;
@@ -41,33 +45,15 @@ public class AdminController extends MessageContoller implements Serializable{
     //************************ display data **************************/
     @PostConstruct
     public void init() {
-        this.administrateurs = this.administrateurDbUtil.getAdministrateurs();
-        //this.roles = this.administrateurDbUtil.loadDropDown();
+        
+        this.setAdministrateurs(this.administrateurDbUtil.getAdministrateurs());
+        this.listRole = this.administrateurDbUtil.loadDropDown();
 
     }
-
-    public List<Administrateur> getAdministrateurs() {
-        return administrateurs;
-    }
-
-    public Administrateur getAdministrateur() {
-        return administrateur;
-    }
-
-    public void setAdministrateur(Administrateur administrateur) {
-        this.administrateur = administrateur;
-    }
-
-    public void setSelectedAdministrateurs(List<Administrateur> selectedAdministrateurs) {
-        this.selectedAdministrateurs = selectedAdministrateurs;
-    }
-
-    public List<Administrateur> getSelectedAdministrateurs() {
-        return selectedAdministrateurs;
-    }
-
+    
+    
     public void clearForm() {
-       this.administrateur = new Administrateur();
+        this.setAdministrateur(new Administrateur());
     }
      
     
@@ -77,16 +63,16 @@ public class AdminController extends MessageContoller implements Serializable{
     
     
     public List<Administrateur> selectedAdministrateurs() {
-        this.administrateurs = this.administrateurDbUtil.getAdministrateurs();
-        return administrateurs;
+        this.setAdministrateurs(this.administrateurDbUtil.getAdministrateurs());
+        return getAdministrateurs();
     }
         
-    //************************ save data **************************/
+    // ************************ save data **************************/
     
     public void create(Administrateur administrateur) {
         
         if (hasSelectedAdministrateurs()) {
-            if (this.administrateur.getId() == null){
+            if (this.getAdministrateur().getId() == null){
 
                 administrateurDbUtil.save(administrateur);
                 this.init();
@@ -102,9 +88,9 @@ public class AdminController extends MessageContoller implements Serializable{
     	
     //************************  edit data by Id  **************************/
     public void edit(Administrateur administrateur) {
-        if (this.administrateur.getId() != null) {
+        if (this.getAdministrateur().getId() != null) {
 
-            int id = this.administrateur.getId();
+            int id = this.getAdministrateur().getId();
             this.administrateurDbUtil.findById(id);
 
         }else{
@@ -118,9 +104,9 @@ public class AdminController extends MessageContoller implements Serializable{
     public void update() {
         
         if (hasSelectedAdministrateurs()) {
-            if (this.administrateur.getId() != null) {
+            if (this.getAdministrateur().getId() != null) {
 
-                this.administrateurDbUtil.update(this.administrateur);
+                this.administrateurDbUtil.update(this.getAdministrateur());
                 showInfo("Updated","Data updated");
                 this.init();
                 PrimeFaces.current().executeScript("PF('manageAdminDialog').hide()");
@@ -141,10 +127,10 @@ public class AdminController extends MessageContoller implements Serializable{
     ///************************ delete data **************************/
     
     public void delete() {
-        if (this.administrateur.getId() != null) {
+        if (this.getAdministrateur().getId() != null) {
 
             //int id = this.administrateur.getId();
-            this.administrateurDbUtil.delete(this.administrateur);
+            this.administrateurDbUtil.delete(this.getAdministrateur());
             PrimeFaces.current().executeScript("PF('manageAdminDialog').show()");
 
         }else{
@@ -169,6 +155,65 @@ public class AdminController extends MessageContoller implements Serializable{
 //        }
 //        return true;
 //    }
+
+    
+    // ************************************Getters And Setters ***************************************
+    
+    public List<Role> getListRole() {
+        return listRole;
+    }
+
+    public void setListRole(List<Role> listRole) {
+        this.listRole = listRole;
+    }
+
+    public Role getModelRole() {
+        return modelRole;
+    }
+
+    public void setModelRole(Role modelRole) {
+        this.modelRole = modelRole;
+    }
+
+    public List<Permission> getListPermission() {
+        return ListPermission;
+    }
+
+    public void setListPermission(List<Permission> ListPermission) {
+        this.ListPermission = ListPermission;
+    }
+
+    public Permission getModelPermission() {
+        return modelPermission;
+    }
+
+    public void setModelPermission(Permission modelPermission) {
+        this.modelPermission = modelPermission;
+    }
+
+    public List<Administrateur> getAdministrateurs() {
+        return administrateurs;
+    }
+
+    public void setAdministrateurs(List<Administrateur> administrateurs) {
+        this.administrateurs = administrateurs;
+    }
+
+    public Administrateur getAdministrateur() {
+        return administrateur;
+    }
+
+    public void setAdministrateur(Administrateur administrateur) {
+        this.administrateur = administrateur;
+    }
+
+    public List<Administrateur> getSelectedAdministrateurs() {
+        return selectedAdministrateurs;
+    }
+
+    public void setSelectedAdministrateurs(List<Administrateur> selectedAdministrateurs) {
+        this.selectedAdministrateurs = selectedAdministrateurs;
+    }
     
 }
 

@@ -10,31 +10,31 @@
         <p:dialog header="Permission Details" widgetVar="managePermissionDialog" minHeight="40" width="450" showEffect="fade">
             <p:outputPanel id="manage-permission-content" class="ui-fluid">
                 
-                <p:outputPanel rendered="#{not empty permissionController.selectedPermission}">
+                <p:outputPanel rendered="#{not empty adminController.administrateur}">
                     
                     <div class="field">
                         <p:outputLabel >Id</p:outputLabel>
-                        <p:inputText value="#{permissionController.selectedPermission.afficher}"/>
+                        <p:inputText value="#{adminController.administrateur.id}"/>
                     </div>
                     
                     <div class="field">
                         <p:outputLabel ></p:outputLabel>
-                        <p:selectBooleanCheckbox value="#{permissionController.selectedPermission.afficher}" itemLabel="Afficher"/>
+                        <p:selectBooleanCheckbox value="#{adminController.administrateur.afficher}" itemLabel="Afficher"/>
                     </div>
 
                     <div class="field">
                         <p:outputLabel ></p:outputLabel>
-                        <p:selectBooleanCheckbox value="#{permissionController.selectedPermission.ajouter}" itemLabel="Ajouter"/>
+                        <p:selectBooleanCheckbox value="#{adminController.administrateur.ajouter}" itemLabel="Ajouter"/>
                     </div>
                     
                     <div class="field">
                         <p:outputLabel ></p:outputLabel>
-                        <p:selectBooleanCheckbox value="#{permissionController.selectedPermission.modifier}" itemLabel="Modifier"/>
+                        <p:selectBooleanCheckbox value="#{adminController.administrateur.modifier}" itemLabel="Modifier"/>
                     </div>
 
                     <div class="field">
                         <p:outputLabel ></p:outputLabel>
-                        <p:selectBooleanCheckbox value="#{permissionController.selectedPermission.supprimer}" itemLabel="Supprimer"/>
+                        <p:selectBooleanCheckbox value="#{adminController.administrateur.supprimer}" itemLabel="Supprimer"/>
                     </div>
 
                 </p:outputPanel>
@@ -44,7 +44,7 @@
                 
                 <p:commandButton 
                     value="Privilegies" 
-                    actionListener="#{permissionController.create}"
+                    actionListener="#{adminController.administrateur.create}"
                     update="manage-permission-content messages" 
                     process="manage-permission-content @this" 
                 />

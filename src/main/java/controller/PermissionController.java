@@ -98,6 +98,7 @@ public class PermissionController extends MessageContoller implements Serializab
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-administrateurs");
                 
             }else
+            
                 if (this.selectedPermission.getId() != null) {
 
                     //this.permissionDbUtil.update(this.selectedPermission.getId());
@@ -114,6 +115,7 @@ public class PermissionController extends MessageContoller implements Serializab
         }
 
     }
+
     public void updatePermission() {
         
         if(hasSelectedPermissions()){
