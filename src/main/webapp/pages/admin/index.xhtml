@@ -95,14 +95,15 @@
                         </p:commandButton>
                         
                         <p:commandButton
-                            icon="pi pi-pencil" 
+                            icon="pi pi-pencil"
+                            action="#{adminController.edit}"
                             styleClass="edit-button rounded-button ui-button-success mr-4"
-                            oncomplete="PF('manageAdminDialog').show()"
-                            update=":dialogs-admin:manage-admin-content"
+                            oncomplete="PF('manageEditAdminDialog').show()"
+                            update=":dialogs-edit-admin:manage-edit-admin-content"
                             process="@this"
                         >
                             <f:setPropertyActionListener value="#{administrateur}" target="#{adminController.administrateur}" />
-                            <p:resetInput target=":dialogs-admin:manage-admin-content" />
+                            <p:resetInput target=":dialogs-edit-admin:manage-edit-admin-content" />
                         </p:commandButton>
 
                         

@@ -170,14 +170,14 @@ public class AdministrateurDbUtil{
     }
 
     //************** find data by ID ***************************/
-    public Administrateur findById(Integer administrateurId) {
+    public Administrateur findById(Administrateur administrateurId) {
 
-        Administrateur administrateur = null;
-        System.out.println(" findById() : Administrateur Id: " + administrateurId);
+        //administrateur = null;
+        System.out.println(" findById() : Administrateur Id: " + administrateurId.getId());
         
         /* Setting The Particular administrateur Details In Session */
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        sessionMap.put("administrateur", administrateur);
+        sessionMap.put("administrateurMapped", administrateur);
 
         try {
            query = ""
@@ -190,7 +190,7 @@ public class AdministrateurDbUtil{
             connection = dataSource.getConnection();
 
             pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, administrateurId);
+            pstmt.setInt(1, administrateurId.getId());
             resultSet = pstmt.executeQuery(query);    
             
             if(resultSet.next()) {

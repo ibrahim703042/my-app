@@ -56,11 +56,9 @@ public class AdminController extends MessageContoller implements Serializable{
         this.setAdministrateur(new Administrateur());
     }
      
-    
     public boolean hasSelectedAdministrateurs() {
         return this.selectedAdministrateurs() != null && !this.selectedAdministrateurs.isEmpty();
     }
-    
     
     public List<Administrateur> selectedAdministrateurs() {
         this.setAdministrateurs(this.administrateurDbUtil.getAdministrateurs());
@@ -77,6 +75,7 @@ public class AdminController extends MessageContoller implements Serializable{
                 administrateurDbUtil.save(administrateur);
                 this.init();
                 showInfo("Inserted","Data Added");
+                PrimeFaces.current().executeScript("PF('manageAdminDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-administrateurs");
             }
 
@@ -87,11 +86,12 @@ public class AdminController extends MessageContoller implements Serializable{
     }
     	
     //************************  edit data by Id  **************************/
-    public void edit(Administrateur administrateur) {
+    public void edit() {
+        
         if (this.getAdministrateur().getId() != null) {
 
-            int id = this.getAdministrateur().getId();
-            this.administrateurDbUtil.findById(id);
+            this.administrateurDbUtil.findById(administrateur);
+            PrimeFaces.current().executeScript("PF('manageEditAdminDialog').show()");
 
         }else{
             this.init();
@@ -109,12 +109,12 @@ public class AdminController extends MessageContoller implements Serializable{
                 this.administrateurDbUtil.update(this.getAdministrateur());
                 showInfo("Updated","Data updated");
                 this.init();
-                PrimeFaces.current().executeScript("PF('manageAdminDialog').hide()");
+                PrimeFaces.current().executeScript("PF('manageEditAdminDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-administrateurs");
             
             }else{
                 showError("Exist","Data exist");
-                PrimeFaces.current().ajax().update("form:messages", "form:dialogs-admin:manage-admin-content");
+                PrimeFaces.current().ajax().update("form:messages", "form:dialogs-edit-admin:manage-edit-admin-content");
             } 
             
         }else{

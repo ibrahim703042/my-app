@@ -12,9 +12,6 @@
                 
                 <p:outputPanel rendered="#{not empty adminController.administrateur}">
 
-                    <div class="field">
-                        <p:inputText  value="#{adminController.administrateur.id}"/>
-                    </div>
                     <div class="formgrid grid">
                         <div class="field col">
                             <component:inputTextField id="nom" label="Nom" placeholder="Entrer nom" value="#{adminController.administrateur.nom}"/>
@@ -51,9 +48,13 @@
                         
                         <div class="field col-12 md:col-6">
                             <p:outputLabel class="font-bold"  value="Role"/>
-                            <p:selectOneMenu value="#{adminController.administrateur.roleId}" id="idRole" style="height: 41px;" >
+                            <p:selectOneMenu value="#{administrateur.roleId}" id="idRole" style="height: 41px;" >
                                 
-                                <f:selectItem itemLabel="Choisir Role" />
+                                <!-- <f:selectItem itemValue="#{adminController.administrateur.roleId}" 
+                                    itemLabel="#{adminController.administrateur.nomRole}" /> -->
+
+                                <f:selectItem itemValue="" itemLabel="Choisir Role" />
+
                                 <f:selectItems var="role" value="#{adminController.listRole}"
                                     itemLabel="#{role.nomRole}" itemValue="#{role.id}" />
 
