@@ -5,6 +5,7 @@
 package model;
 
 import jakarta.faces.bean.ManagedBean;
+import jakarta.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,12 +16,11 @@ import java.util.Date;
  */
 
 @ManagedBean
-
+@ViewScoped
 public class Contribuable implements Serializable {
 
     private Integer id;
     private String nom;
-    private String prenom;
     private String email;
     private String motPasse;
     private Integer telephone;
@@ -37,6 +37,8 @@ public class Contribuable implements Serializable {
     private Date date;
    
     public Contribuable() {
+        nom = "kwizera";
+        email= "@";
     }
 
     public Contribuable(Integer id) {
@@ -57,14 +59,6 @@ public class Contribuable implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
     }
 
     public String getEmail() {

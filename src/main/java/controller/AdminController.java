@@ -27,7 +27,7 @@ import util.AdministrateurDbUtil;
 @ManagedBean
 @SessionScoped
 
-public class AdminController extends MessageContoller implements Serializable{
+public class AdminController extends MessageController implements Serializable{
 
     private List<Role> listRole;
     private Role modelRole;
@@ -46,11 +46,21 @@ public class AdminController extends MessageContoller implements Serializable{
     @PostConstruct
     public void init() {
         
-        this.setAdministrateurs(this.administrateurDbUtil.getAdministrateurs());
+        this.administrateurs = this.administrateurDbUtil.getAdministrateurs();
         this.listRole = this.administrateurDbUtil.loadDropDown();
 
     }
     
+    public List<Administrateur> administrateurList() {
+        
+        this.administrateurs.clear();
+        try {
+            this.administrateurs = this.administrateurDbUtil.getAdministrateurs();
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return administrateurs;
+    }
     
     public void clearForm() {
         this.setAdministrateur(new Administrateur());
@@ -67,9 +77,9 @@ public class AdminController extends MessageContoller implements Serializable{
         
     // ************************ save data **************************/
     
-    public void create(Administrateur administrateur) {
+    public void create() {
         
-        if (hasSelectedAdministrateurs()) {
+        if (IsValid()) {
             if (this.getAdministrateur().getId() == null){
 
                 administrateurDbUtil.save(administrateur);
@@ -80,8 +90,8 @@ public class AdminController extends MessageContoller implements Serializable{
             }
 
         }else{
-            showError("Failed","All field is required");
-            PrimeFaces.current().ajax().update("form:messages", "form:dialogs-admin:manage-admin-content");
+            //showError("Failed","All field is required");
+            //PrimeFaces.current().ajax().update("form:messages", "form:dialogs-admin:manage-admin-content");
         }
     }
     	
@@ -90,7 +100,7 @@ public class AdminController extends MessageContoller implements Serializable{
         
         if (this.getAdministrateur().getId() != null) {
 
-            this.administrateurDbUtil.findById(administrateur);
+            this.administrateurDbUtil.findById(this.getAdministrateur().getId());
             PrimeFaces.current().executeScript("PF('manageEditAdminDialog').show()");
 
         }else{
@@ -103,7 +113,7 @@ public class AdminController extends MessageContoller implements Serializable{
     //************************ update data **************************/
     public void update() {
         
-        if (hasSelectedAdministrateurs()) {
+        if (IsValid()) {
             if (this.getAdministrateur().getId() != null) {
 
                 this.administrateurDbUtil.update(this.getAdministrateur());
@@ -124,37 +134,61 @@ public class AdminController extends MessageContoller implements Serializable{
         }
     }
     
-    ///************************ delete data **************************/
+    // ************************ delete data **************************/
     
-    public void delete() {
-        if (this.getAdministrateur().getId() != null) {
-
-            //int id = this.administrateur.getId();
-            this.administrateurDbUtil.delete(this.getAdministrateur());
-            PrimeFaces.current().executeScript("PF('manageAdminDialog').show()");
-
-        }else{
-            this.init();
-            showInfo("Find ID","Unable to find ID");
-            PrimeFaces.current().ajax().update("form:messages", "form:dt-administrateurs");
-        }
+    public void delete(Integer id) {
+        this.administrateurDbUtil.delete(id);
+        this.init();
+        showInfo("Find ID","Unable to find ID");
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-administrateurs");
     }
     
     
-//    private boolean IsValid(){
-//        
-//        if (this.getAdministrateur().getNom().isEmpty() || this.getAdministrateur().getPrenom().isEmpty() )
-//        {
-//            showError("Failed","Fullname is required");
-//            return false;
-//        }
-//        if (this.getAdministrateur().getBp().isEmpty())
-//        {
-//            showError("Failed","Description is required");
-//            return false;
-//        }
-//        return true;
-//    }
+   private boolean IsValid(){
+       
+       if (this.getAdministrateur().getNom().isEmpty())
+       {
+           showError("Failed","First name is required");
+           return false;
+       }
+       if (this.getAdministrateur().getPrenom().isEmpty() )
+       {
+           showError("Failed","Last name is required");
+           return false;
+       }
+       if (this.getAdministrateur().getEmail().isEmpty())
+       {
+           showError("Failed","E-mail is required");
+           return false;
+       }
+       if (this.getAdministrateur().getMotPasse().isEmpty())
+       {
+           showError("Failed","Password is required");
+           return false;
+       }
+       if (this.getAdministrateur().getBp().isEmpty())
+       {
+           showError("Failed","B.p is required");
+           return false;
+       }
+       if (this.getAdministrateur().getTelephone() == null)
+       {
+           showError("Failed","Phone number is required");
+           return false;
+       }
+//       if (this.getAdministrateur().getRoleId() == null)
+//       {
+//           showError("Failed","Role is required");
+//           return false;
+//       }
+       if (this.getAdministrateur().getIsActive() == null)
+       {
+           showError("Failed","Status is required");
+           return false;
+       }
+       
+       return true;
+   }
 
     
     // ************************************Getters And Setters ***************************************

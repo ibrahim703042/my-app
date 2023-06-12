@@ -24,11 +24,11 @@ import util.RoleDbUtil;
 @ManagedBean
 @SessionScoped
 
-public class RoleController extends MessageContoller implements Serializable{
-
+public class RoleController extends MessageController implements Serializable{
+    
     private List<Role> roles;
-    private Role selectedRole;
-    private List<Role> selectedRoles;
+    private Role role;
+    private List<Role> listOfRoles;
     
     @Inject
     private RoleDbUtil roleDbUtil;
@@ -39,88 +39,79 @@ public class RoleController extends MessageContoller implements Serializable{
         this.roles = this.roleDbUtil.findAll();
     }
        
+    public List<Role> roleList() {
+        
+        this.roles.clear();
+        try {
+            this.roles = this.roleDbUtil.findAll();
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return this.roles;
+    }
     public List<Role> getRoles() {
         return roles;
     }
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setListOfRoles(List<Role> listOfRoles) {
+        this.listOfRoles = listOfRoles;
+    }
+
+    public List<Role> getListOfRoles() {
+        return listOfRoles;
+    }
     
-    public Role getSelectedRole() {
-        return selectedRole;
+    public void clearForm() {
+        this.role = new Role();
     }
 
-    public void setSelectedRole(Role selectedRole) {
-        this.selectedRole = selectedRole;
-    }
-
-    public List<Role> getSelectedRoles() {
-        return selectedRoles;
-    }
-
-    public void setSelectedRoles(List<Role> selectedRoles) {
-        this.selectedRoles = selectedRoles;
-    }
-    
-    public void openNew() {
-        this.selectedRole = new Role();
-    }
-
-    public void saveRole() {
+    public void createOrUpdate() {
         
         if(IsValid()){
             
-            if (this.selectedRole.getId() == null) {
+            if (this.role.getId() == null) {
 
-                this.roleDbUtil.save(this.selectedRole);
+                this.roleDbUtil.save(this.role);
                 this.init();
                 showInfo("Inserted","Role Added");
                 PrimeFaces.current().executeScript("PF('manageRoleDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");
                 
-            }else
-                if (this.selectedRole.getId() != null) {
+            }else if (this.role.getId() != null) {
 
-                    warningMessage("Exist","Data already exist!!!");
-                   // PrimeFaces.current().executeScript("PF('manageRoleDialog').hide()");
-                    PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");
-                
-            
-            } 
-        }else{
-            warningMessage("Required","Required");
-            PrimeFaces.current().ajax().update("form:messages", "form:dialogs");
-        }
-
-    }
-    public void updateRole() {
-        
-        if(IsValid()){
-            
-            if (this.selectedRole.getId() != null) {
-
-                this.roleDbUtil.update(this.selectedRole);
+                this.roleDbUtil.update(this.role);
                 this.init();
                 showInfo("Updated","Role Updated");
                 PrimeFaces.current().executeScript("PF('manageRoleDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");
-            }else{
-                showError("Exist","Data exist");
-                PrimeFaces.current().ajax().update("form:messages", "form:dialogs");
+               // warningMessage("Exist","Data already exist!!!");
+               // PrimeFaces.current().executeScript("PF('manageRoleDialog').hide()");
+                //PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");
+
             } 
-            
-        }else{
-            warningMessage("Invalid","Invalide data!!!");
-            PrimeFaces.current().ajax().update("form:messages", "form:dialogs");
         }
 
     }
     
+    public boolean hasValue() {
+        return this.listOfRoles != null && !this.listOfRoles.isEmpty();
+    }
+    
     // ******   Input Validation ******/
     private boolean IsValid(){
-        if (this.selectedRole.getNomRole().isEmpty())
+        if (this.role.getNomRole().isEmpty())
         {
             showError("Failed","Role name is required");
             return false;
         }
-        if (this.selectedRole.getDescription().isEmpty())
+        if (this.role.getDescription().isEmpty())
         {
             showError("Failed","Description is required");
             return false;
@@ -129,34 +120,12 @@ public class RoleController extends MessageContoller implements Serializable{
     }
     
     // ******   Delete data ******/
-    public void deleteRole() {
-        this.roleDbUtil.delete(this.selectedRole);
-        this.selectedRole = null;
+    public void delete(int id) {
+        this.roleDbUtil.delete(id);
+        this.role = null;
         showInfo("Deleted","Role deleted");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");
     }
 
-    public String getDeleteButtonMessage() {
-        
-        if (hasSelectedRoles()) {
-            int size = this.selectedRoles.size();
-            return size > 1 ? size + " roles selected" : "1 role selected";
-        }
-
-        return "Delete";
-    }
-
-    public boolean hasSelectedRoles() {
-        return this.selectedRoles != null && !this.selectedRoles.isEmpty();
-    }
-    
-    public void deleteSelectedRoles() {
-        this.roleDbUtil.delete(this.selectedRole);
-        this.init();
-        this.selectedRoles = null;
-        showInfo("Deleted","Role deleted");
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");
-        PrimeFaces.current().executeScript("PF('dtRoles').clearFilters()");
-    }
     
 }

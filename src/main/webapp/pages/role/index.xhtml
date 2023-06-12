@@ -19,59 +19,62 @@
                     <p:commandButton 
                         value="Ajouter" 
                         icon="pi pi-plus" 
-                        actionListener="#{roleController.openNew}"
+                        actionListener="#{roleController.clearForm}"
                         update=":dialogs:manage-role-content"
                         oncomplete="PF('manageRoleDialog').show()"
                         styleClass="ui-button-success" 
-                        style="margin-right: .5rem"
-                    >
+                        style="margin-right: .5rem">
+                        
                         <p:resetInput target=":dialogs:manage-role-content" />
+                        
                     </p:commandButton>
                     
-                    <p:commandButton
-                        value="#{roleController.deleteButtonMessage}"
-                        icon="pi pi-trash" 
-                        id="delete-roles-button"
-                        actionListener="#{roleController.deleteSelectedRoles}"
-                        styleClass="ui-button-danger" 
-                        disabled="#{!roleController.hasSelectedRoles()}" 
-                        update="@this"
-                    >
-                        <p:confirm 
-                            header="Confirmation" 
-                            message="Are you Sure?"
-                            icon="pi pi-exclamation-triangle" 
-                        />
-                    </p:commandButton>
-
                 </p:toolbarGroup>
                 
             </p:toolbar>
             
             <p:dataTable
                 id="dt-roles"
-                value="#{roleController.roles}" 
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="5,10,15,20"
+                value="#{roleController.roleList()}"
+                widgetVar="dtRoles" 
                 var="role"
                 rowKey="#{role.id}"
-                selection="#{roleController.selectedRoles}"
                 paginator="true" 
                 rows="4" 
                 rowSelectMode="add"
                 paginatorPosition="bottom"
                 binding="#{table}" 
             >
-               
-                <p:ajax event="rowSelect" update=":form:delete-roles-button" />
-                <p:ajax event="rowUnselect" update=":form:delete-roles-button" />
-                <p:ajax event="rowSelectCheckbox" update=":form:delete-roles-button" />
-                <p:ajax event="rowUnselectCheckbox" update=":form:delete-roles-button" />
-                <p:ajax event="toggleSelect" update=":form:delete-roles-button" />
                 
-                <p:column selectionMode="multiple" exportable="false"></p:column>
+                <f:facet name="header">
+                     <div class="flex justify-content-between">
+                         <span 
+                             style="font-weight: bold;
+                              font-size: 30px; text-transform: uppercase"
+                         >
+                             Roles
+                         </span>
+                         <span class="filter-container ui-input-icon-left"> 
+                             <i class="pi pi-search"></i>
+                             <p:inputText 
+                                 id="globalFilter"
+                                 onkeyup="PF('dtRoles').filter()" 
+                                 placeholder="Search" 
+                             />
+                         </span>
+                     </div>
+                 </f:facet>
                 
+                <p:column headerText="No" style="width: 5%">
+                      <h:outputText value="#{table.rowIndex + 1}" />
+                </p:column>
+                <!--
                 <p:column headerText="Code">
                     <h:outputText value="#{role.id}" />
                 </p:column>
+                -->
 
                 <p:column headerText="Nom" >
                     <h:outputText value="#{role.nomRole}" />
@@ -90,18 +93,17 @@
                     update=":dialogs:manage-role-content"
                     process="@this"
                 >
-                    <f:setPropertyActionListener value="#{role}" target="#{roleController.selectedRole}" />
+                    <f:setPropertyActionListener value="#{role}" target="#{roleController.role}" />
                     <p:resetInput target=":dialogs:manage-role-content" />
                 </p:commandButton>
                 
                 <p:commandButton 
                     class="ui-button-warning rounded-button" 
                     icon="pi pi-trash"
-                    process="@this"
-                    id="deleteRoleDialog"
-                >
-                    <f:setPropertyActionListener value="#{role}" target="#{roleController.selectedRole}" />
+                    ajax="false"
+                    action="#{roleController.delete(role.id)}"
                     
+                >
                 </p:commandButton>
                 
              </p:column>

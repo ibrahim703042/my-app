@@ -24,7 +24,7 @@ import util.PermissionDbUtil;
 
 @ManagedBean
 @SessionScoped
-public class PermissionController extends MessageContoller implements Serializable {
+public class PermissionController extends MessageController implements Serializable {
     
     private List<Permission> permissions;
     private Permission selectedPermission;

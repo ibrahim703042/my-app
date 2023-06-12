@@ -18,8 +18,8 @@ import java.util.Date;
 public class Impot implements Serializable{
 
     private Integer id;
-    private int idSLocation;
-    private Date impDPaye;
+    private int idRevenuSousLocation;
+    private Date date;
     
     private double tranche_1;
     private double tranche_2;
@@ -35,23 +35,26 @@ public class Impot implements Serializable{
     private double accompteImpotDejaPaye;
     private double totalRestantDu;
     
-    private RevenuSousLocation idrevenuSousLocation;
+    private RevenuSousLocation revenuSousLocation;
 
     public Impot() {
     
-    tranche_1 = 1;
-    tranche_2=2;
-    tranche_3=3;
-    
-    tranche_1_Col_5=51;
-    tranche_2_Col_5=52;
-    tranche_3_Col_5=53;
-    
-    impotTotalDu=11111;
-    accompteImpotDejaPaye=2222;
-    totalRestantDu=333;
-    }
+        this.revenuSousLocation = new RevenuSousLocation();
+        
+//        tranche_1 = 0;
+//        tranche_2 = 0;
+//        tranche_3 = 0;
 
+        tranche_1_Col_5=51;
+        tranche_2_Col_5=52;
+        tranche_3_Col_5=53;
+
+        impotTotalDu=11111;
+        accompteImpotDejaPaye=2222;
+        totalRestantDu=333;
+        
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -60,24 +63,32 @@ public class Impot implements Serializable{
         this.id = id;
     }
 
-    public int getIdSLocation() {
-        return idSLocation;
+    public int getIdRevenuSousLocation() {
+        return idRevenuSousLocation;
     }
 
-    public void setIdSLocation(int idSLocation) {
-        this.idSLocation = idSLocation;
+    public void setIdRevenuSousLocation(int idRevenuSousLocation) {
+        this.idRevenuSousLocation = idRevenuSousLocation;
     }
 
-    public Date getImpDPaye() {
-        return impDPaye;
+    public Date getDate() {
+        return date;
     }
 
-    public void setImpDPaye(Date impDPaye) {
-        this.impDPaye = impDPaye;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public double getTranche_1() {
-        return tranche_1;
+        if(
+            (this.revenuSousLocation.getRevenuSousNetImposable()) >= 0 && 
+            (this.revenuSousLocation.getRevenuSousNetImposable()) < 180000 
+        ){
+            return tranche_1 = this.revenuSousLocation.getRevenuSousNetImposable();
+        }else{
+            return (this.revenuSousLocation.getTotalRevenusNetsImposables() - this.revenuSousLocation.getAbbattements()) - tranche_1;
+        }
+        
     }
 
     public void setTranche_1(double tranche_1) {
@@ -85,7 +96,14 @@ public class Impot implements Serializable{
     }
 
     public double getTranche_2() {
-        return tranche_2;
+        if(
+            this.tranche_1 >= 1800000 && 
+            this.tranche_1 < 3600000 
+        ){
+            return tranche_2 = this.tranche_1;
+        }else{
+            return tranche_2 - tranche_1;
+        }
     }
 
     public void setTranche_2(double tranche_2) {
@@ -93,7 +111,10 @@ public class Impot implements Serializable{
     }
 
     public double getTranche_3() {
-        return tranche_3;
+        if(this.tranche_2 >= 3600000 ){
+            return tranche_3 = this.tranche_2;
+        }
+        return 0;
     }
 
     public void setTranche_3(double tranche_3) {
@@ -156,14 +177,13 @@ public class Impot implements Serializable{
         this.totalRestantDu = totalRestantDu;
     }
 
-    public RevenuSousLocation getIdrevenuSousLocation() {
-        return idrevenuSousLocation;
+    public RevenuSousLocation getRevenuSousLocation() {
+        return revenuSousLocation;
     }
 
-    public void setIdrevenuSousLocation(RevenuSousLocation idrevenuSousLocation) {
-        this.idrevenuSousLocation = idrevenuSousLocation;
+    public void setRevenuSousLocation(RevenuSousLocation revenuSousLocation) {
+        this.revenuSousLocation = revenuSousLocation;
     }
 
-    
     
 }

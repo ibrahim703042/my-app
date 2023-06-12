@@ -9,12 +9,11 @@ package util;
  * @author Ibrahim
  */
 
-import dbconnection.MySQLJDBCUtil;
 import static dbconnection.MySQLJDBCUtil.dataSource;
+import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
-import model.Administrateur;
 import java.sql.*;
 import java.util.*;
 import model.RevenuLocatif;
@@ -29,9 +28,50 @@ public class RevenusDbUtil {
     public static ResultSet resultSet;
     public static PreparedStatement pstmt;
 
+    private List<RevenuLocatif> revenusLocatif;
+    
     //*************************** display data *****************/
-    public ArrayList findAll() {
-        ArrayList revenuLocatifList = new ArrayList();
+    @PostConstruct
+    public void init () {
+        revenusLocatif = new ArrayList();
+        
+        try {
+            String query = "SELECT * FROM revenulocatif WHERE id IS NOT NULL ORDER BY id DESC";
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);  
+
+            while(resultSet.next()) { 
+
+                RevenuLocatif revenuLocatif = new RevenuLocatif(); 
+
+                revenuLocatif.setId(resultSet.getInt("id"));  
+                revenuLocatif.setLoyerExonere(resultSet.getDouble("loyerExonere"));  
+                revenuLocatif.setLoyerImposable(resultSet.getDouble("loyerImposable"));  
+                revenuLocatif.setChargeIncombat(resultSet.getDouble("chargeIncombat"));  
+                revenuLocatif.setInteretEmprunt(resultSet.getDouble("interetEmprunt"));  
+                
+                revenusLocatif.add(revenuLocatif);
+                //connection.commit();
+                
+            }   
+
+            System.out.println("Total Records Fetched: " + revenusLocatif.size());
+            connection.close();
+
+        } catch(SQLException sqlException) {  
+            sqlException.printStackTrace();
+        }
+    }
+
+    public List<RevenuLocatif> getRevenusLocatif() {
+        return new ArrayList<>(revenusLocatif);
+    }
+    
+    
+    
+    public List<RevenuLocatif> findAll() {
+        revenusLocatif = new ArrayList();
         
         
         try {
@@ -51,18 +91,18 @@ public class RevenusDbUtil {
                 revenuLocatif.setInteretEmprunt(resultSet.getDouble("interetEmprunt"));  
                 
 
-                revenuLocatifList.add(revenuLocatif);
+                revenusLocatif.add(revenuLocatif);
                 //connection.commit();
                 
             }   
 
-            System.out.println("Total Records Fetched: " + revenuLocatifList.size());
+            System.out.println("Total Records Fetched: " + revenusLocatif.size());
             connection.close();
 
         } catch(SQLException sqlException) {  
             sqlException.printStackTrace();
         }
-        return revenuLocatifList;
+        return revenusLocatif;
     }
     
     //************** Save data **********************************/ 

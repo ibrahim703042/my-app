@@ -188,10 +188,13 @@ public class RepresentantDbUtil implements Serializable {
 
         try {
 
-            String query = "DELETE FROM representant WHERE id = " + representantId ;
+            String query = "DELETE FROM representant WHERE id = ? " ;
+            
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
-            pstmt.executeUpdate();  
+            pstmt.setInt(1,representantId);
+            pstmt.executeUpdate(); 
+            
             connection.close();
             
         } catch(SQLException sqlException){

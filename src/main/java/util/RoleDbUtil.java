@@ -5,7 +5,6 @@
 package util;
 
 
-import dbconnection.MySQLJDBCUtil;
 import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.bean.ApplicationScoped;
@@ -72,7 +71,6 @@ public class RoleDbUtil implements Serializable {
     public List<Role> findAll(){
         
         roles = new ArrayList<>();
-        
         query = "SELECT * FROM role WHERE id IS NOT NULL ORDER BY id DESC";
         
         try {        connection = dataSource.getConnection();
@@ -159,14 +157,13 @@ public class RoleDbUtil implements Serializable {
     }
 
     // ************************ delete data *************************/
-    public Role delete(Role role){
-        
-        
+    public Role delete(Integer roleId){
+        Role role = null;
         try {        
             connection = dataSource.getConnection();
             query = "DELETE FROM role WHERE id = ?";
             pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1,role.getId());
+            pstmt.setInt(1,roleId);
             pstmt.executeUpdate(); 
             
             connection.close();

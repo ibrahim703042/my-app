@@ -1,7 +1,6 @@
 model\RevenuLocatif.class
 controller\RevenusController.class
 util\ImmeubleDbUtil.class
-calcul\CalculRevenus.class
 model\Personne.class
 model\Amande.class
 util\RepresentantDbUtil.class
@@ -12,7 +11,6 @@ util\AmandeDbUtil.class
 util\AbbattementDbUtil.class
 model\NavigationController.class
 controller\AdminController.class
-controller\MessageContoller.class
 model\Commune.class
 util\PermissionDbUtil.class
 util\PayementDbUtil.class
@@ -23,6 +21,7 @@ util\ContribuableDbUtil.class
 controller\ProvinceController.class
 controller\CommuneController.class
 model\Province.class
+controller\RevenusController_Trash.class
 util\CommuneDbUtil.class
 controller\ImmeubleController.class
 util\CollineDbUtil.class
@@ -38,6 +37,7 @@ dbconnection\MySQLJDBCUtil.class
 bean\GenericBean.class
 controller\AvenueController.class
 util\AvenueDbUtil.class
+controller\MessageController.class
 model\Administrateur.class
 model\Role.class
 model\Permission.class

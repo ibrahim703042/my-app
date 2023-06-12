@@ -28,25 +28,20 @@ public class RevenuLocatif implements Serializable {
     
     //revenuBrut * 40%
     private double deductionDepenses;
-    
     private double interetEmprunt;
     
     //revenuBrut-deduction-interetEmprunt
     private double revenuNetImposable;
-    
-    private Integer idImmeuble ;
-    private Immeuble immeuble ;
-    
+      
+//    private Integer idImmeuble ;
+//    private Immeuble immeuble ;
+//    
     
     public RevenuLocatif(){
-        
-//        loyerExonere = 100000;
-//        loyerImposable = 300000000;
-//        chargeIncombat = 5000000;
-//        revenuBrut = loyerImposable + chargeIncombat ;
-//        deductionDepenses = (revenuBrut * 40)/100;
-//        interetEmprunt = 1000000;
-//        revenuNetImposable = revenuBrut - deductionDepenses - interetEmprunt;
+        this.loyerExonere = 1000000;
+        this.loyerImposable = 1000000;   
+        this.chargeIncombat = 100000;
+        this.interetEmprunt = 10000;
     }
     
     
@@ -83,7 +78,7 @@ public class RevenuLocatif implements Serializable {
     }
 
     public double getRevenuBrut() {
-        return revenuBrut;
+        return revenuBrut = this.loyerImposable + this.chargeIncombat;
     }
 
     public void setRevenuBrut(double revenuBrut) {
@@ -91,7 +86,7 @@ public class RevenuLocatif implements Serializable {
     }
 
     public double getDeductionDepenses() {
-        return deductionDepenses;
+        return deductionDepenses = (revenuBrut * 40)/100;
     }
 
     public void setDeductionDepenses(double deductionDepenses) {
@@ -107,28 +102,17 @@ public class RevenuLocatif implements Serializable {
     }
 
     public double getRevenuNetImposable() {
+        revenuNetImposable = this.revenuBrut - this.deductionDepenses - this.interetEmprunt;
         return revenuNetImposable;
     }
 
     public void setRevenuNetImposable(double revenuNetImposable) {
         this.revenuNetImposable = revenuNetImposable;
     }
-
-    public Immeuble getImmeuble() {
-        return immeuble;
-    }
-
-    public void setImmeuble(Immeuble immeuble) {
-        this.immeuble = immeuble;
-    }
-
-    public Integer getIdImmeuble() {
-        idImmeuble = immeuble.getId();
-        return idImmeuble;
-    }
-
-    public void setIdImmeuble(Integer idImmeuble) {
-        this.idImmeuble = idImmeuble;
-    }
     
+    public void totalRevenuBrut() {
+        this.revenuBrut = this.loyerImposable + this.chargeIncombat;
+        this.deductionDepenses = (this.revenuBrut * 40)/100;
+        this.revenuNetImposable = this.revenuBrut - this.deductionDepenses - this.interetEmprunt;
+    }
 }

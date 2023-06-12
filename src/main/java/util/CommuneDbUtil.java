@@ -9,7 +9,6 @@ package util;
  * @author Ibrahim
  */
 
-import dbconnection.MySQLJDBCUtil;
 import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;

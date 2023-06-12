@@ -39,9 +39,7 @@ public class AdministrateurDbUtil{
     
     private String query;
     
-
     //*************************** display data *****************/
-    
     
     public List<Administrateur> getAdministrateurs() {
         
@@ -142,6 +140,10 @@ public class AdministrateurDbUtil{
             query = ""
                     + "INSERT INTO administrateur (id_Role, nom, prenom, email, motPasse, telephone, BP, isActive, creerPar) "
                     + "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            
+            String query_2 = "INSERT INTO permission (id_administrateur,affiche, ajouter, modifier, supprimer)"
+                    + "values(?,?,?,?,?)";
+            
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
@@ -170,10 +172,10 @@ public class AdministrateurDbUtil{
     }
 
     //************** find data by ID ***************************/
-    public Administrateur findById(Administrateur administrateurId) {
+    public Administrateur findById(Integer administrateurId) {
 
-        //administrateur = null;
-        System.out.println(" findById() : Administrateur Id: " + administrateurId.getId());
+        administrateur = null;
+        System.out.println(" findById() : Administrateur Id: " + administrateurId);
         
         /* Setting The Particular administrateur Details In Session */
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -181,7 +183,7 @@ public class AdministrateurDbUtil{
 
         try {
            query = ""
-                + "SELECT administrateur.*, role.nomRole, role.id as Role_id "
+                + "SELECT administrateur.*, role.nomRole, role.id as RoleId "
                 + "FROM administrateur, role "
                 + "WHERE administrateur.id_role = role.id "
                 + "AND administrateur.id = ?" ;
@@ -190,7 +192,7 @@ public class AdministrateurDbUtil{
             connection = dataSource.getConnection();
 
             pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, administrateurId.getId());
+            pstmt.setInt(1, administrateurId);
             resultSet = pstmt.executeQuery(query);    
             
             if(resultSet.next()) {
@@ -207,7 +209,7 @@ public class AdministrateurDbUtil{
                 
                 /********** Role *********/
                 
-                administrateur.setRoleId(resultSet.getInt("Role_id"));  
+                administrateur.setRoleId(resultSet.getInt("RoleId"));  
                 administrateur.setNomRole(resultSet.getString("nomRole")); 
 
             }
@@ -259,15 +261,15 @@ public class AdministrateurDbUtil{
     }
 
     //************** delete data ********************************/
-    public Administrateur delete(Administrateur administrateur) {
-        
-        System.out.println("delete() : Administrateur Id: " + administrateur.getId());
+    public Administrateur delete(Integer administrateurId) {
+        administrateur = null;
+        System.out.println("delete() : Administrateur Id: " + administrateurId);
 
         try {
             connection = dataSource.getConnection();
             query = "DELETE FROM administrateur WHERE id = ? " ;
             pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, administrateur.getId());
+            pstmt.setInt(1, administrateurId);
             pstmt.executeUpdate();  
             connection.close();
             

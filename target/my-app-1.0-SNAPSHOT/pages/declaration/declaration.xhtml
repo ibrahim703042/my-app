@@ -1,0 +1,658 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/dashboardTemplate.xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+    
+    <ui:define name = "contents">
+        <style>
+            .a4-size {
+                font-family: 'Times New Roman', Times, serif, Lucida Grand;
+            }
+            
+            .my-heading-row {
+                background-color: var(--surface-c);
+                font-weight: bold;
+            }
+            
+        </style>
+        
+        <div class="a4-size" >
+        
+            <p:card style="width: auto" id="pnlPrint">
+                <f:facet name="header" >
+                    <div class="flex align-items-center justify-content-center">
+                        <p:graphicImage name="image/logo.jpg" style="width: 50%; margin-top: 10px"/>
+                    </div>
+                    <div class="flex align-items-center justify-content-center font-bold mt-4" style="font-size: 20px">
+                       DECLARATION UNIQUE DE L’IMPOT SUR LES REVENUS LOCATIFS
+                       
+                    </div>
+                    
+                </f:facet>
+                
+                <h:form id="form" class=" py-3">
+                    
+                    <div class="ui-fluid formgrid grid py-3">
+
+                        <!-- ====================== Declaration ===========================-->
+                        <!--                        
+                        <div class="flex align-items-left justify-content-end">
+                                <div class="border border-dashed">
+                                    <span class="text-500">Exercice comptable/Fiscale</span>
+                                    <span class="text-500">
+                                        <p:outputLabel>
+                                            Du ..../.../20...  au ..../..../20...
+                                        </p:outputLabel>
+                                    </span>
+
+                                </div>
+                        </div>
+                        -->
+                        
+                        <!-- ====================== Contribuable ===========================-->
+                        <div class="ui-fluid formgrid grid px-4">
+                            <div class=" field col-12 md:col-12 font-medium text-500 mb-3">
+                                A. IDENTIFICATION DU CONTRIBUABLE
+                            </div>
+                            <p:spacer height="20"/>
+                            <!-- ======================first name and last name ====================== -->
+                            <div class="field col-12 md:col-12">
+                                <span class="font-bold mr-4"> Nom complet ou Raison Sociale : </span>
+                                <span> #{declarationMapped.nomContribuable} </span>
+                            </div>
+
+                            <!-- ======================address====================== -->
+
+                            <div class="field col-2 md:col-4">
+                                <span class="font-bold mr-4"> No : </span>
+                                <span> #{declarationMapped.idContribuable} </span>
+                            </div>
+
+                            <div class="field col-5 md:col-4">
+                                <span class="font-bold mr-4"> Avenue/Rue : </span>
+                                <span> #{declarationMapped.nomAvenue} </span>
+                            </div>
+
+                            <div class="field col-5 md:col-4">
+                                <span class="font-bold mr-4"> Colline/Quartier : </span>
+                                <span> #{declarationMapped.nomColline} </span>
+                            </div>
+
+                            <!-- ======================city & state====================== -->
+                            <div class="field col-6 md:col-6">
+                                <span class="font-bold mr-4"> Commune : </span>
+                                <span> #{declarationMapped.nomCommune} </span>
+                            </div>
+
+                            <div class="field col-6 md:col-6">
+                                <span class="font-bold mr-4"> Province : </span>
+                                <span> #{declarationMapped.nomProvince} </span>
+                            </div>
+
+                            <!-- ======================contact====================== -->
+
+                            <div class="field col-3 md:col-4">
+                                <span class="font-bold mr-4"> B.P : </span>
+                                <span> #{declarationMapped.bpContribuable} </span>
+                            </div>
+
+                            <div class="field col-5 md:col-4">
+                                <span class="font-bold mr-4"> Telephone : </span>
+                                <span> #{declarationMapped.telephoneContribuable} </span>
+                            </div>
+
+                            <div class="field col-4 md:col-4">
+                                <span class="font-bold mr-4"> Email : </span>
+                                <span> #{declarationMapped.emailContribuable} </span>
+                            </div>
+
+                            <p:divider styleClass="ui-divider-dashed" />
+
+                            <!-- ==================================== Representant Fiscale============================================= -->
+
+                            <p:spacer height="40" />
+                            <div class="field col-12 md:col-6 font-medium text-500 mb-3 mt-2">
+                                B. REPRESENTANT DU CONTRIBUABLE
+                            </div>
+                            <p:spacer height="20"/>
+                            
+                            <!-- ======================first name and last name ====================== -->
+                            <div class="field col-12 md:col-12 mt-3">
+                                <span class="font-bold mr-4"> Nom et Prenom : </span>
+                                <span> #{declarationMapped.nomRepresentant} #{declarationMapped.prenomRepresentant} </span>
+                            </div>
+
+                            <!-- ======================address====================== -->
+
+                            <div class="field col-2 md:col-4">
+                                <span class="font-bold mr-4"> No : </span>
+                                <span> #{declarationMapped.idRepresentant} </span>
+                            </div>
+
+                            <div class="field col-5 md:col-4">
+                                <span class="font-bold mr-4"> Avenue/Rue : </span>
+                                <span> #{declarationMapped.nomAvenue} </span>
+                            </div>
+
+                            <div class="field col-5 md:col-4">
+                                <span class="font-bold mr-4"> Colline/Quartier : </span>
+                                <span> #{declarationMapped.nomColline} </span>
+                            </div>
+
+                            <!-- ======================city & state====================== -->
+                            <div class="field col-6 md:col-6">
+                                <span class="font-bold mr-4"> Commune : </span>
+                                <span> #{declarationMapped.nomCommune} </span>
+                            </div>
+
+                            <div class="field col-6 md:col-6">
+                                <span class="font-bold mr-4"> Province : </span>
+                                <span> #{declarationMapped.nomProvince} </span>
+                            </div>
+
+                            <!-- ======================contact====================== -->
+
+                            <div class="field col-3 md:col-4">
+                                <span class="font-bold mr-4"> B.P : </span>
+                                <span> #{declarationMapped.bpRepresentant} </span>
+                            </div>
+
+                            <div class="field col-4 md:col-4">
+                                <span class="font-bold mr-4"> Telephone : </span>
+                                <span> #{declarationMapped.telephoneRepresentant} </span>
+                            </div>
+
+                            <div class="field col-5 md:col-4">
+                                <span class="font-bold mr-4"> Email : </span>
+                                <span> #{declarationMapped.emailRepresentant} </span>
+                            </div>
+
+                            <p:divider styleClass="ui-divider-dashed" />
+
+                            <!-- ================= Abbattement ===================== -->
+
+                            <p:spacer height="30" />
+
+                            <div class="field col-12 md:col-6 font-medium text-500 mb-3">
+                                C. ABBATTEMENT
+                            </div>
+                        </div>
+                        <!-- ==================================== Representant Fiscale============================================= -->
+
+                        <!-- ================= Abbattement ===================== -->
+
+                        <!-- ======================Revenus Locatif===========================-->
+
+                        <div class="field col-12 md:col-12">
+                            <p:panelGrid style="margin-top:20px; width: 100%">
+
+                                <f:facet name="header">
+                                    <p:row styleClass="ui-primary">
+                                        <p:column colspan="3" style="text-align: left">
+                                            <h3>C. REVENUS LOCTIF</h3>
+                                        </p:column>
+                                    </p:row>
+
+                                </f:facet>
+
+                                <p:row>
+                                    <p:column colspan="" >1. Loyers encaissés exonérés</p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber 
+                                            placeholder="......" 
+                                            id="loyerExonere" 
+                                            value="#{revenusController.modelRevenuLocatif.loyerExonere}">
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column> 2. Loyers encaissés imposables  (Annexes II)</p:column>
+                                    <p:column colspan="2"  >
+                                        <p:inputNumber 
+                                            placeholder="......"
+                                            id="loyerImposable"
+                                            value="#{revenusController.modelRevenuLocatif.loyerImposable}">
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="" >3. Charges incombant au propriétaire, payées par les locataires</p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber 
+                                            placeholder="......"
+                                            id="chargeIncombat"  
+                                            value="#{revenusController.modelRevenuLocatif.chargeIncombat}">
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column>4. Revenu brut (Ligne 2 + Ligne3)</p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber 
+                                            placeholder="......" 
+                                            id="revenuBrut"
+                                            readonly="true"
+                                            value="#{revenusController.totalRevenulocatifRevenubrut()}" >
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column>5. Déduction pour dépenses d’entretien (Ligne 4 × 40%)</p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber 
+                                            placeholder="......"
+                                            id="input5"
+                                            readonly="true"
+                                            value="#{revenusController.totalDeductionDepensesEntretien()}" >
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column>
+                                        6. Intérêts des emprunts contractés pour l’acquisition,
+                                        la construction ou le renouvellement des immeubles productifs
+                                        du revenu imposable effectivement payés durant l’exercice d’imposition  
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber 
+                                        placeholder="......"
+                                        id="input6"  
+                                        value="#{revenusController.modelRevenuLocatif.interetEmprunt}" >
+                                        <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                    </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column>
+                                        <b>
+                                            7. Revenus nets imposables (Ligne 4 – Ligne 5– Ligne 6) 
+                                        </b> 
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber 
+                                             
+                                            placeholder="......"
+                                            id="input7"
+                                            readonly="true"
+                                            value="#{revenusController.totalRevenuLocatifRevenunetImposable()}" >
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                            </p:panelGrid>
+
+                        </div>
+
+                        <!-- ======================D. REVENUS DES SOUS-LOCATIONS ===========================-->
+
+                        <div class="field col-12 md:col-12">
+                            <p:panelGrid style="margin-top:20px; width: 100%">
+
+                                <f:facet name="header">
+                                    <p:row styleClass="ui-primary">
+                                        <p:column colspan="2" style="text-align: left">
+                                            <h3>D. REVENUS DES SOUS-LOCATIONS</h3>
+                                        </p:column>
+                                    </p:row>
+                                </f:facet>
+
+                                <p:row>
+                                    <p:column colspan="" >8. Recettes des sous-locations</p:column>
+                                    <p:column colspan="2">
+                                        <p:inputNumber 
+                                            placeholder="......"
+                                            id="recetteSousLocation"
+                                            value="#{revenusController.modelRevenuSousLocation.recetteSousLocation}" >
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan=""> 9. Loyers payés pour la location des immeubles et terrains donnés en sous-location</p:column>
+                                    <p:column colspan="2">
+                                        <p:inputNumber  
+                                            placeholder="......"
+                                            id="loyerPayes"
+                                            value="#{revenusController.modelRevenuSousLocation.loyerPayes}" >
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan=""> <b>10. Revenus nets imposables (Ligne 8 – Ligne 9) </b> </p:column>
+                                    <p:column colspan="2"  >
+                                        <p:inputNumber  
+                                            placeholder="......"
+                                            id="revenusNetsImposables"
+                                            readonly="true"
+                                            value="#{revenusController.totalRevenuSousLocationRevenusNetsImposables()}" >
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan=""> <b>11. Total revenus nets imposables (Ligne 7 + Ligne 10)</b> </p:column>
+                                    <p:column colspan="2">
+                                        <p:inputNumber 
+                                            placeholder="......"
+                                            readonly="true"
+                                            id="totalRevenusNetsImposables"
+                                            value="#{revenusController.totalRevenuSousLocatifTotalRevenusNetsImposable()}" >
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="">12 Abbattement </p:column>
+                                    <p:column>
+                                        <p:inputNumber  
+                                            placeholder="......"
+                                            id="abbattements"
+                                            value="#{revenusController.modelRevenuSousLocation.abbattements}" >
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan=""> <b>13. REVENU NET IMPOSABLE (Ligne 11- Ligne 12)</b> </p:column>
+                                    <p:column colspan="2">
+                                        <p:inputNumber  
+                                            placeholder="......"
+                                            readonly="true"
+                                            id="revenuSousNetImposable"
+                                            value="#{revenusController.totalRevenuSousLocatifRevenuNetImposable()}" >
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                            </p:panelGrid>
+
+                        </div>
+
+                        <!-- ====================== E. DETERMINATION DE L’IMPOT DU ===========================-->
+                        <div class="field col-12 md:col-12">
+                            <p:panelGrid style="margin-top:20px">
+                                <f:facet name="header">
+                                    <p:row styleClass="ui-primary">
+                                        <p:column colspan="9">
+
+                                            <h3>E. DETERMINATION DE L’IMPOT DU </h3>
+                                            <p:spacer height="10" />
+                                            <h5>1. Personnes Physiques et Morales </h5>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column styleClass="text-primary" >COL 1</p:column>
+                                        <p:column styleClass="text-primary" colspan="2">COL 2</p:column>
+                                        <p:column styleClass="text-primary" colspan="2">COL 3</p:column>
+                                        <p:column styleClass="text-primary" colspan="2">COL 4</p:column>
+                                        <p:column styleClass="text-primary" colspan="2">COL 5</p:column>
+                                    </p:row>
+
+                                </f:facet>
+
+                                <p:row>
+                                    <p:column styleClass="text-primary" style="font-weight: bold;">
+                                        Lignes
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                                        Tranches de revenus annuels nets imposables
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                                        Montant
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                                        Taux d’imposition
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                                        Impôt correspondant
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="" styleClass="text-primary" >14</p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >0 – 1 800 000 FBU</p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber 
+                                            placeholder="......." 
+                                            id="tranche_1"
+                                            value="#{revenusController.modelImpot.tranche_1}" >
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >0%</p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber 
+                                            placeholder="....... "
+                                            id="tranche_1_Col_5"
+                                            value="#{revenusController.modelImpot.tranche_1_Col_5}" >
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="" styleClass="text-primary" >15</p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        1 800 001 – 3 600 000 FBU 
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber 
+                                            placeholder="......."
+                                            id="tranche_2"
+                                            value="#{revenusController.modelImpot.tranche_2}" rendered="true">
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        20% de la part qui dépasse 1 800 000 FBU
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber 
+                                            placeholder="......."
+                                            id="tranche_2_Col_5"
+                                            value="#{revenusController.modelImpot.tranche_2_Col_5}">
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="" styleClass="text-primary" >16</p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        Plus de 3 600 000 FBU
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber 
+                                            placeholder="......."
+                                            id="tranche_3"
+                                            value="#{revenusController.modelImpot.tranche_2}" rendered="true">
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        30% de la part qui dépasse 3600 000 FBU 
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber 
+                                            placeholder="......."
+                                            id="tranche_3_Col_5"
+                                            value="#{revenusController.modelImpot.tranche_3_Col_5}">
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+
+                                <p:row>
+                                    <p:column colspan="" styleClass="text-primary" >17</p:column>
+                                    <p:column colspan="6" styleClass="text-primary" style="font-weight: bold;" >
+                                        Impôt total dû (Ligne 14+ Ligne 15+ Ligne 16)
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;" >
+                                        <p:inputNumber 
+                                            placeholder="......."
+                                            id="impotTotalDu"
+                                            readonly="true"
+                                            value="#{revenusController.modelImpot.impotTotalDu}">
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="" styleClass="text-primary" >18</p:column>
+                                    <p:column colspan="6" styleClass="text-primary" style="font-weight: bold;" >
+                                        Acomptes sur l’impôt locatif déjà payés
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;" >
+                                        <p:inputNumber 
+                                            placeholder="......."
+                                            id="accompteImpotDejaPaye"
+                                            readonly="true"
+                                            value="#{revenusController.modelImpot.accompteImpotDejaPaye}">
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="" styleClass="text-primary" >19</p:column>
+                                    <p:column colspan="6" styleClass="text-primary" style="font-weight: bold;">
+                                       Total restant dû (Ligne 17- Ligne 18)
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                                        <p:inputNumber 
+                                            placeholder="......."
+                                            id="totalRestantDu"
+                                            readonly="true"
+                                            value="#{revenusController.modelImpot.totalRestantDu}">
+                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        </p:inputNumber>
+                                    </p:column>
+                                </p:row>
+
+                            </p:panelGrid>
+
+                        </div>
+
+                        <!-- ======================F. RESERVE A L’ADMINISTRATION FISCALE ===========================-->
+                        <p:spacer height="10"/>
+                        <div class="field col-12 md:col-12">
+                            <p:panelGrid style="margin-top:20px; width: 100%">
+
+                                <!--======================= Amande =====================-->
+                                <f:facet name="header">
+                                    <p:row styleClass="ui-primary">
+                                        <p:column colspan="3" style="text-align: left">
+                                            <h3>F. RESERVE A L’ADMINISTRATION FISCALE </h3>
+                                        </p:column>
+                                    </p:row>
+
+                                </f:facet>
+
+                                <p:row>
+                                    <p:column colspan="" style="font-weight: bold;">
+                                       Amende fixe pour retard de déclaration et pénalités pour retard de paiement (BIF) :
+                                    </p:column>
+                                    <p:column colspan="2"/>
+
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="" >
+                                        20. Base (Ligne 19)
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber placeholder="......."/>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="" >
+                                        21. Amende fixe
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber placeholder="......."/>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="" >
+                                        22. Pénalités pour paiement tardif (10%)
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber placeholder="......."/>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="" style="font-weight: bold;" >
+                                        23. Total amendes et pénalités (Lignes 21 + 22)
+                                    </p:column>
+                                    <p:column colspan="2" styleClass="text-primary" >
+                                        <p:inputNumber placeholder="......."/>
+                                    </p:column>
+                                </p:row>
+
+                            </p:panelGrid>
+
+                        </div>
+
+                        <!-- ====================== BUTTON  ===========================-->
+                        <div class="field col-12 md:col-10"></div>
+                        <div class="field col-12 md:col-2">
+                            <p:commandButton 
+                                value="Calculer"
+                                ajax="false"
+                                action="#{revenusController.save(revenuLocatif)}"
+                                style="height: 41px; "
+                            />
+                        </div>
+                    </div>
+                    
+
+                    </h:form>
+                
+                
+                
+                
+                
+                <f:facet name="footer">
+                    <p:commandButton value="Print (custom configuration)" type="button" icon="pi pi-print" styleClass="shadow-1 mb-3">
+                        <p:printer 
+                            target="pnlPrint" 
+
+                        />
+                    </p:commandButton>
+                </f:facet>
+            </p:card>
+            
+            
+            
+        </div>
+        
+            
+    </ui:define>
+        
+</ui:composition>

@@ -51,8 +51,8 @@ public class ImpotDbUtil {
                 Impot impot = new Impot(); 
 
                 impot.setId(resultSet.getInt("id"));  
-                impot.setIdSLocation(resultSet.getInt("id_s_location"));  
-                impot.setImpDPaye(resultSet.getDate("imp_d_paye")); 
+                impot.setIdRevenuSousLocation(resultSet.getInt("id_s_location"));  
+                impot.setDate(resultSet.getDate("imp_d_paye")); 
                 //impot.setImpotTotal(resultSet.getInt("impot_total")); 
 
                 impotList.add(impot);  
@@ -82,8 +82,8 @@ public class ImpotDbUtil {
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
-            pstmt.setInt(1, impot.getIdSLocation());
-            pstmt.setDate(2, (Date) impot.getImpDPaye());
+            pstmt.setInt(1, impot.getIdRevenuSousLocation());
+            pstmt.setDate(2, (Date) impot.getDate());
             //pstmt.setInt(3, impot.getImpotTotal());
             //statement.setDate(7, (java.sql.Date) impot.getDate());
 
@@ -122,8 +122,8 @@ public class ImpotDbUtil {
                 
                 impot = new Impot();
                 impot.setId(resultSet.getInt("id"));  
-                impot.setIdSLocation(resultSet.getInt("id_s_location"));  
-                impot.setImpDPaye(resultSet.getDate("imp_d_paye")); 
+                impot.setIdRevenuSousLocation(resultSet.getInt("id_s_location"));  
+                impot.setDate(resultSet.getDate("imp_d_paye")); 
                 //impot.setImpotTotal(resultSet.getInt("impot_total")); 
                 //impot.setDate(resultSet.getDate("date"));  
                //LocalDate date = LocalDate.now();
@@ -153,8 +153,8 @@ public class ImpotDbUtil {
 
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, impot.getIdSLocation());
-            pstmt.setDate(2, (Date) impot.getImpDPaye());
+            pstmt.setInt(1, impot.getIdRevenuSousLocation());
+            pstmt.setDate(2, (Date) impot.getDate());
             //pstmt.setInt(3, impot.getImpotTotal());
 
             pstmt.execute();

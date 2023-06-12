@@ -10,15 +10,14 @@ package util;
  * 
  */
 
-import dbconnection.MySQLJDBCUtil;
 import static dbconnection.MySQLJDBCUtil.dataSource;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
 import java.sql.*;
 import java.util.*;
+import model.Abbattement;
 import model.Contribuable;
-import static util.AbbattementDbUtil.connection;
+import model.Representant;
 
 @ManagedBean
 @ApplicationScoped
@@ -29,11 +28,19 @@ public class ContribuableDbUtil {
     public static Connection connection;
     public static ResultSet resultSet;
     public static PreparedStatement pstmt;
+    
+    protected List<Representant> representants;
+    protected Representant representant;
+    
+    protected List< Abbattement>  abbattements;
+    protected Contribuable abbattement;
+    
+    private List<Contribuable> contribuableList;
 
     //*************************** display data *****************/
-    public ArrayList findAll() {
+    public List<Contribuable> findAll() {
         
-        ArrayList contribuableList = new ArrayList();
+        contribuableList = new ArrayList();
         
         try {
 
@@ -64,12 +71,44 @@ public class ContribuableDbUtil {
         } catch(SQLException sqlException) {  
             sqlException.printStackTrace();
         }
-        return contribuableList;
+        return new ArrayList<>(this.contribuableList);
+    }
+    
+    //*************************** load dropdown *****************/
+    public List<Representant> loadDropDown() {
+        
+        this.representants = new ArrayList<>();
+        String query = "SELECT * from representant ";
+        
+        try {
+            connection = dataSource.getConnection();
+            //connection.setAutoCommit(false);
+		    pstmt = connection.prepareStatement(query);
+            resultSet = pstmt.executeQuery();  
+            
+            while(resultSet.next()) { 
+                this.representant = new Representant();
+                this.representant.setNomRepresentant(resultSet.getString("nomRepresentant")); 
+                this.representant.setPrenomRepresentant(resultSet.getString("prenomRepresentant")); 
+                this.representant.setId(resultSet.getInt("id")); 
+
+                this.representants.add(this.representant);  
+                //connection.commit();
+            }
+           
+            
+        } catch (SQLException ex) {
+            //connection.rollback();
+            printSQLException(ex);
+        }finally {
+            //connection.setAutoCommit(true);
+        }
+        return new ArrayList<>(this.representants);
     }
     
     //************** Save data **********************************/ 
-    public void save(Contribuable contribuable){
-        
+    public Contribuable save(Contribuable contribuable){
+        Contribuable model = null;
         try {
 
             String query = 
@@ -89,8 +128,9 @@ public class ContribuableDbUtil {
             connection.close();
 
         }catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
+        return model;
     }
 
     //************** find data by ID ***************************/
@@ -138,7 +178,7 @@ public class ContribuableDbUtil {
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
     }
 	
@@ -172,7 +212,7 @@ public class ContribuableDbUtil {
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
     }
 
@@ -189,15 +229,25 @@ public class ContribuableDbUtil {
             connection.close();
             
         } catch(SQLException sqlException){
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
         
     }
 
     //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
+    public void printSQLException(SQLException ex) {
+        for (Throwable e : ex) {
+            if (e instanceof SQLException) {
+                e.printStackTrace(System.err);
+                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+                System.err.println("Message: " + e.getMessage());
+                Throwable t = ex.getCause();
+                while (t != null) {
+                        System.out.println("Cause: " + t);
+                        t = t.getCause();
+                }
+            }
+        }
     }
 }

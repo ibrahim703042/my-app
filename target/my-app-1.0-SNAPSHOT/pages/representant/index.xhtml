@@ -25,6 +25,7 @@
                     
                     <p:toolbar>
                         <p:toolbarGroup>
+                            <!--
                             <p:commandButton 
                                 value="Ajouter" 
                                 icon="pi pi-plus" 
@@ -32,6 +33,18 @@
                                 action="/pages/representant/ajouter?faces-redirect=true"
                                 ajax="false"
                                 style="margin-right: .5rem">
+                            
+                            </p:commandButton>
+                            -->
+                            <p:commandButton 
+                                value="Ajouter" 
+                                icon="pi pi-plus" 
+                                actionListener="#{representantController.clearForm}"
+                                update=":dialogs-representant:manage-representant-content"
+                                oncomplete="PF('manageRepresentantDialog').show()"
+                                styleClass="ui-button-success"
+                                style="margin-right: .5rem">
+                                <p:resetInput target=":dialogs-representant:manage-representant-content" />
                             </p:commandButton>
                         </p:toolbarGroup>
                         
@@ -45,7 +58,7 @@
                         paginatorPosition="bottom"
                         binding="#{table}" 
                         value="#{representantController.representantList()}" 
-                        var="representan"  
+                        var="representant"  
                         >
 
                         <p:column 
@@ -57,84 +70,104 @@
                         <!--
                         <p:column 
                             headerText="Matricule"
-                            sortBy="#{representan.id}" 
-                            filterBy="#{representan.id}"
+                            sortBy="#{representant.id}" 
+                            filterBy="#{representant.id}"
                             style="width: 17%"
                             >
-                             <h:outputText value="#{representan.id}" />
+                             <h:outputText value="#{representant.id}" />
                          </p:column>
                         -->
 
                          <p:column 
                             headerText="Nom" 
-                            sortBy="#{representan.nomRepresentant}" 
-                            filterBy="#{representan.nomRepresentant}"
+                            sortBy="#{representant.nomRepresentant}" 
+                            filterBy="#{representant.nomRepresentant}"
                             style="width: 10%"
                             
                             >
-                            <h:outputText value="#{representan.nomRepresentant}" />
+                            <h:outputText value="#{representant.nomRepresentant}" />
                          </p:column>
                         
                          <p:column 
                             headerText="Prenom" 
-                            sortBy="#{representan.prenomRepresentant}" 
-                            filterBy="#{representan.prenomRepresentant}"
+                            sortBy="#{representant.prenomRepresentant}" 
+                            filterBy="#{representant.prenomRepresentant}"
                             style="width: 15%"
                             >
-                            <h:outputText value="#{representan.prenomRepresentant}" />
+                            <h:outputText value="#{representant.prenomRepresentant}" />
                          </p:column>
                         
                         
                          <p:column 
                             headerText="Email" 
-                            sortBy="#{representan.emailRepresentant}" 
-                            filterBy="#{representan.emailRepresentant}"
+                            sortBy="#{representant.emailRepresentant}" 
+                            filterBy="#{representant.emailRepresentant}"
                             >
-                            <h:outputText value="#{representan.emailRepresentant}" />
+                            <h:outputText value="#{representant.emailRepresentant}" />
                          </p:column>
                         
                          <p:column 
                             headerText="B.P" 
-                            sortBy="#{representan.bpRepresentant}" 
-                            filterBy="#{representan.bpRepresentant}"
+                            sortBy="#{representant.bpRepresentant}" 
+                            filterBy="#{representant.bpRepresentant}"
                             style="width: 10%"
                             >
-                            <h:outputText value="#{representan.bpRepresentant}" />
+                            <h:outputText value="#{representant.bpRepresentant}" />
                          </p:column>
                         
                         <!--
                          <p:column 
                             headerText="Date" 
-                            sortBy="#{representan.date}" 
-                            filterBy="#{representan.date}"
+                            sortBy="#{representant.date}" 
+                            filterBy="#{representant.date}"
                             >
-                            <h:outputText value="#{representan.date}" />
+                            <h:outputText value="#{representant.date}" />
                          </p:column>
                         -->
 
-                     <p:column exportable="false" style="width: 10%" >
-                         <p:commandButton 
-                             icon="pi pi-pencil" 
-                             styleClass="edit-button rounded-button ui-button-success mr-4" 
-                             process="@this"
-                             ajax="false"
-                             action="#{representantController.edit(representan.id)}"
-                             >
-
-                         </p:commandButton>
+                        <p:column exportable="false" style="width: 10%" >
+                            <!--
+                            <p:commandButton 
+                                icon="pi pi-pencil" 
+                                styleClass="edit-button rounded-button ui-button-success mr-4" 
+                                oncomplete="PF('manageAbbattementDialog').show()"
+                                update=":dialogs-abbattement:manage-Abbattement-content"
+                                process="@this">
+                                
+                                <f:setPropertyActionListener value="#{representant}" target="#{representantController.model}" />
+                                <p:resetInput target=":dialogs-Abbattement:manage-Abbattement-content" />
+                            
+                            </p:commandButton>
+                            -->
+                            
+                            <p:commandButton 
+                                icon="pi pi-pencil" 
+                                styleClass="edit-button rounded-button ui-button-success mr-4" 
+                                oncomplete="PF('manageRepresentantDialog').show()"
+                                update=":dialogs-representant:manage-representant-content"
+                                process="@this">
+                                
+                            <f:setPropertyActionListener value="#{representant}" target="#{representantController.model}" />
+                            <p:resetInput target=":dialogs-representant:manage-representant-content" />
+                            
+                        </p:commandButton>
+                            
                          <p:commandButton 
                              class="ui-button-warning rounded-button" 
                              icon="pi pi-trash"
                              process="@this"
                              ajax="false"
-                             action="#{representantController.delete(representan.id)}"
-                             >
+                             action="#{representantController.delete(representant.id)}">
+                            <!--                             
+                            <f:setPropertyActionListener value="#{representant}" target="#{representantController.model}" />
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />-->
+
 
                          </p:commandButton>
                      </p:column>
                      </p:dataTable>
                  </h:form>
-               
+               <ui:include src="ajouter.xhtml" />
             </div>
 
        </div>

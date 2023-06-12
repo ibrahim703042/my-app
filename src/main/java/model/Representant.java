@@ -7,6 +7,7 @@ package model;
 import jakarta.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Representant implements Serializable {
     private String nomRepresentant;
     private String prenomRepresentant;
     private String emailRepresentant;
-    private int telephoneRepresentant;
+    private Integer telephoneRepresentant;
     private String bpRepresentant;
     private Date date;
     
@@ -29,11 +30,10 @@ public class Representant implements Serializable {
     private String nomContribuable;
     private String prenomContribuable;
     
+    private Contribuable contribuable;
+    private List<Contribuable> contribuableList;
+    
     public Representant() {
-    }
-
-    public Representant(Integer id) {
-        this.id = id;
     }
 
     public Integer getId() {
@@ -68,11 +68,11 @@ public class Representant implements Serializable {
         this.emailRepresentant = emailRepresentant;
     }
 
-    public int getTelephoneRepresentant() {
+    public Integer getTelephoneRepresentant() {
         return telephoneRepresentant;
     }
 
-    public void setTelephoneRepresentant(int telephoneRepresentant) {
+    public void setTelephoneRepresentant(Integer telephoneRepresentant) {
         this.telephoneRepresentant = telephoneRepresentant;
     }
 
@@ -115,5 +115,21 @@ public class Representant implements Serializable {
     public void setPrenomContribuable(String prenomContribuable) {
         this.prenomContribuable = prenomContribuable;
     }
-    
+
+    public Contribuable getContribuable() {
+        return contribuable;
+    }
+
+    public void setContribuable(Contribuable contribuable) {
+        this.contribuable = contribuable;
+    }
+
+    public List<Contribuable> getContribuableList() {
+        return contribuableList;
+    }
+
+    public void setContribuableList(List<Contribuable> contribuableList) {
+        this.contribuableList = contribuableList;
+    }
+
 }

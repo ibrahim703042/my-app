@@ -75,7 +75,7 @@ public class DeclarationController implements Serializable {
     }
     
     //************************  edit data by Id  **************************/
-    public String calcul(int id) {
+    public String calculRevenu(int id) {
         
         try {
             declarationDbUtil.ViewById(id);
@@ -83,7 +83,7 @@ public class DeclarationController implements Serializable {
         }catch (Exception ex) {
             addErrorMessage ((SQLException) ex);
         }
-        return "/pages/declaration/calculRevenu.xhtml?faces-redirect=true";
+        return "/pages/declaration/declaration.xhtml?faces-redirect=true";
     }
     
     //************************ update data **************************/

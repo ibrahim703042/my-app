@@ -4,10 +4,9 @@
  */
 package model;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.faces.bean.ManagedBean;
+import jakarta.faces.bean.ViewScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,32 +15,33 @@ import java.util.List;
  */
 
 @ManagedBean
+@ViewScoped
 public class Abbattement implements Serializable{
 
     private Integer id;
     private String beneficiaire;
-    private String[] selectedMotifs;
-    private List<String> motif;
-    private List<Contribuable> contribuable;
+    private List<Contribuable> contribuables;
+    private Contribuable contribuable;
     
-    String A = "A. Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à l’âge de 25 ans, orphelin de père et de mère, héritier ou usufruitier";
-    String B = "B. Enfant mineur ou enfant majeur, copropriétaires, cohéritiers et co-usufruitier";
-    String C = "C. Veuf (veuve) propriétaire, possesseur, titulaire, héritier ou usufruitier";
-    String D = "D. Retraité ou handicapé, personne ayant atteint l’âge légal de la retraite propriétaire, possesseur, titulaire, héritier ou usufruitier";
-    String E = "E. Démobilisé non en fonction publique, privée ou élective ";
+//    String A = "A. Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à l’âge de 25 ans, orphelin de père et de mère, héritier ou usufruitier";
+//    String B = "B. Enfant mineur ou enfant majeur, copropriétaires, cohéritiers et co-usufruitier";
+//    String C = "C. Veuf (veuve) propriétaire, possesseur, titulaire, héritier ou usufruitier";
+//    String D = "D. Retraité ou handicapé, personne ayant atteint l’âge légal de la retraite propriétaire, possesseur, titulaire, héritier ou usufruitier";
+//    String E = "E. Démobilisé non en fonction publique, privée ou élective ";
 
-    @PostConstruct
-    public void init() {
-        motif = new ArrayList<>();
-        
-        motif.add(A);
-        motif.add(B);
-        motif.add(C);
-        motif.add(D);
-        motif.add(E);
-        
+    private Short motif_A;
+//    private boolean motifB;
+//    private boolean motifC;
+//    private boolean motifD;
+//    private boolean motifE;
+    
+    
+    
+    public Abbattement(){
+        beneficiaire = "No";
+        //motif_A = true;
     }
-
+    
     public Integer getId() {
         return id;
     }
@@ -58,29 +58,31 @@ public class Abbattement implements Serializable{
         this.beneficiaire = beneficiaire;
     }
 
-    public String[] getSelectedMotifs() {
-        return selectedMotifs;
+    public List<Contribuable> getContribuables() {
+        return contribuables;
     }
 
-    public void setSelectedMotifs(String[] selectedMotifs) {
-        this.selectedMotifs = selectedMotifs;
+    public void setContribuables(List<Contribuable> contribuables) {
+        this.contribuables = contribuables;
     }
 
-    public List<String> getMotif() {
-        return motif;
-    }
-
-    public void setMotif(List<String> motif) {
-        this.motif = motif;
-    }
-
-    public List<Contribuable> getContribuable() {
+    public Contribuable getContribuable() {
         return contribuable;
     }
 
-    public void setContribuable(List<Contribuable> contribuable) {
+    public void setContribuable(Contribuable contribuable) {
         this.contribuable = contribuable;
     }
+
+    public void setMotif_A(Short motif_A) {
+        this.motif_A = motif_A;
+    }
+
+    public Short getMotif_A() {
+        return motif_A;
+    }
+
+    
     
     
 }

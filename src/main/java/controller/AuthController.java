@@ -22,7 +22,7 @@ import util.AdministrateurDbUtil;
 
 @ManagedBean
 @SessionScoped
-public class AuthController extends MessageContoller implements Serializable {
+public class AuthController extends MessageController implements Serializable {
     private Administrateur model;
     //private String pageId;
     

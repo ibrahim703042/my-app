@@ -5,186 +5,168 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
     
-    <f:metadata>
-        <f:event  type="preRenderView" listener="#{contribuableController.contribuableList()}" />
-    </f:metadata>
-    
-    <div class="surface-card p-4 shadow-1 border-round">
-        <div class="text-3xl font-medium text-900 mb-3">
-            Contribuable
-        </div>
-        <div class="font-medium text-500 mb-3">
-            Listes
-        </div>
-       <div  class="border-2 border-dashed surface-border">
+    <div class="surface-card p-4 shadow-1 border-round ">
 
-           <div class="card ">
-             
-                <h:form>
-                    <p:growl id="message" showDetail="true"/>
-                    
-                    <p:toolbar>
-                        <p:toolbarGroup>
-                            <p:commandButton 
-                                value="Ajouter" 
-                                icon="pi pi-plus" 
-                                styleClass="ui-button-success"
-                                action="/pages/contribuable/ajouter?faces-redirect=true"
-                                ajax="false"
-                                style="margin-right: .5rem">
-                            </p:commandButton>
-                        </p:toolbarGroup>
-                        
-                        <!-- toolbarGroup for import, excel, pdf-->
-                        <p:toolbarGroup align="right">
-                            
-                            <!-- Export data pdf -->
-                            <p:commandButton 
-                                value="PDF" 
-                                icon="pi pi-print" 
-                                styleClass="ui-button-help" 
-                                ajax="false"
-                                class="mr-2"
-                                >
-                                <p:dataExporter 
-                                    type="pdf" 
-                                    target="dt-contribuables" 
-                                    fileName="Gestion des contribuables" 
-                                />
-                            </p:commandButton>
-                            
-                            <!--Export data excel -->
-                            <p:commandButton 
-                                value="EXCEL" 
-                                icon="pi pi-upload" 
-                                styleClass="ui-button-help" 
-                                ajax="false">
-                                <p:dataExporter 
-                                    type="xls" 
-                                    target="dt-contribuables" 
-                                    fileName="Gestion des contribuables" 
-                                />
-                            </p:commandButton>
-                            
-                        </p:toolbarGroup>
-                    </p:toolbar>
-                    
-                    <p:dataTable
-                        id="dt-contribuables"
-                        paginator="true" 
-                        rows="4"
-                        widgetVar="dtContribuables"
-                        reflow="true"
-                        rowSelectMode="add" 
-                        paginatorPosition="bottom"
-                        binding="#{table}" 
-                        value="#{contribuableController.contribuableList()}" 
-                        var="admin"  
-                        >
-                        <f:facet name="header">
-                            <div class="flex justify-content-between">
-                                <span style="font-weight: bold"></span>
-                                <span class="filter-container ui-input-icon-left"> 
-                                    <i class="pi pi-search"></i>
-                                    <p:inputText 
-                                        id="globalFilter" 
-                                        onkeyup="PF('dtContribuables').filter()" 
-                                        placeholder="Search" 
-                                    />
-                                </span>
-                            </div>
-                        </f:facet>
+         <h:form id="form">
+             <p:growl id="message" showDetail="true"/>
 
-                        <p:column 
-                            headerText="" 
-                            style="width: 5%">
-                             <h:outputText value="#{table.rowIndex + 1}" />
-                         </p:column>
-                        
-                        <!--
-                        <p:column 
-                            headerText="Matricule"
-                            sortBy="#{admin.id}" 
-                            filterBy="#{admin.id}"
-                            style="width: 17%"
-                            >
-                             <h:outputText value="#{admin.id}" />
-                         </p:column>
-                        -->
+             <p:toolbar>
+                 <p:toolbarGroup>
+                     <p:commandButton 
+                         value="Ajouter" 
+                         icon="pi pi-plus"
+                         update=":dialogs:manage-form-content"
+                         styleClass="ui-button-success"
+                         action="/pages/contribuable/ajouter?faces-redirect=true"
+                         ajax="false"
+                         style="margin-right: .5rem">
+                         <!--<p:resetInput target=":dialogs:manage-form-content" />-->
+                     </p:commandButton>
+                 </p:toolbarGroup>
 
-                         <p:column 
-                            headerText="Nom" 
-                            sortBy="#{admin.nom}" 
-                            filterBy="#{admin.nom}"
-                            style="width: 10%"
-                            
-                            >
-                            <h:outputText value="#{admin.nom}" />
-                         </p:column>
-                        
-                         <p:column 
-                            headerText="Prenom" 
-                            sortBy="#{admin.prenom}" 
-                            filterBy="#{admin.prenom}"
-                            style="width: 15%"
-                            >
-                            <h:outputText value="#{admin.prenom}" />
-                         </p:column>
-                        
-                        
-                         <p:column 
-                            headerText="Email" 
-                            sortBy="#{admin.email}" 
-                            filterBy="#{admin.email}"
-                            >
-                            <h:outputText value="#{admin.email}" />
-                         </p:column>
-                        
-                         <p:column 
-                            headerText="B.P" 
-                            sortBy="#{admin.bp}" 
-                            filterBy="#{admin.bp}"
-                            style="width: 10%"
-                            >
-                            <h:outputText value="#{admin.bp}" />
-                         </p:column>
-                        
-                        <!--
-                         <p:column 
-                            headerText="Date" 
-                            sortBy="#{admin.date}" 
-                            filterBy="#{admin.date}"
-                            >
-                            <h:outputText value="#{admin.date}" />
-                         </p:column>
-                        -->
+                 <!-- toolbarGroup for import, excel, pdf-->
+                 <p:toolbarGroup align="right">
 
-                     <p:column exportable="false" style="width: 10%" >
-                         <p:commandButton 
-                             icon="pi pi-pencil" 
-                             styleClass="edit-button rounded-button ui-button-success mr-4" 
-                             process="@this"
-                             ajax="false"
-                             action="#{contribuableController.edit(admin.id)}"
-                             >
+                     <!-- Export data pdf -->
+                     <p:commandButton 
+                         value="PDF" 
+                         icon="pi pi-print" 
+                         styleClass="ui-button-help" 
+                         ajax="false"
+                         class="mr-2"
+                         >
+                         <p:dataExporter 
+                             type="pdf" 
+                             target="dt-contribuables" 
+                             fileName="Gestion des contribuables" 
+                         />
+                     </p:commandButton>
 
-                         </p:commandButton>
-                         <p:commandButton 
-                             class="ui-button-warning rounded-button" 
-                             icon="pi pi-trash"
-                             process="@this"
-                             ajax="false"
-                             action="#{contribuableController.delete(admin.id)}"
-                             >
+                     <!--Export data excel -->
+                     <p:commandButton 
+                         value="EXCEL" 
+                         icon="pi pi-upload" 
+                         styleClass="ui-button-help" 
+                         ajax="false">
+                         <p:dataExporter 
+                             type="xls" 
+                             target="dt-contribuables" 
+                             fileName="Gestion des contribuables" 
+                         />
+                     </p:commandButton>
 
-                         </p:commandButton>
-                     </p:column>
-                     </p:dataTable>
-                 </h:form>
-               
-            </div>
+                 </p:toolbarGroup>
+             </p:toolbar>
 
-       </div>
-    </div>
+             <p:dataTable
+                 id="dt-contribuables"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="5,10,15,20"
+                 paginator="true"
+                 widgetVar="dtContribuables" 
+                 rows="4"
+                 value="#{contribuableController.contribuableList()}" 
+                 var="contribuable" 
+                 rowKey="#{contribuable.id}"
+                 paginatorPosition="bottom"
+                 binding="#{table}" >
+
+                 <f:facet name="header">
+                     <div class="flex justify-content-between">
+                         <span 
+                             style="font-weight: bold;
+                              font-size: 30px; text-transform: uppercase"
+                         >
+                             Contribuables
+                         </span>
+                         <span class="filter-container ui-input-icon-left"> 
+                             <i class="pi pi-search"></i>
+                             <p:inputText 
+                                 id="globalFilter" 
+                                 onkeyup="PF('dtContribuables').filter()" 
+                                 placeholder="Search" 
+                             />
+                         </span>
+                     </div>
+                 </f:facet>
+
+                 <p:column 
+                     headerText="" 
+                     style="width: 5%">
+                      <h:outputText value="#{table.rowIndex + 1}" />
+                  </p:column>
+
+                 <!--
+                 <p:column 
+                     headerText="Matricule"
+                     sortBy="#{contribuable.id}" 
+                     filterBy="#{contribuable.id}"
+                     style="width: 17%"
+                     >
+                      <h:outputText value="#{contribuable.id}" />
+                  </p:column>
+                 -->
+
+                  <p:column 
+                     headerText="Nom / Raison sociale" 
+                     sortBy="#{contribuable.nom}" 
+                     filterBy="#{contribuable.nom}">
+                      
+                     <h:outputText value="#{contribuable.nom}" />
+                  </p:column>
+
+                  <p:column 
+                     headerText="Email" 
+                     sortBy="#{contribuable.email}" 
+                     filterBy="#{contribuable.email}"
+                     >
+                     <h:outputText value="#{contribuable.email}" />
+                  </p:column>
+
+                  <p:column 
+                     headerText="B.P" 
+                     sortBy="#{contribuable.bp}" 
+                     filterBy="#{contribuable.bp}"
+                     style="width: 10%"
+                     >
+                     <h:outputText value="#{contribuable.bp}" />
+                  </p:column>
+
+                 <!--
+                  <p:column 
+                     headerText="Date" 
+                     sortBy="#{contribuable.date}" 
+                     filterBy="#{contribuable.date}"
+                     >
+                     <h:outputText value="#{contribuable.date}" />
+                  </p:column>
+                 -->
+
+              <p:column exportable="false" style="width: 10%" >
+                  <p:commandButton 
+                      icon="pi pi-pencil" 
+                      styleClass="edit-button rounded-button ui-button-success mr-4" 
+                      process="manage-form-content @this"
+                      ajax="false"
+                      action="#{contribuableController.edit(contribuable.id)}"
+                      >
+
+                  </p:commandButton>
+                  <p:commandButton 
+                      class="ui-button-warning rounded-button" 
+                      icon="pi pi-trash"
+                      process="@this"
+                      ajax="false"
+                      action="#{contribuableController.delete(contribuable.id)}"
+                      >
+
+                  </p:commandButton>
+              </p:column>
+              </p:dataTable>
+          </h:form>
+
+     </div>
+
+
             
 </ui:composition>

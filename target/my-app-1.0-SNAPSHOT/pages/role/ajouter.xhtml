@@ -10,20 +10,19 @@
         <p:dialog header="Role Details" widgetVar="manageRoleDialog" minHeight="40" width="450" showEffect="fade">
             <p:outputPanel id="manage-role-content" class="ui-fluid">
                 
-                <p:outputPanel rendered="#{not empty roleController.selectedRole}">
+                <p:outputPanel rendered="#{not empty roleController.role}">
                     <div class="field">
-                        <p:outputLabel >ID</p:outputLabel>
-                        <p:inputText  value="#{roleController.selectedRole.id}" />
+                        <p:inputText type="hidden"  value="#{roleController.role.id}" />
                     </div>
                     
                     <div class="field">
                         <p:outputLabel for="nom">Nom</p:outputLabel>
-                        <p:inputText id="nom" value="#{roleController.selectedRole.nomRole}"  />
+                        <p:inputText id="nom" value="#{roleController.role.nomRole}"  />
                     </div>
                     
                     <div class="field">
                         <p:outputLabel for="description">Description</p:outputLabel>
-                        <p:inputTextarea id="description" value="#{roleController.selectedRole.description}"  />
+                        <p:inputTextarea id="description" value="#{roleController.role.description}"  />
                     </div>
 
                 </p:outputPanel>
@@ -32,17 +31,9 @@
             <f:facet name="footer">
                 
                 <p:commandButton 
-                    value="Modifier" 
-                    icon="pi pi-check" 
-                    actionListener="#{roleController.updateRole}"
-                    update="manage-role-content" 
-                    process="manage-role-content @this" 
-                />
-                
-                <p:commandButton 
                     value="Enregistrer" 
-                    actionListener="#{roleController.saveRole}"
-                    update="manage-role-content" 
+                    actionListener="#{roleController.createOrUpdate}"
+                    update="manage-role-content messages" 
                     process="manage-role-content @this" 
                 />
                 
@@ -55,35 +46,6 @@
 
         </p:dialog>
 
-        <p:confirmDialog 
-            widgetVar="deleteRoleDialog" 
-            showEffect="fade" width="300"
-            message="Are you sure?" 
-            header="Confirm" 
-            severity="warn">
-            <p:commandButton 
-                value="Yes" 
-                icon="pi pi-check" 
-                actionListener="#{roleController.deleteRole}"
-                process="@this" 
-                update=":form:delete-roles-button"
-                oncomplete="PF('deleteRoleDialog').hide()" />
-            <p:commandButton
-                value="No" 
-                type="button" 
-                styleClass="ui-button-secondary" 
-                icon="pi pi-times"
-                onclick="PF('deleteRoleDialog').hide()" />
-        </p:confirmDialog>
-        
-        
-        <p:confirmDialog global="true" showEffect="fade" width="300">
-            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
-                icon="pi pi-times" />
-        </p:confirmDialog>
-       
-       
     </h:form>   
     
 </ui:composition>

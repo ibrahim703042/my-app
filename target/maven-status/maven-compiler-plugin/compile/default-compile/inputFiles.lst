@@ -6,6 +6,7 @@ C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\model\Ro
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\model\RevenuSousLocation.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\util\AvenueDbUtil.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\util\RevenusDbUtil.java
+C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\controller\RevenusController_Trash.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\controller\RevenusController.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\com\obr\management\resources\JakartaEE91Resource.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\controller\ContribuableController.java
@@ -23,7 +24,7 @@ C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\util\Per
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\com\obr\management\JakartaRestConfiguration.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\controller\PermissionController.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\controller\RepresentantController.java
-C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\controller\MessageContoller.java
+C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\controller\MessageController.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\controller\AdminController.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\util\DeclarationDbUtil.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\util\CollineDbUtil.java
@@ -49,7 +50,6 @@ C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\model\Pa
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\util\LoginDbUtil.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\dbconnection\MySQLJDBCUtil.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\model\NavigationController.java
-C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\calcul\CalculRevenus.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\controller\AvenueController.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\util\AdministrateurDbUtil.java
 C:\Users\kwize\OneDrive\Documents\NetBeansProjects\my-app\src\main\java\controller\AuthController.java
