@@ -80,6 +80,7 @@ public class RoleController extends MessageController implements Serializable{
 
                 this.roleDbUtil.save(this.role);
                 this.init();
+                //this.roleList();
                 showInfo("Inserted","Role Added");
                 PrimeFaces.current().executeScript("PF('manageRoleDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");

@@ -17,6 +17,7 @@ import model.Role;
 
 import org.primefaces.PrimeFaces;
 import util.AdministrateurDbUtil;
+import util.PermissionDbUtil;
 
 /**
  *
@@ -41,6 +42,7 @@ public class AdminController extends MessageController implements Serializable{
     
     @Inject
     private AdministrateurDbUtil administrateurDbUtil;
+    private PermissionDbUtil permissionDbUtil;
 
     //************************ display data **************************/
     @PostConstruct
@@ -48,20 +50,10 @@ public class AdminController extends MessageController implements Serializable{
         
         this.administrateurs = this.administrateurDbUtil.getAdministrateurs();
         this.listRole = this.administrateurDbUtil.loadDropDown();
+        this.permissionDbUtil = new PermissionDbUtil();
 
     }
-    
-    public List<Administrateur> administrateurList() {
-        
-        this.administrateurs.clear();
-        try {
-            this.administrateurs = this.administrateurDbUtil.getAdministrateurs();
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return administrateurs;
-    }
-    
+     
     public void clearForm() {
         this.setAdministrateur(new Administrateur());
     }
@@ -75,39 +67,36 @@ public class AdminController extends MessageController implements Serializable{
         return getAdministrateurs();
     }
         
-    // ************************ save data **************************/
+    // ************************ create Admin **************************/
     
-    public void create() {
+    public void createOrUpdate() {
         
         if (IsValid()) {
             if (this.getAdministrateur().getId() == null){
 
-                administrateurDbUtil.save(administrateur);
+                this.administrateurDbUtil.save(this.administrateur);
                 this.init();
                 showInfo("Inserted","Data Added");
                 PrimeFaces.current().executeScript("PF('manageAdminDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-administrateurs");
             }
 
-        }else{
-            //showError("Failed","All field is required");
-            //PrimeFaces.current().ajax().update("form:messages", "form:dialogs-admin:manage-admin-content");
         }
     }
-    	
-    //************************  edit data by Id  **************************/
-    public void edit() {
+    
+    // ************************ create Admin **************************/
+    
+    public void updatePermission() {
         
-        if (this.getAdministrateur().getId() != null) {
+        if (this.getAdministrateur().getId() != null){
 
-            this.administrateurDbUtil.findById(this.getAdministrateur().getId());
-            PrimeFaces.current().executeScript("PF('manageEditAdminDialog').show()");
-
-        }else{
+            this.permissionDbUtil.update(this.administrateur.getId());
             this.init();
-            showInfo("Find ID","Unable to find ID");
+            showInfo("Permission","Privilegies granted");
+            PrimeFaces.current().executeScript("PF('managePermissionDialog').hide()");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-administrateurs");
         }
+
     }
     
     //************************ update data **************************/
@@ -117,13 +106,13 @@ public class AdminController extends MessageController implements Serializable{
             if (this.getAdministrateur().getId() != null) {
 
                 this.administrateurDbUtil.update(this.getAdministrateur());
-                showInfo("Updated","Data updated");
                 this.init();
+                showInfo("Updated","Data updated");
                 PrimeFaces.current().executeScript("PF('manageEditAdminDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-administrateurs");
             
             }else{
-                showError("Exist","Data exist");
+                showError("Failed","Operation Failed");
                 PrimeFaces.current().ajax().update("form:messages", "form:dialogs-edit-admin:manage-edit-admin-content");
             } 
             
@@ -139,7 +128,7 @@ public class AdminController extends MessageController implements Serializable{
     public void delete(Integer id) {
         this.administrateurDbUtil.delete(id);
         this.init();
-        showInfo("Find ID","Unable to find ID");
+        showInfo("Deleted","Data deleted");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-administrateurs");
     }
     
@@ -248,6 +237,11 @@ public class AdminController extends MessageController implements Serializable{
     public void setSelectedAdministrateurs(List<Administrateur> selectedAdministrateurs) {
         this.selectedAdministrateurs = selectedAdministrateurs;
     }
+
+    public PermissionDbUtil getPermissionDbUtil() {
+        return permissionDbUtil;
+    }
+    
     
 }
 

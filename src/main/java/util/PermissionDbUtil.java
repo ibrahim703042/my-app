@@ -17,6 +17,7 @@ import jakarta.faces.context.FacesContext;
 import model.Permission;
 import java.sql.*;
 import java.util.*;
+import model.Administrateur;
 
 @ManagedBean
 @ApplicationScoped
@@ -27,11 +28,13 @@ public class PermissionDbUtil {
     public static Connection connection;
     public static ResultSet resultSet;
     public static PreparedStatement pstmt;
+    
+    private List<Permission> permissionList;
 
     //*************************** display data *****************/
-    public ArrayList findAll() {
+    public List<Permission> findAll() {
         
-        ArrayList permissionList = new ArrayList();
+        permissionList = new ArrayList();
         
         try {
             String query = "SELECT * FROM permission WHERE id IS NOT NULL ORDER BY id DESC";
@@ -62,11 +65,8 @@ public class PermissionDbUtil {
     }
 
     //************** Save data **********************************/ 
-    public String save(Permission permission){
-        
-        Integer saveResult = 0;
-        String navigationResult = "";
-        String message = "Record Inserted";
+    public Permission save(Permission permission){
+        Permission  model= null;
         
         try {
 
@@ -82,19 +82,13 @@ public class PermissionDbUtil {
             pstmt.setBoolean(4, permission.getAfficher());
             //statement.setDate(7, (java.sql.Date) permission.getDate());
 
-            saveResult = pstmt.executeUpdate();
+            pstmt.executeUpdate();
             connection.close();
 
         }catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
-        }if(saveResult !=0) {
-            navigationResult = "/pages/admin/template.xhtml?faces-redirect=true";
-            showMessage(message);
-            
-        } else {
-            navigationResult = "";
+            printSQLException(sqlException);
         }
-        return navigationResult;
+        return model;
     }
 
     //************** find data by ID ***************************/
@@ -130,16 +124,14 @@ public class PermissionDbUtil {
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
         return "/pages/admin/edit.xhtml";
     }
 	
     //************** update data ******************************/
-    public String update(Permission permission){
-
-        String message = "Updated Successfully";
-
+    public Permission update(Integer administrateurId){
+        Permission permission = null;
         try {
 
             String query =""
@@ -149,7 +141,7 @@ public class PermissionDbUtil {
                     + "supprimer = ?, "
                     + "modifier = ?, "
                     + "afficher = ? "
-                    + "where id = ? ";
+                    + "where id_administrateur = ? ";
 
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
@@ -158,20 +150,19 @@ public class PermissionDbUtil {
             pstmt.setBoolean(2, permission.getSupprimer());
             pstmt.setBoolean(3, permission.getModifier());
             pstmt.setBoolean(4, permission.getAfficher());
-            pstmt.setInt(5, permission.getId());
+            pstmt.setInt(5, administrateurId);
 
             pstmt.execute();
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
-            showMessage(message);
-            return "/pages/admin/template.xhtml?faces-redirect=true";
+        return permission;
     }
 
     //************** delete data ********************************/
-    public static String delete(int permissionId) {
+    public void delete(int permissionId) {
         
         System.out.println("delete() : permission Id: " + permissionId);
 
@@ -184,24 +175,25 @@ public class PermissionDbUtil {
             connection.close();
             
         } catch(SQLException sqlException){
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
-        return "/pages/admin/template.xhtml?faces-redirect=true";
     }
     
     
-    //************** conecxt msg data ***********************/
-    private static void showMessage(String msg){
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage message = new FacesMessage("Notice",msg);
-        context.addMessage(null, message);
-    }
-    
-     //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
+    //************** error  message from sql ***********************/
+    public void printSQLException(SQLException ex) {
+        for (Throwable e : ex) {
+            if (e instanceof SQLException) {
+                e.printStackTrace(System.err);
+                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+                System.err.println("Message: " + e.getMessage());
+                Throwable t = ex.getCause();
+                while (t != null) {
+                        System.out.println("Cause: " + t);
+                        t = t.getCause();
+                }
+            }
+        }
     }
 }

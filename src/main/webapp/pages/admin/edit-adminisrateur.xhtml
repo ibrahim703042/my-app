@@ -13,7 +13,7 @@
                 <p:outputPanel rendered="#{not empty adminController.administrateur}">
 
                     <div class="field">
-                        <p:inputText  value="#{adminController.administrateur.id}"/>
+                        <p:inputText  type="hidden" value="#{adminController.administrateur.id}"/>
                     </div>
                     <div class="formgrid grid">
                         <div class="field col">
@@ -31,12 +31,13 @@
                             value="#{adminController.administrateur.email}"
                         />
                     </div>
-
+                  
+                    <!--
                     <div class="field">
                     <component:inputPasswordField id="motPasse" label="Mot de passe" placeholder="Entrer Mot de passe"
                             value="#{adminController.administrateur.motPasse}" />
                     </div>
-                    
+                    -->
                     <div class="formgrid grid">
                         
                         <div class="field col-12 md:col-6">
@@ -51,9 +52,11 @@
                         
                         <div class="field col-12 md:col-6">
                             <p:outputLabel class="font-bold"  value="Role"/>
-                            <p:selectOneMenu value="#{administrateur.roleId}" id="idRole" style="height: 41px;" >
+                            <p:selectOneMenu value="#{adminController.administrateur.roleId}" id="idRole" style="height: 41px;" >
                                 
-                                <f:selectItem itemLabel="Choisir Role" />
+                                
+                                <f:selectItem itemValue="" itemLabel="Choisir Role" />
+
                                 <f:selectItems var="role" value="#{adminController.listRole}"
                                     itemLabel="#{role.nomRole}" itemValue="#{role.id}" />
 
@@ -82,18 +85,10 @@
                     update="manage-edit-admin-content" 
                     process="manage-edit-admin-content @this" 
                 />
-                
-                <p:commandButton 
-                    value="Enregistrer" 
-                    actionListener="#{adminController.create}"
-                    update="manage-edit-admin-content messages" 
-                    process="manage-edit-admin-content @this" 
-                />
-                
                 <p:commandButton 
                     value="Cancel" 
                     icon="pi pi-times" 
-                    onclick="PF('manageAdminDialog').hide()"
+                    onclick="PF('manageEditAdminDialog').hide()"
                     class="ui-button-secondary" 
                     type="button" />
             </f:facet>

@@ -48,7 +48,7 @@
                         
                         <div class="field col-12 md:col-6">
                             <p:outputLabel class="font-bold"  value="Role"/>
-                            <p:selectOneMenu value="#{administrateur.roleId}" id="idRole" style="height: 41px;" >
+                            <p:selectOneMenu value="#{adminController.administrateur.roleId}" id="idRole" style="height: 41px;" >
                                 
                                 <!-- <f:selectItem itemValue="#{adminController.administrateur.roleId}" 
                                     itemLabel="#{adminController.administrateur.nomRole}" /> -->
@@ -86,7 +86,7 @@
                 
                 <p:commandButton 
                     value="Enregistrer" 
-                    actionListener="#{adminController.create}"
+                    actionListener="#{adminController.createOrUpdate}"
                     update="manage-admin-content messages" 
                     process="manage-admin-content @this" 
                 />
