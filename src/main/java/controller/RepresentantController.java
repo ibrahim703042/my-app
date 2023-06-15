@@ -6,14 +6,10 @@
 package controller;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import model.Representant;
 import org.primefaces.PrimeFaces;
@@ -30,7 +26,6 @@ import util.RepresentantDbUtil;
 
 public class RepresentantController extends MessageController implements Serializable{
 
-    public ArrayList representants;
     private List< Representant>  representantList;
     private Representant model;
     
@@ -40,23 +35,26 @@ public class RepresentantController extends MessageController implements Seriali
     //************************ display data **************************/
     @PostConstruct
     public void init() {
-        representants = representantDbUtil.findAll();
-        clearForm();
+        this.representantList = representantDbUtil.findAll();
         
     }
     
     public void clearForm() {
         this.model = new Representant();
     }
-    public boolean hasValue() {
-        return this.representantList != null && !this.representantList.isEmpty();
-    }
+    
     
     // ******   Input Validation ******/
     private boolean IsValid(){
-        if (this.model.getNomRepresentant().isEmpty() || this.model.getPrenomRepresentant().isEmpty())
+        
+        if (this.model.getNomRepresentant().isEmpty())
         {
-            showError("Required","Full name is required");
+            showError("Required","First name is required");
+            return false;
+        }
+        if (this.model.getPrenomRepresentant().isEmpty())
+        {
+            showError("Required","Last name is required");
             return false;
         }
         if (this.model.getEmailRepresentant().isEmpty())
@@ -79,8 +77,7 @@ public class RepresentantController extends MessageController implements Seriali
             if (this.model.getId() == null) {
 
                 representantDbUtil.save(this.model);
-//                this.init();
-                representantList();
+                this.init();
                 showInfo("Inserted","Data Added");
                 PrimeFaces.current().executeScript("PF('manageRepresentantDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-representants");
@@ -98,31 +95,17 @@ public class RepresentantController extends MessageController implements Seriali
     }
     
     
-    
-    public ArrayList representantList() {
-        representants.clear();
-        try {
-            representants = representantDbUtil.findAll();
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
-        
-        return representants;
-    }
-    
     ///************************ delete data **************************/
     public void delete(int id) {
-            representantDbUtil.delete(id);
-            this.init();
-            showInfo("Deleted","Data Deleted");
-            PrimeFaces.current().executeScript("PF('manageRepresentantDialog').hide()");
-            PrimeFaces.current().ajax().update("form:messages", "form:dt-representants");
+        representantDbUtil.delete(id);
+        this.init();
+        showInfo("Deleted","Data Deleted");
+        PrimeFaces.current().executeScript("PF('manageRepresentantDialog').hide()");
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-representants");
    
     }
-
     
     //*********************Getters && setters**********************************/
-    
     
     public List< Representant> getRepresentantList() {
         return representantList;
@@ -139,12 +122,5 @@ public class RepresentantController extends MessageController implements Seriali
     public void setModel(Representant model) {
         this.model = model;
     }
-          
-    //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
     
 }

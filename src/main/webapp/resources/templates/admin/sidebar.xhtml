@@ -6,177 +6,139 @@
 
     <h:form>
         
-        <nav class="sidebar">
-            <!-- =============== logo ================= -->
-            <div class="logo-details">
-                <span class="logo_name">
-                    Impot Fiscale
-                </span>
-            </div>
+        <section id="sidebar">
 
-            <!-- =============== sidebar menu-content ================= -->
+            <p:link styleClass="brand no-underline" outcome="/pages/dashboard.xhtml" >
+                <f:param name="pageId" value="1"/>
+                <p:graphicImage class="icon" name="obr.jpg" library="image" height="60" alt="Logo"/>
+                Impot Fiscale
+            </p:link>
+            
+            <ul class="side-menu">
+                <!-- =============== Dashborad section ================= -->
+                <li>
+                    <p:link class="no-underline active" outcome="/pages/dashboard.xhtml" >
+                        <f:param name="pageId" value="1"/>
+                        <i class="pi pi-th-large icon"></i>
+                        Dashboard
+                    </p:link>
+                </li>
 
-            <div class="menu-content">
-              <ul class="menu-items">
+                <li class="divider" data-text="main">Main</li>
 
-                    <!-- =============== Dashboard ================= -->
-
-                    <li class="item">
-                      <p:link class="no-underline nav-link">
-                            <i class="pi pi-th-large mr-2" style="font-size: 1rem"></i>
-                            <span class="link_name">Dashboard</span>
-                        </p:link>
-                    </li>
-
-                    <!-- =============== Administrateur section ================= -->
-
-                    <li class="item">
-                        <div class="submenu-item">
-                            <span>
-                                <i class="pi pi-user mr-2" style="font-size: 1rem"></i>
-                                <span class="link_name">Administrateur</span>
-                            </span>
-                             <i class="pi pi-chevron-right"></i>
-                        </div>
-
-                        <ul class="menu-items submenu">
-                            <div class="menu-title">
-                                <i class="pi pi-chevron-left"></i>
-                                <span class="link_name">
-                                    Retour
-                                </span>
-                            </div>
-                            <li class="item">
-                                <p:link class="no-underline nav-link" outcome="/pages/admin/template?faces-redirect=true" >
-                                    <i class="pi pi pi-users mr-2" style="font-size: 1rem"></i>
-                                    <span class="link_name">
-                                        Administrateurs
-                                    </span>
-                                </p:link>
-                            </li>
+                <!-- =============== Administrateur section ================= -->
+                <li>
+                    <a href="#">
+                        <i class="pi pi-users icon"></i>
+                        Administrateurs
+                        <i class="pi pi-chevron-right icon-right"></i>
+                    </a>
+                    <ul class="side-dropdown">
+                        <li>
+                            <p:link class="no-underline nav-link" outcome="/pages/role/template" >
+                                <f:param name="pageId" value="2"/>
+                                <i class='pi pi-list icon' ></i>
+                                Roles
+                            </p:link>
+                        </li>
+                        <li>
+                            <p:link class="no-underline nav-link" outcome="/pages/permission/template" >
+                                <f:param name="pageId" value="8"/>
+                                <i class='pi pi-list icon' ></i>
+                                Permission
+                            </p:link>
+                        </li>
+                        <li>
+                            <p:link class="no-underline nav-link" outcome="/pages/admin/template" >
+                                <f:param name="pageId" value="3"/>
+                                <i class='pi pi-users icon' ></i>
+                                Administrateurs
+                             </p:link> 
+                        </li>
+                        <li>
+                            <p:link class="no-underline nav-link" outcome="/pages/pays/province/template.xhtml" >
+                                <f:param name="pageId" value="4"/>
+                                <i class='pi pi-flag icon' ></i>
+                                Provinces
+                             </p:link> 
                             
-                            <li class="item">
-                                <p:link class="no-underline nav-link" outcome="/pages/role/template?faces-redirect=true" >
-                                    <i class="pi pi pi-users mr-2" style="font-size: 1rem"></i>
-                                    <span class="link_name">
-                                         Role
-                                    </span>
-                                </p:link>
-                            </li>
-                            
-                            <li class="item">
-                                <p:link class="no-underline nav-link" outcome="/pages/pays/province/template?faces-redirect=true" >
-                                    <i class="pi pi-flag mr-2" style="font-size: 1rem"></i>
-                                    Province
-                                </p:link>
-                            </li>
+                        </li>
+                        <li>
+                            <p:link class="no-underline nav-link" outcome="/pages/pays/commune/template.xhtml" >
+                                <f:param name="pageId" value="5"/>
+                                <i class='pi pi-map icon' ></i>
+                                Communes
+                             </p:link> 
+                        </li>
+                        <li>
+                            <p:link class="no-underline nav-link" outcome="/pages/pays/colline/template.xhtml" >
+                                <f:param name="pageId" value="6"/>
+                                <i class='pi pi-map-marker icon' ></i>
+                                Collines
+                             </p:link> 
+                        </li>
+                    </ul>
+                </li>
 
-                            <li class="item">
-                                <p:link class="no-underline nav-link" outcome="/pages/pays/commune/template?faces-redirect=true" >
-                                    <i class="pi pi-map mr-2" style="font-size: 1rem"></i>
-                                    Commune
-                                </p:link>
-                            </li>
+                <!-- =============== Contribuable section ================= -->
+                <li>
+                    <a href="#">
+                        <i class="pi pi-users icon"></i>
+                        Contribuables
+                        <i class="pi pi-chevron-right icon-right"></i>
+                    </a>
+                    <ul class="side-dropdown">
+                        <li>
+                            <p:link class="no-underline nav-link" outcome="/pages/representant/template.xhtml" >
+                                <f:param name="pageId" value="7"/>
+                                <i class='pi pi-users icon' ></i>
+                                Representants
+                             </p:link> 
+                        </li>
+                        <li>
+                            <p:link class="no-underline nav-link" outcome="/pages/contribuable/template.xhtml" >
+                                <f:param name="pageId" value="8"/>
+                                <i class='pi pi-users icon' ></i>
+                                Contribuable
+                             </p:link> 
+                        </li>
+                        <li>
+                            <p:link class="no-underline nav-link" outcome="/pages/immeuble/template.xhtml" >
+                                <f:param name="pageId" value="9"/>
+                                <i class='pi pi-building icon' ></i>
+                                Immeubles
+                             </p:link> 
+                        </li>
+                        <!--
+                        <li>
+                            <a href="#">Abbattement</a>
+                        </li>
+                        -->
+                    </ul>
+                </li>
 
-                            <li class="item">
-                                <p:link class="no-underline nav-link" outcome="/pages/pays/colline/template?faces-redirect=true" >
-                                    <i class="pi pi-map-marker mr-2" style="font-size: 1rem"></i>
-                                    Colline
-                                </p:link>
-                            </li>
+                <!-- =============== Declaration section ================= -->
+                <li>
+                    <p:link class="no-underline nav-link" outcome="/pages/declaration/template.xhtml" >
+                        <f:param name="pageId" value="7"/>
+                        <i class='pi pi-calculator icon' ></i>
+                        Declaration
+                    </p:link> 
+                </li>
 
-                            <li class="item">
-                                <p:link class="no-underline nav-link" outcome="/pages/archive/index?faces-redirect=true" >
-                                    <i class="pi pi-trash mr-2" style="font-size: 1rem"></i>
-                                    Archives
-                                </p:link>
-                            </li>
+                <li class="divider" data-text="Autre">Autre</li>
 
-                        </ul>
+                <li>
+                    <p:link class="no-underline nav-link">
+                        <!--<f:param name="pageId" value="7"/>-->
+                        <i class='pi pi-dollar icon' ></i>
+                        Payement
+                    </p:link> 
+                </li>
+                
+            </ul>
 
-                    </li>
-
-                    <!-- =============== Contribuable section ================= -->
-
-                    <li class="item">
-                        
-                        <div class="submenu-item">
-                            <span>
-                                <i class="pi pi-user mr-2" style="font-size: 1rem"></i>
-                                <span class="link_name">Contribuable</span>
-                            </span>
-                             <i class="pi pi-chevron-right"></i>
-                        </div>
-
-                        <ul class="menu-items submenu">
-                            <div class="menu-title">
-                              <i class="pi pi-chevron-left"></i>
-                              Retour
-                            </div>
-                            <li class="item">
-                                <p:link class="no-underline nav-link" outcome="/pages/contribuable/template?faces-redirect=true" >
-                                    <i class="pi pi pi-users mr-2" style="font-size: 1rem"></i>
-                                    Contribuables
-                                </p:link>
-                            </li>
-
-                            <li class="item">
-                                <p:link class="no-underline nav-link" outcome="/pages/representant/template?faces-redirect=true" >
-                                    <i class="pi pi pi-users mr-2" style="font-size: 1rem"></i>
-                                    Representants
-                                </p:link>
-                            </li>
-                            <li class="item">
-                                <p:link class="no-underline nav-link" outcome="/pages/abbattement/template?faces-redirect=true" >
-                                    <i class="pi pi pi-users mr-2" style="font-size: 1rem"></i>
-                                    Abbattement
-                                </p:link>
-                            </li>
-                            
-                            
-                            <li class="item">
-                                <p:link class="no-underline nav-link" outcome="/pages/immeuble/template?faces-redirect=true" >
-                                     <i class="pi pi-building mr-2" style="font-size: 1rem"></i>
-                                    Immeubles
-                                </p:link>
-                            </li>
-                           
-                            <li class="item">
-                                <p:link class="no-underline nav-link" outcome="/pages/revenus/template?faces-redirect=true"  >
-                                    <i class="pi pi-calculator mr-2" style="font-size: 1rem"></i>
-                                    Calcul Revenus
-                                </p:link>
-                            </li>
-
-                        </ul>
-                        
-                    </li>
-
-                    <!-- =============== Declaration section ================= -->
-                    
-                    <li class="item">
-                      <p:link class="no-underline nav-link"  outcome="/pages/declaration/template?faces-redirect=true" >
-                            <i class="pi pi-th-large mr-2" style="font-size: 1rem"></i>
-                            <span class="link_name">Declaration</span>
-                        </p:link>
-                    </li>
-                    
-                    <!-- =============== logout section ================= -->
-                    
-                    
-                    <li class="item" >
-                        <h1>#{login.nom}</h1>
-                        <p:link class="no-underline nav-link" >
-                            <i class="pi pi-th-large mr-2" style="font-size: 1rem"></i>
-                            <span class="link_name">Se deconnectez</span>
-                            <p:commandButton  ajax="false" value="Se deconnectez" action="#{authController.logout}"  />
-                        </p:link>
-                        
-                    </li>
-                    
-              </ul>
-            </div>
-        </nav>
-
+        </section>
+        
     </h:form>
 </ui:composition>

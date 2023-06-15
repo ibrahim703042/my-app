@@ -10,10 +10,8 @@ package util;
  */
 
 import static dbconnection.MySQLJDBCUtil.dataSource;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
-import jakarta.faces.context.FacesContext;
 import model.Permission;
 import java.sql.*;
 import java.util.*;
@@ -30,6 +28,9 @@ public class PermissionDbUtil {
     public static PreparedStatement pstmt;
     
     private List<Permission> permissionList;
+    private List<Administrateur> administrateurList;
+    private Administrateur administrateur;
+    private String query;
 
     //*************************** display data *****************/
     public List<Permission> findAll() {
@@ -37,7 +38,14 @@ public class PermissionDbUtil {
         permissionList = new ArrayList();
         
         try {
-            String query = "SELECT * FROM permission WHERE id IS NOT NULL ORDER BY id DESC";
+            
+            query = ""
+                + "SELECT administrateur.*, "
+                + "permission.* "
+                + "FROM administrateur, permission "
+                + "WHERE administrateur.id = permission.id_administrateur "
+                + "ORDER BY permission.id_permission DESC";
+            
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
@@ -46,11 +54,16 @@ public class PermissionDbUtil {
 
                 Permission permission = new Permission(); 
 
-                permission.setId(resultSet.getInt("id"));  
+                permission.setId(resultSet.getInt("id_permission"));  
                 permission.setAjouter(resultSet.getBoolean("ajouter"));  
                 permission.setSupprimer(resultSet.getBoolean("supprimer"));  
                 permission.setModifier(resultSet.getBoolean("modifier"));  
-                permission.setAfficher(resultSet.getBoolean("afficher")); 
+                permission.setAfficher(resultSet.getBoolean("afficher"));
+                
+                permission.setIdAdministrateur(resultSet.getInt("id"));  
+                permission.setNom(resultSet.getString("nom"));  
+                permission.setPrenom(resultSet.getString("prenom"));  
+                
                 
                 permissionList.add(permission);  
             }   
@@ -63,6 +76,50 @@ public class PermissionDbUtil {
         }
         return permissionList;
     }
+    
+    public List<Administrateur> loadDropDown() {
+        
+        administrateurList = new ArrayList();
+        
+        query = ""
+                + "SELECT * FROM administrateur "
+                + "WHERE administrateur.id "
+                + "IS NOT NULL "
+                + "ORDER By administrateur.id DESC";
+               
+        try {
+            connection = dataSource.getConnection();
+            //connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);
+            resultSet = pstmt.executeQuery();  
+            
+            while(resultSet.next()) { 
+                
+                administrateur = new Administrateur(); 
+
+                administrateur.setId(resultSet.getInt("id"));  
+                administrateur.setNom(resultSet.getString("nom"));  
+                administrateur.setPrenom(resultSet.getString("prenom"));  
+                administrateur.setEmail(resultSet.getString("email"));  
+                administrateur.setMotPasse(resultSet.getString("motPasse"));  
+                administrateur.setTelephone(resultSet.getInt("telephone"));  
+                administrateur.setBp(resultSet.getString("BP"));
+                administrateur.setIsActive(resultSet.getString("isActive"));
+                administrateur.setDate(resultSet.getDate("date"));
+                
+                administrateurList.add(administrateur);  
+                //connection.commit();
+            }
+           
+            
+        } catch (SQLException ex) {
+            //connection.rollback();
+            printSQLException(ex);
+        }finally {
+            //connection.setAutoCommit(true);
+        }
+        return administrateurList;
+    }
 
     //************** Save data **********************************/ 
     public Permission save(Permission permission){
@@ -70,16 +127,17 @@ public class PermissionDbUtil {
         
         try {
 
-            String query = 
-                    "INSERT INTO permission (ajouter, supprimer, modifier, afficher) "
-                    + "values (?, ?, ?, ?)";
+            query = 
+                    "INSERT INTO permission (id_administrateur, ajouter, supprimer, modifier, afficher) "
+                    + "values (?, ?, ?, ?, ?)";
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
-            pstmt.setBoolean(1, permission.getAjouter());
-            pstmt.setBoolean(2, permission.getSupprimer());
-            pstmt.setBoolean(3, permission.getModifier());
-            pstmt.setBoolean(4, permission.getAfficher());
+            pstmt.setInt(1, permission.getIdAdministrateur());
+            pstmt.setBoolean(2, permission.getAjouter());
+            pstmt.setBoolean(3, permission.getSupprimer());
+            pstmt.setBoolean(4, permission.getModifier());
+            pstmt.setBoolean(5, permission.getAfficher());
             //statement.setDate(7, (java.sql.Date) permission.getDate());
 
             pstmt.executeUpdate();
@@ -90,67 +148,30 @@ public class PermissionDbUtil {
         }
         return model;
     }
-
-    //************** find data by ID ***************************/
-    public String findById(int permissionId) {
-        
-        Permission permission = null;
-        System.out.println(" findById() : Permission Id: " + permissionId);
-        
-        /* Setting The Particular province Details In Session */
-        Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-
-        try {
-           
-            String query = "SELECT * FROM permission WHERE id =" + permissionId ;
-            connection = dataSource.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);    
-            
-            if(resultSet.next()) {
-                
-                permission = new Permission();
-                permission.setId(resultSet.getInt("id"));  
-                permission.setAjouter(resultSet.getBoolean("ajouter"));  
-                permission.setSupprimer(resultSet.getBoolean("supprimer"));  
-                permission.setModifier(resultSet.getBoolean("modifier"));  
-                permission.setAfficher(resultSet.getBoolean("afficher")); 
-                //permission.setDate(resultSet.getDate("date"));  
-               //LocalDate date = LocalDate.now();
-
-            }
-            
-            sessionMap.put("permissionMapped", permission);
-            connection.close();
-
-        } catch(SQLException sqlException) {
-            printSQLException(sqlException);
-        }
-        return "/pages/admin/edit.xhtml";
-    }
-	
     //************** update data ******************************/
-    public Permission update(Integer administrateurId){
-        Permission permission = null;
+    public Permission update(Permission permission){
+        Permission model = null;
         try {
 
-            String query =""
+            query = ""
                     + "UPDATE permission "
                     + "SET "
+                    + "id_administrateur = ?, "
                     + "ajouter = ?, "
                     + "supprimer = ?, "
                     + "modifier = ?, "
                     + "afficher = ? "
-                    + "where id_administrateur = ? ";
+                    + "where id_permission = ? ";
 
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             
-            pstmt.setBoolean(1, permission.getAjouter());
-            pstmt.setBoolean(2, permission.getSupprimer());
-            pstmt.setBoolean(3, permission.getModifier());
-            pstmt.setBoolean(4, permission.getAfficher());
-            pstmt.setInt(5, administrateurId);
+            pstmt.setInt(1, permission.getIdAdministrateur());
+            pstmt.setBoolean(2, permission.getAjouter());
+            pstmt.setBoolean(3, permission.getSupprimer());
+            pstmt.setBoolean(4, permission.getModifier());
+            pstmt.setBoolean(5, permission.getAfficher());
+            pstmt.setInt(6, permission.getId());
 
             pstmt.execute();
             connection.close();
@@ -158,7 +179,7 @@ public class PermissionDbUtil {
         } catch(SQLException sqlException) {
             printSQLException(sqlException);
         }
-        return permission;
+        return model;
     }
 
     //************** delete data ********************************/
@@ -168,7 +189,7 @@ public class PermissionDbUtil {
 
         try {
             
-            String query = "DELETE FROM permission WHERE id = " + permissionId ;
+            query = "DELETE FROM permission WHERE id = " + permissionId ;
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  

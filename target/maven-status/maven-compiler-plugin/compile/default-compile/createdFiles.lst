@@ -17,11 +17,11 @@ util\PayementDbUtil.class
 model\Contribuable.class
 dbconnection\TestConnection.class
 util\DeclarationDbUtil.class
+util\AuthDbUtil.class
 util\ContribuableDbUtil.class
 controller\ProvinceController.class
 controller\CommuneController.class
 model\Province.class
-controller\RevenusController_Trash.class
 util\CommuneDbUtil.class
 controller\ImmeubleController.class
 util\CollineDbUtil.class
@@ -34,7 +34,6 @@ util\QuittanceDbUtil.class
 model\Payement.class
 util\AdministrateurDbUtil.class
 dbconnection\MySQLJDBCUtil.class
-bean\GenericBean.class
 controller\AvenueController.class
 util\AvenueDbUtil.class
 controller\MessageController.class
@@ -42,12 +41,10 @@ model\Administrateur.class
 model\Role.class
 model\Permission.class
 controller\RoleController.class
-bean\UserBean.class
 controller\AuthController.class
 model\RevenuSousLocation.class
 controller\AbbattementController.class
 util\SessionUtils.class
-bean\LoginBean.class
 controller\CollineController.class
 util\ProvinceDbUtil.class
 model\Quittance.class

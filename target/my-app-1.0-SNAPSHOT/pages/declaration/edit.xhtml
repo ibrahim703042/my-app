@@ -8,111 +8,150 @@
     xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <ui:define name = "contents">
+        
+                
+        <h1 class="title">Declaration</h1>
+        <ul class="breadcrumbs">
+            <li>
+                <p:link styleClass="no-underline"  outcome="/pages/declaration/template" >
+                    <f:param name="pageId" value="7"/>
+                    Acceuil
+                </p:link>
+            </li>
             
-        <p:spacer height="90" />
-                    
-        <h:form id="form" class=" py-3">
-            <!--<p:messages id="msgs"/>-->
-            <div class="">
-                <div class="ui-fluid formgrid grid">
+            <li class="divider">/</li>
+            <li>
+                <p:link styleClass="no-underline active"  outcome="/pages/dashboard.xhtml" >
+                    <f:param name="pageId" value="1"/>
+                    Edit
+                </p:link>
+            </li>
+            
+            <li class="divider">/</li>
+            <li>
+                <p:link styleClass="no-underline active"  outcome="/pages/dashboard.xhtml" >
+                    <f:param name="pageId" value="1"/>
+                    Declaration
+                </p:link>
+            </li>
+        </ul>
+        
+        <div class="data">
+            <div class="content-data">
+                
+                <div class="data-details">
+        
+                    <h:form id="form" class=" py-3">
+                       <p:messages id="msgs"/>
+                       <div class="ui-fluid formgrid grid">
 
-                    <div class="field col-12 md:col-7">
-                        <p:outputLabel class="font-bold"  value="Immeuble"/>
-                        <p:selectOneMenu
-                            value="#{declarationMapped.idImmeuble}"
-                            filter="true" 
-                            filterMatchMode="startsWith" 
-                            dynamic="true"
-                            style="height: 41px; "
-                            required="true"
-                        >
-                            <f:selectItem itemLabel=" ------- Choisir Immeuble -------" />
-                            <f:selectItems var="cont"
-                                value="#{immeubleController.immeubleList()}"
-                                itemLabel=" #{cont.id} :              
-                                PROVINCE: #{cont.nomProvince}   -     
-                                COMMUNE: #{cont.nomCommune}     -   
-                                COLLINE: #{cont.nomColline}     -    
-                                AVENUE: #{cont.nomAvenue} "
-                                itemValue="#{cont.id}" 
-                            />
+                           <div class="field col-12 md:col-7">
+                               <p:outputLabel class="font-bold"  value="Immeuble"/>
+                               <p:selectOneMenu
+                                   value="#{declarationMapped.idImmeuble}"
+                                   filter="true" 
+                                   filterMatchMode="startsWith" 
+                                   dynamic="true"
+                                   style="height: 41px; "
+                                   required="true"
+                               >
+                                   <f:selectItem itemLabel=" ------- Choisir Immeuble -------" />
+                                   <f:selectItems var="cont"
+                                       value="#{immeubleController.immeubleList()}"
+                                       itemLabel=" #{cont.id} :              
+                                       PROVINCE: #{cont.nomProvince}   -     
+                                       COMMUNE: #{cont.nomCommune}     -   
+                                       COLLINE: #{cont.nomColline}     -    
+                                       AVENUE: #{cont.nomAvenue} "
+                                       itemValue="#{cont.id}" 
+                                   />
 
-                        </p:selectOneMenu>
-                    </div>
+                               </p:selectOneMenu>
+                           </div>
 
-                    <div class="field col-12 md:col-3">
+                           <div class="field col-12 md:col-3">
 
-                        <component:inputTextField
-                            label="NIF"
-                            placeholder="NIF"
-                            value="#{declarationMapped.nif}"
-                        />
+                               <component:inputTextField
+                                   label="NIF"
+                                   placeholder="NIF"
+                                   value="#{declarationMapped.nif}"
+                               />
 
-                    </div>
+                           </div>
 
-                    <div class="field col-12 md:col-2">
+                           <div class="field col-12 md:col-2">
 
-                        <component:inputTextField
-                            label="CCF"
-                            placeholder="CCF"
-                            value="#{declarationMapped.ccf}"
-                        />
+                               <component:inputTextField
+                                   label="CCF"
+                                   placeholder="CCF"
+                                   value="#{declarationMapped.ccf}"
+                               />
 
-                    </div>
+                           </div>
 
-                    <div class="field col-12 md:col-2">
-                        <p:outputLabel class="font-bold"  value="Date plutot"/>
-                        <p:datePicker 
-                            value="#{declarationMapped.date_1}" 
-                            style="height: 41px; "
-                            showIcon="true"
-                            locale="de"
-                            monthNavigator="true"
-                            yearNavigator="true"
-                            pattern="yyyy-MMM-dd"
-                            dir="rtl"
-                            readonly="true"
-                        />
+                           <div class="field col-12 md:col-2">
+                               <p:outputLabel class="font-bold"  value="Date plutot"/>
+                               <p:datePicker 
+                                   value="#{declarationMapped.date_1}" 
+                                   style="height: 41px; "
+                                   showIcon="true"
+                                   locale="de"
+                                   monthNavigator="true"
+                                   yearNavigator="true"
+                                   pattern="yyyy-MMM-dd"
+                                   dir="rtl"
+                                   readonly="true"
+                               />
 
-                    </div>
+                           </div>
 
-                    <div class="field col-12 md:col-4">
-                        <p:outputLabel class="font-bold"  value="Date plutard"/>
-                        <p:datePicker
-                            value="#{declarationMapped.date_2}" 
-                            style="height: 41px; "
-                            showIcon="true"
-                            monthNavigator="true"
-                            yearNavigator="true"
-                            pattern="yyyy-MMM-dd"
-                            dir="rtl"
-                            required="true"
-                        />
+                           <div class="field col-12 md:col-4">
+                               <p:outputLabel class="font-bold"  value="Date plutard"/>
+                               <p:datePicker
+                                   value="#{declarationMapped.date_2}" 
+                                   style="height: 41px; "
+                                   showIcon="true"
+                                   monthNavigator="true"
+                                   yearNavigator="true"
+                                   pattern="yyyy-MMM-dd"
+                                   dir="rtl"
+                                   required="true"
+                               />
 
-                    </div>
+                           </div>
 
-                    <div class="field col-12 md:col-4 pt-1">
-                        <p:spacer />
-                        <p:commandButton 
-                            value="Modifier" 
-                            ajax="false"
-                            action="#{declarationController.update(declarationMapped)}"
-                            style="height: 41px; "
-                        />
-                    </div>
+                           <div class="field col-12 md:col-4 pt-1">
+                               <p:spacer />
+                               <p:commandButton 
+                                   value="Modifier" 
+                                   ajax="false"
+                                   action="#{declarationController.update(declarationMapped)}"
+                                   style="height: 41px; "
+                               />
+                           </div>
+                       </div>
+
+                    </h:form>
+
                 </div>
             </div>
-
-        </h:form>
+        </div>
         
+        <div class="data">
+            <div class="content-data">
+                <!--                
+                    <div class="head">
+                    </div>
+                -->
+                <div class="data-details">
         
+                    <ui:insert>
+                        <ui:include src="index.xhtml" />
+                    </ui:insert>
+                </div>
+            </div>
+        </div>
         
-        
-        
-        <ui:insert>
-            <ui:include src="index.xhtml" />
-        </ui:insert>
-            
     </ui:define>
         
 </ui:composition>

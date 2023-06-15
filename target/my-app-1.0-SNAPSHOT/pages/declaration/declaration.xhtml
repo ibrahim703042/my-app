@@ -10,18 +10,24 @@
         <style>
             .a4-size {
                 font-family: 'Times New Roman', Times, serif, Lucida Grand;
+                font-size: 12px;
             }
             
-            .my-heading-row {
-                background-color: var(--surface-c);
-                font-weight: bold;
+            body .ui-panelgrid .ui-panelgrid-cell {
+                background-color: transparent;
             }
+              
+            body .ui-panelgrid .ui-panelgrid-cell .ui-inputtext {
+                background-color: transparent;
+                border-color: transparent;
+            }
+            
             
         </style>
         
         <div class="a4-size" >
         
-            <p:card style="width: auto" id="pnlPrint">
+            <p:card style="width: auto" id="printDeclaration">
                 <f:facet name="header" >
                     <div class="flex align-items-center justify-content-center">
                         <p:graphicImage name="image/logo.jpg" style="width: 50%; margin-top: 10px"/>
@@ -33,25 +39,38 @@
                     
                 </f:facet>
                 
-                <h:form id="form" class=" py-3">
+                <h:form id="form-declaration" class=" py-3">
+                    
+
+                    <!-- ====================== Declaration ===========================-->
+
+                    <div>
+
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <label >Exercice comptable/Fiscale</label>
+                                <span class="mr-2">Du ..../.../20...</span>
+                                <span> au ..../..../20...</span>
+                            </div>
+
+                        </div>
+
+                        <div class="formgroup-inline">
+                            <div class="field">
+                                <label class="p-sr-only">NIF</label>
+                                <p:outputLabel>450000000000</p:outputLabel>
+                            </div>
+                            <div class="field">
+                                <label class="p-sr-only">CCF</label>
+                                <p:outputLabel>12345</p:outputLabel>
+                            </div>
+                        </div>
+
+                    </div>
+                        
                     
                     <div class="ui-fluid formgrid grid py-3">
 
-                        <!-- ====================== Declaration ===========================-->
-                        <!--                        
-                        <div class="flex align-items-left justify-content-end">
-                                <div class="border border-dashed">
-                                    <span class="text-500">Exercice comptable/Fiscale</span>
-                                    <span class="text-500">
-                                        <p:outputLabel>
-                                            Du ..../.../20...  au ..../..../20...
-                                        </p:outputLabel>
-                                    </span>
-
-                                </div>
-                        </div>
-                        -->
-                        
                         <!-- ====================== Contribuable ===========================-->
                         <div class="ui-fluid formgrid grid px-4">
                             <div class=" field col-12 md:col-12 font-medium text-500 mb-3">
@@ -180,10 +199,7 @@
                                 C. ABBATTEMENT
                             </div>
                         </div>
-                        <!-- ==================================== Representant Fiscale============================================= -->
-
-                        <!-- ================= Abbattement ===================== -->
-
+                        
                         <!-- ======================Revenus Locatif===========================-->
 
                         <div class="field col-12 md:col-12">
@@ -216,7 +232,7 @@
                                             placeholder="......"
                                             id="loyerImposable"
                                             value="#{revenusController.modelRevenuLocatif.loyerImposable}">
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            <p:ajax event="blur" update="revenuBrut" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -228,7 +244,7 @@
                                             placeholder="......"
                                             id="chargeIncombat"  
                                             value="#{revenusController.modelRevenuLocatif.chargeIncombat}">
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            <p:ajax event="blur" update="revenuBrut" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -241,6 +257,7 @@
                                             id="revenuBrut"
                                             readonly="true"
                                             value="#{revenusController.totalRevenulocatifRevenubrut()}" >
+                                        <p:ajax event="blur" update="deduction revenuNetImposable_1" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -250,10 +267,10 @@
                                     <p:column colspan="2" styleClass="text-primary" >
                                         <p:inputNumber 
                                             placeholder="......"
-                                            id="input5"
+                                            id="deduction"
                                             readonly="true"
                                             value="#{revenusController.totalDeductionDepensesEntretien()}" >
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            <p:ajax event="blur" update="revenuNetImposable_1" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -267,9 +284,9 @@
                                     <p:column colspan="2" styleClass="text-primary" >
                                         <p:inputNumber 
                                         placeholder="......"
-                                        id="input6"  
+                                        id="interet"  
                                         value="#{revenusController.modelRevenuLocatif.interetEmprunt}" >
-                                        <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                        <p:ajax event="blur" update="revenuNetImposable_1" />
                                     </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -284,10 +301,10 @@
                                         <p:inputNumber 
                                              
                                             placeholder="......"
-                                            id="input7"
+                                            id="revenuNetImposable_1"
                                             readonly="true"
                                             value="#{revenusController.totalRevenuLocatifRevenunetImposable()}" >
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            <p:ajax event="blur" update="revenusNetsImposables" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -316,7 +333,7 @@
                                             placeholder="......"
                                             id="recetteSousLocation"
                                             value="#{revenusController.modelRevenuSousLocation.recetteSousLocation}" >
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            <p:ajax event="blur" update="revenusNetsImposables" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -328,7 +345,7 @@
                                             placeholder="......"
                                             id="loyerPayes"
                                             value="#{revenusController.modelRevenuSousLocation.loyerPayes}" >
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            <p:ajax event="blur" update="revenusNetsImposables" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -341,7 +358,7 @@
                                             id="revenusNetsImposables"
                                             readonly="true"
                                             value="#{revenusController.totalRevenuSousLocationRevenusNetsImposables()}" >
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            <p:ajax event="blur" update="totalRevenusNetsImposables" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -354,7 +371,7 @@
                                             readonly="true"
                                             id="totalRevenusNetsImposables"
                                             value="#{revenusController.totalRevenuSousLocatifTotalRevenusNetsImposable()}" >
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            <p:ajax event="blur" update="revenuSousNetImposable" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -366,7 +383,7 @@
                                             placeholder="......"
                                             id="abbattements"
                                             value="#{revenusController.modelRevenuSousLocation.abbattements}" >
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            <p:ajax event="blur" update="revenuSousNetImposable" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -379,7 +396,7 @@
                                             readonly="true"
                                             id="revenuSousNetImposable"
                                             value="#{revenusController.totalRevenuSousLocatifRevenuNetImposable()}" >
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            <p:ajax event="blur" update="tranche_1" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -390,7 +407,7 @@
 
                         <!-- ====================== E. DETERMINATION DE L’IMPOT DU ===========================-->
                         <div class="field col-12 md:col-12">
-                            <p:panelGrid style="margin-top:20px">
+                            <p:panelGrid  style="margin-top:20px; width: 100%">
                                 <f:facet name="header">
                                     <p:row styleClass="ui-primary">
                                         <p:column colspan="9">
@@ -436,7 +453,7 @@
                                         <p:inputNumber 
                                             placeholder="......." 
                                             id="tranche_1"
-                                            value="#{revenusController.modelImpot.tranche_1}" >
+                                            value="#{revenusController.revenuTranche()}" >
                                             <!--<p:ajax event="blur" update="revenuBrut" />-->
                                         </p:inputNumber>
                                     </p:column>
@@ -445,7 +462,7 @@
                                         <p:inputNumber 
                                             placeholder="....... "
                                             id="tranche_1_Col_5"
-                                            value="#{revenusController.modelImpot.tranche_1_Col_5}" >
+                                            value="#{revenusController.impotDu()}" >
                                             <!--<p:ajax event="blur" update="revenuBrut" />-->
                                         </p:inputNumber>
                                     </p:column>
@@ -460,7 +477,7 @@
                                         <p:inputNumber 
                                             placeholder="......."
                                             id="tranche_2"
-                                            value="#{revenusController.modelImpot.tranche_2}" rendered="true">
+                                            value="#{revenusController.revenuTranche()}" >
                                             <!--<p:ajax event="blur" update="revenuBrut" />-->
                                         </p:inputNumber>
                                     </p:column>
@@ -471,7 +488,7 @@
                                         <p:inputNumber 
                                             placeholder="......."
                                             id="tranche_2_Col_5"
-                                            value="#{revenusController.modelImpot.tranche_2_Col_5}">
+                                            value="#{revenusController.impotDu()}">
                                             <!--<p:ajax event="blur" update="revenuBrut" />-->
                                         </p:inputNumber>
                                     </p:column>
@@ -486,7 +503,7 @@
                                         <p:inputNumber 
                                             placeholder="......."
                                             id="tranche_3"
-                                            value="#{revenusController.modelImpot.tranche_2}" rendered="true">
+                                            value="#{revenusController.revenuTranche()}" >
                                             <!--<p:ajax event="blur" update="revenuBrut" />-->
                                         </p:inputNumber>
                                     </p:column>
@@ -497,7 +514,7 @@
                                         <p:inputNumber 
                                             placeholder="......."
                                             id="tranche_3_Col_5"
-                                            value="#{revenusController.modelImpot.tranche_3_Col_5}">
+                                            value="#{revenusController.impotDu()}">
                                             <!--<p:ajax event="blur" update="revenuBrut" />-->
                                         </p:inputNumber>
                                     </p:column>
@@ -514,8 +531,8 @@
                                             placeholder="......."
                                             id="impotTotalDu"
                                             readonly="true"
-                                            value="#{revenusController.modelImpot.impotTotalDu}">
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            value="#{revenusController.totalImpotDU()}">
+                                            <p:ajax event="blur" update="totalRestantDu" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -531,7 +548,7 @@
                                             id="accompteImpotDejaPaye"
                                             readonly="true"
                                             value="#{revenusController.modelImpot.accompteImpotDejaPaye}">
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            <p:ajax event="blur" update="totalRestantDu" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -546,7 +563,7 @@
                                             placeholder="......."
                                             id="totalRestantDu"
                                             readonly="true"
-                                            value="#{revenusController.modelImpot.totalRestantDu}">
+                                            value="#{revenusController.totalRestantDU()}">
                                             <!--<p:ajax event="blur" update="revenuBrut" />-->
                                         </p:inputNumber>
                                     </p:column>
@@ -558,6 +575,7 @@
 
                         <!-- ======================F. RESERVE A L’ADMINISTRATION FISCALE ===========================-->
                         <p:spacer height="10"/>
+                        
                         <div class="field col-12 md:col-12">
                             <p:panelGrid style="margin-top:20px; width: 100%">
 
@@ -584,7 +602,9 @@
                                         20. Base (Ligne 19)
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputNumber placeholder="......."/>
+                                        <p:inputNumber 
+                                            placeholder="......."
+                                            value="#{revenusController.modelAmande.baseLine}"/>
                                     </p:column>
                                 </p:row>
 
@@ -593,7 +613,9 @@
                                         21. Amende fixe
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputNumber placeholder="......."/>
+                                        <p:inputNumber 
+                                            placeholder="......."
+                                            value="#{revenusController.modelAmande.amandeFixe}"/>
                                     </p:column>
                                 </p:row>
 
@@ -602,7 +624,9 @@
                                         22. Pénalités pour paiement tardif (10%)
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputNumber placeholder="......."/>
+                                        <p:inputNumber 
+                                            placeholder="......."
+                                            value="#{revenusController.modelAmande.penalite}"/>
                                     </p:column>
                                 </p:row>
 
@@ -611,44 +635,138 @@
                                         23. Total amendes et pénalités (Lignes 21 + 22)
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
-                                        <p:inputNumber placeholder="......."/>
+                                        <p:inputNumber 
+                                            placeholder="......."
+                                            value="#{revenusController.modelAmande.total}"/>
                                     </p:column>
                                 </p:row>
 
                             </p:panelGrid>
 
                         </div>
+                        
+                        <div class="field col-12 md:col-12">
+                            <p:panelGrid style="margin-top:20px; width: 100%">
 
-                        <!-- ====================== BUTTON  ===========================-->
-                        <div class="field col-12 md:col-10"></div>
-                        <div class="field col-12 md:col-2">
-                            <p:commandButton 
-                                value="Calculer"
-                                ajax="false"
-                                action="#{revenusController.save(revenuLocatif)}"
-                                style="height: 41px; "
-                            />
+                                <p:row>
+                                    <p:column colspan="" style="font-weight: bold;">
+                                       Mode de paiement :
+                                    </p:column>
+                                    <p:column colspan="">
+                                        Quittance
+                                    </p:column>
+
+                                </p:row>
+
+                                <p:row>
+                                    <p:column>
+                                        <div class="field grid">
+                                            <label>Especes</label>
+                                            <div class="col-12 md:col-3">
+                                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                                            </div>
+                                        </div>
+                                        <div class="field grid">
+                                            <label>Carte Cash</label>
+                                            <div class="col-12 md:col-3">
+                                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="field grid">
+                                            <label>Banque</label>
+                                            <div class="col-12 md:col-3">
+                                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                                            </div>
+                                        </div>
+                                        <div class="field grid">
+                                            <label>Numero</label>
+                                            <div class="col-12 md:col-3">
+                                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                                            </div>
+                                        </div>
+                                        <div class="field grid">
+                                            <label>O.V</label>
+                                            <div class="col-12 md:col-3">
+                                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                                            </div>
+                                        </div>
+                                        <div class="field grid">
+                                            <label>C.S.T</label>
+                                            <div class="col-6 md:col-8">
+                                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                                            </div>
+                                        </div>
+                                        <div class="field grid">
+                                            <label>Autre</label>
+                                            <div class="col-6 md:col-8">
+                                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                                            </div>
+                                        </div>
+                                    </p:column>
+                                    
+                                    <p:column colspan="" >
+                                        <div class="field grid">
+                                            <label>Numero</label>
+                                            <div class="col-6 md:col-8">
+                                                <p:inputNumber placeholder="......."/>
+                                            </div>
+                                        </div>
+                                        <div class="field grid">
+                                            <label>Date</label>
+                                            <div class="col-6 md:col-8">
+                                                <p:inputNumber placeholder="......."/>
+                                            </div>
+                                        </div>
+                                        <div class="field grid">
+                                            <label>Montant paye</label>
+                                            <div class="col-6 md:col-8">
+                                                <p:inputNumber 
+                                                    placeholder="......."
+                                                    value="#{revenusController.modelPayement.montantPaye}"/>
+                                            </div>
+                                        </div>
+                                        <div class="field grid">
+                                            <label>Restant Du</label>
+                                            <div class="col-6 md:col-8">
+                                                <p:inputNumber 
+                                                    placeholder="......."
+                                                     value="#{revenusController.modelPayement.montantPaye}"/>
+                                            </div>
+                                        </div>
+                                        
+                                    </p:column>
+                                    
+                                </p:row>
+
+                            </p:panelGrid>
+
                         </div>
+
                     </div>
+                        
                     
-
-                    </h:form>
+                </h:form>
                 
-                
-                
-                
-                
-                <f:facet name="footer">
-                    <p:commandButton value="Print (custom configuration)" type="button" icon="pi pi-print" styleClass="shadow-1 mb-3">
-                        <p:printer 
-                            target="pnlPrint" 
-
-                        />
-                    </p:commandButton>
-                </f:facet>
             </p:card>
             
-            
+            <!--==========================================================-->    
+            <p:toolbar>
+                <p:toolbarGroup align="right">
+
+
+                    <p:commandButton 
+                        value="Print" 
+                        type="button" icon="pi pi-print" 
+                        styleClass="shadow-1 mb-3">
+
+                        <p:printer 
+                            target="printDeclaration" 
+                        />
+                    </p:commandButton>
+
+                </p:toolbarGroup>
+             </p:toolbar>
             
         </div>
         

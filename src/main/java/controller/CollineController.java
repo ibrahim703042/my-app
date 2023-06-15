@@ -26,7 +26,7 @@ import util.CollineDbUtil;
 @ManagedBean
 @SessionScoped
 
-public class CollineController implements Serializable {
+public class CollineController extends MessageController implements Serializable {
 
     public ArrayList collines;
     
@@ -45,7 +45,7 @@ public class CollineController implements Serializable {
         try {
             collines = collineDbUtil.findAll();
         }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+            ex.printStackTrace();
         }
         return collines;
     }
@@ -57,7 +57,7 @@ public class CollineController implements Serializable {
             collineDbUtil.save(colline);
 
         }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+            ex.printStackTrace();
         }
         return "/pages/pays/colline/template.xhtml?faces-redirect=true";
     }
@@ -69,7 +69,7 @@ public class CollineController implements Serializable {
             collineDbUtil.findById(id);
 
         }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+            ex.printStackTrace();
         }
         return "/pages/pays/colline/edit.xhtml?faces-redirect=true";
     }
@@ -81,7 +81,7 @@ public class CollineController implements Serializable {
             collineDbUtil.update(colline);
 
         }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+            ex.printStackTrace();
         }
         return "/pages/pays/colline/template.xhtml?faces-redirect=true";
     }
@@ -91,16 +91,13 @@ public class CollineController implements Serializable {
         
         try {
             collineDbUtil.delete(id);
+            this.showInfo("Deleted", "Data deleted");
+            this.init();
 
         }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+            ex.printStackTrace();
         }
         return "/pages/pays/colline/template.xhtml?faces-redirect=true";
     }
-    
-    //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
+   
 }

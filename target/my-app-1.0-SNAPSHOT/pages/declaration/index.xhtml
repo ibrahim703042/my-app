@@ -5,169 +5,152 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
     
-    
-    <!--    
-    <f:metadata>
-        <f:event  listener="#{declarationController.declarationList()}" type="preRenderView" />
-    </f:metadata>
-    -->
-    
-   
-    <div class="surface-card p-4 shadow-1 border-round">
-        <div class="text-3xl font-medium text-900 mb-3">
-            Declaration
-        </div>
-        <div class="font-medium text-500 mb-3">
-            Listes
-        </div>
-       <div  class="border-2 border-dashed surface-border">
+    <h:form>
 
-           <div class="card ">
-                <h:form>
-                    
-                    <p:growl id="message" showDetail="true"/>
-                    
-                    <p:toolbar>
-                        <p:toolbarGroup>
-                            <p:commandButton 
-                                value="Ajouter" 
-                                icon="pi pi-plus" 
-                                styleClass="ui-button-success"
-                                action="/pages/declaration/template?faces-redirect=true"
-                                ajax="false"
-                                style="margin-right: .5rem">
-                            </p:commandButton>
-                        </p:toolbarGroup>
-                        
-                        <!-- toolbarGroup for import, excel, pdf-->
-                        <p:toolbarGroup align="right">
-                            
-                            <!--Export data excel -->
-                            <p:commandButton 
-                                value="EXCEL" 
-                                icon="pi pi-upload" 
-                                styleClass="ui-button-help" 
-                                ajax="false">
-                                <p:dataExporter 
-                                    type="xls" 
-                                    target="dt-declaractions" 
-                                    fileName="Gestion declaractions" 
-                                />
-                            </p:commandButton>
-                            
-                        </p:toolbarGroup>
-                    </p:toolbar>
+        <p:growl id="message" showDetail="true"/>
 
-                    <p:dataTable 
-                        id="dt-declaractions"
-                        paginator="true" 
-                        rows="4"
-                        widgetVar="dtDeclarations"
-                        paginatorPosition="bottom"
-                        binding="#{table}" 
-                        var="declaration" 
-                        value="#{declarationController.declarationList()}"
-                        
-                        >
-                        <!--
-                        <f:facet name="header">
-                            <div class="flex justify-content-between">
-                                <span style="font-weight: bold;"></span>
-                                <span class="filter-container ui-input-icon-left"> 
-                                    <i class="pi pi-search"></i>
-                                    <p:inputText 
-                                        id="globalFilter" 
-                                        onkeyup="PF('dtDeclarations').filter()" 
-                                        placeholder="Search" 
-                                    />
-                                </span>
-                            </div>
-                        </f:facet>
-                        -->
-                        
-                        
-                        <p:column headerText="" style="width: 5%">
-                            <h:outputText value="#{table.rowIndex + 1}" />
-                        </p:column>
-                       
-                        <p:column 
-                            headerText="NIF"
-                            sortBy="#{declaration.nif}" 
-                            filterBy="#{declaration.nif}"
-                            style="width: 10%"
-                        >
-                            <h:outputText value="#{declaration.nif}" />
-                        </p:column>
+        <p:toolbar>
+            <p:toolbarGroup>
+                <p:commandButton 
+                    value="Ajouter" 
+                    icon="pi pi-plus" 
+                    styleClass="ui-button-success"
+                    action="/pages/declaration/template?faces-redirect=true"
+                    ajax="false"
+                    style="margin-right: .5rem">
+                </p:commandButton>
+            </p:toolbarGroup>
 
-                        <p:column 
-                            headerText="CCF"
-                            sortBy="#{declaration.ccf}" 
-                            filterBy="#{declaration.ccf}"
-                            style="width: 5%"
-                        >
-                            <h:outputText value="#{declaration.ccf}" />
-                        </p:column>
-                        
-                        
-                        <p:column 
-                            headerText="Nom / Raison Sociale"
-                            sortBy="#{declaration.contribuable}" 
-                            filterBy="#{declaration.contribuable}"
-                        >
-                            <h:outputText value="#{declaration.contribuable}" />
-                        </p:column>
-                        
-                        <p:column 
-                            headerText="Date plutot"
-                            sortBy="#{declaration.date_1}" 
-                            filterBy="#{declaration.date_1}"
-                            style="width: 10%"
-                        >
-                            <h:outputText value="#{declaration.date_1}" />
-                        </p:column>
-                        
-                        <p:column 
-                            headerText="Date plutard"
-                            sortBy="#{declaration.date_2}" 
-                            filterBy="#{declaration.date_2}"
-                            style="width: 11%"
-                        >
-                            <h:outputText value="#{declaration.date_2}" />
-                        </p:column>
-                        
-                        <p:column exportable="false" style="width: 15%" >
+            <!-- toolbarGroup for import, excel, pdf-->
+            <p:toolbarGroup align="right">
 
-                            <p:commandButton 
-                                icon="pi pi-pencil" 
-                                styleClass="edit-button rounded-button ui-button-success mr-4" 
-                                ajax="false"
-                                action="#{declarationController.edit(declaration.id)}"
-                                >
+                <!--Export data excel -->
+                <p:commandButton 
+                    value="EXCEL" 
+                    icon="pi pi-upload" 
+                    styleClass="ui-button-help" 
+                    ajax="false">
+                    <p:dataExporter 
+                        type="xls" 
+                        target="dt-declaractions" 
+                        fileName="Gestion declaractions" 
+                    />
+                </p:commandButton>
 
-                            </p:commandButton>
+            </p:toolbarGroup>
+        </p:toolbar>
 
-                            <p:commandButton 
-                                icon="pi pi-eye" 
-                                styleClass="edit-button rounded-button ui-button-info mr-4" 
-                                ajax="false"
-                                action="#{declarationController.calculRevenu(declaration.id)}"
-                                >
-                            </p:commandButton>
-                            <p:commandButton 
-                                class="ui-button-warning rounded-button" 
-                                icon="pi pi-trash"
-                                ajax="false"
-                                action="#{declarationController.delete(declaration.id)}"
-                                >
+        <p:dataTable 
+            id="dt-declaractions"
+            paginator="true" 
+            rows="4"
+            widgetVar="dtDeclarations"
+            paginatorPosition="bottom"
+            binding="#{table}" 
+            var="declaration" 
+            rowKey="#{declaration}"
+            value="#{declarationController.declarationList()}"
 
-                            </p:commandButton>
-                        </p:column>
+            >
 
-                    </p:dataTable>
-                </h:form>
-            </div>
+            <f:facet name="header">
+                <div class="flex justify-content-between">
+                     <span 
+                        style="font-weight: bold;
+                        font-size: 18px; text-transform: uppercase">
+                         LISTE
+                     </span>
+                     <span class="filter-container ui-input-icon-left"> 
+                         <i class="pi pi-search icon"></i>
+                         <p:inputText 
+                             id="globalFilter" 
+                             onkeyup="PF('dtDeclarations').filter()" 
+                             placeholder="Search...." 
+                         />
+                     </span>
+                 </div>
+             </f:facet>
 
-       </div>
-    </div>
+            <p:column headerText="#" style="width: 3%">
+                <h:outputText value="#{table.rowIndex + 1}" />
+            </p:column>
+
+            <p:column 
+                headerText="NIF"
+                sortBy="#{declaration.nif}" 
+                filterBy="#{declaration.nif}"
+                style="width: 10%"
+            >
+                <h:outputText value="#{declaration.nif}" />
+            </p:column>
+
+            <p:column 
+                headerText="CCF"
+                sortBy="#{declaration.ccf}" 
+                filterBy="#{declaration.ccf}"
+                style="width: 7%"
+            >
+                <h:outputText value="#{declaration.ccf}" />
+            </p:column>
+
+
+            <p:column 
+                headerText="Nom / Raison Sociale"
+                sortBy="#{declaration.contribuable}" 
+                filterBy="#{declaration.contribuable}"
+            >
+                <h:outputText value="#{declaration.contribuable}" />
+            </p:column>
+
+            <!--
+            <p:column 
+                headerText="Date plutot"
+                sortBy="#{declaration.date_1}" 
+                filterBy="#{declaration.date_1}"
+                style="width: 10%"
+            >
+                <h:outputText value="#{declaration.date_1}" />
+            </p:column>
+
+            <p:column 
+                headerText="Date plutard"
+                sortBy="#{declaration.date_2}" 
+                filterBy="#{declaration.date_2}"
+                style="width: 11%"
+            >
+                <h:outputText value="#{declaration.date_2}" />
+            </p:column>
+            -->
+            <p:column exportable="false" style="width: 20%" >
+
+                <p:commandButton 
+                    styleClass="edit-button ui-button-info mr-4" 
+                    ajax="false"
+                    value="Declarer"
+                    action="#{declarationController.calculRevenu(declaration.id)}"
+                    >
+                </p:commandButton>
+                
+                <p:commandButton 
+                    icon="pi pi-pencil" 
+                    styleClass="edit-button rounded-button ui-button-success mr-4" 
+                    ajax="false"
+                    action="#{declarationController.edit(declaration.id)}"
+                    >
+
+                </p:commandButton>
+                
+                <p:commandButton 
+                    class="ui-button-warning rounded-button" 
+                    icon="pi pi-trash"
+                    ajax="false"
+                    action="#{declarationController.delete(declaration.id)}"
+                    >
+
+                </p:commandButton>
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
             
 </ui:composition>

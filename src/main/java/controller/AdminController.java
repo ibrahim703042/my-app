@@ -12,7 +12,6 @@ import jakarta.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
 import model.Administrateur;
-import model.Permission;
 import model.Role;
 
 import org.primefaces.PrimeFaces;
@@ -33,12 +32,8 @@ public class AdminController extends MessageController implements Serializable{
     private List<Role> listRole;
     private Role modelRole;
     
-    private List<Permission> ListPermission;
-    private Permission modelPermission;
-    
     private List<Administrateur> administrateurs;
     private Administrateur administrateur;
-    private List<Administrateur> selectedAdministrateurs;
     
     @Inject
     private AdministrateurDbUtil administrateurDbUtil;
@@ -48,25 +43,15 @@ public class AdminController extends MessageController implements Serializable{
     @PostConstruct
     public void init() {
         
-        this.administrateurs = this.administrateurDbUtil.getAdministrateurs();
+        this.administrateurs = this.administrateurDbUtil.findAll();
         this.listRole = this.administrateurDbUtil.loadDropDown();
-        this.permissionDbUtil = new PermissionDbUtil();
-
+        
     }
      
     public void clearForm() {
         this.setAdministrateur(new Administrateur());
     }
      
-    public boolean hasSelectedAdministrateurs() {
-        return this.selectedAdministrateurs() != null && !this.selectedAdministrateurs.isEmpty();
-    }
-    
-    public List<Administrateur> selectedAdministrateurs() {
-        this.setAdministrateurs(this.administrateurDbUtil.getAdministrateurs());
-        return getAdministrateurs();
-    }
-        
     // ************************ create Admin **************************/
     
     public void createOrUpdate() {
@@ -82,21 +67,6 @@ public class AdminController extends MessageController implements Serializable{
             }
 
         }
-    }
-    
-    // ************************ create Admin **************************/
-    
-    public void updatePermission() {
-        
-        if (this.getAdministrateur().getId() != null){
-
-            this.permissionDbUtil.update(this.administrateur.getId());
-            this.init();
-            showInfo("Permission","Privilegies granted");
-            PrimeFaces.current().executeScript("PF('managePermissionDialog').hide()");
-            PrimeFaces.current().ajax().update("form:messages", "form:dt-administrateurs");
-        }
-
     }
     
     //************************ update data **************************/
@@ -165,11 +135,6 @@ public class AdminController extends MessageController implements Serializable{
            showError("Failed","Phone number is required");
            return false;
        }
-//       if (this.getAdministrateur().getRoleId() == null)
-//       {
-//           showError("Failed","Role is required");
-//           return false;
-//       }
        if (this.getAdministrateur().getIsActive() == null)
        {
            showError("Failed","Status is required");
@@ -198,22 +163,6 @@ public class AdminController extends MessageController implements Serializable{
         this.modelRole = modelRole;
     }
 
-    public List<Permission> getListPermission() {
-        return ListPermission;
-    }
-
-    public void setListPermission(List<Permission> ListPermission) {
-        this.ListPermission = ListPermission;
-    }
-
-    public Permission getModelPermission() {
-        return modelPermission;
-    }
-
-    public void setModelPermission(Permission modelPermission) {
-        this.modelPermission = modelPermission;
-    }
-
     public List<Administrateur> getAdministrateurs() {
         return administrateurs;
     }
@@ -230,18 +179,9 @@ public class AdminController extends MessageController implements Serializable{
         this.administrateur = administrateur;
     }
 
-    public List<Administrateur> getSelectedAdministrateurs() {
-        return selectedAdministrateurs;
-    }
-
-    public void setSelectedAdministrateurs(List<Administrateur> selectedAdministrateurs) {
-        this.selectedAdministrateurs = selectedAdministrateurs;
-    }
-
     public PermissionDbUtil getPermissionDbUtil() {
         return permissionDbUtil;
     }
-    
     
 }
 

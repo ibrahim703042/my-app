@@ -39,16 +39,6 @@ public class RoleController extends MessageController implements Serializable{
         this.roles = this.roleDbUtil.findAll();
     }
        
-    public List<Role> roleList() {
-        
-        this.roles.clear();
-        try {
-            this.roles = this.roleDbUtil.findAll();
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return this.roles;
-    }
     public List<Role> getRoles() {
         return roles;
     }
@@ -80,7 +70,6 @@ public class RoleController extends MessageController implements Serializable{
 
                 this.roleDbUtil.save(this.role);
                 this.init();
-                //this.roleList();
                 showInfo("Inserted","Role Added");
                 PrimeFaces.current().executeScript("PF('manageRoleDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");
@@ -123,7 +112,7 @@ public class RoleController extends MessageController implements Serializable{
     // ******   Delete data ******/
     public void delete(int id) {
         this.roleDbUtil.delete(id);
-        this.role = null;
+        this.init();
         showInfo("Deleted","Role deleted");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-roles");
     }

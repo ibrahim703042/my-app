@@ -1,16 +1,62 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
     
     
-    <nav class="navbar" >
-        <i class="pi pi-bars" id="sidebar-close" style="font-size: 1.5rem"></i>
+    <nav>
+        <i class="pi pi-bars toggle-sidebar"></i>
+        
+        <h:form>
+            <div class="form-group">
+                <p:inputText placeholder="Search..."/>
+                <i class='pi pi-search icon' ></i>
+            </div>
+        </h:form>
         <!--
-        <h1>#{adminSession.id}</h1>
-        <h1>#{adminSession.email}</h1>
-        <h1>#{adminSession.idRole}</h1>
+        <a href="#" class="nav-link">
+            <i class='pi pi-bell icon' ></i>
+            <span class="badge">5</span>
+        </a>
+        
+        <a href="#" class="nav-link">
+            <i class='pi pi-envelope icon' ></i>
+            <span class="badge">8</span>
+        </a>
         -->
+        <span class="divider"></span>
+        
+        <div class="profile">
+            <p:graphicImage name="avatar.png" library="image" alt="Profile"/>
+            <ul class="profile-link">
+                <h:form>
+                    
+                    <li>
+                        <a href="#">
+                            <i class='pi pi-user icon' ></i> 
+                            <span>#{login.email}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class='pi pi-user icon' ></i> 
+                            Profile
+                        </a>
+                    </li>
+
+                    <li>
+                        <h:commandLink action="#{authController.logout}">
+                            <!--<f:param name="pageId" value="2"/>-->
+                            <i class='pi pi-sign-out' ></i>
+                            Se deconnecter
+                        </h:commandLink>
+                    
+                    </li>
+                </h:form>
+            </ul>
+        </div>
+        
     </nav>
     
 </ui:composition>

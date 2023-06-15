@@ -4,36 +4,31 @@
  */
 package model;
 
+import jakarta.faces.bean.ManagedBean;
 import java.io.Serializable;
-import java.util.Collection;
 /**
  *
  * @author Ibrahim
  */
+
+@ManagedBean
 public class Amande implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
     private Integer id;
-    private int idImpot;
-    private int amandeFixe;
+    private Integer idImpot;
+    private double baseLine;
+    private double amandeFixe;
     private double penalite;
-    private int total;
-    private Collection<Payement> payementCollection;
-
+    private double total;
+    
+    private Impot impot;
+    
     public Amande() {
-    }
-
-    public Amande(Integer id) {
-        this.id = id;
-    }
-
-    public Amande(Integer id, int idImpot, int amandeFixe, double penalite, int total) {
-        this.id = id;
-        this.idImpot = idImpot;
-        this.amandeFixe = amandeFixe;
-        this.penalite = penalite;
-        this.total = total;
+        amandeFixe=200;
+        penalite=200;
+        total=200;
     }
 
     public Integer getId() {
@@ -44,19 +39,27 @@ public class Amande implements Serializable {
         this.id = id;
     }
 
-    public int getIdImpot() {
+    public Integer getIdImpot() {
         return idImpot;
     }
 
-    public void setIdImpot(int idImpot) {
+    public void setIdImpot(Integer idImpot) {
         this.idImpot = idImpot;
     }
 
-    public int getAmandeFixe() {
+    public double getBaseLine() {
+        return baseLine ;
+    }
+
+    public void setBaseLine(double baseLine) {
+        this.baseLine = baseLine;
+    }
+
+    public double getAmandeFixe() {
         return amandeFixe;
     }
 
-    public void setAmandeFixe(int amandeFixe) {
+    public void setAmandeFixe(double amandeFixe) {
         this.amandeFixe = amandeFixe;
     }
 
@@ -68,20 +71,21 @@ public class Amande implements Serializable {
         this.penalite = penalite;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
-    public Collection<Payement> getPayementCollection() {
-        return payementCollection;
+    public void setImpot(Impot impot) {
+        this.impot = impot;
     }
 
-    public void setPayementCollection(Collection<Payement> payementCollection) {
-        this.payementCollection = payementCollection;
+    public Impot getImpot() {
+        return impot;
     }
 
+    
 }

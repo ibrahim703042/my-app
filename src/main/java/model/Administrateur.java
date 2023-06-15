@@ -50,9 +50,6 @@ public class Administrateur implements Serializable{
     private Date date;
 
     public Administrateur() {
-        //nom="Ibrahim";
-        email="Kwizera.ibrahim@gmail.com";
-        motPasse="1234567890";
     }
 
     public Integer getId() {

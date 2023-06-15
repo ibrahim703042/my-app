@@ -5,7 +5,6 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
     
-    <div class="surface-card p-4 shadow-1 border-round">
         <h:form id="form">
             <p:growl id="messages" showDetail="true" />
             <!--
@@ -40,10 +39,9 @@
                 value="#{roleController.roles}"
                 widgetVar="dtRoles" 
                 var="role"
-                rowKey="#{role.id}"
+                rowKey="#{role.nomRole}"
                 paginator="true" 
                 rows="4" 
-                rowSelectMode="add"
                 paginatorPosition="bottom"
                 binding="#{table}" 
             >
@@ -52,16 +50,16 @@
                      <div class="flex justify-content-between">
                          <span 
                              style="font-weight: bold;
-                              font-size: 30px; text-transform: uppercase"
+                              font-size: 18px; text-transform: uppercase"
                          >
-                             Roles
+                            Liste
                          </span>
                          <span class="filter-container ui-input-icon-left"> 
-                             <i class="pi pi-search"></i>
+                             <i class="pi pi-search icon"></i>
                              <p:inputText 
                                  id="globalFilter"
                                  onkeyup="PF('dtRoles').filter()" 
-                                 placeholder="Search" 
+                                 placeholder="Search..." 
                              />
                          </span>
                      </div>
@@ -112,7 +110,6 @@
             
         </h:form>
         <ui:include src="ajouter.xhtml" />
-    </div>
     
                 
 </ui:composition>

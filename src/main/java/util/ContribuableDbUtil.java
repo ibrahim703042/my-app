@@ -18,6 +18,7 @@ import java.util.*;
 import model.Abbattement;
 import model.Contribuable;
 import model.Representant;
+import org.apache.commons.codec.digest.DigestUtils;
 
 @ManagedBean
 @ApplicationScoped
@@ -117,10 +118,14 @@ public class ContribuableDbUtil {
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
+            String motPasse = DigestUtils.shaHex(contribuable.getMotPasse());
+            //String motPasse = administrateur.getMotPasse();
+            //String admin = "Super administrateur";
+            
             pstmt.setInt(1, contribuable.getIdRepresentant());
             pstmt.setString(2, contribuable.getNom());
             pstmt.setString(3, contribuable.getEmail());
-            pstmt.setString(4, contribuable.getMotPasse());
+            pstmt.setString(4, motPasse);
             pstmt.setInt(5, contribuable.getTelephone());
             pstmt.setString(6, contribuable.getBp());
             

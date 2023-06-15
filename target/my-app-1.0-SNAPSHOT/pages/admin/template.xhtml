@@ -2,15 +2,42 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     template="/resources/templates/dashboardTemplate.xhtml"
-    xmlns:p="http://primefaces.org/ui">
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <ui:define name = "contents">
             
-        <p:spacer height="90" />
+        <h1 class="title">Administrateur</h1>
+        <ul class="breadcrumbs">
+            <li>
+                <p:link styleClass="no-underline"  outcome="/pages/dashboard.xhtml" >
+                    <f:param name="pageId" value="1"/>
+                    Acceuil
+                </p:link>
+            </li>
+            <li class="divider">/</li>
+            <li>
+                <p:link styleClass="no-underline active"  outcome="/pages/dashboard.xhtml" >
+                    <f:param name="pageId" value="1"/>
+                    Administrateur
+                </p:link>
+            </li>
+        </ul>
         
-        <ui:insert>
-            <ui:include src="index.xhtml" />
-        </ui:insert>
+        <div class="data">
+            <div class="content-data">
+                <!--                
+                    <div class="head">
+                    </div>
+                -->
+                <div class="data-details">
+        
+                    <ui:insert>
+                        <ui:include src="index.xhtml" />
+                    </ui:insert>
+                </div>
+            </div>
+        </div>
             
     </ui:define>
         

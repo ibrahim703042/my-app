@@ -11,68 +11,59 @@ import java.io.Serializable;
 /**
  *
  * @author Ibrahim
+ * 
  */
+
 @Named(value = "navigationController")
 @ViewScoped
 public class NavigationController implements Serializable {
+    private String pageId;
     
-    private String adminId;
-    private String addAdminId;
-    private String editAdminId;
-    private String contribuableId;
-    private String addContribuableId;
-    private String editContribuableId;
-
-    public String getAdminId() {
-        return adminId;
+    public NavigationController(){
     }
-
-    public void setAdminId(String adminId) {
-        this.adminId = adminId;
-    }
-
-    public String getAddAdminId() {
-        return addAdminId;
-    }
-
-    public void setAddAdminId(String addAdminId) {
-        this.addAdminId = addAdminId;
-    }
-
-    public String getEditAdminId() {
-        return editAdminId;
-    }
-
-    public void setEditAdminId(String editAdminId) {
-        this.editAdminId = editAdminId;
-    }
-
-    public String getContribuableId() {
-        return contribuableId;
-    }
-
-    public void setContribuableId(String contribuableId) {
-        this.contribuableId = contribuableId;
-    }
-
-    public String getAddContribuableId() {
-        return addContribuableId;
-    }
-
-    public void setAddContribuableId(String addContribuableId) {
-        this.addContribuableId = addContribuableId;
-    }
-
-    public String getEditContribuableId() {
-        return editContribuableId;
-    }
-
-    public void setEditContribuableId(String editContribuableId) {
-        this.editContribuableId = editContribuableId;
-    }
-
     
-    
-    
+    public String showPage() {
+        
+        if( pageId != null) {
+            
+          return "index";
+          
+        }
+
+        switch (pageId) {
+            case "1":
+                return "/pages/dashaboard";
+                
+            case "2":
+                return "/pages/index";
+                
+            case "3":
+                return "dashboard.xhtml";
+            
+            case "4":
+                return "/pages/admin/template.xhtml";
+            case "5":
+                return "/pages/admin/ajouter.xhtml";
+            case "6":
+                return "/pages/admin/edit.xhtml";
+                
+            case "7":
+                return "/pages/role/template.xhtml";
+            case "8":
+                return "/pages/role/ajouter.xhtml";
+            case "9":
+                return "/pages/role/edit.xhtml";
+                
+            case "10":
+                return "/pages/permission/template.xhtml";
+            case "11":
+                return "/pages/permission/ajouter.xhtml";
+            case "12":
+                return "/pages/permission/edit.xhtml";
+                
+            default:
+                return "index";
+        }
+    }
     
 }

@@ -9,74 +9,109 @@
     
     <ui:define name = "contents">
             
-        <p:spacer height="90" />
-                    
-        <h:form id="form" class=" py-3 mb-4 shadow-1 px-4">
-            <div class="">
-                
-                <div class="ui-fluid formgrid grid">
+        
+        <h1 class="title">Immeuble</h1>
+        
+        <ul class="breadcrumbs">
+            <li>
+                <p:link styleClass="no-underline"  outcome="/pages/immeuble/template" >
+                    <f:param name="pageId" value="9"/>
+                    Acceuil
+                </p:link>
+            </li>
+            
+            <li class="divider">/</li>
+            <li>
+                <p:link styleClass="no-underline active"  outcome="/pages/dashboard.xhtml" >
+                    <f:param name="pageId" value="1"/>
+                    Enregistrer
+                </p:link>
+            </li>
+            
+            <li class="divider">/</li>
+            <li>
+                <p:link styleClass="no-underline active"  outcome="/pages/dashboard.xhtml" >
+                    <f:param name="pageId" value="1"/>
+                    Immeuble
+                </p:link>
+            </li>
+        </ul>
+        
+        <div class="data">
+            <div class="content-data">
+                <!--                
+                    <div class="head">
+                    </div>
+                -->
+                <div class="data-details">
+        
+                    <h:form id="form-edit-immeuble" class="px-3">
+
+                        <div class="ui-fluid formgrid grid">
                        
-                    <div class="field col-12 md:col-12">
-                        <p:outputLabel class="font-bold"  value="Contribuable"/>
-                        <p:selectOneMenu 
-                            value="#{immeubleMapped.idContribuable}"
-                            filter="true" 
-                            filterMatchMode="startsWith" 
-                            dynamic="true"
-                            style="height: 41px; "
-                        >
-                            <f:selectItem itemLabel="Choisir contribuable" />
-                            <f:selectItems var="contribuabl"
-                                value="#{contribuableController.contribuableList()}"
-                                itemLabel="#{contribuabl.id} : 
-                                    #{contribuabl.nom} 
-                                "
-                                itemValue="#{contribuabl.id}" 
-                            />
+                            <div class="field col-12 md:col-12">
+                                <p:outputLabel class="font-bold"  value="Contribuable"/>
+                                <p:selectOneMenu 
+                                    value="#{immeubleMapped.idContribuable}"
+                                    filter="true" 
+                                    filterMatchMode="startsWith" 
+                                    dynamic="true"
+                                    style="height: 41px; "
+                                >
+                                    <f:selectItem itemLabel="Choisir contribuable" />
+                                    <f:selectItems var="contribuabl"
+                                        value="#{contribuableController.contribuableList()}"
+                                        itemLabel="#{contribuabl.id} : #{contribuabl.nom} "
+                                        itemValue="#{contribuabl.id}" 
+                                    />
 
-                        </p:selectOneMenu>
-                    </div>
+                                </p:selectOneMenu>
+                            </div>
 
-                    <div class="field col-12 md:col-12">
-                        <p:outputLabel class="font-bold"  value="Colline"/>
-                        <p:selectOneMenu 
-                            value="#{immeubleMapped.idColline}"
-                            filter="true" 
-                            filterMatchMode="startsWith" 
-                            dynamic="true"
-                            style="height: 41px; "
-                        >
-                            <f:selectItem itemLabel="Choisir colline" />
-                            <f:selectItems var="coll"
-                                value="#{collineController.collineList()}"
-                                itemLabel="#{coll.nomColline} "
-                                itemValue="#{coll.id}" 
-                            />
+                            <div class="field col-12 md:col-12">
+                                <p:outputLabel class="font-bold"  value="Colline"/>
+                                <p:selectOneMenu 
+                                    value="#{immeubleMapped.idColline}"
+                                    filter="true" 
+                                    filterMatchMode="startsWith" 
+                                    dynamic="true"
+                                    style="height: 41px; "
+                                >
+                                    <f:selectItem itemLabel="Choisir colline" />
+                                    <f:selectItems var="coll"
+                                        value="#{collineController.collineList()}"
+                                        itemLabel="#{coll.nomColline} "
+                                        itemValue="#{coll.id}" 
+                                    />
 
-                        </p:selectOneMenu>
-                    </div>
+                                </p:selectOneMenu>
+                            </div>
 
-                    <div class="field col-12 md:col-6">
-                        <component:inputTextField
-                            label="Avenue/Rue"
-                            placeholder="20 Av No 109"
-                            value="#{immeubleMapped.nomAvenue}"
-                        />
-                    </div>
+                            <div class="field col-12 md:col-12">
+                                <component:inputTextField
+                                    label="Avenue/Rue"
+                                    placeholder="20 Av No 109"
+                                    value="#{immeubleMapped.nomAvenue}"
+                                />
+                            </div>
 
-                    <div class="field col-12 md:col-10"></div>
-                    <div class="field col-12 md:col-2">
-                        <p:commandButton
-                            ajax="false"
-                            value="Modifier" 
-                            action="#{immeubleController.update(immeubleMapped)}"
-                            style="height: 41px; "
-                        />
-                    </div>
+                            <div class="field col-12 md:col-10"></div>
+                            <div class="field col-12 md:col-2">
+                                <p:commandButton
+                                    ajax="false"
+                                    value="Modifier" 
+                                    action="#{immeubleController.update(immeubleMapped)}"
+                                    style="height: 41px; "
+                                />
+                            </div>
+                        </div>
+
+                    </h:form>
+                    
                 </div>
+                
             </div>
-
-        </h:form>
+        </div>
             
     </ui:define>
         

@@ -6,13 +6,10 @@
 package controller;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Commune;
 import util.CommuneDbUtil;
@@ -26,7 +23,7 @@ import util.CommuneDbUtil;
 @ManagedBean
 @SessionScoped
 
-public class CommuneController implements Serializable {
+public class CommuneController extends MessageController implements Serializable {
 
     public ArrayList communes;
     
@@ -45,7 +42,7 @@ public class CommuneController implements Serializable {
         try {
             communes = communeDbUtil.findAll();
         }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+            ex.printStackTrace();
         }
         return communes;
     }
@@ -57,7 +54,7 @@ public class CommuneController implements Serializable {
             communeDbUtil.save(c);
 
         }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+            ex.printStackTrace();
         }
         return "/pages/pays/commune/template.xhtml?faces-redirect=true";
     }
@@ -69,7 +66,7 @@ public class CommuneController implements Serializable {
             communeDbUtil.findById(id);
 
         }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+            ex.printStackTrace();
         }
         return "/pages/pays/commune/edit.xhtml?faces-redirect=true";
     }
@@ -81,26 +78,23 @@ public class CommuneController implements Serializable {
             communeDbUtil.update(c);
 
         }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+            ex.printStackTrace();
         }
         return "/pages/pays/commune/template.xhtml?faces-redirect=true";
     }
     
     ///************************ delete data **************************/
-    public String delete(int id) {
+    public void delete(int id) {
         
         try {
             communeDbUtil.delete(id);
+            this.showInfo("Deleted", "Data deleted");
+            this.init();
 
         }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+            ex.printStackTrace();
         }
-        return "/pages/pays/commune/template.xhtml?faces-redirect=true";
+//        return "/pages/pays/commune/template.xhtml?faces-redirect=true";
     }
     
-    //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
 }

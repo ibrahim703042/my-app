@@ -16,7 +16,6 @@
             <section id="login" class="login">
 
                 <div class="container" data-aos="fade-up">
-                    
                     <div class="cover" data-aos="fade-up" data-aos-delay="100">
 
                         <div class="cover-img">
@@ -31,12 +30,12 @@
 
                                 <div class="title">S'authentifier</div>
 
-                                <h:form id="login">
+                                <h:form id="form">
 
                                     <div class="input-boxes">
                                         <div class="input-box">
                                             <i class="ri-mail-line"></i>
-                                            <h:inputText  required="true" class="input" >
+                                            <h:inputText  required="true" class="input" value="#{authController.contribuable.email}">
                                                 <f:passThroughAttribute name="type" value="email"/>
                                                 <f:passThroughAttribute name="placeholder" value="Email"/>
                                             </h:inputText>
@@ -44,14 +43,14 @@
                                        
                                         <div class="input-box">
                                             <i class="ri-lock-password-line"></i>
-                                             <h:inputSecret required="true" class="input" >
+                                             <h:inputSecret required="true" class="input" value="#{authController.contribuable.motPasse}" >
                                                 <f:passThroughAttribute name="type" value="motPasse"/>
                                                 <f:passThroughAttribute name="placeholder" value="Mot de passe"/>
                                             </h:inputSecret>
                                         </div>
 
                                         <div class="button input-box">
-                                            <h:commandButton value="Se connecter" class="btnInput" action="/pages/dashboard.xhtml">
+                                            <h:commandButton value="Se connecter" class="btnInput" action="#{authController.loginContribuable}">
                                                 <f:param name="pageId" value="2"/>
                                             </h:commandButton>
                                         </div>

@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="field">
-                    <component:inputPasswordField id="motPasse" label="Mot de passe" placeholder="Entrer Mot de passe"
+                    <component:inputTextField type="password" id="motPasse" label="Mot de passe" placeholder="Entrer Mot de passe"
                             value="#{adminController.administrateur.motPasse}" />
                     </div>
                     
@@ -76,13 +76,6 @@
             </p:outputPanel>
             
             <f:facet name="footer">
-                
-                <p:commandButton 
-                    value="Modifier" 
-                    actionListener="#{adminController.update}"
-                    update="manage-admin-content" 
-                    process="manage-admin-content @this" 
-                />
                 
                 <p:commandButton 
                     value="Enregistrer" 

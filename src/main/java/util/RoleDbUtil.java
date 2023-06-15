@@ -110,22 +110,27 @@ public class RoleDbUtil implements Serializable {
     public Role save(Role role) {
         Role model = null;
         
-        
-        String admin = "Kwizera Ibrahim";
-        
-        try {        
+        try {   
+            
             connection = dataSource.getConnection();
+            
             connection.setAutoCommit(false);
+            
             query = "INSERT INTO role (nomrole, description, creerPar) values (?,?,?)";
             pstmt = connection.prepareStatement(query);  
 
+            String admin = "Super Administrateur";
+            
             pstmt.setString(1, role.getNomRole());
             pstmt.setString(2, role.getNomRole());
             //pstmt.setString(3, role.getNomRole());
             pstmt.setString(3, admin);
             
             pstmt.executeUpdate();
-            connection.close();
+           connection.commit();
+                               
+            //connection.close();
+
             
         } catch(SQLException sqlException) {
             printSQLException(sqlException);

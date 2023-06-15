@@ -26,7 +26,8 @@
     </session-config>
     
     <welcome-file-list>
-        <welcome-file>faces/pages/dashboard.xhtml</welcome-file>
+        <!--<welcome-file>faces/pages/dashboard.xhtml</welcome-file>-->
+        <welcome-file>faces/pages/index.xhtml</welcome-file>
         <!--<welcome-file>faces/index.xhtml</welcome-file>-->
         <!--<welcome-file>faces/login.xhtml</welcome-file>-->
     </welcome-file-list>

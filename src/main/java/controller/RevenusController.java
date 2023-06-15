@@ -71,19 +71,11 @@ public final class RevenusController implements Serializable {
     private List<Quittance> listQuittance;
     private Quittance modelQuittance;
     
-    private double restante = 0;
+    public static double restante = 0;
 
     @Inject
     private RevenusDbUtil revenuDbUtil;
-    
-//    public RevenusController(){
-//        
-//       listRevenuLocatif = revenuDbUtil.findAll();
-//       this.modelRevenuLocatif = new RevenuLocatif();
-//       this.modelRevenuSousLocation = new RevenuSousLocation();
-//       this.modelImpot = new Impot();
-//    }
-//    
+  
     @PostConstruct
     public void init(){
         
@@ -91,9 +83,13 @@ public final class RevenusController implements Serializable {
        this.modelRevenuLocatif = new RevenuLocatif();
        this.modelRevenuSousLocation = new RevenuSousLocation();
        this.modelImpot = new Impot();
+       this.modelAmande = new Amande();
+       this.modelPayement = new Payement();
+       this.modelQuittance = new Quittance();
+       
     }
 
-    // *********** REVENULOCATIF ****************/
+    // ************************** REVENULOCATIF ************************************************/
     
     public Double totalRevenulocatifRevenubrut() {
         return (this.getModelRevenuLocatif().getLoyerImposable() + this.getModelRevenuLocatif().getChargeIncombat());
@@ -124,74 +120,98 @@ public final class RevenusController implements Serializable {
        return total;
     }
      
-    // *********** DETERMINATION DE L’IMPOT DU  ****************/
-     
-    public double impotDu() {
-        double revenus = totalRevenuSousLocatifTotalRevenusNetsImposable();
+    // *********** MONTANT PAR TRANCHE L’IMPOT DU  ****************/
+    
+    public static double tranche = 0;
+    public static double revenus_1 ;
+    public static double revenus_2;
+    public  static double revenus_3;
+    
+    
+    public Double revenuTranche() {
         
-       if( revenus > 0 && revenus < 1800000 ){
+        double montant = totalRevenuSousLocatifTotalRevenusNetsImposable();
+        double montant_restante_par_tranche = montant;
+        
+       if( montant_restante_par_tranche > 0 && montant_restante_par_tranche <= 1800000 ){
+           
+           tranche = montant_restante_par_tranche;
+//           revenus_1 = montant_restante_par_tranche;
+           montant_restante_par_tranche = this.modelImpot.getTranche_1();
 
-           return revenus ;
+       }else if( montant_restante_par_tranche > 1800000 && montant_restante_par_tranche <=3600000 ){
+            
+            tranche = montant_restante_par_tranche  ;
+//            revenus_2 = montant_restante_par_tranche  ;
+              montant_restante_par_tranche = this.modelImpot.getTranche_2()  ;
+            
 
-       }else if( revenus >= 1800000 && revenus < 3600000 ){
+       }else if( montant_restante_par_tranche > 3600000){
 
-           return  revenus - 1800000 ;  
+            tranche = montant_restante_par_tranche  ;
+//            revenus_3 = montant_restante_par_tranche  ;
+            montant_restante_par_tranche = this.modelImpot.getTranche_3();
+       }
+       
+       return montant_restante_par_tranche;
+    }
+    
+    // *********** DETERMINATION DE L’IMPOT DU  ****************/
+    public static double impot = 0;
+    public static double impot_1;
+    public static double impot_2;
+    public  static double impot_3;
+    
+    public double impotDu() {
+        
+        double revenus = totalRevenuSousLocatifTotalRevenusNetsImposable();
+        restante = revenus;
+        
+       if( restante > 0 && restante <= 1800000 ){
+           impot = restante*0;
+           impot_1 = restante*0;
 
-       }else if( restante >= 1800000 && restante < 3600000 ){
+       }else if( restante > 1800000 && restante <=3600000 ){
 
-           return  restante = 3600000 - 1800000 ;  
+            impot =  (restante-1800000) *0.2;  
+            impot_2 =  (restante-1800000) *0.2;  
 
        }else if( restante > 3600000){
 
-           return restante;  
-
-       }else {
-
-           return restante = 1800000 - 1 ;  
+           impot =  0+30000+(restante-3600000) *0.3; 
+           impot_3 =(restante-3600000) *0.3; 
 
        }
+       
+       return impot;
     }
      
+    
     // *********** . RESERVE A L’ADMINISTRATION FISCALE   ****************/
-//    public double operation_1_col_6 = this.modelImpot.getTranche_1_Col_5();
-//    public double operation_2_col_5 = this.modelImpot.getTranche_2_Col_5();
-//    public double operation_3_col_5 = this.modelImpot.getTranche_3_Col_5();
      
-//    public double operation_1_col_5(){
-//       return (operation_1 * 0) /100;
-//    }
-//
-//    public double operation_2_col_5(){
-//       return (((operation_1 * 0) /100) +(operation_2 * 20) / 100) ;
-//    }
-//
-//    public double operation_3_col_5(){
-//        return ((((operation_1 * 0) /100) + (operation_2 * 20) / 100) + ((operation_3 * 30) / 100)) ;
-//    }
-//
-//
-//    // *********** TOTALITE RESERVE A L’ADMINISTRATION FISCALE   ****************/
-//    public double totalImpotDU(){
-//       return operation_1_col_5() + operation_2_col_5() + operation_3_col_5();
-//    }
-//
-//    public double totalRestantDU(){
-//       return  totalImpotDU() - this.modelImpot.getAccompteImpotDejaPaye();
-//    }
-//
-//    // *********** AMANDE ****************/
-//
-//    public double totalAmandePenalite(){
-//       return  totalRestantDU() + this.modelAmande.getAmandeFixe() + (this.modelAmande.getPenalite() * 10)/100 ;
-//    }
-//
-//    // *********** Qittance  ****************/
-//    public double quittanceMontantRestantDu(){
-//       return  totalRestantDU() + this.modelQuittance.getMontantPaye() ;
-//    }
-//     
-//    
-//    
+
+
+    // *********** TOTALITE RESERVE A L’ADMINISTRATION FISCALE   ****************/
+    public double totalImpotDU(){
+       return impot_1 + impot_2 + impot_3;
+    }
+
+    public double totalRestantDU(){
+       return  totalImpotDU() - this.modelImpot.getAccompteImpotDejaPaye();
+    }
+
+    // *********** AMANDE ****************/
+
+    public double totalAmandePenalite(){
+       return  totalRestantDU() + this.modelAmande.getAmandeFixe() + (this.modelAmande.getPenalite() * 10)/100 ;
+    }
+
+    // *********** Qittance  ****************/
+    public double getQuittanceMontantRestantDu(){
+       return  totalRestantDU() - this.modelPayement.getMontantPaye() ;
+    }
+
+    
     // ********************************Getters and Setters************************************************/
 
     public Contribuable getModelContribuable() {
@@ -386,7 +406,4 @@ public final class RevenusController implements Serializable {
         this.modelQuittance = modelQuittance;
     }
      
-        
-    
-    
 }

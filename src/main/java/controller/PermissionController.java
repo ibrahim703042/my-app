@@ -27,11 +27,10 @@ import util.PermissionDbUtil;
 public class PermissionController extends MessageController implements Serializable {
     
     private List<Permission> permissions;
-    private Permission selectedPermission;
-    private List<Permission> selectedPermissions;
+    private Permission permission;
     
+    private List<Administrateur> administrateurs;
     private Administrateur administrateur;
-    private Integer idAdministrateur;
     
     @Inject
     private PermissionDbUtil permissionDbUtil;
@@ -40,110 +39,72 @@ public class PermissionController extends MessageController implements Serializa
     @PostConstruct
     public void init() {
         this.permissions = this.permissionDbUtil.findAll();
-        this.administrateur = new Administrateur();
-        selectedPermission = new Permission();
+        this.administrateurs = this.permissionDbUtil.loadDropDown();
     }
-       
+     
+    public void clearForm(){
+        this.permission = new Permission();
+    }
+    public void createOrUpdatePermission() {
+        
+        if (this.permission.getId() == null){
+
+            this.permissionDbUtil.save(this.permission);
+            this.init();
+            showInfo("Permission","Privilegies granted");
+            PrimeFaces.current().executeScript("PF('managePermissionDialog').hide()");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-permissions");
+        
+        }else if (this.permission.getId() != null){
+
+            this.permissionDbUtil.update(this.permission);
+            this.init();
+            showInfo("Permission","Privilegies updated");
+            PrimeFaces.current().executeScript("PF('managePermissionDialog').hide()");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-permissions");
+
+        }
+    }
+    
+    // ************************ delete data **************************/
+    
+    public void delete(Integer id) {
+        this.permissionDbUtil.delete(id);
+        this.init();
+        showInfo("Deleted","Data deleted");
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-permissions");
+    }
+
+    // ************************ Getters And setters **************************/
+
     public List<Permission> getPermissions() {
         return permissions;
+    }
+
+    public void setPermission(Permission permission) {
+        this.permission = permission;
+    }
+
+    public Permission getPermission() {
+        return permission;
+    }
+
+    
+    public List<Administrateur> getAdministrateurs() {
+        return administrateurs;
+    }
+
+    public void setAdministrateurs(List<Administrateur> administrateurs) {
+        this.administrateurs = administrateurs;
     }
 
     public Administrateur getAdministrateur() {
         return administrateur;
     }
 
-    public Integer getIdAdministrateur() {
-        idAdministrateur = this.administrateur.getId();
-        return idAdministrateur ;
+    public void setAdministrateur(Administrateur administrateur) {
+        this.administrateur = administrateur;
     }
-
-    public void setIdAdministrateur(Integer idAdministrateur) {
-        this.idAdministrateur = idAdministrateur;
-    }
-    
-    public Permission getSelectedPermission() {
-        return selectedPermission;
-    }
-
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
-    }
-
-    public void setSelectedPermission(Permission selectedPermission) {
-        this.selectedPermission = selectedPermission;
-    }
-
-    public List<Permission> getSelectedPermissions() {
-        return selectedPermissions;
-    }
-
-    public void setSelectedPermissions(List<Permission> selectedPermissions) {
-        this.selectedPermissions = selectedPermissions;
-    }
-    
-    public boolean hasSelectedPermissions() {
-        return this.selectedPermissions != null && !this.selectedPermissions.isEmpty();
-    }
-    
-    public void create() {
-        
-        if(hasSelectedPermissions()){
-            
-            if (this.selectedPermission.getId() != null) {
-
-                this.permissionDbUtil.save(this.selectedPermission);
-                this.init();
-                showInfo("Inserted","Permission Added");
-                PrimeFaces.current().executeScript("PF('managePermissionDialog').hide()");
-                PrimeFaces.current().ajax().update("form:messages", "form:dt-administrateurs");
-                
-            }else
-            
-                if (this.selectedPermission.getId() != null) {
-
-                    //this.permissionDbUtil.update(this.selectedPermission.getId());
-                    this.init();
-                    showInfo("Updated","Permission Updated");
-                    PrimeFaces.current().executeScript("PF('managePermissionDialog').hide()");
-                    PrimeFaces.current().ajax().update("form:messages", "form:dt-administrateurs");
-                
-            
-            } 
-        }else{
-            warningMessage("Required","Required");
-            PrimeFaces.current().ajax().update("form:messages", "form:dialogs-permission:manage-permission-content");
-        }
-
-    }
-
-    public void updatePermission() {
-        
-        if(hasSelectedPermissions()){
-            
-            if (this.selectedPermission.getId() != null) {
-
-                //this.permissionDbUtil.update(this.selectedPermission.getId());
-                this.init();
-                showInfo("Updated","Permission Updated");
-                PrimeFaces.current().executeScript("PF('managePermissionDialog').hide()");
-                PrimeFaces.current().ajax().update("form:messages", "form:dt-administrateurs");
-            } 
-            
-        }else{
-            warningMessage("Required","Required");
-            PrimeFaces.current().ajax().update("form:messages", "form:dialogs-permission");
-        }
-
-    }
-    
-    public void deleteSelectedPermissions() {
-        //this.permissionDbUtil.delete(this.selectedPermission);
-//        this.roles.removeAll(this.selectedRoles);
-        this.init();
-        this.selectedPermissions = null;
-        showInfo("Deleted","Permission deleted");
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-administateurs");
-        PrimeFaces.current().executeScript("PF('dtadministateurs').clearFilters()");
-    }
+   
     
 }

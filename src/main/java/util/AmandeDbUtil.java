@@ -9,7 +9,6 @@ package util;
  * @author Ibrahim
  */
 
-import dbconnection.MySQLJDBCUtil;
 import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
@@ -18,7 +17,6 @@ import jakarta.inject.Named;
 import model.Amande;
 import java.sql.*;
 import java.util.*;
-import static util.AbbattementDbUtil.connection;
 
 @Named
 @ApplicationScoped
@@ -79,19 +77,18 @@ public class AmandeDbUtil {
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setInt(1, amande.getIdImpot());
-            pstmt.setInt(2, amande.getAmandeFixe());
+            pstmt.setDouble(2, amande.getAmandeFixe());
             pstmt.setDouble(3, amande.getPenalite());
-            pstmt.setInt(4, amande.getTotal());
+            pstmt.setDouble(4, amande.getTotal());
             //statement.setDate(7, (java.sql.Date) amande.getDate());
 
             saveResult = pstmt.executeUpdate();
             connection.close();
 
         }catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }if(saveResult !=0) {
             navigationResult = "/pages/admin/template.xhtml?faces-redirect=true";
-            showMessage(message);
             
         } else {
             navigationResult = "";
@@ -132,7 +129,7 @@ public class AmandeDbUtil {
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
         return "/pages/admin/edit.xhtml";
     }
@@ -144,7 +141,8 @@ public class AmandeDbUtil {
 
         try {
 
-            String query ="Update amande SET "
+            String query =""
+                    + "Update amande SET "
                     + "id_impot=?, "
                     + "amande_fixe=?, "
                     + "penalite=?, "
@@ -154,17 +152,16 @@ public class AmandeDbUtil {
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, amande.getIdImpot());
-            pstmt.setInt(2, amande.getAmandeFixe());
+            pstmt.setDouble(2, amande.getAmandeFixe());
             pstmt.setDouble(3, amande.getPenalite());
-            pstmt.setInt(4, amande.getTotal());
+            pstmt.setDouble(4, amande.getTotal());
 
             pstmt.execute();
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
-            showMessage(message);
             return "/pages/admin/template.xhtml?faces-redirect=true";
     }
 
@@ -181,24 +178,24 @@ public class AmandeDbUtil {
             connection.close();
             
         } catch(SQLException sqlException){
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
         return "/pages/admin/template.xhtml?faces-redirect=true";
     }
     
-    
-    //************** conecxt msg data ***********************/
-    private static void showMessage(String msg){
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage message = new FacesMessage("Notice",msg);
-        context.addMessage(null, message);
-    }
-    
-     //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
+    public static void printSQLException(SQLException ex) {
+        for (Throwable e : ex) {
+            if (e instanceof SQLException) {
+                e.printStackTrace(System.err);
+                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+                System.err.println("Message: " + e.getMessage());
+                Throwable t = ex.getCause();
+                while (t != null) {
+                        System.out.println("Cause: " + t);
+                        t = t.getCause();
+                }
+            }
+        }
     }
 }

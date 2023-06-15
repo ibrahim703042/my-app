@@ -9,138 +9,142 @@
         <f:event listener="#{immeubleController.immeubleList()}" type="preRenderView" />
     </f:metadata>
     
-            
-    <div class="surface-card p-4 shadow-1 border-round">
-        <div class="text-3xl font-medium text-900 mb-3">
-            IMMEUBLE
-        </div>
-        <div class="font-medium text-500 mb-3">
-            Listes
-        </div>
-        <div  class="border-2 border-dashed surface-border">
+        <h:form>
 
-           <div class="card ">
-               
-                <h:form>
-                    
-                    <p:growl id="message" showDetail="true"/>
-                    
-                    <p:toolbar>
-                        <p:toolbarGroup>
-                            <p:commandButton 
-                                value="Ajouter" 
-                                icon="pi pi-plus" 
-                                styleClass="ui-button-success"
-                                action="/pages/immeuble/ajouter?faces-redirect=true"
-                                ajax="false"
-                                style="margin-right: .5rem">
-                            </p:commandButton>
-                        </p:toolbarGroup>
-                        
-                        <!-- toolbarGroup for import, excel, pdf-->
-                        <p:toolbarGroup align="right">
-                            
-                            <!--Export data excel -->
-                            <p:commandButton 
-                                value="EXCEL" 
-                                icon="pi pi-upload" 
-                                styleClass="ui-button-help" 
-                                ajax="false">
-                                <p:dataExporter 
-                                    type="xls" 
-                                    target="dt-immeubles" 
-                                    fileName="Gestion immeubles" 
-                                />
-                            </p:commandButton>
-                            
-                        </p:toolbarGroup>
-                    </p:toolbar>
-                    
-                    <!--/**  Datatables**/-->
-                    
-                    <p:dataTable 
-                        id="dt-immeubles"
-                        paginator="true" 
-                        rows="4" 
-                        rowSelectMode="add" 
-                        paginatorPosition="bottom"
-                        binding="#{table}" 
-                        value="#{immeubleController.immeubleList()}" 
-                        var="immeubl"  >
-                        
-                        <p:column headerText="" style="width: 5%">
-                            <h:outputText value="#{table.rowIndex + 1}" />
-                        </p:column>
+            <p:growl id="message" showDetail="true"/>
 
-                        <p:column 
-                            headerText="Imm.No" 
-                            sortBy="#{immeubl.id}" 
-                            filterBy="#{immeubl.id}"
-                        >
-                            <h:outputText value="#{immeubl.id}" />
-                        </p:column>
-                        
-                        <!--
-                        <p:column 
-                            headerText="Nom / Raison Sociale" 
-                            sortBy="#{immeubl.nomContribuable} #{immeubl.prenomContribuable}" 
-                            filterBy="#{immeubl.nomContribuable} #{immeubl.prenomContribuable}"
-                        >
-                            <h:outputText value="#{immeubl.nomContribuable} "/>
-                        </p:column>
-                        -->
-                        
-                        <p:column 
-                            headerText="Commune" 
-                            sortBy="#{immeubl.nomCommune}" 
-                            filterBy="#{immeubl.nomCommune}"
-                        >
-                            <h:outputText value="#{immeubl.nomCommune}" />
-                        </p:column>
-                        
-                        <p:column 
-                            headerText="Colline" 
-                            sortBy="#{immeubl.nomColline}" 
-                            filterBy="#{immeubl.nomCommune}"
-                        >
-                            <h:outputText value="#{immeubl.nomColline}" />
-                        </p:column>
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton 
+                        value="Ajouter" 
+                        icon="pi pi-plus" 
+                        styleClass="ui-button-success"
+                        action="/pages/immeuble/ajouter?faces-redirect=true"
+                        ajax="false"
+                        style="margin-right: .5rem">
+                    </p:commandButton>
+                </p:toolbarGroup>
+
+                <!-- toolbarGroup for import, excel, pdf-->
+                <p:toolbarGroup align="right">
+
+                    <!--Export data excel -->
+                    <p:commandButton 
+                        value="EXCEL" 
+                        icon="pi pi-upload" 
+                        styleClass="ui-button-help" 
+                        ajax="false">
+                        <p:dataExporter 
+                            type="xls" 
+                            target="dt-immeubles" 
+                            fileName="Gestion immeubles" 
+                        />
+                    </p:commandButton>
+
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <!--/**  Datatables**/-->
+
+            <p:dataTable 
+                id="dt-immeubles"
+                paginator="true" 
+                rows="4" 
+                widgetVar="dtImmeubles"
+                paginatorPosition="bottom"
+                binding="#{table}" 
+                value="#{immeubleController.immeubleList()}" 
+                var="immeuble"  
+                rowKey="#{immeuble}">
+
                 
-                        <p:column 
-                            headerText="Avenue" 
-                            sortBy="#{immeubl.nomAvenue}" 
-                            filterBy="#{immeubl.nomAvenue}"
+                <f:facet name="header">
+                    <div class="flex justify-content-between">
+                         <span 
+                            style="font-weight: bold;
+                            font-size: 18px; text-transform: uppercase">
+                             LISTE
+                         </span>
+                         <span class="filter-container ui-input-icon-left"> 
+                             <i class="pi pi-search icon"></i>
+                             <p:inputText 
+                                 id="globalFilter" 
+                                 onkeyup="PF('dtImmeubles').filter()" 
+                                 placeholder="Search...." 
+                             />
+                         </span>
+                     </div>
+                 </f:facet>
+                
+                
+                <p:column headerText="#" style="width: 5%">
+                    <h:outputText value="#{table.rowIndex + 1}" />
+                </p:column>
+
+                <p:column 
+                    headerText="Imm.No" 
+                    sortBy="#{immeuble.id}" 
+                    filterBy="#{immeuble.id}"
+                >
+                    <h:outputText value="#{immeuble.id}" />
+                </p:column>
+
+                <!--
+                <p:column 
+                    headerText="Nom / Raison Sociale" 
+                    sortBy="#{immeuble.nomContribuable} #{immeuble.prenomContribuable}" 
+                    filterBy="#{immeuble.nomContribuable} #{immeuble.prenomContribuable}"
+                >
+                    <h:outputText value="#{immeuble.nomContribuable} "/>
+                </p:column>
+                -->
+
+                <p:column 
+                    headerText="Commune" 
+                    sortBy="#{immeuble.nomCommune}" 
+                    filterBy="#{immeuble.nomCommune}"
+                >
+                    <h:outputText value="#{immeuble.nomCommune}" />
+                </p:column>
+
+                <p:column 
+                    headerText="Colline" 
+                    sortBy="#{immeuble.nomColline}" 
+                    filterBy="#{immeuble.nomCommune}"
+                >
+                    <h:outputText value="#{immeuble.nomColline}" />
+                </p:column>
+
+                <p:column 
+                    headerText="Avenue" 
+                    sortBy="#{immeuble.nomAvenue}" 
+                    filterBy="#{immeuble.nomAvenue}"
+                >
+                    <h:outputText value="#{immeuble.nomAvenue}" />
+                </p:column>
+
+                <p:column exportable="false" style="width: 10%" >
+
+                    <p:commandButton 
+                        icon="pi pi-pencil" 
+                        styleClass="edit-button rounded-button ui-button-success mr-4" 
+                        ajax="false"
+                        action="#{immeubleController.edit(immeuble.id)}"
                         >
-                            <h:outputText value="#{immeubl.nomAvenue}" />
-                        </p:column>
-                
-                        <p:column exportable="false" style="width: 10%" >
 
-                            <p:commandButton 
-                                icon="pi pi-pencil" 
-                                styleClass="edit-button rounded-button ui-button-success mr-4" 
-                                ajax="false"
-                                action="#{immeubleController.edit(immeubl.id)}"
-                                >
+                    </p:commandButton>
 
-                            </p:commandButton>
+                    <p:commandButton 
+                        class="ui-button-warning rounded-button" 
+                        icon="pi pi-trash"
+                        ajax="false"
+                        action="#{immeubleController.delete(immeuble.id)}"
+                        >
 
-                            <p:commandButton 
-                                class="ui-button-warning rounded-button" 
-                                icon="pi pi-trash"
-                                ajax="false"
-                                action="#{immeubleController.delete(immeubl.id)}"
-                                >
+                    </p:commandButton>
+                </p:column>
 
-                            </p:commandButton>
-                        </p:column>
-                        
-                    </p:dataTable>
-                </h:form>
-                
-            </div>
-
-       </div>
-    </div>
+            </p:dataTable>
+        </h:form>
             
 </ui:composition>

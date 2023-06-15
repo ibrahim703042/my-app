@@ -33,15 +33,12 @@ public class RevenuLocatif implements Serializable {
     //revenuBrut-deduction-interetEmprunt
     private double revenuNetImposable;
       
-//    private Integer idImmeuble ;
-//    private Immeuble immeuble ;
-//    
     
     public RevenuLocatif(){
-        this.loyerExonere = 1000000;
-        this.loyerImposable = 1000000;   
-        this.chargeIncombat = 100000;
-        this.interetEmprunt = 10000;
+//        this.loyerExonere = 1000000;
+//        this.loyerImposable = 1000000;   
+//        this.chargeIncombat = 100000;
+//        this.interetEmprunt = 10000;
     }
     
     

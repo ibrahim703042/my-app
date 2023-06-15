@@ -5,6 +5,8 @@
 package model;
 
 import jakarta.faces.bean.ManagedBean;
+import jakarta.faces.bean.RequestScoped;
+import jakarta.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -15,12 +17,13 @@ import java.util.List;
  */
 
 @ManagedBean
-
+@RequestScoped
 public class Representant implements Serializable {
 
     private Integer id;
     private String nomRepresentant;
     private String prenomRepresentant;
+    @Email
     private String emailRepresentant;
     private Integer telephoneRepresentant;
     private String bpRepresentant;

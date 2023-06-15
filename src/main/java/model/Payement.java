@@ -16,24 +16,16 @@ public class Payement implements Serializable {
 
     private Integer id;
     private String modePayement;
+    private String status;
     private double montantPaye;
     private Date datePayement;
     
-    private Amande idAmande;
-    private Quittance  idQuittance;
+    private Amande amande;
+    private Integer idAmande;
+    //private Quittance  quittance;
+    //private int  idQuittance;
 
     public Payement() {
-    }
-
-    public Payement(Integer id) {
-        this.id = id;
-    }
-
-    public Payement(Integer id, String modePayement, double montantPaye, Date datePayement) {
-        this.id = id;
-        this.modePayement = modePayement;
-        this.montantPaye = montantPaye;
-        this.datePayement = datePayement;
     }
 
     public Integer getId() {
@@ -52,6 +44,14 @@ public class Payement implements Serializable {
         this.modePayement = modePayement;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public double getMontantPaye() {
         return montantPaye;
     }
@@ -68,13 +68,21 @@ public class Payement implements Serializable {
         this.datePayement = datePayement;
     }
 
-    public Amande getIdAmande() {
+    public Amande getAmande() {
+        return amande;
+    }
+
+    public void setAmande(Amande amande) {
+        this.amande = amande;
+    }
+
+    public Integer getIdAmande() {
         return idAmande;
     }
 
-    public void setIdAmande(Amande idAmande) {
+    public void setIdAmande(Integer idAmande) {
         this.idAmande = idAmande;
     }
 
-   
+    
 }

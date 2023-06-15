@@ -10,7 +10,7 @@
     </title>
     
     <!-- Custom styles for this template -->
-    <h:outputScript library="primefaces" name="jquery/jquery.js" />
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'/>
     <h:outputStylesheet library="webjars" name="primeflex/3.3.0/primeflex.min.css" />
     <h:outputStylesheet library="css" name="admin.css"/>
     
@@ -22,21 +22,20 @@
         <ui:include src="/resources/templates/admin/sidebar.xhtml" />
     </ui:insert>
     
-    <main class="main">
-        <div class="container" style="width:100%; padding: 10px;">
-            <ui:insert name = "header" >
-                <ui:include src = "/resources/templates/admin/header.xhtml" />
+    <section id="content">
+        <ui:insert name="header" >
+            <ui:include src="/resources/templates/admin/header.xhtml" />
+        </ui:insert>
+        <main>
+            <ui:insert name="contents" >
+                <ui:include src="/resources/templates/admin/contents.xhtml" />
             </ui:insert>
-            <div class="card container">
-                <ui:insert name="contents" >
-                    <ui:include src="/resources/templates/admin/contents.xhtml" />
-                </ui:insert>
-            </div>
-        </div>
+        </main>
+    </section>
         
-    </main>
-    
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <h:outputScript library="js" name="script.js"/>
+    <h:outputScript library="primefaces" name="jquery/jquery.js" />
      
 </h:body>
 </html>

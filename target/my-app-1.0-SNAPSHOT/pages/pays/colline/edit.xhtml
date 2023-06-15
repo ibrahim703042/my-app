@@ -7,60 +7,98 @@
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
     
     <ui:define name = "contents">
-            
-        <p:spacer height="90" />
         
-        <h:form id="form" class=" py-3">
-            
-        <p:messages id="msgs"/>
-        
-            <div class="">
-                <div class="ui-fluid formgrid grid">
-                    <div class="field col-12 md:col-4">
+        <h1 class="title">Colline</h1>
+        <ul class="breadcrumbs">
+            <li>
+                <p:link styleClass="no-underline"  outcome="/pages/dashboard.xhtml" >
+                    <f:param name="pageId" value="1"/>
+                    Acceuil
+                </p:link>
+            </li>
+            <li class="divider">/</li>
+            <li>
+                <p:link styleClass="no-underline active"  outcome="/pages/dashboard.xhtml" >
+                    <f:param name="pageId" value="1"/>
+                    Edit
+                </p:link>
+            </li>
+            <li class="divider">/</li>
+            <li>
+                <p:link styleClass="no-underline active"  outcome="/pages/dashboard.xhtml" >
+                    <f:param name="pageId" value="1"/>
+                    Colline
+                </p:link>
+            </li>
+        </ul>
 
-                        <component:inputTextField
-                            label="Nom"
-                            placeholder="Entrer nom"
-                            value="#{collineMapped.nomColline}"
-                        />
-
+        <div class="data">
+            <div class="content-data">
+                <!--                
+                    <div class="head">
                     </div>
-                    <div class="field col-12 md:col-4">
-                        <p:outputLabel class="font-bold"  value="Province"/>
-                        <p:selectOneMenu 
-                            value="#{collineMapped.idCommune}"
-                            style="height: 41px; "
-                        >
-                            <f:selectItem itemLabel="Choisir Province"  />
-                            <f:selectItems var="commun"
-                                value="#{communeController.communeList()}"
-                                itemLabel="#{commun.nomCommune}"
-                                itemValue="#{commun.id}" 
-                            />
+                -->
 
-                        </p:selectOneMenu>
-                    </div>
+                <div class="data-details">
 
-                    <div class="field col-12 md:col-4 pt-1">
-                        <p:spacer />
-                        <p:commandButton 
-                            value="Modifier" 
-                            ajax="false"
-                            action="#{collineController.update(collineMapped)}"
-                            style="height: 41px; "
-                        />
+                    <h:form id="form" class=" py-3">
+                        <div class="ui-fluid formgrid grid">
+                            <div class="field col-12 md:col-4">
+
+                                <component:inputTextField
+                                    label="Nom"
+                                    placeholder="Entrer nom"
+                                    value="#{collineMapped.nomColline}"
+                                />
+
+                            </div>
+                            <div class="field col-12 md:col-4">
+                                <p:outputLabel class="font-bold"  value="Province"/>
+                                <p:selectOneMenu 
+                                    value="#{collineMapped.idCommune}"
+                                    style="height: 41px; "
+                                >
+                                    <f:selectItem itemLabel="Choisir Province"  />
+                                    <f:selectItems var="commun"
+                                        value="#{communeController.communeList()}"
+                                        itemLabel="#{commun.nomCommune}"
+                                        itemValue="#{commun.id}" 
+                                    />
+
+                                </p:selectOneMenu>
+                            </div>
+
+                            <div class="field col-12 md:col-4 pt-1">
+                                <p:spacer />
+                                <p:commandButton 
+                                    value="Modifier" 
+                                    ajax="false"
+                                    action="#{collineController.update(collineMapped)}"
+                                    style="height: 41px; "
+                                />
+                            </div>
+                        </div>
+
+                    </h:form>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="data">
+            <div class="content-data">
+                <!--                
+                    <div class="head">
                     </div>
+                -->
+                <div class="data-details">
+
+                    <ui:insert>
+                        <ui:include src="index.xhtml" />
+                    </ui:insert>
                 </div>
             </div>
-
-        </h:form>
-        
-        
-        
-        <ui:insert>
-            <ui:include src="index.xhtml" />
-        </ui:insert>
-        
+        </div>
             
     </ui:define>
         

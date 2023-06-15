@@ -22,11 +22,18 @@ public class Permission implements Serializable{
     private boolean supprimer;
     private boolean modifier;
     private boolean afficher;
-    private Administrateur idadministrateur;
     
-
+    private Administrateur administrateur;
+    private Integer idAdministrateur;
+    private String nom;
+    private String prenom;
+    
     public Permission() {
-        afficher = true;
+//       afficher = true;
+//       ajouter = true;
+//       supprimer = true;
+//       modifier = true;
+//       this.idAdministrateur = 1;
     }
 
     
@@ -70,13 +77,37 @@ public class Permission implements Serializable{
         this.afficher = afficher;
     }
 
-    public void setIdadministrateur(Administrateur idadministrateur) {
-        this.idadministrateur = idadministrateur;
+        public Administrateur getAdministrateur() {
+        return administrateur;
     }
 
-    public Administrateur getIdadministrateur() {
-        return idadministrateur;
+    public void setAdministrateur(Administrateur administrateur) {
+        this.administrateur = administrateur;
     }
 
+    public Integer getIdAdministrateur() {
+        return idAdministrateur;
+    }
+
+    public void setIdAdministrateur(Integer idAdministrateur) {
+        this.idAdministrateur = idAdministrateur;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+    
     
 }

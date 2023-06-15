@@ -10,7 +10,7 @@
         <h:outputStylesheet library="css" name="login.css"/>
     </h:head>
     <h:body id="body">
-        <!--<p:graphicImage name="image_1.png" library="image" alt="Image" class="min-h" />-->
+        
         <div class="mt-5 pt-5">
             <div class="flex align-items-center justify-content-center">
                 <div class="surface-card p-4 shadow-2 border-round w-full lg:w-4">
@@ -27,22 +27,21 @@
 
                         <div>
                             <label for="email" class="block text-900 font-medium mb-2">Email</label>
-                            <p:inputText id="email" value="#{authController.model.email}" placeholder="example@outlook.com" styleClass="w-full mb-3" />
+                            <p:inputText id="email" value="#{authController.administrateur.email}" placeholder="example@outlook.com" styleClass="w-full mb-3" />
 
                             <label for="motPasse" class="block text-900 font-medium mb-2">Mot de passe</label>
-                            <p:inputText id="motPasse" value="#{authController.model.motPasse}" type="password" placeholder="**********" styleClass="w-full mb-3"/>
+                            <p:inputText id="motPasse" value="#{authController.administrateur.motPasse}" type="password" placeholder="**********" styleClass="w-full mb-3"/>
 
                             <p:spacer height="20"/>
                             
                             <p:commandButton 
                                 ajax="false"
                                 value="Se connectez" 
-                                icon="pi pi-user"
                                 styleClass="w-full"
                                 update="form_login"
                                 action="#{authController.login}"
                             >
-                                <!--<f:param name="pageId" value="3"/>-->
+                                <f:param name="pageId" value="1"/>
                             </p:commandButton>
                         </div>
                         

@@ -36,7 +36,7 @@ public class RevenusDbUtil {
         revenusLocatif = new ArrayList();
         
         try {
-            String query = "SELECT * FROM revenulocatif WHERE id IS NOT NULL ORDER BY id DESC";
+            String query = "SELECT * FROM revenulocatif WHERE id_revenuLocatif IS NOT NULL ORDER BY id_revenuLocatif DESC";
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
@@ -45,7 +45,7 @@ public class RevenusDbUtil {
 
                 RevenuLocatif revenuLocatif = new RevenuLocatif(); 
 
-                revenuLocatif.setId(resultSet.getInt("id"));  
+                revenuLocatif.setId(resultSet.getInt("id_revenuLocatif"));  
                 revenuLocatif.setLoyerExonere(resultSet.getDouble("loyerExonere"));  
                 revenuLocatif.setLoyerImposable(resultSet.getDouble("loyerImposable"));  
                 revenuLocatif.setChargeIncombat(resultSet.getDouble("chargeIncombat"));  
@@ -75,7 +75,7 @@ public class RevenusDbUtil {
         
         
         try {
-            String query = "SELECT * FROM revenulocatif WHERE id IS NOT NULL ORDER BY id DESC";
+            String query = "SELECT * FROM revenulocatif WHERE id_revenuLocatif IS NOT NULL ORDER BY id_revenuLocatif DESC";
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
@@ -84,7 +84,7 @@ public class RevenusDbUtil {
 
                 RevenuLocatif revenuLocatif = new RevenuLocatif(); 
 
-                revenuLocatif.setId(resultSet.getInt("id"));  
+                revenuLocatif.setId(resultSet.getInt("id_revenuLocatif"));  
                 revenuLocatif.setLoyerExonere(resultSet.getDouble("loyerExonere"));  
                 revenuLocatif.setLoyerImposable(resultSet.getDouble("loyerImposable"));  
                 revenuLocatif.setChargeIncombat(resultSet.getDouble("chargeIncombat"));  
@@ -126,7 +126,7 @@ public class RevenusDbUtil {
             connection.close();
 
         }catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
     }
 
@@ -144,7 +144,7 @@ public class RevenusDbUtil {
             String query = ""
                     + "SELECT * "
                     + "FROM revenuLocatif "
-                    + "WHERE id = " + revenuId ;
+                    + "WHERE id_revenuLocatif = " + revenuId ;
             
             connection = dataSource.getConnection();
             statement = connection.createStatement();
@@ -166,7 +166,7 @@ public class RevenusDbUtil {
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
     }
 	
@@ -182,7 +182,7 @@ public class RevenusDbUtil {
                     + "loyerExonere = ?, "
                     + "loyerImposable = ?, "
                     + "interetEmprunt = ? " 
-                    + "where id = ? ";
+                    + "where id_revenuLocatif = ? ";
 
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
@@ -198,7 +198,7 @@ public class RevenusDbUtil {
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
     }
 
@@ -209,22 +209,32 @@ public class RevenusDbUtil {
 
         try {
             
-            String query = "DELETE FROM revenuLocatif WHERE id = " + revenuId ;
+            String query = "DELETE FROM revenuLocatif WHERE id_revenuLocatif = " + revenuId ;
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  
             connection.close();
             
         } catch(SQLException sqlException){
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
         
     }
-
-    //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
+    
+    
+    public static void printSQLException(SQLException ex) {
+        for (Throwable e : ex) {
+            if (e instanceof SQLException) {
+                e.printStackTrace(System.err);
+                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+                System.err.println("Message: " + e.getMessage());
+                Throwable t = ex.getCause();
+                while (t != null) {
+                        System.out.println("Cause: " + t);
+                        t = t.getCause();
+                }
+            }
+        }
     }
 }

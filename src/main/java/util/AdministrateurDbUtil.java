@@ -41,22 +41,16 @@ public class AdministrateurDbUtil{
     
     //*************************** display data *****************/
     
-    public List<Administrateur> getAdministrateurs() {
+    public List<Administrateur> findAll() {
         
         administrateurs = new ArrayList<>();
         query = ""
                 + "SELECT administrateur.*, "
                 + "role.id AS RoleID, "
-                + "role.nomRole, "
-                + "permission.ajouter, "
-                + "permission.afficher, "
-                + "permission.supprimer, "
-                + "permission.modifier "
-                + "FROM administrateur, role, permission "
+                + "role.nomRole "
+                + "FROM administrateur, role "
                 + "WHERE administrateur.id_role = role.id "
-                + "AND administrateur.id = permission.id_administrateur "
                 + "ORDER BY administrateur.id DESC";
-        
         try {
             connection = dataSource.getConnection();
             //connection.setAutoCommit(false);
@@ -76,12 +70,6 @@ public class AdministrateurDbUtil{
                 administrateur.setBp(resultSet.getString("BP"));
                 administrateur.setIsActive(resultSet.getString("isActive"));
                 administrateur.setDate(resultSet.getDate("date"));
-                
-                //administrateur.setPermissionId(resultSet.getInt(" PermissionID"));
-                administrateur.setAfficher(resultSet.getBoolean("afficher"));
-                administrateur.setAjouter(resultSet.getBoolean("ajouter"));
-                administrateur.setSupprimer(resultSet.getBoolean("supprimer"));
-                administrateur.setModifier(resultSet.getBoolean("modifier"));
                 
                 administrateur.setNomRole(resultSet.getString("nomRole")); 
                 administrateur.setRoleId(resultSet.getInt("RoleID")); 
@@ -148,7 +136,8 @@ public class AdministrateurDbUtil{
             pstmt = connection.prepareStatement(query);         
 
             String motPasse = DigestUtils.shaHex(administrateur.getMotPasse());
-            String admin = "administrateur";
+//            String motPasse = administrateur.getMotPasse();
+            String admin = "Super administrateur";
             
             pstmt.setInt(1, administrateur.getRoleId());
             pstmt.setString(2, administrateur.getNom());
@@ -158,7 +147,7 @@ public class AdministrateurDbUtil{
             pstmt.setInt(6, administrateur.getTelephone());
             pstmt.setString(7, administrateur.getBp());
             pstmt.setString(8, administrateur.getIsActive());
-//            pstmt.setString(9, administrateur.getCeerPar());
+            //pstmt.setString(9, administrateur.getCeerPar());
             pstmt.setString(9, admin);
 
             pstmt.executeUpdate();
@@ -279,110 +268,6 @@ public class AdministrateurDbUtil{
         return administrateur;
     }
 
-    
-    
-    //************** authentification  ***********************/
-    
-    public static boolean validate(String email,String motPasse) throws SQLException {
-        
-        Integer isActive= 1;
-        connection = dataSource.getConnection();
-        String sql = "SELECT * FROM administrateur WHERE email = ? AND motPasse = ? AND isActive = " + isActive ;
-       String sqlc = ""
-                + "SELECT administrateur.*, "
-                + "role.nomRole, "
-                + "role.description "
-                + "FROM administrateur, role "
-                + "WHERE email = ? AND motPasse = ? AND isActive = " + isActive ;
-        
-        boolean status = false;
-            
-        
-        try {
-            
-            pstmt = connection.prepareStatement(sql);
-            pstmt.setString(1, email);
-            pstmt.setString(2, motPasse);
-
-            resultSet = pstmt.executeQuery();
-            status = resultSet.next();
-            
-            while(status) { 
-                
-               Administrateur administrateur = new Administrateur(); 
-
-                administrateur.setId(resultSet.getInt("id"));  
-                administrateur.setNom(resultSet.getString("nom"));  
-                administrateur.setPrenom(resultSet.getString("prenom"));  
-                administrateur.setEmail(resultSet.getString("email"));  
-                administrateur.setMotPasse(resultSet.getString("motPasse"));  
-                administrateur.setTelephone(resultSet.getInt("telephone"));  
-                administrateur.setBp(resultSet.getString("BP"));  
-                administrateur.setDate(resultSet.getDate("date")); 
-                
-//                administrateur.setNomRole(resultSet.getString("nomRole")); 
-//                administrateur.setDescriptionRole(resultSet.getString("description")); 
-                //administrateur.setRole(resultSet.getObject("nomRole", role.getClass())); 
-
-                //connection.commit();
-            }
-
-        }catch (SQLException ex) {
-            printSQLException(ex);
-        } finally {
-            connection.close();
-        }
-        return status;
-    }
-    
-    public List<Administrateur> findByEmailPassword(String email,String motPasse) {
-        
-        administrateurs = new ArrayList<>();
-        query = ""
-                + "SELECT administrateur.*, role.nomRole "
-                + "FROM administrateur, role "
-                + "WHERE email = " + motPasse + " ,"
-                + "AND motPasse = "  + email + ","
-                + "AND isActive = " + 1 ;
-                
-        
-        try {
-            
-            connection = dataSource.getConnection();
-            //connection.setAutoCommit(false);
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);
-            
-            connection = dataSource.getConnection();
-            pstmt = connection.prepareStatement(query);
-            
-            while(resultSet.next()) { 
-                
-                administrateur = new Administrateur(); 
-
-                administrateur.setId(resultSet.getInt("id"));  
-                administrateur.setNom(resultSet.getString("nom"));  
-                administrateur.setPrenom(resultSet.getString("prenom"));  
-                administrateur.setEmail(resultSet.getString("email"));  
-                administrateur.setMotPasse(resultSet.getString("motPasse"));  
-                administrateur.setTelephone(resultSet.getInt("telephone"));  
-                administrateur.setBp(resultSet.getString("BP"));  
-                administrateur.setDate(resultSet.getDate("date")); 
-                
-//                administrateur.setNomRole(resultSet.getString("nomRole")); 
-
-                //connection.commit();
-            }
-           
-            
-        } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
-        }
-        return administrateurs;
-    }
     
       public static void printSQLException(SQLException ex) {
         for (Throwable e : ex) {

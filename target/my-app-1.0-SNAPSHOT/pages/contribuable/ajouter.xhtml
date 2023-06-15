@@ -9,108 +9,150 @@
     
     <ui:define name = "contents">
             
-        <p:spacer height="90" />
-                    
-         <h:form id="dialogs" class=" py-3 mb-4 bg-white">
-            <p:growl id="messages" showDetail="true" />
-            
-            <p:card >
+        <h1 class="title">Contribuable</h1>
+        <ul class="breadcrumbs">
+            <li>
+                <p:link styleClass="no-underline"  outcome="/pages/contribuable/template.xhtml" >
+                    <f:param name="pageId" value="8"/>
+                    Acceuil
+                </p:link>
+            </li>
+            <li class="divider">/</li>
+            <li>
+                <p:link styleClass="no-underline active"  outcome="/pages/dashboard.xhtml" >
+                    <f:param name="pageId" value="1"/>
+                    Enregistrer
+                </p:link>
+            </li>
+            <li class="divider">/</li>
+            <li>
+                <p:link styleClass="no-underline active"  outcome="/pages/dashboard.xhtml" >
+                    <f:param name="pageId" value="1"/>
+                    Contribuable
+                </p:link>
+            </li>
+        </ul>
+        
+        <div class="data">
+            <div class="content-data">
+                <!--                
+                    <div class="head">
+                    </div>
+                -->
+                <div class="data-details">
+        
+            <h:form id="dialogs">
+                
+                <p:growl id="messages" showDetail="true" />
 
-                <f:facet name="title">
-                    Contribuable Details
-                </f:facet>
-                <p:outputPanel id="manage-form-content" class="ui-fluid">
-                    <p:outputPanel>
+                <p:card>
+                    <!--
+                    <f:facet name="title">
+                        Contribuable Details
+                    </f:facet>
+                    -->
+
+                    <p:outputPanel id="manage-form-content" class="ui-fluid">
                         
-                        <div class="ui-fluid formgrid grid py-3">
+                        <p:outputPanel>
+                            <div class="ui-fluid formgrid grid">
 
-                            <p:spacer height="30" />
+                                <div class=" field col-12 md:col-6 font-medium text-500 mb-3">
+                                    A. IDENTIFICATION DU CONTRIBUABLE
+                                </div>
 
-                            <div class=" field col-12 md:col-6 font-medium text-500 mb-3">
-                                B. IDENTIFICATION DU CONTRIBUABLE
-                            </div>
+                                <div class="field col-12 md:col-12 mt-5">
+                                    <component:inputTextField
+                                        label="Nom ou Raison Sociale"
+                                        placeholder="Entrer nom ou raison Sociale"
+                                        value="#{contribuableController.modelContribuable.nom}"
+                                    />
+                                </div>
 
-                            <div class="field col-12 md:col-12">
+                                <div class="field col-12 md:col-6">
                                 <component:inputTextField
-                                    label="Nom ou Raison Sociale"
-                                    placeholder="Entrer nom ou raison Sociale"
-                                    value="#{contribuableController.modelContribuable.nom}"
-                                />
-                            </div>
-
-                            <div class="field col-12 md:col-6">
-                            <component:inputTextField
-                                label="E-mail"
-                                placeholder="Entrer email "
-                                value="#{contribuableController.modelContribuable.email}"
-                            />
-
-                            </div>
-
-                            <div class="field col-12 md:col-6">
-                                <component:inputPasswordField
-                                    label="Mot de passe"
-                                    placeholder="Entrer Mot de passe"
-                                    value="#{contribuableController.modelContribuable.motPasse}"
-                                />
-                            </div>
-
-                            <div class="field col-12 md:col-6">
-                                <component:inputTextField
-                                    label="Boite postal"
-                                    placeholder="BP 1023456 "
-                                    value="#{contribuableController.modelContribuable.bp}"
+                                    label="E-mail"
+                                    placeholder="Entrer email "
+                                    value="#{contribuableController.modelContribuable.email}"
                                 />
 
-                            </div>
+                                </div>
 
-                            <div class="field col-12 md:col-6">
-                                <component:inputTextField
-                                    label="Telephone"
-                                    placeholder="+25771204778"
-                                    value="#{contribuableController.modelContribuable.telephone}"
-                                />
-                            </div>
+                                <div class="field col-12 md:col-6">
+                                    <component:inputTextField
+                                        label="Mot de passe"
+                                        type="password"
+                                        placeholder="Entrer Mot de passe"
+                                        value="#{contribuableController.modelContribuable.motPasse}"
+                                    />
+                                </div>
 
-                            <div class="field col-12 md:col-12">
-                                <p:outputLabel class="font-bold"  value="Representant"/>
-                                <p:selectOneMenu 
-                                    value="#{contribuableController.modelContribuable.idRepresentant}"
-                                    filter="true" 
-                                    filterMatchMode="startsWith" 
-                                    dynamic="true"
-                                    style="height: 41px; "
-                                >
-                                    <f:selectItem itemLabel="Choisir Representant" />
-                                    <f:selectItems var="representant"
-                                        value="#{contribuableController.representantList}"
-                                        itemLabel="#{representant.id} : #{representant.nomRepresentant} #{representant.prenomRepresentant}"
-                                        itemValue="#{representant.id}" 
+                                <div class="field col-12 md:col-6">
+                                    <component:inputTextField
+                                        label="Boite postal"
+                                        placeholder="BP 1023456 "
+                                        value="#{contribuableController.modelContribuable.bp}"
                                     />
 
-                                </p:selectOneMenu>
+                                </div>
+
+                                <div class="field col-12 md:col-6">
+                                    <component:inputTextField
+                                        label="Telephone"
+                                        placeholder="+25771204778"
+                                        value="#{contribuableController.modelContribuable.telephone}"
+                                    />
+                                </div>
+
+                                <div class=" field col-12 md:col-6 font-medium text-500 mb-3 mt-5">
+                                    B. IDENTIFICATION DU REPRESENTANT
+                                </div>
+
+                                <div class="field col-12 md:col-12">
+                                    <p:outputLabel class="font-bold"  value="Representant"/>
+                                    <p:selectOneMenu 
+                                        value="#{contribuableController.modelContribuable.idRepresentant}"
+                                        filter="true" 
+                                        filterMatchMode="startsWith" 
+                                        dynamic="true"
+                                        style="height: 41px; "
+                                    >
+                                        <f:selectItem itemLabel="Choisir Representant" />
+                                        <f:selectItems var="representant"
+                                            value="#{contribuableController.representantList}"
+                                            itemLabel="#{representant.id} : #{representant.nomRepresentant} #{representant.prenomRepresentant}"
+                                            itemValue="#{representant.id}" 
+                                        />
+
+                                    </p:selectOneMenu>
+                                </div>
+
                             </div>
-                            
-                        </div>
-                        
+
+                        </p:outputPanel>
                     </p:outputPanel>
-                </p:outputPanel>
-                <f:facet name="footer">
-                    <div class="flex align-items-center justify-content-end">
-                        <p:commandButton 
-                            value="Enregistrer"
-                            ajax="false"
-                            action="#{contribuableController.create(contribuableController.modelContribuable)}"
-                            update="manage-form-content dialogs" 
-                            process="manage-form-content @this" 
-                            style="height: 41px;"/>
+                    <f:facet name="footer">
+                        <div class="flex align-items-center justify-content-end">
+                            <p:commandButton 
+                                value="Enregistrer"
+                                ajax="false"
+                                action="#{contribuableController.create(contribuableController.modelContribuable)}"
+                                update="manage-form-content dialogs" 
+                                process="manage-form-content @this" 
+                                style="height: 41px;"/>
 
-                    </div>
+                        </div>
 
-                </f:facet>
-            </p:card>
+                    </f:facet>
 
-        </h:form>
+                </p:card>
+
+            </h:form>
+                </div>
+            </div>
+        </div>
+                         
+         
             
     </ui:define>
     

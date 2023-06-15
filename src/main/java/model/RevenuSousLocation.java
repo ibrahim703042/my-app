@@ -31,9 +31,9 @@ public class RevenuSousLocation {
     public RevenuSousLocation() {
         
         this.revenuLocatif = new RevenuLocatif ();
-        this.recetteSousLocation = 10000000;
-        this.loyerPayes = 20000;
-        this.abbattements = 9000;
+//        this.recetteSousLocation = 10000000;
+//        this.loyerPayes = 20000;
+//        this.abbattements = 9000;
     }
 
     public Integer getId() {
