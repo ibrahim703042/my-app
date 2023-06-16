@@ -96,6 +96,13 @@
                              </p:link> 
                         </li>
                         <li>
+                            <p:link class="no-underline nav-link" outcome="/pages/abbattement/template.xhtml" >
+                                <f:param name="pageId" value="20"/>
+                                <i class='pi pi-users icon' ></i>
+                                Abbattement
+                             </p:link> 
+                        </li>
+                        <li>
                             <p:link class="no-underline nav-link" outcome="/pages/contribuable/template.xhtml" >
                                 <f:param name="pageId" value="8"/>
                                 <i class='pi pi-users icon' ></i>
@@ -126,13 +133,76 @@
                     </p:link> 
                 </li>
 
+                <!-- =============== Autre ================= -->
+                
                 <li class="divider" data-text="Autre">Autre</li>
+                
+                <!-- =============== Contribuable section ================= -->
+                <li>
+                    <a href="#">
+                        <i class="pi pi-users icon"></i>
+                        Revenu
+                        <i class="pi pi-chevron-right icon-right"></i>
+                    </a>
+                    <ul class="side-dropdown">
+                        <li>
+                            <p:link class="no-underline nav-link" outcome="/pages/representant/template.xhtml" >
+                                <f:param name="pageId" value="7"/>
+                                <i class='pi pi-building icon' ></i>
+                                Revenus Locatif
+                             </p:link> 
+                        </li>
+                        <li>
+                            <p:link class="no-underline nav-link" outcome="/pages/contribuable/template.xhtml" >
+                                <f:param name="pageId" value="8"/>
+                                <i class='pi pi-building icon' ></i>
+                                Revenus des sous Location
+                             </p:link> 
+                        </li>
+                        <li>
+                            <p:link class="no-underline nav-link" outcome="/pages/immeuble/template.xhtml" >
+                                <f:param name="pageId" value="9"/>
+                                <i class='pi pi-calculator icon' ></i>
+                                Impot
+                             </p:link> 
+                        </li>
+                        <!--
+                        <li>
+                            <a href="#">Abbattement</a>
+                        </li>
+                        -->
+                    </ul>
+                </li>
 
                 <li>
-                    <p:link class="no-underline nav-link">
+                    <p:link class="no-underline nav-link" outcome="/pages/impot/template.xhtml">
+                        <!--<f:param name="pageId" value="7"/>-->
+                        <i class='pi pi-calculator icon' ></i>
+                        Impot
+                    </p:link> 
+                </li>
+                
+                <li>
+                    <p:link class="no-underline nav-link" outcome="/pages/amande/template.xhtml">
+                        <!--<f:param name="pageId" value="7"/>-->
+                        <i class='pi pi-list icon' ></i>
+                        Amende
+                    </p:link> 
+                </li>
+                
+                <li>
+                    <p:link class="no-underline nav-link" outcome="/pages/payement/template.xhtml">
                         <!--<f:param name="pageId" value="7"/>-->
                         <i class='pi pi-dollar icon' ></i>
                         Payement
+                    </p:link> 
+                </li>
+                
+                <li>
+                    <p:link class="no-underline nav-link" outcome="/pages/quittance/template.xhtml">
+                        <!--<f:param name="pageId" value="7"/>-->
+                        <i class='pi pi-list icon' ></i>
+                        Quittance
                     </p:link> 
                 </li>
                 

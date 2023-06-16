@@ -10,7 +10,7 @@ package util;
  * 
  */
 
-import static dbconnection.MySQLJDBCUtil.dataSource;
+import dbconnection.MySQLJDBCUtil;
 import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
 import java.sql.*;
@@ -23,12 +23,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 @ManagedBean
 @ApplicationScoped
 
-public class ContribuableDbUtil {
-    
-    public static Statement statement;
-    public static Connection connection;
-    public static ResultSet resultSet;
-    public static PreparedStatement pstmt;
+public class ContribuableDbUtil extends MySQLJDBCUtil {
     
     protected List<Representant> representants;
     protected Representant representant;

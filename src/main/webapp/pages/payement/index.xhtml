@@ -72,29 +72,19 @@
                 <p:commandButton 
                     icon="pi pi-pencil" 
                     styleClass="edit-button rounded-button ui-button-success mr-4"
-                    oncomplete="PF('manageRoleDialog').show()"
-                    update=":dialogs:manage-role-content"
                     process="@this"
                 >
-                    <f:setPropertyActionListener value="#{role}" target="#{roleController.role}" />
-                    <p:resetInput target=":dialogs:manage-role-content" />
+<!--                    <f:setPropertyActionListener value="#{role}" target="#{roleController.role}" />
+                    <p:resetInput target=":dialogs:manage-role-content" />-->
                 </p:commandButton>
                 
-                <p:commandButton 
-                    class="ui-button-warning rounded-button" 
-                    icon="pi pi-trash"
-                    ajax="false"
-                    action="#{roleController.delete(role.id)}"
-                    
-                >
-                </p:commandButton>
                 
              </p:column>
 
             </p:dataTable>
             
         </h:form>
-        <ui:include src="ajouter.xhtml" />
+        <!--<ui:include src="ajouter.xhtml" />-->
     
                 
 </ui:composition>

@@ -4,8 +4,7 @@
  */
 package util;
 
-
-import static dbconnection.MySQLJDBCUtil.dataSource;
+import dbconnection.MySQLJDBCUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
@@ -24,12 +23,8 @@ import model.Role;
 @ManagedBean
 @ApplicationScoped
 
-public class RoleDbUtil implements Serializable {
+public class RoleDbUtil extends MySQLJDBCUtil {
     
-    private static Statement statement;
-    private static Connection connection;
-    private static ResultSet resultSet;
-    private static PreparedStatement pstmt;
     private String query;
     
     private List<Role> roles;

@@ -5,7 +5,7 @@
 package util;
 
 
-import static dbconnection.MySQLJDBCUtil.dataSource;
+import dbconnection.MySQLJDBCUtil;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
@@ -22,15 +22,10 @@ import java.sql.*;
 
 @ManagedBean
 @ApplicationScoped
-public class AuthDbUtil {
+public class AuthDbUtil extends MySQLJDBCUtil {
 
     public AuthDbUtil() {
     }
-    
-    public static Statement statement;
-    public static Connection connection;
-    public static ResultSet resultSet;
-    public static PreparedStatement pstmt;
     
     private static String query;
 

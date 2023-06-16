@@ -10,31 +10,20 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import model.Quittance;
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
-import static util.PermissionDbUtil.connection;
 
 @Named
-
-public class QuittanceDbUtil {
-    
-    public static Statement statement;
-    public static Connection connection;
-    public static ResultSet resultSet;
-    public static PreparedStatement pstmt;
-
+@ApplicationScoped
+public class QuittanceDbUtil extends MySQLJDBCUtil {
+   
     //*************************** display data *****************/
     public static ArrayList findAll(Object newParam) {
         

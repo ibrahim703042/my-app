@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+    
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+            <!--
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
+            -->
+
+            <p:toolbar>
+                
+            </p:toolbar>
+            
+            <p:dataTable
+                id="dt-impot"
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="5,10,15,20"
+                value="#{impotController.impotList}"
+                widgetVar="dtImpot" 
+                var="impot"
+                rowKey="#{impot.nomimpot}"
+                paginator="true" 
+                rows="4" 
+                paginatorPosition="bottom"
+                binding="#{table}" 
+            >
+                
+                <f:facet name="header">
+                     <div class="flex justify-content-between">
+                         <span 
+                             style="font-weight: bold;
+                              font-size: 18px; text-transform: uppercase"
+                         >
+                            Liste
+                         </span>
+                         <span class="filter-container ui-input-icon-left"> 
+                             <i class="pi pi-search icon"></i>
+                             <p:inputText 
+                                 id="globalFilter"
+                                 onkeyup="PF('dtImpot').filter()" 
+                                 placeholder="Search..." 
+                             />
+                         </span>
+                     </div>
+                 </f:facet>
+                
+                <p:column headerText="No" style="width: 5%">
+                      <h:outputText value="#{table.rowIndex + 1}" />
+                </p:column>
+                <!--
+                <p:column headerText="Code">
+                    <h:outputText value="#{impot.id_impot}" />
+                </p:column>
+                -->
+                <!--
+                <p:column headerText="Revenu net Sous location" >
+                    <h:outputText value="#{impot.revenuSousNetImposable}" />
+                </p:column>
+                -->
+                
+                <p:column headerText="Acomptes sur l’impôt locatif déjà payés" >
+                    <h:outputText value="#{impot.accompteImpotDejaPaye}" />
+                </p:column>
+                
+                <p:column headerText="Date" style="width: 10%;">
+                    <h:outputText value="#{impot.date}" />
+                </p:column>
+                
+            
+            </p:dataTable>
+            
+        </h:form>
+        <!--<ui:include src="ajouter.xhtml" />-->
+    
+                
+</ui:composition>

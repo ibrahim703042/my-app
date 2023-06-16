@@ -10,7 +10,8 @@ package util;
  * 
  */
 
-import static dbconnection.MySQLJDBCUtil.dataSource;
+
+import dbconnection.MySQLJDBCUtil;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
@@ -24,13 +25,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 @ManagedBean
 @ApplicationScoped
 
-public class AdministrateurDbUtil{
+public class AdministrateurDbUtil  extends MySQLJDBCUtil{
     
-    public static Statement statement;
-    public static Connection connection;
-    public static ResultSet resultSet;
-    public static PreparedStatement pstmt;
-
     protected List<Administrateur> administrateurs;
     protected Administrateur administrateur;
     

@@ -1,0 +1,110 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+        <p:spacer height="90" />
+                    
+        <h:form id="form" class=" py-3 mb-4 shadow-1 px-4">
+            <div class="">
+                <div class="ui-fluid formgrid grid">
+                    
+                    <div class="field col-12 md:col-12">
+                        <p:outputLabel class="font-bold"  value="Contribuable"/>
+                        <p:selectOneMenu
+                            value="#{abbattement.id}"
+                            filter="true" 
+                            filterMatchMode="startsWith" 
+                            dynamic="true"
+                            style="height: 41px; "
+                        >
+                            <f:selectItem itemLabel=" ------- Choisir contribuable -------" />
+                            <f:selectItems var="contribuable"
+                                value="#{contribuableController.contribuableList()}"
+                                itemLabel="#{contribuable.id} : #{contribuable.nom}"
+                                itemValue="#{contribuable.id}" 
+                            />
+
+                        </p:selectOneMenu>
+                    </div>
+                    
+                    <div class=" flex field col-12 md:col-12">
+                        <p:outputLabel for="@next" >
+                            Bénéficiaire d’abattement (Article 84)2 
+                        </p:outputLabel>
+                        <p:spacer width="20" />
+                        <p:selectOneRadio value="#">
+                            <f:selectItem itemValue="Oui" itemLabel="Oui"/>
+                            <f:selectItem itemValue="No" itemLabel="No"/>
+                        </p:selectOneRadio>
+                        <p:message for="@previous"/>
+                        <h:outputText/>
+                    </div>
+
+                    <div class=" field col-12 md:col-12">
+                        <p:outputLabel class="font-bold" >
+                            Motif d’abattement :  
+                        </p:outputLabel>
+
+                        <!--==============================A======================================-->
+                        <div class="field col-12 md:col-12">
+                            <p:outputLabel styleClass="mr-3" >
+                                A. Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à l’âge de 25 ans, orphelin de père et de mère, héritier ou usufruitier
+                                <p:selectBooleanCheckbox value="#" />
+                            </p:outputLabel>
+                            
+                        </div>
+
+                        <!--==============================B======================================-->
+                        <div class="field col-12 md:col-12">
+                            <p:outputLabel styleClass="mr-3" >
+                              B. Enfant mineur ou enfant majeur, copropriétaires, cohéritiers et co-usufruitier
+                              <p:selectBooleanCheckbox value="#"/>
+                            </p:outputLabel>
+                        </div>
+
+                        <!--==============================C======================================-->
+                        <div class="field col-12 md:col-12">
+                            <p:outputLabel styleClass="mr-3" >
+                                C. Veuf (veuve) propriétaire, possesseur, titulaire, héritier ou usufruitier
+                                <p:selectBooleanCheckbox value="#"/>
+                            </p:outputLabel>
+                        </div>
+
+                        <!--==============================D======================================-->
+                        <div class="field col-12 md:col-12">
+                            <p:outputLabel styleClass="mr-3">
+                                D. Retraité ou handicapé, personne ayant atteint l’âge légal de la retraite propriétaire, possesseur, titulaire, héritier ou usufruitier <br/>
+                                <p:selectBooleanCheckbox value="#"/>
+                            </p:outputLabel>
+                        </div>
+
+                        <!--==============================E======================================-->
+                        <div class="field col-12 md:col-12">
+                            <p:outputLabel styleClass="mr-3">
+                                E. Démobilisé non en fonction publique, privée ou élective 
+                                <p:selectBooleanCheckbox value="#"/>
+                            </p:outputLabel>
+                        </div>
+
+                    </div>
+                   
+                    <div class="field col-12 md:col-10"></div>
+                    <div class="field col-12 md:col-2">
+                        <p:commandButton
+                            ajax="false"
+                            value="Enregistrer" 
+                            action="#{abbattementController.save(abbattement)}"
+                            style="height: 41px; "
+                        />
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+            
+        
+</ui:composition>

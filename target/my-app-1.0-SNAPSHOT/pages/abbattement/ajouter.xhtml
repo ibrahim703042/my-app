@@ -1,110 +1,106 @@
-
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:p="http://primefaces.org/ui"
-    xmlns:component="http://xmlns.jcp.org/jsf/composite/component"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
-        <p:spacer height="90" />
-                    
-        <h:form id="form" class=" py-3 mb-4 shadow-1 px-4">
-            <div class="">
-                <div class="ui-fluid formgrid grid">
-                    
-                    <div class="field col-12 md:col-12">
-                        <p:outputLabel class="font-bold"  value="Contribuable"/>
-                        <p:selectOneMenu
-                            value="#{abbattement.id}"
-                            filter="true" 
-                            filterMatchMode="startsWith" 
-                            dynamic="true"
-                            style="height: 41px; "
-                        >
-                            <f:selectItem itemLabel=" ------- Choisir contribuable -------" />
-                            <f:selectItems var="contribuable"
-                                value="#{contribuableController.contribuableList()}"
-                                itemLabel="#{contribuable.id} : #{contribuable.nom}"
-                                itemValue="#{contribuable.id}" 
-                            />
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+                
+   <h:form id="dialogs-representant" >
+       <p:growl id="messages" showDetail="true" />
+        <p:dialog header="Representant Details" widgetVar="manageRepresentantDialog" minHeight="40" width="750" showEffect="fade">
+            <p:outputPanel id="manage-representant-content" class="ui-fluid">
+                
+                <p:outputPanel rendered="#{not empty representantController.model}">
 
-                        </p:selectOneMenu>
-                    </div>
-                    
-                    <div class=" flex field col-12 md:col-12">
-                        <p:outputLabel for="@next" >
-                            Bénéficiaire d’abattement (Article 84)2 
-                        </p:outputLabel>
-                        <p:spacer width="20" />
-                        <p:selectOneRadio value="#">
-                            <f:selectItem itemValue="Oui" itemLabel="Oui"/>
-                            <f:selectItem itemValue="No" itemLabel="No"/>
-                        </p:selectOneRadio>
-                        <p:message for="@previous"/>
-                        <h:outputText/>
-                    </div>
-
-                    <div class=" field col-12 md:col-12">
-                        <p:outputLabel class="font-bold" >
-                            Motif d’abattement :  
-                        </p:outputLabel>
-
-                        <!--==============================A======================================-->
-                        <div class="field col-12 md:col-12">
-                            <p:outputLabel styleClass="mr-3" >
-                                A. Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à l’âge de 25 ans, orphelin de père et de mère, héritier ou usufruitier
-                                <p:selectBooleanCheckbox value="#" />
-                            </p:outputLabel>
-                            
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <component:inputTextField id="nom" label="Nom" placeholder="Entrer nom" value="#{representantController.model.nomRepresentant}"/>
                         </div>
-
-                        <!--==============================B======================================-->
-                        <div class="field col-12 md:col-12">
-                            <p:outputLabel styleClass="mr-3" >
-                              B. Enfant mineur ou enfant majeur, copropriétaires, cohéritiers et co-usufruitier
-                              <p:selectBooleanCheckbox value="#"/>
-                            </p:outputLabel>
-                        </div>
-
-                        <!--==============================C======================================-->
-                        <div class="field col-12 md:col-12">
-                            <p:outputLabel styleClass="mr-3" >
-                                C. Veuf (veuve) propriétaire, possesseur, titulaire, héritier ou usufruitier
-                                <p:selectBooleanCheckbox value="#"/>
-                            </p:outputLabel>
-                        </div>
-
-                        <!--==============================D======================================-->
-                        <div class="field col-12 md:col-12">
-                            <p:outputLabel styleClass="mr-3">
-                                D. Retraité ou handicapé, personne ayant atteint l’âge légal de la retraite propriétaire, possesseur, titulaire, héritier ou usufruitier <br/>
-                                <p:selectBooleanCheckbox value="#"/>
-                            </p:outputLabel>
-                        </div>
-
-                        <!--==============================E======================================-->
-                        <div class="field col-12 md:col-12">
-                            <p:outputLabel styleClass="mr-3">
-                                E. Démobilisé non en fonction publique, privée ou élective 
-                                <p:selectBooleanCheckbox value="#"/>
-                            </p:outputLabel>
-                        </div>
-
-                    </div>
-                   
-                    <div class="field col-12 md:col-10"></div>
-                    <div class="field col-12 md:col-2">
-                        <p:commandButton
-                            ajax="false"
-                            value="Enregistrer" 
-                            action="#{abbattementController.save(abbattement)}"
-                            style="height: 41px; "
+                        <div class="field col">
+                            <component:inputTextField id="prnom" label="Prenom" placeholder="Entrer prenom"
+                            value="#{representantController.model.prenomRepresentant}"
                         />
+                        </div>
                     </div>
-                </div>
-            </div>
 
-        </h:form>
+                    <div class="field">
+                        <component:inputTextField  id="email" label="E-mail" placeholder="Entrer email "
+                                value="#{representantController.model.emailRepresentant}" />
+                    </div>
+                    
+                    <div class="formgrid grid">
+                        
+                        <div class="field col-12 md:col-6">
+                            <component:inputTextField id="bp" label="Boite postal" placeholder="B.P 1023456 "
+                                value="#{representantController.model.bpRepresentant}"/>
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <component:inputTextField id="telephone" label="Telephone" placeholder="+257 71 20 47 78"
+                                value="#{representantController.model.telephoneRepresentant}" />
+                        </div>
+                        
+                    </div>
+                    
+                    <div class=" field">
+                         <p:outputPanel id="customPanel">
+                            <p:selectManyCheckbox id="custom" value="#{abbattement.motifAbbattement}" layout="custom">
+                                <!--<p:ajax listener="#{abbattement.motifAbbattement}" />-->
+                                <f:selectItem itemLabel="Option 1" itemValue="Option 1"/>
+                                <f:selectItem itemLabel="Option 2" itemValue="Option 2"/>
+                                <f:selectItem itemLabel="Option 3" itemValue="Option 3"/>
+                            </p:selectManyCheckbox>
+
+                            <div class="grid text-center">
+                                <div class="col">
+                                    <p:outputLabel for="opt1" value="Option 1" styleClass="block mb-2"/>
+                                    <p:checkbox id="opt1" for="custom" itemIndex="0"/>
+                                </div>
+
+                                <div class="col">
+                                    <p:outputLabel for="opt2" value="Option 2" styleClass="block mb-2"/>
+                                    <p:checkbox id="opt2" for="custom" itemIndex="1"/>
+                                </div>
+
+                                <div class="col">
+                                    <p:outputLabel for="opt3" value="Option 3" styleClass="block mb-2"/>
+                                    <p:checkbox id="opt3" for="custom" itemIndex="2"/>
+                                </div>
+                            </div>
+                        </p:outputPanel>
+
+                    </div>
+                    
+                </p:outputPanel>
+
+            </p:outputPanel>
             
-        
+            <f:facet name="footer">
+                <p:commandButton 
+                    value="Enregistrer" 
+                    actionListener="#{representantController.createOrUpdate}"
+                    update="manage-representant-content messages" 
+                    process="manage-representant-content @this" 
+                />
+                
+                <p:commandButton 
+                    value="Cancel" 
+                    onclick="PF('manageRepresentantDialog').hide()"
+                    class="ui-button-secondary" 
+                    type="button" />
+            </f:facet>
+
+        </p:dialog>
+
+
+
+        <p:confirmDialog global="true" showEffect="fade" width="300">
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                icon="pi pi-times" />
+        </p:confirmDialog>
+       
+       
+    </h:form>   
+    
 </ui:composition>

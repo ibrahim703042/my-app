@@ -48,6 +48,7 @@ util\SessionUtils.class
 controller\CollineController.class
 util\ProvinceDbUtil.class
 model\Quittance.class
+controller\ImpotController.class
 model\Colline.class
 com\obr\management\resources\JakartaEE91Resource.class
 model\Avenue.class

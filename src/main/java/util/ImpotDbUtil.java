@@ -9,51 +9,47 @@ package util;
  * @author Ibrahim
  */
 
-import static dbconnection.MySQLJDBCUtil.dataSource;
+import dbconnection.MySQLJDBCUtil;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import model.Impot;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
 
 @Named
 @ApplicationScoped
 
-public class ImpotDbUtil {
+public class ImpotDbUtil extends MySQLJDBCUtil {
     
-    public static Statement statement;
-    public static Connection connection;
-    public static ResultSet resultSet;
-    public static PreparedStatement pstmt;
-
+   private List<Impot> impotList;
+   private Impot impot;
+    
     //*************************** display data *****************/
-    public static ArrayList findAll() {
+    public List<Impot> findAll() {
         
-        ArrayList impotList = new ArrayList();
+        impotList = new ArrayList();
         
         try {
-            String query = "SELECT * FROM impot WHERE id IS NOT NULL ORDER BY id DESC";
+            String query = ""
+                    + "SELECT * "
+                    + "FROM revenusouslocation, impot "
+                    + "WHERE impot.id_sous_location = revenusouslocation.id_revenuSousLocatif "
+                    + "ORDER BY id_impot DESC";
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
             while(resultSet.next()) { 
 
-                Impot impot = new Impot(); 
+                impot = new Impot(); 
 
-                impot.setId(resultSet.getInt("id"));  
-                impot.setIdRevenuSousLocation(resultSet.getInt("id_s_location"));  
-                impot.setDate(resultSet.getDate("imp_d_paye")); 
-                //impot.setImpotTotal(resultSet.getInt("impot_total")); 
+                impot.setId(resultSet.getInt("id_impot"));  
+                impot.setIdRevenuSousLocation(resultSet.getInt("id_sous_location"));  
+                impot.setAccompteImpotDejaPaye(resultSet.getDouble("impot_deja_paye")); 
+                impot.setDate(resultSet.getDate("date_impot")); 
+                impot.setRevenuSousNetImposable(resultSet.getDouble("revenuNetImposable")); 
 
                 impotList.add(impot);  
             }   
@@ -67,137 +63,5 @@ public class ImpotDbUtil {
         return impotList;
     }
 
-    //************** Save data **********************************/ 
-    public static String save(Impot impot){
-        
-        Integer saveResult = 0;
-        String navigationResult = "";
-        String message = "Record Inserted";
-        
-        try {
-
-            String query = 
-                    "INSERT INTO impot (id_s_location, id_avenue, impot_total) "
-                    + "values (?, ?,?)";
-            connection = dataSource.getConnection();
-            pstmt = connection.prepareStatement(query);         
-
-            pstmt.setInt(1, impot.getIdRevenuSousLocation());
-            pstmt.setDate(2, (Date) impot.getDate());
-            //pstmt.setInt(3, impot.getImpotTotal());
-            //statement.setDate(7, (java.sql.Date) impot.getDate());
-
-            saveResult = pstmt.executeUpdate();
-            connection.close();
-
-        }catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
-        }if(saveResult !=0) {
-            navigationResult = "/pages/admin/template.xhtml?faces-redirect=true";
-            showMessage(message);
-            
-        } else {
-            navigationResult = "";
-        }
-        return navigationResult;
-    }
-
-    //************** find data by ID ***************************/
-    public static String findById(int impotId) {
-        
-        Impot impot = null;
-        System.out.println(" findById() : Province Id: " + impotId);
-        
-        /* Setting The Particular province Details In Session */
-        Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-
-        try {
-           
-            String query = "SELECT * FROM impot WHERE id =" + impotId ;
-            connection = dataSource.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);    
-            
-            if(resultSet.next()) {
-                
-                impot = new Impot();
-                impot.setId(resultSet.getInt("id"));  
-                impot.setIdRevenuSousLocation(resultSet.getInt("id_s_location"));  
-                impot.setDate(resultSet.getDate("imp_d_paye")); 
-                //impot.setImpotTotal(resultSet.getInt("impot_total")); 
-                //impot.setDate(resultSet.getDate("date"));  
-               //LocalDate date = LocalDate.now();
-
-            }
-            
-            sessionMap.put("impotMapped", impot);
-            connection.close();
-
-        } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
-        }
-        return "/pages/admin/edit.xhtml";
-    }
-	
-    //************** update data ******************************/
-    public static String update(Impot impot){
-
-        String message = "Updated Successfully";
-
-        try {
-
-            String query ="Update impot SET "
-                    + "id_s_location=?, "
-                    + "imp_d_paye=?, "
-                    + "impot_total=?, ";
-
-            connection = dataSource.getConnection();
-            pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, impot.getIdRevenuSousLocation());
-            pstmt.setDate(2, (Date) impot.getDate());
-            //pstmt.setInt(3, impot.getImpotTotal());
-
-            pstmt.execute();
-            connection.close();
-
-        } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
-        }
-            showMessage(message);
-            return "/pages/admin/template.xhtml?faces-redirect=true";
-    }
-
-    //************** delete data ********************************/
-    public static String delete(int impotId) {
-        
-        //System.out.println("delete() : impot Id: " + impotId);
-
-        try {
-            connection = dataSource.getConnection();
-            String query = "DELETE FROM impot WHERE id = " + impotId ;
-            pstmt = connection.prepareStatement(query);
-            pstmt.executeUpdate();  
-            connection.close();
-            
-        } catch(SQLException sqlException){
-            addErrorMessage(sqlException);
-        }
-        return "/pages/admin/template.xhtml?faces-redirect=true";
-    }
     
-    
-    //************** conecxt msg data ***********************/
-    private static void showMessage(String msg){
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage message = new FacesMessage("Notice",msg);
-        context.addMessage(null, message);
-    }
-    
-     //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
 }

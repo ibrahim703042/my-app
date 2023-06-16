@@ -9,39 +9,35 @@ package util;
  * @author Ibrahim
  */
 
-import static dbconnection.MySQLJDBCUtil.dataSource;
-import jakarta.enterprise.context.ApplicationScoped;
+import dbconnection.MySQLJDBCUtil;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.bean.ApplicationScoped;
+import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
-import jakarta.inject.Named;
 import model.Payement;
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
-@Named
+@ManagedBean
 @ApplicationScoped
 
-public class PayementDbUtil {
+public class PayementDbUtil extends MySQLJDBCUtil {
+   
+    private List<Payement> payementList;
+    private Payement payement;
     
-    public static Statement statement;
-    public static Connection connection;
-    public static ResultSet resultSet;
-    public static PreparedStatement pstmt;
-
+    
     //*************************** display data *****************/
-    public static ArrayList findAll() {
+    public List<Payement> findAll() {
         
-        ArrayList impotList = new ArrayList();
+        payementList = new ArrayList<>();
         
         try {
-            String query = "SELECT * FROM impot WHERE id IS NOT NULL ORDER BY id DESC";
+            String query = "SELECT * FROM payement WHERE id IS NOT NULL ORDER BY id DESC";
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
@@ -50,21 +46,21 @@ public class PayementDbUtil {
 
                 Payement impot = new Payement(); 
 
-                impot.setId(resultSet.getInt("id"));  
+                impot.setId(resultSet.getInt("id_payement"));  
                 impot.setModePayement(resultSet.getString("modePayement"));  
                 impot.setMontantPaye(resultSet.getDouble("montantPaye")); 
                 impot.setDatePayement(resultSet.getDate("datePayement")); 
 
-                impotList.add(impot);  
+                payementList.add(impot);  
             }   
 
-            System.out.println("Total Records Fetched: " + impotList.size());
+            System.out.println("Total Records Fetched: " + payementList.size());
             connection.close();
 
         } catch(SQLException sqlException) {  
             sqlException.printStackTrace();
         }
-        return impotList;
+        return payementList;
     }
 
     //************** Save data **********************************/ 

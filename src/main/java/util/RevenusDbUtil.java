@@ -9,9 +9,8 @@ package util;
  * @author Ibrahim
  */
 
-import static dbconnection.MySQLJDBCUtil.dataSource;
+import dbconnection.MySQLJDBCUtil;
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
 import java.sql.*;
@@ -21,13 +20,8 @@ import model.RevenuLocatif;
 @ManagedBean
 @ApplicationScoped
 
-public class RevenusDbUtil {
+public class RevenusDbUtil extends MySQLJDBCUtil {
     
-    public static Statement statement;
-    public static Connection connection;
-    public static ResultSet resultSet;
-    public static PreparedStatement pstmt;
-
     private List<RevenuLocatif> revenusLocatif;
     
     //*************************** display data *****************/

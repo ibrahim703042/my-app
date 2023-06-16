@@ -30,10 +30,6 @@ public class RevenuSousLocation {
     
     public RevenuSousLocation() {
         
-        this.revenuLocatif = new RevenuLocatif ();
-//        this.recetteSousLocation = 10000000;
-//        this.loyerPayes = 20000;
-//        this.abbattements = 9000;
     }
 
     public Integer getId() {
@@ -61,7 +57,8 @@ public class RevenuSousLocation {
     }
 
     public double getRevenusNetsImposables() {
-        return revenusNetsImposables = this.recetteSousLocation - this.loyerPayes;
+//        return revenusNetsImposables = this.recetteSousLocation - this.loyerPayes;
+        return revenusNetsImposables;
     }
 
     public void setRevenusNetsImposables(double revenusNetsImposables) {
@@ -69,7 +66,8 @@ public class RevenuSousLocation {
     }
 
     public double getTotalRevenusNetsImposables() {
-        return totalRevenusNetsImposables = (this.revenuLocatif.getRevenuBrut()-this.revenuLocatif.getDeductionDepenses()-this.revenuLocatif.getInteretEmprunt()) + this.revenusNetsImposables;
+//        return totalRevenusNetsImposables = (this.revenuLocatif.getRevenuBrut()-this.revenuLocatif.getDeductionDepenses()-this.revenuLocatif.getInteretEmprunt()) + this.revenusNetsImposables;
+        return totalRevenusNetsImposables;
     }
 
     public void setTotalRevenusNetsImposables(double totalRevenusNetsImposables) {
@@ -85,8 +83,8 @@ public class RevenuSousLocation {
     }
 
     public double getRevenuSousNetImposable() {
-       double total  = this.totalRevenusNetsImposables - this.abbattements;
-        return revenuSousNetImposable = total ;
+//       double total  = this.totalRevenusNetsImposables - this.abbattements;
+        return revenuSousNetImposable;
     }
 
     public void setRevenuSousNetImposable(double revenuSousNetImposable) {

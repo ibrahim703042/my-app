@@ -9,7 +9,7 @@ package util;
  * @author Ibrahim
  */
 
-import static dbconnection.MySQLJDBCUtil.dataSource;
+import dbconnection.MySQLJDBCUtil;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
@@ -21,13 +21,8 @@ import java.util.*;
 @ManagedBean
 @ApplicationScoped
 
-public class AbbattementDbUtil {
-    
-    public static Statement statement;
-    public static Connection connection;
-    public static ResultSet resultSet;
-    public static PreparedStatement pstmt;
-
+public class AbbattementDbUtil  extends MySQLJDBCUtil {
+   
     //*************************** display data *****************/
     public ArrayList findAll() {
         

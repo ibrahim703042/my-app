@@ -10,7 +10,6 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
@@ -23,19 +22,13 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import model.Declaration;
 import java.util.*;
-import static util.AbbattementDbUtil.connection;
 
 
 @ManagedBean
 @ApplicationScoped
 
-public class DeclarationDbUtil {
+public class DeclarationDbUtil extends MySQLJDBCUtil {
     
-    public static Statement statement;
-    public static Connection connection;
-    public static ResultSet resultSet;
-    public static PreparedStatement pstmt;
-
     //*************************** display data *****************/
     public ArrayList findAll() {
         

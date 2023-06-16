@@ -17,11 +17,16 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 public class MySQLJDBCUtil {
    
-   private static final String DB_URL = "jdbc:mysql://localhost:3306/db_impotfiscal";
-   private static final String USER = "root";
-   private static final String PASS = "";
-   private static final String DRIVER= "com.mysql.cj.jdbc.Driver";
-   public static final BasicDataSource dataSource = new BasicDataSource();
+    public static Statement statement;
+    public static Connection connection;
+    public static ResultSet resultSet;
+    public static PreparedStatement pstmt;
+    
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/db_impotfiscal";
+    private static final String USER = "root";
+    private static final String PASS = "";
+    private static final String DRIVER= "com.mysql.cj.jdbc.Driver";
+    public static final BasicDataSource dataSource = new BasicDataSource();
 
     static {
         

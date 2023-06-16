@@ -9,7 +9,7 @@ package util;
  * @author Ibrahim
  */
 
-import static dbconnection.MySQLJDBCUtil.dataSource;
+import dbconnection.MySQLJDBCUtil;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
 import model.Permission;
@@ -20,12 +20,7 @@ import model.Administrateur;
 @ManagedBean
 @ApplicationScoped
 
-public class PermissionDbUtil {
-    
-    public static Statement statement;
-    public static Connection connection;
-    public static ResultSet resultSet;
-    public static PreparedStatement pstmt;
+public class PermissionDbUtil extends MySQLJDBCUtil {
     
     private List<Permission> permissionList;
     private List<Administrateur> administrateurList;

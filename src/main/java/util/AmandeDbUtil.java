@@ -9,9 +9,8 @@ package util;
  * @author Ibrahim
  */
 
-import static dbconnection.MySQLJDBCUtil.dataSource;
+import dbconnection.MySQLJDBCUtil;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import model.Amande;
@@ -21,17 +20,14 @@ import java.util.*;
 @Named
 @ApplicationScoped
 
-public class AmandeDbUtil {
+public class AmandeDbUtil extends MySQLJDBCUtil {
+    private List<Amande> amandeList;
+    private Amande amande;
     
-    public static Statement statement;
-    public static Connection connection;
-    public static ResultSet resultSet;
-    public static PreparedStatement pstmt;
-
     //*************************** display data *****************/
-    public static ArrayList findAll() {
+    public List<Amande> findAll() {
         
-        ArrayList amandeList = new ArrayList();
+        amandeList = new ArrayList<>();
         
         try {
             String query = "SELECT * FROM amande WHERE id IS NOT NULL ORDER BY id DESC";
@@ -41,7 +37,7 @@ public class AmandeDbUtil {
 
             while(resultSet.next()) { 
 
-                Amande amande = new Amande(); 
+                amande = new Amande(); 
 
                 amande.setId(resultSet.getInt("id"));  
                 amande.setIdImpot(resultSet.getInt("id_impot"));  

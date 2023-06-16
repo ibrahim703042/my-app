@@ -4,141 +4,124 @@
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
-    
-    <f:metadata>
-        <f:event  type="preRenderView" listener="#{administrateurController.administrateurList()}" />
-    </f:metadata>
-    
-    <div class="surface-card p-4 shadow-1 border-round">
-        <div class="text-3xl font-medium text-900 mb-3">
-            Abbattement
-        </div>
-        <div class="font-medium text-500 mb-3">
-            Listes
-        </div>
-       <div  class="border-2 border-dashed surface-border">
-
-           <div class="card ">
              
-                <h:form>
-                    <p:growl id="message" showDetail="true"/>
-                    
-                    <p:toolbar>
-                        <p:toolbarGroup>
-                            <p:commandButton 
-                                value="Ajouter" 
-                                icon="pi pi-plus" 
-                                styleClass="ui-button-success"
-                                action="/pages/abbatement/ajouter?faces-redirect=true"
-                                ajax="false"
-                                style="margin-right: .5rem">
-                            </p:commandButton>
-                        </p:toolbarGroup>
-                        
-                        
-                    </p:toolbar>
-                    
-                    <p:dataTable
-                        id="dt-administrateurs"
-                        paginator="true" 
-                        rows="4" 
-                        rowSelectMode="add" 
-                        paginatorPosition="bottom"
-                        binding="#{table}" 
-                        value="#{administrateurController.administrateurList()}" 
-                        var="admin"  
-                        >
+        <h:form>
+            <p:growl id="message" showDetail="true"/>
 
-                        <p:column 
-                            headerText="" 
-                            style="width: 5%">
-                             <h:outputText value="#{table.rowIndex + 1}" />
-                         </p:column>
-                        
-                        <!--
-                        <p:column 
-                            headerText="Matricule"
-                            sortBy="#{admin.id}" 
-                            filterBy="#{admin.id}"
-                            style="width: 17%"
-                            >
-                             <h:outputText value="#{admin.id}" />
-                         </p:column>
-                        -->
+            <p:toolbar>
+                <p:toolbarGroup>
 
-                         <p:column 
-                            headerText="Nom" 
-                            sortBy="#{admin.nom}" 
-                            filterBy="#{admin.nom}"
-                            style="width: 10%"
-                            
-                            >
-                            <h:outputText value="#{admin.nom}" />
-                         </p:column>
-                        
-                         <p:column 
-                            headerText="Prenom" 
-                            sortBy="#{admin.prenom}" 
-                            filterBy="#{admin.prenom}"
-                            style="width: 15%"
-                            >
-                            <h:outputText value="#{admin.prenom}" />
-                         </p:column>
-                        
-                        
-                         <p:column 
-                            headerText="Email" 
-                            sortBy="#{admin.email}" 
-                            filterBy="#{admin.email}"
-                            >
-                            <h:outputText value="#{admin.email}" />
-                         </p:column>
-                        
-                         <p:column 
-                            headerText="B.P" 
-                            sortBy="#{admin.bp}" 
-                            filterBy="#{admin.bp}"
-                            style="width: 10%"
-                            >
-                            <h:outputText value="#{admin.bp}" />
-                         </p:column>
-                        
-                        <!--
-                         <p:column 
-                            headerText="Date" 
-                            sortBy="#{admin.date}" 
-                            filterBy="#{admin.date}"
-                            >
-                            <h:outputText value="#{admin.date}" />
-                         </p:column>
-                        -->
+                    <p:commandButton 
+                        value="Ajouter" 
+                        icon="pi pi-plus" 
+                        actionListener="#{representantController.clearForm}"
+                        update=":dialogs-representant:manage-representant-content"
+                        oncomplete="PF('manageRepresentantDialog').show()"
+                        styleClass="ui-button-success"
+                        style="margin-right: .5rem">
+                        <p:resetInput target=":dialogs-representant:manage-representant-content" />
+                    </p:commandButton>
+                </p:toolbarGroup>
 
-                     <p:column exportable="false" style="width: 10%" >
-                         <p:commandButton 
-                             icon="pi pi-pencil" 
-                             styleClass="edit-button rounded-button ui-button-success mr-4" 
-                             process="@this"
-                             ajax="false"
-                             action="#{administrateurController.edit(admin.id)}"
-                             >
+            </p:toolbar>
 
-                         </p:commandButton>
-                         <p:commandButton 
-                             class="ui-button-warning rounded-button" 
-                             icon="pi pi-trash"
-                             process="@this"
-                             ajax="false"
-                             action="#{administrateurController.delete(admin.id)}"
-                             >
+            <p:dataTable
+                id="dt-representants"
+                paginator="true" 
+                rows="4"
+                widgetVar="dtRepresentants"
+                rowSelectMode="add" 
+                paginatorPosition="bottom"
+                binding="#{table}" 
+                value="#{representantController.representantList}" 
+                var="representant"
+                rowKey="#{representant}">
 
-                         </p:commandButton>
-                     </p:column>
-                     </p:dataTable>
-                 </h:form>
-               
-            </div>
+                <f:facet name="header">
+                    <div class="flex justify-content-between">
+                         <span 
+                            style="font-weight: bold;
+                            font-size: 18px; text-transform: uppercase">
+                             LISTE
+                         </span>
+                         <span class="filter-container ui-input-icon-left"> 
+                             <i class="pi pi-search icon"></i>
+                             <p:inputText 
+                                 id="globalFilter" 
+                                 onkeyup="PF('dtRepresentants').filter()" 
+                                 placeholder="Search...." 
+                             />
+                         </span>
+                     </div>
+                 </f:facet>
+                <p:column 
+                    headerText="#" 
+                    style="width: 5%">
+                    <h:outputText value="#{table.rowIndex + 1}" />
+                </p:column>
 
-       </div>
-    </div>
-            
+                <p:column 
+                    headerText="Nom" 
+                    sortBy="#{representant.nomRepresentant}" 
+                    filterBy="#{representant.nomRepresentant}"
+                    style="width: 10%">
+                    <h:outputText value="#{representant.nomRepresentant}" />
+                </p:column>
+
+                <p:column 
+                   headerText="Prenom" 
+                   sortBy="#{representant.prenomRepresentant}" 
+                   filterBy="#{representant.prenomRepresentant}"
+                   style="width: 15%">
+                   <h:outputText value="#{representant.prenomRepresentant}" />
+                </p:column>
+
+                <p:column 
+                   headerText="Email" 
+                   sortBy="#{representant.emailRepresentant}" 
+                   filterBy="#{representant.emailRepresentant}">
+                   <h:outputText value="#{representant.emailRepresentant}" />
+                </p:column>
+
+                <p:column 
+                   headerText="B.P" 
+                   sortBy="#{representant.bpRepresentant}" 
+                   filterBy="#{representant.bpRepresentant}"
+                   style="width: 10%">
+                   <h:outputText value="#{representant.bpRepresentant}" />
+                </p:column>
+
+                <p:column exportable="false" style="width: 10%" >
+
+                    <p:commandButton 
+                        icon="pi pi-pencil" 
+                        styleClass="edit-button rounded-button ui-button-success mr-4" 
+                        oncomplete="PF('manageRepresentantDialog').show()"
+                        update=":dialogs-representant:manage-representant-content"
+                        process="@this">
+
+                        <f:setPropertyActionListener value="#{representant}" target="#{representantController.model}" />
+                        <p:resetInput target=":dialogs-representant:manage-representant-content" />
+
+                    </p:commandButton>
+
+                 <p:commandButton 
+                     class="ui-button-warning rounded-button" 
+                     icon="pi pi-trash"
+                     process="@this"
+                     ajax="false"
+                     action="#{representantController.delete(representant.id)}">
+                    <!--                             
+                    <f:setPropertyActionListener value="#{representant}" target="#{representantController.model}" />
+                    <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />-->
+
+
+                 </p:commandButton>
+             </p:column>
+             </p:dataTable>
+         </h:form>
+         
+       <ui:include src="ajouter.xhtml" />
+    
+
 </ui:composition>

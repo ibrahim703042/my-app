@@ -9,7 +9,7 @@ package util;
  * @author Ibrahim
  */
 
-import static dbconnection.MySQLJDBCUtil.dataSource;
+import dbconnection.MySQLJDBCUtil;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
@@ -21,13 +21,8 @@ import model.Commune;
 @ManagedBean
 @ApplicationScoped
 
-public class CommuneDbUtil {
+public class CommuneDbUtil extends MySQLJDBCUtil{
     
-    public static Statement statement;
-    public static Connection connection;
-    public static ResultSet resultSet;
-    public static PreparedStatement pstmt;
-
     //*************************** display data *****************/
     public  ArrayList findAll() {
         

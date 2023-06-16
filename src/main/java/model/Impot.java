@@ -18,7 +18,6 @@ import java.util.Date;
 public class Impot implements Serializable{
 
     private Integer id;
-    private int idRevenuSousLocation;
     private Date date;
     
     private double tranche_1;
@@ -36,23 +35,13 @@ public class Impot implements Serializable{
     private double totalRestantDu;
     
     private RevenuSousLocation revenuSousLocation;
-
+    private int idRevenuSousLocation;
+    private double revenuSousNetImposable;
+    
     public Impot() {
     
         this.revenuSousLocation = new RevenuSousLocation();
-        
-//        tranche_1 = 0;
-//        tranche_2 = 0;
-//        tranche_3 = 0;
-
-        tranche_1_Col_5=51;
-        tranche_2_Col_5=52;
-        tranche_3_Col_5=53;
-
-        impotTotalDu=11111;
-        accompteImpotDejaPaye=2222;
-        totalRestantDu=333;
-        
+              
     }
     
     public Integer getId() {
@@ -80,15 +69,7 @@ public class Impot implements Serializable{
     }
 
     public double getTranche_1() {
-        if(
-            (this.revenuSousLocation.getRevenuSousNetImposable()) >= 0 && 
-            (this.revenuSousLocation.getRevenuSousNetImposable()) < 180000 
-        ){
-            return tranche_1 = this.revenuSousLocation.getRevenuSousNetImposable();
-        }else{
-            return (this.revenuSousLocation.getTotalRevenusNetsImposables() - this.revenuSousLocation.getAbbattements()) - tranche_1;
-        }
-        
+       return tranche_1;
     }
 
     public void setTranche_1(double tranche_1) {
@@ -96,14 +77,15 @@ public class Impot implements Serializable{
     }
 
     public double getTranche_2() {
-        if(
-            this.tranche_1 >= 1800000 && 
-            this.tranche_1 < 3600000 
-        ){
-            return tranche_2 = this.tranche_1;
-        }else{
-            return tranche_2 - tranche_1;
-        }
+//        if(
+//            this.tranche_1 >= 1800000 && 
+//            this.tranche_1 < 3600000 
+//        ){
+//            return tranche_2 = this.tranche_1;
+//        }else{
+//            return tranche_2 - tranche_1;
+//        }
+        return tranche_2;
     }
 
     public void setTranche_2(double tranche_2) {
@@ -111,10 +93,11 @@ public class Impot implements Serializable{
     }
 
     public double getTranche_3() {
-        if(this.tranche_2 >= 3600000 ){
-            return tranche_3 = this.tranche_2;
-        }
-        return 0;
+//        if(this.tranche_2 >= 3600000 ){
+//            return tranche_3 = this.tranche_2;
+//        }
+//        return 0;
+        return tranche_3;
     }
 
     public void setTranche_3(double tranche_3) {
@@ -183,6 +166,14 @@ public class Impot implements Serializable{
 
     public void setRevenuSousLocation(RevenuSousLocation revenuSousLocation) {
         this.revenuSousLocation = revenuSousLocation;
+    }
+
+    public double getRevenuSousNetImposable() {
+        return revenuSousNetImposable;
+    }
+
+    public void setRevenuSousNetImposable(double revenuSousNetImposable) {
+        this.revenuSousNetImposable = revenuSousNetImposable;
     }
 
     

@@ -20,8 +20,9 @@ public class Abbattement implements Serializable{
 
     private Integer id;
     private String beneficiaire;
-    private List<Contribuable> contribuables;
-    private Contribuable contribuable;
+    private String[] motifAbbattement;
+    private Representant representant;
+    private Integer Idrepresentant;
     
 //    String A = "A. Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à l’âge de 25 ans, orphelin de père et de mère, héritier ou usufruitier";
 //    String B = "B. Enfant mineur ou enfant majeur, copropriétaires, cohéritiers et co-usufruitier";
@@ -29,19 +30,15 @@ public class Abbattement implements Serializable{
 //    String D = "D. Retraité ou handicapé, personne ayant atteint l’âge légal de la retraite propriétaire, possesseur, titulaire, héritier ou usufruitier";
 //    String E = "E. Démobilisé non en fonction publique, privée ou élective ";
 
-    private Short motif_A;
-//    private boolean motifB;
-//    private boolean motifC;
-//    private boolean motifD;
-//    private boolean motifE;
+    //private Short motif_A;
     
     
     
     public Abbattement(){
         beneficiaire = "No";
-        //motif_A = true;
+        
     }
-    
+
     public Integer getId() {
         return id;
     }
@@ -58,31 +55,29 @@ public class Abbattement implements Serializable{
         this.beneficiaire = beneficiaire;
     }
 
-    public List<Contribuable> getContribuables() {
-        return contribuables;
+    public String[] getMotifAbbattement() {
+        return motifAbbattement;
     }
 
-    public void setContribuables(List<Contribuable> contribuables) {
-        this.contribuables = contribuables;
+    public void setMotifAbbattement(String[] motifAbbattement) {
+        this.motifAbbattement = motifAbbattement;
     }
 
-    public Contribuable getContribuable() {
-        return contribuable;
+    public Representant getRepresentant() {
+        return representant;
     }
 
-    public void setContribuable(Contribuable contribuable) {
-        this.contribuable = contribuable;
+    public void setRepresentant(Representant representant) {
+        this.representant = representant;
     }
 
-    public void setMotif_A(Short motif_A) {
-        this.motif_A = motif_A;
+    public Integer getIdrepresentant() {
+        return Idrepresentant;
     }
 
-    public Short getMotif_A() {
-        return motif_A;
+    public void setIdrepresentant(Integer Idrepresentant) {
+        this.Idrepresentant = Idrepresentant;
     }
-
-    
     
     
 }

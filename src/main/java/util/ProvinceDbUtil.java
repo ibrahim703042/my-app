@@ -6,7 +6,6 @@ package util;
 
 
 import dbconnection.MySQLJDBCUtil;
-import static dbconnection.MySQLJDBCUtil.dataSource;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
@@ -25,13 +24,8 @@ import model.Province;
 @ManagedBean
 @ApplicationScoped
 
-public class ProvinceDbUtil implements Serializable {
+public class ProvinceDbUtil extends MySQLJDBCUtil{
     
-    public static Statement statement;
-    public static Connection connection;
-    public static ResultSet resultSet;
-    public static PreparedStatement pstmt;
-
     /// ************************ display data *************************/
     public ArrayList findAll() {
         
