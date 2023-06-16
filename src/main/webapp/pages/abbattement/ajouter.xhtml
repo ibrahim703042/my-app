@@ -7,7 +7,7 @@
                 
    <h:form id="dialogs-representant" >
        <p:growl id="messages" showDetail="true" />
-        <p:dialog header="Representant Details" widgetVar="manageRepresentantDialog" minHeight="40" width="750" showEffect="fade">
+        <p:dialog header="Representant Details" widgetVar="manageRepresentantDialog" minHeight="40" width="1200" showEffect="fade">
             <p:outputPanel id="manage-representant-content" class="ui-fluid">
                 
                 <p:outputPanel rendered="#{not empty representantController.model}">
@@ -42,30 +42,53 @@
                         
                     </div>
                     
-                    <div class=" field">
+                    <div class="field mt-2">
+                        <p:outputLabel >
+                            Bénéficiaire d’abattement (Article 84)2 
+                        </p:outputLabel>
+                        <p:spacer width="20" />
+                        <p:selectOneRadio value="#{abbattement.beneficiaire}">
+                            <f:selectItem itemValue="Oui" itemLabel="Oui"/>
+                            <f:selectItem itemValue="No" itemLabel="No"/>
+                        </p:selectOneRadio>
+                    </div>
+                    
+                    <div class="field mt-3">
                          <p:outputPanel id="customPanel">
+                             <h5 class="mb-5"> Motif d’abattement : </h5>
                             <p:selectManyCheckbox id="custom" value="#{abbattement.motifAbbattement}" layout="custom">
                                 <!--<p:ajax listener="#{abbattement.motifAbbattement}" />-->
-                                <f:selectItem itemLabel="Option 1" itemValue="Option 1"/>
-                                <f:selectItem itemLabel="Option 2" itemValue="Option 2"/>
-                                <f:selectItem itemLabel="Option 3" itemValue="Option 3"/>
+                                <f:selectItem itemLabel="#{abbattement.motif_A}" itemValue="#{abbattement.motif_A}"/>
+                                <f:selectItem itemLabel="#{abbattement.motif_B}" itemValue="#{abbattement.motif_B}"/>
+                                <f:selectItem itemLabel="#{abbattement.motif_C}" itemValue="#{abbattement.motif_C}"/>
+                                <f:selectItem itemLabel="#{abbattement.motif_D}" itemValue="#{abbattement.motif_D}"/>
+                                <f:selectItem itemLabel="#{abbattement.motif_E}" itemValue="#{abbattement.motif_E}"/>
+                                
                             </p:selectManyCheckbox>
 
-                            <div class="grid text-center">
-                                <div class="col">
-                                    <p:outputLabel for="opt1" value="Option 1" styleClass="block mb-2"/>
+                            <div class="field">
+                                <div class="flex ">
+                                    <p:outputLabel for="opt1" value="#{abbattement.motif_A}" styleClass="block mb-2 mr-3"/>
                                     <p:checkbox id="opt1" for="custom" itemIndex="0"/>
                                 </div>
-
-                                <div class="col">
-                                    <p:outputLabel for="opt2" value="Option 2" styleClass="block mb-2"/>
+                                <div class="flex ">
+                                    <p:outputLabel for="opt2" value="#{abbattement.motif_B}" styleClass="block mb-2 mr-3"/>
                                     <p:checkbox id="opt2" for="custom" itemIndex="1"/>
                                 </div>
-
-                                <div class="col">
-                                    <p:outputLabel for="opt3" value="Option 3" styleClass="block mb-2"/>
+                                <div class="flex ">
+                                    <p:outputLabel for="opt3" value="#{abbattement.motif_C}" styleClass="block mb-2 mr-3"/>
                                     <p:checkbox id="opt3" for="custom" itemIndex="2"/>
                                 </div>
+                                <div class="flex ">
+                                    <p:outputLabel for="opt4" value="#{abbattement.motif_D}" styleClass="block mb-2 mr-3"/>
+                                    <p:checkbox id="opt4" for="custom" itemIndex="3"/>
+                                </div>
+                                <div class="flex ">
+                                    <p:outputLabel for="opt5" value="#{abbattement.motif_E}" styleClass="block mb-2 mr-3"/>
+                                    <p:checkbox id="opt5" for="custom" itemIndex="4"/>
+                                </div>
+
+                                
                             </div>
                         </p:outputPanel>
 
