@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+                
+   <h:form id="dialogs-representant" >
+       <p:growl id="messages" showDetail="true" />
+        <p:dialog header="Representant Details" widgetVar="manageRepresentantDialog" minHeight="40" width="750" showEffect="fade">
+            <p:outputPanel id="manage-representant-content" class="ui-fluid">
+                
+                <p:outputPanel rendered="#{not empty representantController.model}">
+
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <component:inputTextField id="nom" label="Nom" placeholder="Entrer nom" value="#{representantController.model.nomRepresentant}"/>
+                        </div>
+                        <div class="field col">
+                            <component:inputTextField id="prnom" label="Prenom" placeholder="Entrer prenom"
+                            value="#{representantController.model.prenomRepresentant}"
+                        />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                    <component:inputTextField  id="email" label="E-mail" placeholder="Entrer email "
+                            value="#{representantController.model.emailRepresentant}"
+                        />
+                    </div>
+                    
+                    <div class="formgrid grid">
+                        
+                        <div class="field col-12 md:col-6">
+                            <component:inputTextField id="bp" label="Boite postal" placeholder="B.P 1023456 "
+                            value="#{representantController.model.bpRepresentant}"/>
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <component:inputTextField id="telephone" label="Telephone" placeholder="+257 71 20 47 78"
+                                value="#{representantController.model.telephoneRepresentant}" />
+                        </div>
+                        
+                    </div>
+                    
+                </p:outputPanel>
+
+            </p:outputPanel>
+            
+            <f:facet name="footer">
+                <p:commandButton 
+                    value="Enregistrer" 
+                    actionListener="#{representantController.createOrUpdate}"
+                    update="manage-representant-content messages" 
+                    process="manage-representant-content @this" 
+                />
+                
+                <p:commandButton 
+                    value="Cancel" 
+                    onclick="PF('manageRepresentantDialog').hide()"
+                    class="ui-button-secondary" 
+                    type="button" />
+            </f:facet>
+
+        </p:dialog>
+
+
+
+        <p:confirmDialog global="true" showEffect="fade" width="300">
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                icon="pi pi-times" />
+        </p:confirmDialog>
+       
+       
+    </h:form>   
+    
+</ui:composition>

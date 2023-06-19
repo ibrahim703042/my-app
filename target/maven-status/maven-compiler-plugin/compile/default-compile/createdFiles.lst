@@ -14,6 +14,7 @@ controller\AdminController.class
 model\Commune.class
 util\PermissionDbUtil.class
 util\PayementDbUtil.class
+util\RevenusLocatifDbUtil.class
 model\Contribuable.class
 dbconnection\TestConnection.class
 util\DeclarationDbUtil.class
@@ -31,6 +32,7 @@ com\obr\management\JakartaRestConfiguration.class
 controller\RepresentantController.class
 model\Impot.class
 controller\DeclarationController.class
+util\RevenusSousLocationDbUtil.class
 util\QuittanceDbUtil.class
 model\Payement.class
 util\AdministrateurDbUtil.class

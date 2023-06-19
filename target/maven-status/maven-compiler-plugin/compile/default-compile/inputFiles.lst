@@ -6,6 +6,7 @@ D:\BIU\internShip\my-app\src\main\java\model\NavigationController.java
 D:\BIU\internShip\my-app\src\main\java\model\Declaration.java
 D:\BIU\internShip\my-app\src\main\java\util\CollineDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\util\RoleDbUtil.java
+D:\BIU\internShip\my-app\src\main\java\util\RevenusSousLocationDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\model\Province.java
 D:\BIU\internShip\my-app\src\main\java\com\obr\management\resources\JakartaEE91Resource.java
 D:\BIU\internShip\my-app\src\main\java\controller\RoleController.java
@@ -57,6 +58,7 @@ D:\BIU\internShip\my-app\src\main\java\dbconnection\MySQLJDBCUtil.java
 D:\BIU\internShip\my-app\src\main\java\model\Abbattement.java
 D:\BIU\internShip\my-app\src\main\java\model\Commune.java
 D:\BIU\internShip\my-app\src\main\java\controller\ImmeubleController.java
+D:\BIU\internShip\my-app\src\main\java\util\RevenusLocatifDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\controller\ContribuableController.java
 D:\BIU\internShip\my-app\src\main\java\util\SessionUtils.java
 D:\BIU\internShip\my-app\src\main\java\controller\CommuneController.java
