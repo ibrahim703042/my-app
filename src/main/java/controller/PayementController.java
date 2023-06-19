@@ -26,32 +26,34 @@ public class PayementController extends PayementDbUtil implements Serializable {
     private Payement modelPayement;
     private List<Payement> payementList;
     
-    @Inject
+    //@Inject
     private PayementDbUtil payementDbUtil;
     
     @PostConstruct
     public void init(){
-        this.setPayementList(payementDbUtil.findAll());
+        payementList = payementDbUtil.findAll();
     }
 
     public void createOrUpdate(){
         
         if(this.modelPayement.getId() == null){
                 
-                payementDbUtil.save(this.modelPayement);
-                showInfo("Inserted","Data inserted");
-                this.init();
-                PrimeFaces.current().executeScript("PF('manageContribuableDialog').hide()");
-                PrimeFaces.current().ajax().update("form:messages", "form:dt-contribuables");
-   
-            }else if(this.modelPayement.getId() != null){
-                payementDbUtil.update(this.modelPayement);
-                showInfo("Updated","Data Updated");
-                this.init();
-                PrimeFaces.current().executeScript("PF('manageContribuableDialog').hide()");
-                PrimeFaces.current().ajax().update("form:messages", "form:dt-contribuables");
-   
-            }
+            payementDbUtil.save(this.modelPayement);
+            showInfo("Inserted","Data inserted");
+            this.init();
+            PrimeFaces.current().executeScript("PF('manageContribuableDialog').hide()");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-contribuables");
+
+        }else if(this.modelPayement.getId() != null){
+            
+            payementDbUtil.update(this.modelPayement);
+            showInfo("Updated","Data Updated");
+            this.init();
+            PrimeFaces.current().executeScript("PF('manageContribuableDialog').hide()");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-contribuables");
+
+        }
+        
     }
     
     public Payement getModelPayement() {
@@ -65,10 +67,5 @@ public class PayementController extends PayementDbUtil implements Serializable {
     public List<Payement> getPayementList() {
         return payementList;
     }
-
-    public void setPayementList(List<Payement> payementList) {
-        this.payementList = payementList;
-    }
-    
-    
+        
 }

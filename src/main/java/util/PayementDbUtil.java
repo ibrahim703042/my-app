@@ -123,9 +123,7 @@ public class PayementDbUtil extends MySQLJDBCUtil {
     }
 	
     //************** update data ******************************/
-    public static String update(Payement payement){
-
-        String message = "Updated Successfully";
+    public String update(Payement payement){
 
         try {
 
@@ -150,7 +148,7 @@ public class PayementDbUtil extends MySQLJDBCUtil {
     }
 
     //************** delete data ********************************/
-    public static String delete(int payementId) {
+    public String delete(int payementId) {
         
         System.out.println("delete() : payement Id: " + payementId);
 
