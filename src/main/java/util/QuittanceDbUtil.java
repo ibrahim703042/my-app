@@ -80,10 +80,10 @@ public class QuittanceDbUtil extends MySQLJDBCUtil {
             connection.close();
 
         }catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }if(saveResult !=0) {
             navigationResult = "/pages/admin/template.xhtml?faces-redirect=true";
-            showMessage(message);
+           
             
         } else {
             navigationResult = "";
@@ -123,7 +123,7 @@ public class QuittanceDbUtil extends MySQLJDBCUtil {
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
         return "/pages/admin/edit.xhtml";
     }
@@ -150,9 +150,8 @@ public class QuittanceDbUtil extends MySQLJDBCUtil {
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
-            showMessage(message);
             return "/pages/admin/template.xhtml?faces-redirect=true";
     }
 
@@ -170,24 +169,9 @@ public class QuittanceDbUtil extends MySQLJDBCUtil {
             connection.close();
             
         } catch(SQLException sqlException){
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
         return "/pages/admin/template.xhtml?faces-redirect=true";
     }
     
-    
-    //************** conecxt msg data ***********************/
-    private static void showMessage(String msg){
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage message = new FacesMessage("Notice",msg);
-        context.addMessage(null, message);
-    }
-    
-     //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
 }

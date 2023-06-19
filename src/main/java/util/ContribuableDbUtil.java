@@ -11,6 +11,7 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
+import static dbconnection.MySQLJDBCUtil.pstmt;
 import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
 import java.sql.*;
@@ -28,8 +29,8 @@ public class ContribuableDbUtil extends MySQLJDBCUtil {
     protected List<Representant> representants;
     protected Representant representant;
     
-    protected List< Abbattement>  abbattements;
-    protected Contribuable abbattement;
+    protected List<Abbattement>  abbattements;
+    protected Abbattement abbattement;
     
     private List<Contribuable> contribuableList;
 
@@ -40,7 +41,18 @@ public class ContribuableDbUtil extends MySQLJDBCUtil {
         
         try {
 
-            String query = "SELECT * FROM contribuable WHERE id IS NOT NULL ORDER BY id DESC";
+            String query = ""
+                    + "SELECT contribuable.*, "+ "abbattement.id_abbattement as Abbattement_ID, "
+                    + "abbattement.beneficiaire, "
+                    + "abbattement.motif_A, "
+                    + "abbattement.motif_B, "
+                    + "abbattement.motif_C, "
+                    + "abbattement.motif_D, "
+                    + "abbattement.motif_E "
+                    + "FROM contribuable,  abbattement "
+                    + "WHERE contribuable.id = abbattement.id_contribuable "
+                    + "AND contribuable.id IS NOT NULL ORDER BY contribuable.id DESC";
+            
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
@@ -51,12 +63,22 @@ public class ContribuableDbUtil extends MySQLJDBCUtil {
 
                contribuable.setId(resultSet.getInt("id"));  
                contribuable.setNom(resultSet.getString("nom"));  
-               //contribuable.setPrenom(resultSet.getString("prenom"));  
                contribuable.setEmail(resultSet.getString("email"));  
                contribuable.setMotPasse(resultSet.getString("motPasse"));  
                contribuable.setTelephone(resultSet.getInt("telephone"));  
                contribuable.setBp(resultSet.getString("BP"));  
                contribuable.setDate(resultSet.getDate("date")); 
+               
+               contribuable.setIdRepresentant(resultSet.getInt("id_representant"));
+               contribuable.setBeneficiaire(resultSet.getString("beneficiaire"));
+               contribuable.setMotif_A(resultSet.getShort("motif_A"));
+               contribuable.setMotif_B(resultSet.getShort("motif_B")); 
+               contribuable.setMotif_C(resultSet.getShort("motif_C")); 
+               contribuable.setMotif_D(resultSet.getShort("motif_D")); 
+               contribuable.setMotif_E(resultSet.getShort("motif_E")); 
+               
+               
+               
 
                contribuableList.add(contribuable);  
             }   
@@ -79,7 +101,7 @@ public class ContribuableDbUtil extends MySQLJDBCUtil {
         try {
             connection = dataSource.getConnection();
             //connection.setAutoCommit(false);
-		    pstmt = connection.prepareStatement(query);
+            pstmt = connection.prepareStatement(query);
             resultSet = pstmt.executeQuery();  
             
             while(resultSet.next()) { 
@@ -93,7 +115,7 @@ public class ContribuableDbUtil extends MySQLJDBCUtil {
             }
            
             
-        } catch (SQLException ex) {
+        }catch (SQLException ex) {
             //connection.rollback();
             printSQLException(ex);
         }finally {
@@ -104,31 +126,73 @@ public class ContribuableDbUtil extends MySQLJDBCUtil {
     
     //************** Save data **********************************/ 
     public Contribuable save(Contribuable contribuable){
+        
         Contribuable model = null;
+        
+        String query_1 = ""
+                + "INSERT INTO contribuable "
+                + "(id_representant, nom, email, motPasse, telephone, BP) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+        
+        String query_2 = ""
+                + "INSERT INTO abbattement "
+                + "(id_contribuable,beneficiaire,motifAbbattement) "
+                + "VALUES (?,?,?) ";
+                
         try {
 
-            String query = 
-                    "INSERT INTO contribuable (id_representant, nom, email, motPasse, telephone, BP) "
-                    + "values (?, ?, ?, ?, ?, ?)";
             connection = dataSource.getConnection();
-            pstmt = connection.prepareStatement(query);         
+            connection.setAutoCommit(false);
+            
+            pstmt = connection.prepareStatement(query_1, Statement.RETURN_GENERATED_KEYS);         
 
             String motPasse = DigestUtils.shaHex(contribuable.getMotPasse());
-            //String motPasse = administrateur.getMotPasse();
             //String admin = "Super administrateur";
             
+            // Insert data into the first table
             pstmt.setInt(1, contribuable.getIdRepresentant());
             pstmt.setString(2, contribuable.getNom());
             pstmt.setString(3, contribuable.getEmail());
             pstmt.setString(4, motPasse);
             pstmt.setInt(5, contribuable.getTelephone());
             pstmt.setString(6, contribuable.getBp());
-            
             pstmt.executeUpdate();
-            connection.close();
+            
+            // Retrieve last inserted id on contribuable table
+            //resultSet.next();
+            //int id_contribuable = resultSet.getInt(1);
+            
+            // Insert data into Abbattement table
+//            pstmt = connection.prepareStatement(query_2);
+//            pstmt.setInt(1, id_contribuable);
+//            pstmt.setString(2, abbattement.getBeneficiaire());
+//            pstmt.setString(3, Arrays.toString(abbattement.getMotifAbbattement()));
+//            pstmt.executeUpdate();
+//            
+            connection.commit();
+            connection.setAutoCommit(true);
 
-        }catch(SQLException sqlException) {
-            printSQLException(sqlException);
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
+                }
+            }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
         return model;
     }
@@ -232,22 +296,5 @@ public class ContribuableDbUtil extends MySQLJDBCUtil {
             printSQLException(sqlException);
         }
         
-    }
-
-    //************** error  message from sql ***********************/
-    public void printSQLException(SQLException ex) {
-        for (Throwable e : ex) {
-            if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
-                Throwable t = ex.getCause();
-                while (t != null) {
-                        System.out.println("Cause: " + t);
-                        t = t.getCause();
-                }
-            }
-        }
     }
 }

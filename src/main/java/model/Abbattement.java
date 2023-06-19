@@ -31,6 +31,7 @@ public class Abbattement implements Serializable{
 
     public Abbattement(){
         //beneficiaire = "No";
+        
     }
 
     public Integer getId() {

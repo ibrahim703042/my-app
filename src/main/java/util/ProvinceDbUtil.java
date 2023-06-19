@@ -51,7 +51,7 @@ public class ProvinceDbUtil extends MySQLJDBCUtil{
             connection.close();
             
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         } 
         
         return provinceList;
@@ -71,7 +71,7 @@ public class ProvinceDbUtil extends MySQLJDBCUtil{
             connection.close();
             
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
     }
     
@@ -102,7 +102,7 @@ public class ProvinceDbUtil extends MySQLJDBCUtil{
             connection.close();
             
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
     }
 
@@ -122,7 +122,7 @@ public class ProvinceDbUtil extends MySQLJDBCUtil{
             connection.close();
             
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
     }
 
@@ -141,21 +141,8 @@ public class ProvinceDbUtil extends MySQLJDBCUtil{
             connection.close();
             
         } catch(SQLException sqlException){
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
-    }
-
-    /// ************************ show message after executing  *************************/
-    private static void showMessage(String msg){
-        FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage message = new FacesMessage("Notice",msg);
-        context.addMessage(null, message);
-    }
-    
-    /// ************************ error *************************/
-    private static void addErrorMessage(SQLException ex) {
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
     }
     
 }

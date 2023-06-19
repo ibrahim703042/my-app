@@ -50,6 +50,9 @@ public class ContribuableController extends MessageController implements Seriali
         this.modelAbbattement = new Abbattement();
     }
 
+    public void clearForm(){
+        this.modelContribuable = new Contribuable();
+    }
     public List<Contribuable> contribuableList() {
         
         contribuableList.clear();
@@ -62,28 +65,27 @@ public class ContribuableController extends MessageController implements Seriali
     }
         
     //************************ save data **************************/
-    public void create(Contribuable contribuable) {
+    public void createOrUpdate() {
         
         if(IsValid()){
             
             if(this.modelContribuable.getId() == null){
                 
-                contribuableDbUtil.save(contribuable);
+                contribuableDbUtil.save(this.modelContribuable);
                 showInfo("Inserted","Data inserted");
                 this.init();
-    //          PrimeFaces.current().executeScript("PF('manageRepresentantDialog').hide()");
+                PrimeFaces.current().executeScript("PF('manageContribuableDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-contribuables");
    
             }else if(this.modelContribuable.getId() != null){
-                contribuableDbUtil.update(contribuable);
+                contribuableDbUtil.update(this.modelContribuable);
                 showInfo("Updated","Data Updated");
                 this.init();
-    //          PrimeFaces.current().executeScript("PF('manageRepresentantDialog').hide()");
+                PrimeFaces.current().executeScript("PF('manageContribuableDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-contribuables");
    
             }
         }
-          //return "/pages/contribuable/template.xhtml?faces-redirect=true";
     }
     	
     //************************  edit data by Id  **************************/
@@ -99,12 +101,11 @@ public class ContribuableController extends MessageController implements Seriali
     }
     
     //************************ update data **************************/
-    public String update(Contribuable contribuable) {
+    public String update() {
         try {
-            contribuableDbUtil.update(contribuable);
+            contribuableDbUtil.update(this.modelContribuable);
             showInfo("Updated","Data Updated");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-contribuables");
-   
 
         }catch (Exception ex) {
             ex.printStackTrace();
@@ -120,13 +121,12 @@ public class ContribuableController extends MessageController implements Seriali
         this.init();
         showInfo("Deleted","Data Deleted");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-contribuables");
-   
     }
     
     
     //************** Getters && Setters ***********************/
 
-    public List< Representant> getRepresentantList() {
+    public List<Representant> getRepresentantList() {
         return representantList;
     }
 
@@ -196,14 +196,19 @@ public class ContribuableController extends MessageController implements Seriali
             showError("Required","Password is required");
             return false;
         }
-        if (this.modelContribuable.getTelephone() == null)
-        {
-            showError("Required","Email is required");
-            return false;
-        }
         if (this.modelContribuable.getBp().isEmpty())
         {
-            showError("Required","B.p is required");
+            showError("Required","B.P is required");
+            return false;
+        }
+        if (this.modelContribuable.getTelephone() == null)
+        {
+            showError("Required","Phone number is required");
+            return false;
+        }
+        if (this.modelContribuable.getIdRepresentant() == null)
+        {
+            showError("Required","Representative is required");
             return false;
         }
         

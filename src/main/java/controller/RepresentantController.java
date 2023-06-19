@@ -59,6 +59,7 @@ public class RepresentantController extends MessageController implements Seriali
         }
         if (this.model.getEmailRepresentant().isEmpty())
         {
+            // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")
             showError("Required","Email is required");
             return false;
         }

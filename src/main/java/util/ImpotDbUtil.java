@@ -12,7 +12,11 @@ package util;
 import dbconnection.MySQLJDBCUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
+
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import model.Impot;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,5 +67,66 @@ public class ImpotDbUtil extends MySQLJDBCUtil {
         return impotList;
     }
 
-    
+    public void save(){
+            
+        try {
+
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            connection.setAutoCommit(false);
+
+            String insertSql = "INSERT INTO table1 (column1, column2) VALUES (?, ?)";
+            pstmt = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, "value1");
+            pstmt.setString(2, "value2");
+            pstmt.executeUpdate();
+
+            resultSet = pstmt.getGeneratedKeys();
+            int generatedKey = 0;
+            if (resultSet.next()) {
+                generatedKey = resultSet.getInt(1);
+            }
+
+            String updateSql = "INSERT INTO table2 (column1, column2) VALUES (?, ?)";
+            pstmt = connection.prepareStatement(updateSql);
+            pstmt.setInt(1, generatedKey);
+            pstmt.setString(2, "value3");
+            pstmt.executeUpdate();
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+        
 }

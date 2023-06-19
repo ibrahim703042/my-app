@@ -18,6 +18,7 @@ D:\BIU\internShip\my-app\src\main\java\controller\AdminController.java
 D:\BIU\internShip\my-app\src\main\java\controller\ImpotController.java
 D:\BIU\internShip\my-app\src\main\java\controller\ProvinceController.java
 D:\BIU\internShip\my-app\src\main\java\util\ImpotDbUtil.java
+D:\BIU\internShip\my-app\src\main\java\controller\PayementController.java
 D:\BIU\internShip\my-app\src\main\java\controller\CollineController.java
 D:\BIU\internShip\my-app\src\main\java\util\AuthDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\util\PayementDbUtil.java
@@ -26,12 +27,14 @@ D:\BIU\internShip\my-app\src\main\java\model\Representant.java
 D:\BIU\internShip\my-app\src\main\java\model\Contribuable.java
 D:\BIU\internShip\my-app\src\main\java\util\AdministrateurDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\util\CommuneDbUtil.java
+D:\BIU\internShip\my-app\src\main\java\enums\Motif.java
 D:\BIU\internShip\my-app\src\main\java\util\ImmeubleDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\util\RevenusDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\controller\AbbattementController.java
 D:\BIU\internShip\my-app\src\main\java\util\AbbattementDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\util\DeclarationDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\util\RepresentantDbUtil.java
+D:\BIU\internShip\my-app\src\main\java\dbconnection\app.java
 D:\BIU\internShip\my-app\src\main\java\model\Impot.java
 D:\BIU\internShip\my-app\src\main\java\model\Administrateur.java
 D:\BIU\internShip\my-app\src\main\java\util\PermissionDbUtil.java

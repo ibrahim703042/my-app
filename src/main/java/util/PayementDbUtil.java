@@ -10,7 +10,6 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
@@ -37,21 +36,21 @@ public class PayementDbUtil extends MySQLJDBCUtil {
         payementList = new ArrayList<>();
         
         try {
-            String query = "SELECT * FROM payement WHERE id IS NOT NULL ORDER BY id DESC";
+            String query = "SELECT * FROM payement WHERE id_payement IS NOT NULL ORDER BY id_payement DESC";
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
             while(resultSet.next()) { 
 
-                Payement impot = new Payement(); 
+                payement  = new Payement(); 
 
-                impot.setId(resultSet.getInt("id_payement"));  
-                impot.setModePayement(resultSet.getString("modePayement"));  
-                impot.setMontantPaye(resultSet.getDouble("montantPaye")); 
-                impot.setDatePayement(resultSet.getDate("datePayement")); 
+                payement.setId(resultSet.getInt("id_payement"));  
+                payement.setModePayement(resultSet.getString("modePayement"));  
+                payement.setMontantPaye(resultSet.getDouble("montantPaye")); 
+                payement.setDatePayement(resultSet.getDate("datePayement")); 
 
-                payementList.add(impot);  
+                payementList.add(payement);  
             }   
 
             System.out.println("Total Records Fetched: " + payementList.size());
@@ -64,136 +63,109 @@ public class PayementDbUtil extends MySQLJDBCUtil {
     }
 
     //************** Save data **********************************/ 
-    public static String save(Payement impot){
-        
-        Integer saveResult = 0;
-        String navigationResult = "";
-        String message = "Record Inserted";
+    public Payement save(Payement payement){
+        Payement model = null ;
         
         try {
 
-            String query = 
-                    "INSERT INTO impot (modePayement, montantPaye, datePayement) "
-                    + "values (?, ?,?)";
+            String query = "INSERT INTO payement (modePayement, montantPaye, datePayement) values (?, ?,?)";
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
 
-            pstmt.setString(1, impot.getModePayement());
-            pstmt.setDouble(2, impot.getMontantPaye());
-            pstmt.setDate(3, (Date) impot.getDatePayement());
-            //statement.setDate(7, (java.sql.Date) impot.getDate());
+            pstmt.setString(1, payement.getModePayement());
+            pstmt.setDouble(2, payement.getMontantPaye());
+            pstmt.setDate(3, (Date) payement.getDatePayement());
 
-            saveResult = pstmt.executeUpdate();
+            pstmt.executeUpdate();
             connection.close();
 
         }catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
-        }if(saveResult !=0) {
-            navigationResult = "/pages/admin/template.xhtml?faces-redirect=true";
-            showMessage(message);
-            
-        } else {
-            navigationResult = "";
+            printSQLException(sqlException);
         }
-        return navigationResult;
+        return model;
     }
 
     //************** find data by ID ***************************/
-    public static String findById(int impotId) {
+    public static String findById(int payementId) {
         
-        Payement impot = null;
-        System.out.println(" findById() : Province Id: " + impotId);
+        Payement payement = null;
+        System.out.println(" findById() : Province Id: " + payementId);
         
         /* Setting The Particular province Details In Session */
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
         try {
            
-            String query = "SELECT * FROM impot WHERE id =" + impotId ;
+            String query = "SELECT * FROM payement WHERE id =" + payementId ;
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
             
             if(resultSet.next()) {
                 
-                impot = new Payement();
-                impot.setId(resultSet.getInt("id"));  
-                impot.setModePayement(resultSet.getString("modePayement"));  
-                impot.setMontantPaye(resultSet.getDouble("montantPaye")); 
-                impot.setDatePayement(resultSet.getDate("datePayement")); 
-                //impot.setDate(resultSet.getDate("date"));  
+                payement = new Payement();
+                payement.setId(resultSet.getInt("id"));  
+                payement.setModePayement(resultSet.getString("modePayement"));  
+                payement.setMontantPaye(resultSet.getDouble("montantPaye")); 
+                payement.setDatePayement(resultSet.getDate("datePayement")); 
+                //payement.setDate(resultSet.getDate("date"));  
                //LocalDate date = LocalDate.now();
 
             }
             
-            sessionMap.put("payementMapped", impot);
+            sessionMap.put("payementMapped", payement);
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
         return "/pages/admin/edit.xhtml";
     }
 	
     //************** update data ******************************/
-    public static String update(Payement impot){
+    public static String update(Payement payement){
 
         String message = "Updated Successfully";
 
         try {
 
-            String query ="Update impot SET "
+            String query ="Update payement SET "
                     + "modePayement=?, "
                     + "montantPaye=?, "
                     + "datePayement=?, ";
 
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, impot.getModePayement());
-            pstmt.setDouble(2, impot.getMontantPaye());
-            pstmt.setDate(3, (Date) impot.getDatePayement());
+            pstmt.setString(1, payement.getModePayement());
+            pstmt.setDouble(2, payement.getMontantPaye());
+            pstmt.setDate(3, (Date) payement.getDatePayement());
 
             pstmt.execute();
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
-            showMessage(message);
             return "/pages/admin/template.xhtml?faces-redirect=true";
     }
 
     //************** delete data ********************************/
-    public static String delete(int impotId) {
+    public static String delete(int payementId) {
         
-        System.out.println("delete() : impot Id: " + impotId);
+        System.out.println("delete() : payement Id: " + payementId);
 
         try {
             connection = dataSource.getConnection();
-            String query = "DELETE FROM impot WHERE id = " + impotId ;
+            String query = "DELETE FROM payement WHERE id = " + payementId ;
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  
             connection.close();
             
         } catch(SQLException sqlException){
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
         return "/pages/admin/template.xhtml?faces-redirect=true";
     }
     
-    
-    //************** conecxt msg data ***********************/
-    private static void showMessage(String msg){
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage message = new FacesMessage("Notice",msg);
-        context.addMessage(null, message);
-    }
-    
-     //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
+   
 }

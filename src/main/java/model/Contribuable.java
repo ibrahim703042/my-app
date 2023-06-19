@@ -6,7 +6,6 @@ package model;
 
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.RequestScoped;
-import jakarta.faces.bean.ViewScoped;
 import jakarta.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.Date;
@@ -37,15 +36,23 @@ public class Contribuable implements Serializable {
     private String telephoneRepresentant;
     private String EmailRepresentant;
     
+    //** Abbattement **/
+    private String beneficiaire;
+    private String motif;
+    private short motif_A;
+    private short motif_B;
+    private short motif_C;
+    private short motif_D;
+    private short motif_E;
+    
+    private Abbattement model;
+    
+    
+    public Contribuable (){
+        beneficiaire = "No";
+        motif_A = 1;
+    }
     private Date date;
-   
-    public Contribuable() {
-        
-    }
-
-    public Contribuable(Integer id) {
-        this.id = id;
-    }
 
     public Integer getId() {
         return id;
@@ -95,6 +102,8 @@ public class Contribuable implements Serializable {
         this.bp = bp;
     }
 
+    //    *****************REPRESENTANT**********************************
+    
     public Integer getIdRepresentant() {
         return idRepresentant;
     }
@@ -151,5 +160,71 @@ public class Contribuable implements Serializable {
         this.date = date;
     }
 
+    //    *****************ABBATTEMENT**********************************
+    
+    public String getBeneficiaire() {
+        return beneficiaire;
+    }
+
+    public void setBeneficiaire(String beneficiaire) {
+        this.beneficiaire = beneficiaire;
+    }
+    
+    
+    public void setModel(Abbattement model) {
+        this.model = model;
+    }
+
+    public Abbattement getModel() {
+        return model;
+    }
+
+    public void setMotif(String motif) {
+        this.motif = motif;
+    }
+
+    public String getMotif() {
+        return motif;
+    }
+
+    public short getMotif_A() {
+        return motif_A;
+    }
+
+    public void setMotif_A(short motif_A) {
+        this.motif_A = motif_A;
+    }
+
+    public short getMotif_B() {
+        return motif_B;
+    }
+
+    public void setMotif_B(short motif_B) {
+        this.motif_B = motif_B;
+    }
+
+    public short getMotif_C() {
+        return motif_C;
+    }
+
+    public void setMotif_C(short motif_C) {
+        this.motif_C = motif_C;
+    }
+
+    public short getMotif_D() {
+        return motif_D;
+    }
+
+    public void setMotif_D(short motif_D) {
+        this.motif_D = motif_D;
+    }
+
+    public short getMotif_E() {
+        return motif_E;
+    }
+
+    public void setMotif_E(short motif_E) {
+        this.motif_E = motif_E;
+    }
     
 }

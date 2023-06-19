@@ -14,111 +14,136 @@
                     <p:commandButton 
                         value="Ajouter" 
                         icon="pi pi-plus" 
-                        actionListener="#{representantController.clearForm}"
-                        update=":dialogs-representant:manage-representant-content"
-                        oncomplete="PF('manageRepresentantDialog').show()"
+                        actionListener="#{contribuableController.clearForm}"
+                        update=":dialogs-contribuable:manage-contribuable-content"
+                        oncomplete="PF('manageContribuableDialog').show()"
                         styleClass="ui-button-success"
                         style="margin-right: .5rem">
-                        <p:resetInput target=":dialogs-representant:manage-representant-content" />
+                        <p:resetInput target=":dialogs-contribuable:manage-contribuable-content" />
                     </p:commandButton>
                 </p:toolbarGroup>
+                
+                <p:toolbarGroup align="right">
 
+                    <!-- Export data pdf -->
+                    <p:commandButton 
+                        value="PDF" 
+                        icon="pi pi-print" 
+                        styleClass="ui-button-help" 
+                        ajax="false"
+                        class="mr-2"
+                        >
+                        <p:dataExporter 
+                            type="pdf" 
+                            target="dt-contribuables" 
+                            fileName="Gestion des contribuables" 
+                        />
+                    </p:commandButton>
+
+                    <!--Export data excel -->
+                    <p:commandButton 
+                        value="EXCEL" 
+                        icon="pi pi-upload" 
+                        styleClass="ui-button-help" 
+                        ajax="false">
+                        <p:dataExporter 
+                            type="xls" 
+                            target="dt-contribuables" 
+                            fileName="Gestion des contribuables" 
+                        />
+                    </p:commandButton>
+
+                </p:toolbarGroup>
+                
             </p:toolbar>
-
+            
             <p:dataTable
-                id="dt-representants"
-                paginator="true" 
-                rows="4"
-                widgetVar="dtRepresentants"
-                rowSelectMode="add" 
+                id="dt-contribuables"
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="3,10,15,20"
+                paginator="true"
+                widgetVar="dtContribuables" 
+                rows="3"
+                value="#{contribuableController.contribuableList}" 
+                var="contribuable" 
+                rowKey="#{contribuable}"
                 paginatorPosition="bottom"
-                binding="#{table}" 
-                value="#{representantController.representantList}" 
-                var="representant"
-                rowKey="#{representant}">
+                binding="#{table}" >
 
-                <f:facet name="header">
-                    <div class="flex justify-content-between">
-                         <span 
-                            style="font-weight: bold;
-                            font-size: 18px; text-transform: uppercase">
-                             LISTE
-                         </span>
-                         <span class="filter-container ui-input-icon-left"> 
-                             <i class="pi pi-search icon"></i>
-                             <p:inputText 
-                                 id="globalFilter" 
-                                 onkeyup="PF('dtRepresentants').filter()" 
-                                 placeholder="Search...." 
-                             />
-                         </span>
-                     </div>
-                 </f:facet>
-                <p:column 
-                    headerText="#" 
-                    style="width: 5%">
-                    <h:outputText value="#{table.rowIndex + 1}" />
-                </p:column>
+            <f:facet name="header">
+                <div class="flex justify-content-between">
+                     <span 
+                         style="font-weight: bold;
+                          font-size: 18px; text-transform: uppercase">
+                         LIste
+                     </span>
+                     <span class="filter-container ui-input-icon-left"> 
+                         <i class="pi pi-search icon"></i>
+                         <p:inputText 
+                             id="globalFilter" 
+                             onkeyup="PF('dtContribuables').filter()" 
+                             placeholder="Search..." 
+                         />
+                     </span>
+                 </div>
+             </f:facet>
+
+             <p:column 
+                 headerText="" 
+                 style="width: 5%">
+                  <h:outputText value="#{table.rowIndex + 1}" />
+              </p:column>
+
+              <p:column 
+                 headerText="Nom / Raison sociale" 
+                 sortBy="#{contribuable.nom}" 
+                 filterBy="#{contribuable.nom}">
+
+                 <h:outputText value="#{contribuable.nom}" />
+              </p:column>
+
+              <p:column 
+                 headerText="Email" 
+                 sortBy="#{contribuable.email}" 
+                 filterBy="#{contribuable.email}"
+                 >
+                 <h:outputText value="#{contribuable.email}" />
+              </p:column>
 
                 <p:column 
-                    headerText="Nom" 
-                    sortBy="#{representant.nomRepresentant}" 
-                    filterBy="#{representant.nomRepresentant}"
+                    headerText="B.P" 
+                    sortBy="#{contribuable.bp}" 
+                    filterBy="#{contribuable.bp}"
                     style="width: 10%">
-                    <h:outputText value="#{representant.nomRepresentant}" />
-                </p:column>
-
-                <p:column 
-                   headerText="Prenom" 
-                   sortBy="#{representant.prenomRepresentant}" 
-                   filterBy="#{representant.prenomRepresentant}"
-                   style="width: 15%">
-                   <h:outputText value="#{representant.prenomRepresentant}" />
-                </p:column>
-
-                <p:column 
-                   headerText="Email" 
-                   sortBy="#{representant.emailRepresentant}" 
-                   filterBy="#{representant.emailRepresentant}">
-                   <h:outputText value="#{representant.emailRepresentant}" />
-                </p:column>
-
-                <p:column 
-                   headerText="B.P" 
-                   sortBy="#{representant.bpRepresentant}" 
-                   filterBy="#{representant.bpRepresentant}"
-                   style="width: 10%">
-                   <h:outputText value="#{representant.bpRepresentant}" />
+                    <h:outputText value="#{contribuable.bp}" />
                 </p:column>
 
                 <p:column exportable="false" style="width: 10%" >
-
                     <p:commandButton 
                         icon="pi pi-pencil" 
                         styleClass="edit-button rounded-button ui-button-success mr-4" 
-                        oncomplete="PF('manageRepresentantDialog').show()"
-                        update=":dialogs-representant:manage-representant-content"
+                        oncomplete="PF('manageContribuableDialog').show()"
+                        update=":dialogs-contribuable:manage-contribuable-content"
                         process="@this">
 
-                        <f:setPropertyActionListener value="#{representant}" target="#{representantController.model}" />
-                        <p:resetInput target=":dialogs-representant:manage-representant-content" />
+                        <f:setPropertyActionListener value="#{contribuable}" target="#{contribuableController.modelContribuable}" />
+                        <p:resetInput target=":dialogs-contribuable:manage-contribuable-content" />
 
                     </p:commandButton>
 
-                 <p:commandButton 
-                     class="ui-button-warning rounded-button" 
-                     icon="pi pi-trash"
-                     process="@this"
-                     ajax="false"
-                     action="#{representantController.delete(representant.id)}">
-                    <!--                             
-                    <f:setPropertyActionListener value="#{representant}" target="#{representantController.model}" />
-                    <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />-->
+                    <p:commandButton 
+                    class="ui-button-warning rounded-button" 
+                    icon="pi pi-trash"
+                    process="@this"
+                    ajax="false"
+                    action="#{contribuableController.delete(contribuable.id)}">
 
-
-                 </p:commandButton>
-             </p:column>
-             </p:dataTable>
+                </p:commandButton>
+                    
+                </p:column>
+                
+          </p:dataTable>
+            
          </h:form>
          
        <ui:include src="ajouter.xhtml" />

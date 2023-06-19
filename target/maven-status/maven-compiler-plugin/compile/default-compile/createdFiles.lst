@@ -17,6 +17,7 @@ util\PayementDbUtil.class
 model\Contribuable.class
 dbconnection\TestConnection.class
 util\DeclarationDbUtil.class
+controller\PayementController.class
 util\AuthDbUtil.class
 util\ContribuableDbUtil.class
 controller\ProvinceController.class
@@ -55,5 +56,7 @@ model\Avenue.class
 util\RoleDbUtil.class
 model\Immeuble.class
 util\ImpotDbUtil.class
+enums\Motif.class
 controller\ContribuableController.class
+dbconnection\app.class
 model\Declaration.class

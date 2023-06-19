@@ -62,20 +62,17 @@
                                 </div>
 
                                 <div class="field col-12 md:col-12 mt-5">
-                                    <component:inputTextField
-                                        label="Nom ou Raison Sociale"
+                                    <component:inputTextField label="Nom ou Raison Sociale"
                                         placeholder="Entrer nom ou raison Sociale"
                                         value="#{contribuableController.modelContribuable.nom}"
                                     />
                                 </div>
 
                                 <div class="field col-12 md:col-6">
-                                <component:inputTextField
-                                    label="E-mail"
-                                    placeholder="Entrer email "
-                                    value="#{contribuableController.modelContribuable.email}"
-                                />
-
+                                    <component:inputTextField
+                                        label="E-mail"
+                                        placeholder="Entrer email "
+                                        value="#{contribuableController.modelContribuable.email}"/>
                                 </div>
 
                                 <div class="field col-12 md:col-6">
@@ -86,7 +83,7 @@
                                         value="#{contribuableController.modelContribuable.motPasse}"
                                     />
                                 </div>
-
+                                
                                 <div class="field col-12 md:col-6">
                                     <component:inputTextField
                                         label="Boite postal"
@@ -104,7 +101,7 @@
                                     />
                                 </div>
 
-                                <div class=" field col-12 md:col-6 font-medium text-500 mb-3 mt-5">
+                                <div class=" field col-12 md:col-6 font-medium text-500 mb-0 mt-1">
                                     B. IDENTIFICATION DU REPRESENTANT
                                 </div>
 
@@ -115,86 +112,29 @@
                                         filter="true" 
                                         filterMatchMode="startsWith" 
                                         dynamic="true"
-                                        style="height: 41px; "
-                                    >
+                                        style="height: 41px; " >
+
                                         <f:selectItem itemLabel="Choisir Representant" />
                                         <f:selectItems var="representant"
                                             value="#{contribuableController.representantList}"
                                             itemLabel="#{representant.id} : #{representant.nomRepresentant} #{representant.prenomRepresentant}"
-                                            itemValue="#{representant.id}" 
-                                        />
+                                            itemValue="#{representant.id}" />
 
                                     </p:selectOneMenu>
                                 </div>
-                                
-                                <div class=" flex field col-12 md:col-12 mt-4">
-                                    <p:outputLabel >
-                                        Bénéficiaire d’abattement (Article 84)2 
-                                    </p:outputLabel>
-                                    <p:spacer width="20" />
-                                    <p:selectOneRadio value="#">
-                                        <f:selectItem itemValue="Oui" itemLabel="Oui"/>
-                                        <f:selectItem itemValue="No" itemLabel="No"/>
-                                    </p:selectOneRadio>
-                                    <h:outputText/>
-                                </div>
-                                
-                                <div class=" field col-12 md:col-12">
-                                    <p:outputLabel class="font-bold mt-3" >
-                                        Motif d’abattement :  
-                                    </p:outputLabel>
-                                    
-                                    <ul>
-                                        <!--==============================A======================================-->
-                                        <li>
-                                            <p:outputLabel styleClass="mr-3" >
-                                            
-                                                A. Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à l’âge de 25 ans, orphelin de père et de mère, héritier ou usufruitier
-                                                <p:selectBooleanCheckbox value="#" />
-                                            </p:outputLabel>
-                                        </li>
-                                        <!--==============================B======================================-->
-                                        <li>
-                                            <p:outputLabel styleClass="mr-3" >
-                                                B. Enfant mineur ou enfant majeur, copropriétaires, cohéritiers et co-usufruitier
-                                                <p:selectBooleanCheckbox value="#"/>
-                                            </p:outputLabel>
-                                        </li>
-                                        <!--==============================c======================================-->
-                                        <li>
-                                            <p:outputLabel styleClass="mr-3" >
-                                                C. Veuf (veuve) propriétaire, possesseur, titulaire, héritier ou usufruitier
-                                                <p:selectBooleanCheckbox value="#"/>
-                                            </p:outputLabel>
-                                        </li>
-                                        <!--==============================D======================================-->
-                                        <li>
-                                            <p:outputLabel>
-                                                D. Retraité ou handicapé, personne ayant atteint l’âge légal de la retraite propriétaire, possesseur, titulaire, héritier ou usufruitier
-                                                <p:selectBooleanCheckbox value="#"/>
-                                            </p:outputLabel>
-                                        </li>
-                                        <!--==============================E======================================-->
-                                        <li>
-                                            <p:outputLabel styleClass="mr-3">
-                                                E. Démobilisé non en fonction publique, privée ou élective 
-                                                <p:selectBooleanCheckbox value="#"/>
-                                            </p:outputLabel>
-                                        </li>
-                                    </ul>
-                                    
-                                </div>
 
+                                
                             </div>
 
                         </p:outputPanel>
+                        
                     </p:outputPanel>
+                    
                     <f:facet name="footer">
                         <div class="flex align-items-center justify-content-end">
-                            <p:commandButton 
-                                value="Enregistrer"
+                            <p:commandButton value="Enregistrer"
                                 ajax="false"
-                                action="#{contribuableController.create(contribuableController.modelContribuable)}"
+                                action="#{contribuableController.createOrUpdate}"
                                 update="manage-form-content dialogs" 
                                 process="manage-form-content @this" 
                                 style="height: 41px;"/>
