@@ -7,10 +7,11 @@ package controller;
 
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import model.Administrateur;
 import model.Contribuable;
@@ -31,74 +32,35 @@ public class AuthController extends AuthDbUtil implements Serializable {
     
     private List<Administrateur> administrateurs;
     private Administrateur administrateur;
+    private Administrateur authAdministrateur;
 
-    private List<Contribuable> contribuables;
-    private Contribuable contribuable;
-    
-    private List<Role> roles;
-    private Role role;
-    
     public AuthController()  {
        this.administrateur = new Administrateur();
-       this.administrateurs = new ArrayList<Administrateur>();
-       this.contribuable = new Contribuable();
-       this.contribuables = new ArrayList<Contribuable>();
-       this.role = new Role();
-       this.roles = new ArrayList<Role>();
-       
     }
     
-    ///******** validate login ****************************//
-    public String loginContribuable() throws SQLException{
+    public String loginAdmin(){
         
-        String msg_1 ="Incorrect Email and Passowrd";
-        String msg_2 ="Please Enter Correct Email and Password";
+        String mail = this.administrateur.getEmail();
+        String password = DigestUtils.shaHex(this.administrateur.getMotPasse());
         
-        String mail = this.contribuable.getEmail();
-        String password = DigestUtils.shaHex(this.contribuable.getMotPasse());
-//      String password = this.contribuable.getMotPasse();
-        
-        
-        boolean valid = AuthDbUtil.validateContribuable(mail,password);
-        
-        if(valid){
-            
-            HttpSession session = SessionUtils.getSession();
-            session.setAttribute("email", this.contribuable.getEmail());
-            
-            return "welcome?faces-redirect=true";
-            
-            
-        }else{
-            warningMessage(msg_1,msg_2);
-        }
-        return "";
-    }
-    
-    ///******** validate login ****************************//
-    public String login() throws SQLException{
-        
-        String msg_1 ="Incorrect Email and Passowrd";
-        String msg_2 ="Please Enter Correct Email and Password";
-        
-        String mail = this.getAdministrateur().getEmail();
-        String password = DigestUtils.shaHex(this.getAdministrateur().getMotPasse());
-//        String password = this.getAdministrateur().getMotPasse();
-        
-        
-        boolean valid = AuthDbUtil.validate(mail,password);
-        
-        if(valid){
-            
-            HttpSession session = SessionUtils.getSession();
-            session.setAttribute("email", this.administrateur.getEmail());
-            
+        List<Administrateur> list = AuthDbUtil.authentificator(mail,password);
+
+        if( !list.isEmpty()){
+            this.authAdministrateur = list.get(0);
+            this.administrateur.setMotPasse("");
+
+            FacesContext context = FacesContext.getCurrentInstance();
+            ExternalContext externalContext = context.getExternalContext();
+            externalContext.getSessionMap().put("authAdministrateur", this.administrateur);
+
             return "dashboard?faces-redirect=true";
             
-            
         }else{
-            warningMessage(msg_1,msg_2);
+            //showInfo("Bocked"," Your account is disable ");
+            warningMessage("Incorrect Email and Passowrd","Please Enter Correct Email and Password");
+        
         }
+        
         return "";
     }
     
@@ -107,11 +69,14 @@ public class AuthController extends AuthDbUtil implements Serializable {
         
         HttpSession session = SessionUtils.getSession();
         session.invalidate();
-        return "index";
+        return "index?faces-redirect=true";
         
     }
-
+    
+    /// **************** getters and setters *********
+    
     public List<Administrateur> getAdministrateurs() {
+        
         return administrateurs;
     }
 
@@ -126,38 +91,18 @@ public class AuthController extends AuthDbUtil implements Serializable {
     public void setAdministrateur(Administrateur administrateur) {
         this.administrateur = administrateur;
     }
-
-    public List<Contribuable> getContribuables() {
-        return contribuables;
+    
+    public Administrateur getAuthAdministrateur() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
+        administrateur = (Administrateur) externalContext.getSessionMap().get("authAdministrateur");
+        return authAdministrateur;
     }
 
-    public void setContribuables(List<Contribuable> contribuables) {
-        this.contribuables = contribuables;
+    public void setAuthAdministrateur(Administrateur authAdministrateur) {
+        this.authAdministrateur = authAdministrateur;
     }
 
-    public Contribuable getContribuable() {
-        return contribuable;
-    }
-
-    public void setContribuable(Contribuable contribuable) {
-        this.contribuable = contribuable;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
- 
+    
 }
 

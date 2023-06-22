@@ -21,10 +21,10 @@
                 id="dt-payement"
                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                 rowsPerPageTemplate="5,10,15,20"
-                value="#{roleController.roles}"
-                widgetVar="dtRoles" 
-                var="role"
-                rowKey="#{role.nomRole}"
+                value="#{quittanceController.quittanceList}"
+                widgetVar="dtQuittance" 
+                var="quittance"
+                rowKey="#{quittance}"
                 paginator="true" 
                 rows="4" 
                 paginatorPosition="bottom"
@@ -43,44 +43,49 @@
                              <i class="pi pi-search icon"></i>
                              <p:inputText 
                                  id="globalFilter"
-                                 onkeyup="PF('dtRoles').filter()" 
+                                 onkeyup="PF('dtQuittance').filter()" 
                                  placeholder="Search..." 
                              />
                          </span>
                      </div>
                  </f:facet>
-                
+                <!--
                 <p:column headerText="No" style="width: 5%">
                       <h:outputText value="#{table.rowIndex + 1}" />
                 </p:column>
-                <!--
-                <p:column headerText="Code">
-                    <h:outputText value="#{role.id}" />
-                </p:column>
                 -->
-
-                <p:column headerText="Nom" >
-                    <h:outputText value="#{role.nomRole}" />
+                
+                <p:column headerText="Numero">
+                    <h:outputText value="#{quittance.id}" />
                 </p:column>
                 
-                <p:column headerText="Description" >
-                    <h:outputText value="#{role.description}" />
+                <p:column headerText="Montant paye" >
+                    <h:outputText value="#{quittance.montantPaye}" />
+                </p:column>
+                
+                <p:column headerText="Montant restante du" >
+                    <h:outputText value="#{quittance.montantRestanteDu}" />
                 </p:column>
 
-            <p:column exportable="false" style="width: 10%" >
+                <p:column headerText="Date">
+                    <h:outputText value="#{quittance.dateQuittance}" />
+                </p:column>
+              
+            <!--
+            <p:column exportable="false" style="width: 5%" >
                 
                 <p:commandButton 
                     icon="pi pi-pencil" 
                     styleClass="edit-button rounded-button ui-button-success mr-4"
                     process="@this"
                 >
-<!--                    <f:setPropertyActionListener value="#{role}" target="#{roleController.role}" />
-                    <p:resetInput target=":dialogs:manage-role-content" />-->
+                   <f:setPropertyActionListener value="#{quittance}" target="#{quittanceController.quittance}" />
+                    <p:resetInput target=":dialogs:manage-form-content" />
                 </p:commandButton>
                 
-                
              </p:column>
-
+            -->
+            
             </p:dataTable>
             
         </h:form>

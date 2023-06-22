@@ -7,24 +7,19 @@
     
         <h:form id="form">
             <p:growl id="messages" showDetail="true" />
-            <!--
-            <p:messages id="messages" showDetail="true" closable="true">
-                <p:autoUpdate/>
-            </p:messages>
-            -->
-
+            
             <p:toolbar>
                 
             </p:toolbar>
             
             <p:dataTable
-                id="dt-payement"
+                id="dt-amande"
                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                 rowsPerPageTemplate="5,10,15,20"
-                value="#{roleController.roles}"
-                widgetVar="dtRoles" 
-                var="role"
-                rowKey="#{role.nomRole}"
+                value="#{amendeController.listAmende}"
+                widgetVar="dtAmendes" 
+                var="amende"
+                rowKey="#{amende}"
                 paginator="true" 
                 rows="4" 
                 paginatorPosition="bottom"
@@ -43,7 +38,7 @@
                              <i class="pi pi-search icon"></i>
                              <p:inputText 
                                  id="globalFilter"
-                                 onkeyup="PF('dtRoles').filter()" 
+                                 onkeyup="PF('dtAmendes').filter()" 
                                  placeholder="Search..." 
                              />
                          </span>
@@ -53,33 +48,42 @@
                 <p:column headerText="No" style="width: 5%">
                       <h:outputText value="#{table.rowIndex + 1}" />
                 </p:column>
+                
+                <p:column headerText="Impot" >
+                    <h:outputText value="#{amende.idImpot}" />
+                </p:column>
                 <!--
-                <p:column headerText="Code">
-                    <h:outputText value="#{role.id}" />
+                <p:column headerText="Base Line" >
+                    <h:outputText value="#{amende.baseLine}" />
                 </p:column>
                 -->
-
-                <p:column headerText="Nom" >
-                    <h:outputText value="#{role.nomRole}" />
+                
+                <p:column headerText="Amande fixe" >
+                    <h:outputText value="#{amende.amandeFixe}" />
                 </p:column>
                 
-                <p:column headerText="Description" >
-                    <h:outputText value="#{role.description}" />
+                <p:column headerText="Penalite (10%)" >
+                    <h:outputText value="#{amende.penalite}" />
+                </p:column>
+                
+                <p:column headerText="Total" >
+                    <h:outputText value="#{amende.total}" />
                 </p:column>
 
-            <p:column exportable="false" style="width: 10%" >
-                
-                <p:commandButton 
-                    icon="pi pi-pencil" 
-                    styleClass="edit-button rounded-button ui-button-success mr-4"
-                    process="@this"
-                >
-<!--                    <f:setPropertyActionListener value="#{role}" target="#{roleController.role}" />
-                    <p:resetInput target=":dialogs:manage-role-content" />-->
-                </p:commandButton>
-                
-                
-             </p:column>
+                <!--
+                <p:column exportable="false" style="width: 10%" >
+
+                    <p:commandButton 
+                        icon="pi pi-pencil" 
+                        styleClass="edit-button rounded-button ui-button-success mr-4"
+                        process="@this"
+                    >
+                        <f:setPropertyActionListener value="#{role}" target="#{roleController.role}" />
+                        <p:resetInput target=":dialogs:manage-form-content" />
+                    </p:commandButton>
+
+                 </p:column>
+                 -->   
 
             </p:dataTable>
             

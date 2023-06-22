@@ -19,16 +19,16 @@ public class SessionUtils {
         return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     }
 
-    public static String getEmail() {
+    public static String getUserEmail() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        return session.getAttribute("email").toString();
+        return session.getAttribute("user_email").toString();
     }
 
-    public static String getId() {
+    public static String getUserId() {
         HttpSession session = getSession();
 
         if (session != null){
-            return (String) session.getAttribute("id");
+            return (String) session.getAttribute("user_id");
         }else{
             return null;
         }

@@ -20,7 +20,7 @@ public class Payement implements Serializable {
     private double montantPaye;
     private Date datePayement;
     
-    private Amande amande;
+    private Amende amande;
     private Integer idAmande;
     //private Quittance  quittance;
     //private int  idQuittance;
@@ -68,11 +68,11 @@ public class Payement implements Serializable {
         this.datePayement = datePayement;
     }
 
-    public Amande getAmande() {
+    public Amende getAmande() {
         return amande;
     }
 
-    public void setAmande(Amande amande) {
+    public void setAmande(Amende amande) {
         this.amande = amande;
     }
 

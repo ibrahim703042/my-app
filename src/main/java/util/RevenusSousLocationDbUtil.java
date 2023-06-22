@@ -11,388 +11,271 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
-import jakarta.faces.context.FacesContext;
 import java.sql.*;
 import java.util.*;
-import model.Immeuble;
+import model.RevenuSousLocation;
+import model.RevenusLocatif;
 
 @ManagedBean
 @ApplicationScoped
 
 public class RevenusSousLocationDbUtil extends MySQLJDBCUtil {
     
+    private List<RevenuSousLocation> revenuSousLocationList;
+    private RevenuSousLocation revenuSousLocation;
+    private String query;
+    
     //*************************** display data *****************/
-    public ArrayList findAll() {
+    public List<RevenuSousLocation> findAll() {
         
-        ArrayList administrateurList = new ArrayList();
+        revenuSousLocationList = new ArrayList<>();
         
         try {
-            String query = 
-                    "SELECT "
-                    + "contribuable.id As Contribuable_ID, "
-                    + "contribuable.nom As nom_contribuable, "
-                    + "contribuable.email AS email_contribuable, "
-                    + "contribuable.telephone AS tel_contribuable, "
-                    + "contribuable.BP AS BP_contribuable, "
-                    + "representant.id As representant_ID, "
-                    + "representant.nomRepresentant As nom_representant, "
-                    + "representant.prenomRepresentant AS prenom_representant, "
-                    + "representant.emailRepresentant AS email_representant, "
-                    + "representant.telephoneRepresentant AS tel_representant, "
-                    + "representant.bpRepresentant AS BP_representant, "
-                    + "immeuble.id as Immeuble_ID, "
-                    + "immeuble.nomAvenue as Rue , "
-                    + "colline.nomColline as Colline,  "
-                    + "commune.nomCommune as Commune "
-                    + "FROM representant "
-                    + "JOIN contribuable "
-                    + "ON contribuable.id_representant = representant.id "
-                    + "JOIN immeuble "
-                    + "ON immeuble.id_contribuable = contribuable.id "
-                    + "JOIN colline "
-                    + "ON immeuble.id_colline = colline.id "
-                    + "JOIN commune ON colline.id_commune = commune.id "
-                    + "ORDER BY immeuble.id DESC";
+            query =  " "
+                    + "SELECT "
+                    + "revenusouslocation.id_revenuSousLocatif, "
+                    + "revenusouslocation.id_revenuLocatif, "
+                    + "revenusouslocation.recetteSousLocation,"
+                    + "revenusouslocation.loyerPayes, "
+                    + "(revenusouslocation.recetteSousLocation - revenusouslocation.loyerPayes) AS Revenus_nets_imposables , "
+                    + "((((revenulocatif.loyerExonere + revenulocatif.loyerImposable)-(revenulocatif.loyerExonere + revenulocatif.loyerImposable) * 0.4) - revenulocatif.interetEmprunt) + (revenusouslocation.recetteSousLocation - revenusouslocation.loyerPayes)) AS  Total_revenus_nets_imposables , "
+                    + "revenusouslocation.abbattements, "
+                    + "((((revenulocatif.loyerExonere + revenulocatif.loyerImposable)-(revenulocatif.loyerExonere + revenulocatif.loyerImposable) * 0.4) - revenulocatif.interetEmprunt) + (revenusouslocation.recetteSousLocation - revenusouslocation.loyerPayes)) - revenusouslocation.abbattements AS REVENU_NET_IMPOSABLE "
+                    + "FROM revenusouslocation, revenulocatif "
+                    + "WHERE revenulocatif.id_revenuLocatif = revenusouslocation.id_revenuLocatif "
+                    + "AND revenusouslocation.id_revenuSousLocatif IS NOT NULL ORDER BY revenusouslocation.id_revenuSousLocatif DESC";
 
-            // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
             while(resultSet.next()) { 
 
-                Immeuble immeuble = new Immeuble();
+                revenuSousLocation = new RevenuSousLocation();
                 
-                /* *******contribuable **** */
-                
-                immeuble.setId(resultSet.getInt("Immeuble_ID")); 
-                immeuble.setIdContribuable(resultSet.getInt("Contribuable_ID"));  
-                immeuble.setNomContribuable(resultSet.getString("nom_contribuable"));  
-                immeuble.setNomColline(resultSet.getString("Colline"));  
-                immeuble.setNomCommune(resultSet.getString("Commune"));  
-                //immeuble.setNomProvince(resultSet.getString("Province"));  
-                immeuble.setNomAvenue(resultSet.getString("Rue"));  
-                immeuble.setTelephoneContribuable(resultSet.getString("tel_contribuable"));  
-                immeuble.setBpContribuable(resultSet.getString("BP_contribuable"));  
-                immeuble.setEmailContribuable(resultSet.getString("email_contribuable"));  
-                
-                /* *******representant **** */
-                immeuble.setIdRepresentant(resultSet.getInt("Representant_ID"));  
-                immeuble.setNomRepresentant(resultSet.getString("nom_representant"));  
-                immeuble.setPrenomRepresentant(resultSet.getString("prenom_representant"));  
-                immeuble.setNomColline(resultSet.getString("Colline"));  
-                immeuble.setNomCommune(resultSet.getString("Commune"));  
-                //immeuble.setNomProvince(resultSet.getString("Province"));  
-                immeuble.setNomAvenue(resultSet.getString("Rue"));  
-                immeuble.setTelephoneRepresentant(resultSet.getString("tel_representant"));
-                immeuble.setBpRepresentant(resultSet.getString("BP_representant"));  
-                immeuble.setEmailRepresentant(resultSet.getString("email_representant"));
+                revenuSousLocation.setId(resultSet.getInt("id_revenuSousLocatif")); 
+                revenuSousLocation.setIdRevenusLocatif(resultSet.getInt("id_revenuLocatif")); 
+                revenuSousLocation.setRecetteSousLocation(resultSet.getDouble("recetteSousLocation")); 
+                revenuSousLocation.setLoyerPayes(resultSet.getDouble("loyerPayes")); 
+                revenuSousLocation.setRevenusNetsImposables(resultSet.getDouble("Revenus_nets_imposables")); 
+                revenuSousLocation.setTotalRevenusNetsImposables(resultSet.getDouble("Total_revenus_nets_imposables")); 
+                revenuSousLocation.setAbbattements(resultSet.getDouble("abbattements")); 
+                revenuSousLocation.setRevenuSousNetImposable(resultSet.getDouble("REVENU_NET_IMPOSABLE")); 
                 
 
-                administrateurList.add(immeuble);  
+                revenuSousLocationList.add(revenuSousLocation);  
             }   
 
-            System.out.println("Total Records Fetched: " + administrateurList.size());
+            System.out.println("Total Records Fetched: " + revenuSousLocationList.size());
             connection.close();
 
         } catch(SQLException sqlException) {  
             sqlException.printStackTrace();
         }
-        return administrateurList;
-
-    }
-    
-    
-    //*************************** display data *****************/
-    public ArrayList getAllByImmeubleDeclaration() {
-        
-        ArrayList administrateurList = new ArrayList();
-        
-        try {
-            String query = 
-                    "SELECT "
-                    + "contribuable.id As Contribuable_ID, "
-                    + "contribuable.nom As nom_contribuable, "
-                    + "contribuable.email AS email_contribuable, "
-                    + "contribuable.telephone AS tel_contribuable, "
-                    + "contribuable.BP AS BP_contribuable, "
-                    + "representant.id As representant_ID, "
-                    + "representant.nomRepresentant As nom_representant, "
-                    + "representant.prenomRepresentant AS prenom_representant, "
-                    + "representant.emailRepresentant AS email_representant, "
-                    + "representant.telephoneRepresentant AS tel_representant, "
-                    + "representant.bpRepresentant AS BP_representant, "
-                    + "immeuble.id as Immeuble_ID, "
-                    + "immeuble.nomAvenue as Rue , "
-                    + "colline.nomColline as Colline,  "
-                    + "commune.nomCommune as Commune "
-                    + "FROM representant,contribuable,immeuble,declaration,colline,commune "
-                    + "WHERE contribuable.id_representant = representant.id "
-                    + "AND immeuble.id_contribuable = contribuable.id "
-                    + "AND declaration.id_immeuble != immeuble.id "
-                    + "AND immeuble.id_colline = colline.id "
-                    + "AND colline.id_commune = commune.id "
-                    + "ORDER BY immeuble.id DESC";
-
-            // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = dataSource.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);  
-
-            while(resultSet.next()) { 
-
-                Immeuble immeuble = new Immeuble();
-                
-                /* *******contribuable **** */
-                
-                immeuble.setId(resultSet.getInt("Immeuble_ID")); 
-                immeuble.setIdContribuable(resultSet.getInt("Contribuable_ID"));  
-                immeuble.setNomContribuable(resultSet.getString("nom_contribuable"));  
-                immeuble.setNomColline(resultSet.getString("Colline"));  
-                immeuble.setNomCommune(resultSet.getString("Commune"));  
-                //immeuble.setNomProvince(resultSet.getString("Province"));  
-                immeuble.setNomAvenue(resultSet.getString("Rue"));  
-                immeuble.setTelephoneContribuable(resultSet.getString("tel_contribuable"));  
-                immeuble.setBpContribuable(resultSet.getString("BP_contribuable"));  
-                immeuble.setEmailContribuable(resultSet.getString("email_contribuable"));  
-                
-                /* *******representant **** */
-                immeuble.setIdRepresentant(resultSet.getInt("Representant_ID"));  
-                immeuble.setNomRepresentant(resultSet.getString("nom_representant"));  
-                immeuble.setPrenomRepresentant(resultSet.getString("prenom_representant"));  
-                immeuble.setNomColline(resultSet.getString("Colline"));  
-                immeuble.setNomCommune(resultSet.getString("Commune"));  
-                //immeuble.setNomProvince(resultSet.getString("Province"));  
-                immeuble.setNomAvenue(resultSet.getString("Rue"));  
-                immeuble.setTelephoneRepresentant(resultSet.getString("tel_representant"));
-                immeuble.setBpRepresentant(resultSet.getString("BP_representant"));  
-                immeuble.setEmailRepresentant(resultSet.getString("email_representant"));
-                
-
-                administrateurList.add(immeuble);  
-            }   
-
-            System.out.println("Total Records Fetched: " + administrateurList.size());
-            connection.close();
-
-        } catch(SQLException sqlException) {  
-            sqlException.printStackTrace();
-        }
-        return administrateurList;
+        return revenuSousLocationList;
 
     }
     
     //************** Save data **********************************/ 
-    public void save(Immeuble immeuble){
-        
+    public RevenuSousLocation save(RevenuSousLocation revenuSousLocation){
+        RevenuSousLocation model = null;
         try {
 
-            String query ="INSERT INTO immeuble (id_colline, id_contribuable, nomAvenue) values (?, ?, ?)";
+            query =""
+                + "INSERT INTO revenusouslocation "
+                + "(id_revenuLocatif, recetteSousLocation, loyerPayes, abbattements) "
+                + "VALUES (?, ?, ?, ?)";
             
             connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
             pstmt = connection.prepareStatement(query);         
 
-            pstmt.setInt(1, immeuble.getIdColline());
-            pstmt.setInt(2, immeuble.getIdContribuable());
-            pstmt.setString(3, immeuble.getNomAvenue());
+            pstmt.setInt(1, revenuSousLocation.getId());
+            pstmt.setDouble(2, revenuSousLocation.getRecetteSousLocation());
+            pstmt.setDouble(3, revenuSousLocation.getLoyerPayes());
+            pstmt.setDouble(4, revenuSousLocation.getAbbattements());
 
             pstmt.executeUpdate();
-            connection.close();
-
-        }
-//        catch (NullPointerException e) {
-//            // handle the null value appropriately
-//            System.err.println("Caught NullPointerException: " + e.getMessage());
-//        } 
-        catch (SQLException e) {
-            // handle the SQLException appropriately
-            System.err.println("Caught SQLException: " + e.getMessage());
-        } 
-    }
-
-    //*************************** find data by id *****************/
-    public void findById(int immeubleId ) {
-        
-        Immeuble immeuble = null;
-        System.out.println(" findById() : immeuble Id: " + immeubleId);
-        
-        /* Setting The Particular province Details In Session */
-        Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        
-        try {
-            String query = ""
-                    + "SELECT contribuable.*, "
-                    + "colline.nomColline AS Colline, "
-                    + "colline.id AS Colline_id, "
-                    + "immeuble.id AS immeuble_id,"
-                    + "immeuble.nomAvenue AS Rue "
-                    + "FROM contribuable, immeuble, colline "
-                    + "WHERE immeuble.id_contribuable = contribuable.id "
-                    + "AND immeuble.id_colline = colline.id "
-                    + "AND immeuble.id = " + immeubleId ;
-
-            // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = dataSource.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);  
-
-            while(resultSet.next()) { 
-
-                immeuble = new Immeuble();
-                
-                /* *******contribuable **** */
-                
-                immeuble.setId(resultSet.getInt("Immeuble_ID"));
-                immeuble.setNomAvenue(resultSet.getString("Rue"));  
-
-                immeuble.setIdContribuable(resultSet.getInt("id"));  
-                immeuble.setNomContribuable(resultSet.getString("nom"));  
-                
-                immeuble.setIdColline(resultSet.getInt("Colline_id"));  
-                immeuble.setNomColline(resultSet.getString("Colline"));  
-                                
-            }   
-
-            sessionMap.put("immeubleMapped", immeuble);
-            connection.close();
             
-        } catch(SQLException sqlException) {  
-            sqlException.printStackTrace();
-        }
+            connection.commit();
+            connection.setAutoCommit(true);
 
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
+                }
+            }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+             }
+        }
+        return model;
     }
     
-    //*************************** View data by id *****************/
-    public void ViewById(int immeubleId ) {
-        
-        Immeuble immeuble = null;
-        System.out.println(" findById() : immeuble Id: " + immeubleId);
-        
-        /* Setting The Particular province Details In Session */
-        Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        
+    //************** update data **********************************/ 
+    public RevenuSousLocation update(RevenuSousLocation revenuSousLocation){
+        RevenuSousLocation model = null;
         try {
-            String query = 
-                    "SELECT "
-                    + "contribuable.id As Contribuable_ID, "
-                    + "contribuable.nom As nom_contribuable, "
-                    + "contribuable.prenom AS prenom_contribuable, "
-                    + "contribuable.email AS email_contribuable, "
-                    + "contribuable.telephone AS tel_contribuable, "
-                    + "contribuable.BP AS BP_contribuable, "
-                    + "immeuble.id as Immeuble_ID, "
-                    + "immeuble.nomAvenue as Rue , "
-                    + "colline.nomColline as Colline,  "
-                    + "commune.nomCommune as Commune,  "
-                    + "province.nomProvince as Province "
-                    + "FROM contribuable "
-                    + "JOIN immeuble "
-                    + "ON immeuble.id_contribuable = "
-                    + "contribuable.id JOIN colline "
-                    + "ON immeuble.id_colline = colline.id "
-                    + "JOIN commune ON colline.id_commune = commune.id "
-                    + "JOIN province ON commune.id_province = province.id "
-                    + "WHERE contribuable.id = " +immeubleId;
 
-            // String query = "SELECT * FROM immeuble WHERE id IS NOT NULL ORDER BY id DESC";
-            connection = dataSource.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);  
-
-            while(resultSet.next()) { 
-
-                immeuble = new Immeuble();
-                
-                /* *******contribuable **** */
-                
-                immeuble.setId(resultSet.getInt("Immeuble_ID")); 
-                immeuble.setIdContribuable(resultSet.getInt("Contribuable_ID"));  
-                immeuble.setNomContribuable(resultSet.getString("nom_contribuable"));  
-                immeuble.setPrenomContribuable(resultSet.getString("prenom_contribuable"));  
-                immeuble.setNomColline(resultSet.getString("Colline"));  
-                immeuble.setNomCommune(resultSet.getString("Commune"));  
-                immeuble.setNomProvince(resultSet.getString("Province"));  
-                immeuble.setNomAvenue(resultSet.getString("Rue"));  
-                immeuble.setTelephoneContribuable(resultSet.getString("tel_contribuable"));  
-                immeuble.setBpContribuable(resultSet.getString("BP_contribuable"));  
-                immeuble.setEmailContribuable(resultSet.getString("email_contribuable"));  
-                
-                /* *******representant **** */
-//                immeuble.setIdRepresentant(resultSet.getInt("Representant_ID"));  
-//                immeuble.setNomRepresentant(resultSet.getString("nom_representant"));  
-//                immeuble.setPrenomRepresentant(resultSet.getString("prenom_representant"));  
-//                immeuble.setNomColline(resultSet.getString("Colline"));  
-//                immeuble.setNomCommune(resultSet.getString("Commune"));  
-//                immeuble.setNomProvince(resultSet.getString("Province"));  
-//                immeuble.setNomAvenue(resultSet.getString("Rue"));  
-//                immeuble.setTelephoneRepresentant(resultSet.getString("tel_representant"));
-//                immeuble.setBpRepresentant(resultSet.getString("BP_representant"));  
-//                immeuble.setEmailRepresentant(resultSet.getString("email_representant"));
-                
-            }   
-
-            sessionMap.put("immeubleMapped", immeuble);
-            connection.close();
+            query =""
+                + "UPDATE revenusouslocation SET "
+                + "id_revenuLocatif = ?, "
+                + "recetteSousLocation = ?, "
+                + "loyerPayes = ?, "
+                + "abbattements = ? "
+                + "WHERE = ? ";
             
-        } catch(SQLException sqlException) {  
-            sqlException.printStackTrace();
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);         
+
+            pstmt.setInt(1, revenuSousLocation.getIdRevenusLocatif());
+            pstmt.setDouble(2, revenuSousLocation.getRecetteSousLocation());
+            pstmt.setDouble(3, revenuSousLocation.getLoyerPayes());
+            pstmt.setDouble(4, revenuSousLocation.getAbbattements());
+            pstmt.setInt(5, revenuSousLocation.getId());
+
+            pstmt.executeUpdate();
+            
+            connection.commit();
+            connection.setAutoCommit(true);
+
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
+                }
+            }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
-
+        return model;
     }
-	
-    //************** update data ******************************/
-    public void update(Immeuble immeuble){
-
+    
+    //************** delete data **********************************/ 
+    public void delete(Integer revenuSousLocationId){
+        
+        System.out.println("delete() : RevenuSousLocation Id: " + revenuSousLocationId);
+        
         try {
 
-            String query =""
-                    + "UPDATE immeuble "
-                    + "SET "
-                    + "id_colline = ?, "
-                    + "id_contribuable = ?, "
-                    + "nomAvenue = ? "
-                    + "WHERE id = ? ";
-
-            connection = dataSource.getConnection();
-            pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, immeuble.getIdColline());
-            pstmt.setInt(2, immeuble.getIdContribuable());
-            pstmt.setString(3, immeuble.getNomAvenue());
-            pstmt.setInt(4,immeuble.getId());
+            query = " DELETE revenusouslocation WHERE = ? ";
             
-            pstmt.execute();
-            connection.close();
-
-        } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
-        }
-        
-    }
-
-    //************** delete data ********************************/
-    public void delete(int immeubleId) {
-        
-        System.out.println("delete() : Immeuble Id: " + immeubleId);
-
-        try {
             connection = dataSource.getConnection();
-            String query = "DELETE FROM immeuble WHERE id = " + immeubleId ;
-            pstmt = connection.prepareStatement(query);
-            pstmt.executeUpdate();  
-            connection.close();
+            connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);         
+
+            pstmt.setInt(1, revenuSousLocation.getId());
+
+            pstmt.executeUpdate();
             
-        } catch(SQLException sqlException){
-            addErrorMessage(sqlException);
+            connection.commit();
+            connection.setAutoCommit(true);
+
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
+                }
+            }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
     
-     //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
+    
+    //*************************** fetch a single value *****************/
+    public List<RevenusLocatif> findRevenuBrut( Integer id){
+        List<RevenusLocatif> revenuLocatifList = new ArrayList<>();
+        System.out.println("findRevenuBrut() : Revenu Locatif Id: " + id);
         
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        try {
+            query = ""
+                    + "SELECT "
+                    + "(((revenulocatif.loyerExonere + revenulocatif.loyerImposable)-(revenulocatif.loyerExonere + revenulocatif.loyerImposable) * 0.4) - revenulocatif.interetEmprunt) AS RevenusNetsImposables  "
+                    + "FROM revenulocatif WHERE  ORDER BY revenulocatif.id_revenuLocatif DESC";
+
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);         
+
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            
+            while(resultSet.next()) { 
+
+                RevenusLocatif revenuLocatif = new RevenusLocatif();
+                revenuLocatif.setRevenuNetImposable(resultSet.getDouble("RevenusNetsImposables"));
+                revenuLocatifList.add(revenuLocatif);
+            }   
+            System.out.println("Total Records Fetched: " + revenuLocatifList.size());
+            connection.commit();
+            connection.setAutoCommit(true);
+
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
+                }
+            }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return revenuLocatifList;
     }
+    
 }

@@ -15,14 +15,14 @@ import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
 import java.sql.*;
 import java.util.*;
-import model.RevenuLocatif;
+import model.RevenusLocatif;
 
 @ManagedBean
 @ApplicationScoped
 
 public class RevenusDbUtil extends MySQLJDBCUtil {
     
-    private List<RevenuLocatif> revenusLocatif;
+    private List<RevenusLocatif> revenusLocatif;
     
     //*************************** display data *****************/
     @PostConstruct
@@ -37,7 +37,7 @@ public class RevenusDbUtil extends MySQLJDBCUtil {
 
             while(resultSet.next()) { 
 
-                RevenuLocatif revenuLocatif = new RevenuLocatif(); 
+                RevenusLocatif revenuLocatif = new RevenusLocatif(); 
 
                 revenuLocatif.setId(resultSet.getInt("id_revenuLocatif"));  
                 revenuLocatif.setLoyerExonere(resultSet.getDouble("loyerExonere"));  
@@ -58,13 +58,13 @@ public class RevenusDbUtil extends MySQLJDBCUtil {
         }
     }
 
-    public List<RevenuLocatif> getRevenusLocatif() {
+    public List<RevenusLocatif> getRevenusLocatif() {
         return new ArrayList<>(revenusLocatif);
     }
     
     
     
-    public List<RevenuLocatif> findAll() {
+    public List<RevenusLocatif> findAll() {
         revenusLocatif = new ArrayList();
         
         
@@ -76,7 +76,7 @@ public class RevenusDbUtil extends MySQLJDBCUtil {
 
             while(resultSet.next()) { 
 
-                RevenuLocatif revenuLocatif = new RevenuLocatif(); 
+                RevenusLocatif revenuLocatif = new RevenusLocatif(); 
 
                 revenuLocatif.setId(resultSet.getInt("id_revenuLocatif"));  
                 revenuLocatif.setLoyerExonere(resultSet.getDouble("loyerExonere"));  
@@ -100,7 +100,7 @@ public class RevenusDbUtil extends MySQLJDBCUtil {
     }
     
     //************** Save data **********************************/ 
-    public void save(RevenuLocatif revenuLocatif){
+    public void save(RevenusLocatif revenuLocatif){
         
         try {
 
@@ -127,7 +127,7 @@ public class RevenusDbUtil extends MySQLJDBCUtil {
     //************** find data by ID ***************************/
     public void findById(int revenuId) {
         
-        RevenuLocatif revenuLocatif = null;
+        RevenusLocatif revenuLocatif = null;
         System.out.println(" findById() : Revenu Id: " + revenuId);
         
         /* Setting The Particular administrateur Details In Session */
@@ -146,7 +146,7 @@ public class RevenusDbUtil extends MySQLJDBCUtil {
             
             if(resultSet.next()) {
                 
-                revenuLocatif = new RevenuLocatif(); 
+                revenuLocatif = new RevenusLocatif(); 
 
                 revenuLocatif.setId(resultSet.getInt("id"));  
                 revenuLocatif.setLoyerExonere(resultSet.getDouble("loyerExonere"));  
@@ -165,7 +165,7 @@ public class RevenusDbUtil extends MySQLJDBCUtil {
     }
 	
     //************** update data ******************************/
-    public void update(RevenuLocatif revenuLocatif){
+    public void update(RevenusLocatif revenuLocatif){
 
         try {
 

@@ -31,19 +31,18 @@
             <p:graphicImage name="avatar.png" library="image" alt="Profile"/>
             <ul class="profile-link">
                 <h:form>
-                    
-                    <li>
-                        <a href="#">
-                            <i class='pi pi-user icon' ></i> 
-                            <span>#{login.email}</span>
-                        </a>
-                    </li>
+                    <div class="text-center py-3 px-2">
+                        <h3>#{authController.authAdministrateur.prenom}</h3>
+                        <span class="text-900">#{authController.authAdministrateur.nomRole}</span>
+                    </div>
+                    <!--
                     <li>
                         <a href="#">
                             <i class='pi pi-user icon' ></i> 
                             Profile
                         </a>
                     </li>
+                    -->
 
                     <li>
                         <h:commandLink action="#{authController.logout}">

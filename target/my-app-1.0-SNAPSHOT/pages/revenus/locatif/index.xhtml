@@ -1,4 +1,5 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -7,35 +8,37 @@
     
         <h:form>
             <p:growl id="message" showDetail="true"/>
-
             <p:toolbar>
                 <p:toolbarGroup>
-
+                    <!--
                     <p:commandButton 
                         value="Ajouter" 
                         icon="pi pi-plus" 
-                        actionListener="#{representantController.clearForm}"
-                        update=":dialogs-representant:manage-representant-content"
-                        oncomplete="PF('manageRepresentantDialog').show()"
+                        actionListener="#{revenusLoctifController.clearForm}"
+                        update=":dialogs-revenus:manage-revenus-content"
+                        oncomplete="PF('manageRevenusDialog').show()"
                         styleClass="ui-button-success"
                         style="margin-right: .5rem">
-                        <p:resetInput target=":dialogs-representant:manage-representant-content" />
+                        <p:resetInput target=":dialogs-revenus:manage-revenus-content" />
                     </p:commandButton>
+                    -->
                 </p:toolbarGroup>
 
             </p:toolbar>
+            
 
             <p:dataTable
-                id="dt-representants"
+                id="dt-revenus"
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="3,10,15,20"
                 paginator="true" 
-                rows="4"
-                widgetVar="dtRepresentants"
-                rowSelectMode="add" 
+                rows="3"
+                widgetVar="dtRevenus"
                 paginatorPosition="bottom"
                 binding="#{table}" 
-                value="#{representantController.representantList}" 
-                var="representant"
-                rowKey="#{representant}">
+                value="#{revenusLoctifController.revenusLocatifList}" 
+                var="revenu"
+                rowKey="#{revenu}">
 
                 <f:facet name="header">
                     <div class="flex justify-content-between">
@@ -48,119 +51,66 @@
                              <i class="pi pi-search icon"></i>
                              <p:inputText 
                                  id="globalFilter" 
-                                 onkeyup="PF('dtRepresentants').filter()" 
+                                 onkeyup="PF('dtRevenus').filter()" 
                                  placeholder="Search...." 
                              />
                          </span>
                      </div>
-                 </f:facet>
+                </f:facet>
+                
                 <p:column 
-                    headerText="#" 
-                    style="width: 5%">
-                     <h:outputText value="#{table.rowIndex + 1}" />
-                 </p:column>
+                   headerText="#" 
+                   style="width: 5%">
+                    <h:outputText value="#{table.rowIndex + 1}" />
+                </p:column>
+                
+                <p:column headerText="Loyer exonere">
+                     <h:outputText value="#{revenu.loyerExonere}" />
+                </p:column>
 
+                <p:column headerText="Loyer Imposable" >
+                   <h:outputText value="#{revenu.loyerImposable}" />
+                </p:column>
+
+                <p:column headerText="Charge Incombat" >
+                   <h:outputText value="#{revenu.chargeIncombat}" />
+                </p:column>
+
+                <p:column headerText="Revenu Brut" >
+                   <h:outputText value="#{revenu.revenuBrut}" />
+                </p:column>
+
+                <p:column headerText="Deduction Depenses" >
+                   <h:outputText value="#{revenu.deductionDepenses}" />
+                </p:column>
+                
+                <p:column headerText="Interet Emprunt" >
+                   <h:outputText value="#{revenu.interetEmprunt}" />
+                </p:column>
+                
+                <p:column headerText="Revenus Net Imposable" >
+                   <h:outputText value="#{revenu.revenuNetImposable}" />
+                </p:column>
+                
                 <!--
-                <p:column 
-                    headerText="Matricule"
-                    sortBy="#{representant.id}" 
-                    filterBy="#{representant.id}"
-                    style="width: 17%"
-                    >
-                     <h:outputText value="#{representant.id}" />
-                 </p:column>
-                -->
-
-                 <p:column 
-                    headerText="Nom" 
-                    sortBy="#{representant.nomRepresentant}" 
-                    filterBy="#{representant.nomRepresentant}"
-                    style="width: 10%"
-
-                    >
-                    <h:outputText value="#{representant.nomRepresentant}" />
-                 </p:column>
-
-                 <p:column 
-                    headerText="Prenom" 
-                    sortBy="#{representant.prenomRepresentant}" 
-                    filterBy="#{representant.prenomRepresentant}"
-                    style="width: 15%"
-                    >
-                    <h:outputText value="#{representant.prenomRepresentant}" />
-                 </p:column>
-
-
-                 <p:column 
-                    headerText="Email" 
-                    sortBy="#{representant.emailRepresentant}" 
-                    filterBy="#{representant.emailRepresentant}"
-                    >
-                    <h:outputText value="#{representant.emailRepresentant}" />
-                 </p:column>
-
-                 <p:column 
-                    headerText="B.P" 
-                    sortBy="#{representant.bpRepresentant}" 
-                    filterBy="#{representant.bpRepresentant}"
-                    style="width: 10%"
-                    >
-                    <h:outputText value="#{representant.bpRepresentant}" />
-                 </p:column>
-
-                <!--
-                 <p:column 
-                    headerText="Date" 
-                    sortBy="#{representant.date}" 
-                    filterBy="#{representant.date}"
-                    >
-                    <h:outputText value="#{representant.date}" />
-                 </p:column>
-                -->
-
-                <p:column exportable="false" style="width: 10%" >
-                    <!--
+                <p:column exportable="false" style="width: 5%" >
                     <p:commandButton 
                         icon="pi pi-pencil" 
                         styleClass="edit-button rounded-button ui-button-success mr-4" 
-                        oncomplete="PF('manageAbbattementDialog').show()"
-                        update=":dialogs-abbattement:manage-Abbattement-content"
+                        oncomplete="PF('manageRevenusDialog').show()"
+                        update=":dialogs-revenus:manage-revenus-content"
                         process="@this">
 
-                        <f:setPropertyActionListener value="#{representant}" target="#{representantController.model}" />
-                        <p:resetInput target=":dialogs-Abbattement:manage-Abbattement-content" />
-
+                        <f:setPropertyActionListener value="#{revenus}" target="#{revenusLoctifController.modelRevenusLocatif}" />
+                        <p:resetInput target=":dialogs-revenus:manage-revenus-content" />
                     </p:commandButton>
-                    -->
-
-                    <p:commandButton 
-                        icon="pi pi-pencil" 
-                        styleClass="edit-button rounded-button ui-button-success mr-4" 
-                        oncomplete="PF('manageRepresentantDialog').show()"
-                        update=":dialogs-representant:manage-representant-content"
-                        process="@this">
-
-                    <f:setPropertyActionListener value="#{representant}" target="#{representantController.model}" />
-                    <p:resetInput target=":dialogs-representant:manage-representant-content" />
-
-                </p:commandButton>
-
-                 <p:commandButton 
-                     class="ui-button-warning rounded-button" 
-                     icon="pi pi-trash"
-                     process="@this"
-                     ajax="false"
-                     action="#{representantController.delete(representant.id)}">
-                    <!--                             
-                    <f:setPropertyActionListener value="#{representant}" target="#{representantController.model}" />
-                    <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />-->
-
-
-                 </p:commandButton>
-             </p:column>
+                
+                </p:column>
+                -->
+                
              </p:dataTable>
          </h:form>
     
-       <ui:include src="ajouter.xhtml" />
+       <!--<ui:include src="ajouter.xhtml" />-->
             
 </ui:composition>

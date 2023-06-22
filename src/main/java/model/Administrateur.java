@@ -8,7 +8,6 @@ import jakarta.faces.bean.ManagedBean;
 import jakarta.validation.constraints.Email;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 
 /**
  *
@@ -30,18 +29,6 @@ public class Administrateur implements Serializable{
     
     private String isActive;
     private String bp;
-    
-    public List<Role> roleList;
-    public Role role;
-    
-    private List<Permission> permissionList;
-    private Permission permission;
-    
-    private Integer permissionId;
-    private boolean ajouter;
-    private boolean supprimer;
-    private boolean modifier;
-    private boolean afficher;
             
     private Integer roleId;
     private String nomRole;
@@ -155,62 +142,5 @@ public class Administrateur implements Serializable{
     public void setDate(Date date) {
         this.date = date;
     }
-
-    public List<Permission> getPermissionList() {
-        return permissionList;
-    }
-
-    public void setPermissionList(List<Permission> permissionList) {
-        this.permissionList = permissionList;
-    }
-
-    public Permission getPermission() {
-        return permission;
-    }
-
-    public void setPermission(Permission permission) {
-        this.permission = permission;
-    }
-
-    public Integer getPermissionId() {
-        return permissionId;
-    }
-
-    public void setPermissionId(Integer permissionId) {
-        this.permissionId = permissionId;
-    }
-
-    public boolean isAjouter() {
-        return ajouter;
-    }
-
-    public void setAjouter(boolean ajouter) {
-        this.ajouter = ajouter;
-    }
-
-    public boolean isSupprimer() {
-        return supprimer;
-    }
-
-    public void setSupprimer(boolean supprimer) {
-        this.supprimer = supprimer;
-    }
-
-    public boolean isModifier() {
-        return modifier;
-    }
-
-    public void setModifier(boolean modifier) {
-        this.modifier = modifier;
-    }
-
-    public boolean isAfficher() {
-        return afficher;
-    }
-
-    public void setAfficher(boolean afficher) {
-        this.afficher = afficher;
-    }
-
-        
+   
 }

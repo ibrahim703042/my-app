@@ -28,6 +28,7 @@ public class PayementDbUtil extends MySQLJDBCUtil {
    
     private List<Payement> payementList;
     private Payement payement;
+    private String query;
     
     
     //*************************** display data *****************/
@@ -36,7 +37,11 @@ public class PayementDbUtil extends MySQLJDBCUtil {
         payementList = new ArrayList<>();
         
         try {
-            String query = "SELECT * FROM payement WHERE id_payement IS NOT NULL ORDER BY id_payement DESC";
+            query = ""
+                    + "SELECT * "
+                    + "FROM payement "
+                    + "WHERE id_payement IS NOT NULL ORDER BY id_payement DESC";
+            
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
@@ -46,11 +51,14 @@ public class PayementDbUtil extends MySQLJDBCUtil {
                 payement  = new Payement(); 
 
                 payement.setId(resultSet.getInt("id_payement"));  
+                payement.setIdAmande(resultSet.getInt("id_amande"));  
                 payement.setModePayement(resultSet.getString("modePayement"));  
                 payement.setMontantPaye(resultSet.getDouble("montantPaye")); 
+                payement.setStatus(resultSet.getString("payement_status")); 
                 payement.setDatePayement(resultSet.getDate("datePayement")); 
 
-                payementList.add(payement);  
+                payementList.add(payement);
+                
             }   
 
             System.out.println("Total Records Fetched: " + payementList.size());
@@ -68,27 +76,112 @@ public class PayementDbUtil extends MySQLJDBCUtil {
         
         try {
 
-            String query = "INSERT INTO payement (modePayement, montantPaye, datePayement) values (?, ?,?)";
+            query = ""
+                    + "INSERT INTO payement "
+                    + "(modePayement, montantPaye,payement_status, datePayement) "
+                    + "values (?,?,?,?)";
+            
             connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            
             pstmt = connection.prepareStatement(query);         
 
             pstmt.setString(1, payement.getModePayement());
             pstmt.setDouble(2, payement.getMontantPaye());
-            pstmt.setDate(3, (Date) payement.getDatePayement());
+            pstmt.setString(3, payement.getStatus());
+            pstmt.setDate(4, (Date) payement.getDatePayement());
 
             pstmt.executeUpdate();
-            connection.close();
+            
+            connection.commit();
+            connection.setAutoCommit(true);
 
-        }catch(SQLException sqlException) {
-            printSQLException(sqlException);
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
+                }
+            }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+             }
+        }
+        return model;
+    }
+    
+    //************** update data **********************************/ 
+    public Payement update(Payement payement){
+        Payement model = null ;
+        
+        try {
+
+            query = ""
+                    + "UPDATE payement SET"
+                    + "id_amande  = ?, "
+                    + "modePayement = ?, "
+                    + "montantPaye = ?, "
+                    + "payement_status = ?, "
+                    + "datePayement = ? "
+                    + "wHERE id_payement = ? ";
+            
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            
+            pstmt = connection.prepareStatement(query);         
+
+            pstmt.setInt(1, payement.getIdAmande());
+            pstmt.setString(2, payement.getModePayement());
+            pstmt.setDouble(3, payement.getMontantPaye());
+            pstmt.setString(4, payement.getStatus());
+            pstmt.setDate(5, (Date) payement.getDatePayement());
+            pstmt.setInt(6, payement.getId());
+
+            pstmt.executeUpdate();
+            
+            connection.commit();
+            connection.setAutoCommit(true);
+
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
+                }
+            }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+             }
         }
         return model;
     }
 
     //************** find data by ID ***************************/
-    public static String findById(int payementId) {
+    public String findById(int payementId) {
         
-        Payement payement = null;
+        payement = null;
         System.out.println(" findById() : Province Id: " + payementId);
         
         /* Setting The Particular province Details In Session */
@@ -96,7 +189,7 @@ public class PayementDbUtil extends MySQLJDBCUtil {
 
         try {
            
-            String query = "SELECT * FROM payement WHERE id =" + payementId ;
+            query = "SELECT * FROM payement WHERE id =" + payementId ;
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);    
@@ -104,13 +197,12 @@ public class PayementDbUtil extends MySQLJDBCUtil {
             if(resultSet.next()) {
                 
                 payement = new Payement();
-                payement.setId(resultSet.getInt("id"));  
+                payement.setId(resultSet.getInt("id_payement"));  
+                payement.setIdAmande(resultSet.getInt("id_amande"));  
                 payement.setModePayement(resultSet.getString("modePayement"));  
                 payement.setMontantPaye(resultSet.getDouble("montantPaye")); 
+                payement.setStatus(resultSet.getString("payement_status")); 
                 payement.setDatePayement(resultSet.getDate("datePayement")); 
-                //payement.setDate(resultSet.getDate("date"));  
-               //LocalDate date = LocalDate.now();
-
             }
             
             sessionMap.put("payementMapped", payement);
@@ -119,51 +211,50 @@ public class PayementDbUtil extends MySQLJDBCUtil {
         } catch(SQLException sqlException) {
             printSQLException(sqlException);
         }
-        return "/pages/admin/edit.xhtml";
+        //return "/pages/admin/edit.xhtml";
+        return "";
     }
 	
-    //************** update data ******************************/
-    public String update(Payement payement){
-
-        try {
-
-            String query ="Update payement SET "
-                    + "modePayement=?, "
-                    + "montantPaye=?, "
-                    + "datePayement=?, ";
-
-            connection = dataSource.getConnection();
-            pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, payement.getModePayement());
-            pstmt.setDouble(2, payement.getMontantPaye());
-            pstmt.setDate(3, (Date) payement.getDatePayement());
-
-            pstmt.execute();
-            connection.close();
-
-        } catch(SQLException sqlException) {
-            printSQLException(sqlException);
-        }
-            return "/pages/admin/template.xhtml?faces-redirect=true";
-    }
-
     //************** delete data ********************************/
-    public String delete(int payementId) {
+    public void delete(int payementId) {
         
-        System.out.println("delete() : payement Id: " + payementId);
+        System.out.println("delete() : Payement Id: " + payementId);
 
         try {
-            connection = dataSource.getConnection();
-            String query = "DELETE FROM payement WHERE id = " + payementId ;
-            pstmt = connection.prepareStatement(query);
-            pstmt.executeUpdate();  
-            connection.close();
             
-        } catch(SQLException sqlException){
-            printSQLException(sqlException);
+            query = "DELETE FROM payement WHERE id = ? " ;
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            
+            pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, payementId);
+            
+            pstmt.executeUpdate();  
+            
+           connection.commit();
+           connection.setAutoCommit(true);
+
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
+                }
+            }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
-        return "/pages/admin/template.xhtml?faces-redirect=true";
     }
-    
-   
 }

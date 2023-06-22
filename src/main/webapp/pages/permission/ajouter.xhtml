@@ -11,7 +11,7 @@
             <p:outputPanel id="manage-permission-content" class="ui-fluid">
                 
                 <p:outputPanel >
-                    <p:inputText value="#{permissionController.permission.id}"/>
+                    <!--<p:inputText value="#{permissionController.permission.id}"/>-->
                     <div class="field">
                         <p:outputLabel class="font-bold"  value="Administrateur"/>
                         <p:selectOneMenu 
@@ -19,6 +19,7 @@
                             filter="true" 
                             filterMatchMode="startsWith" 
                             dynamic="true"
+                            required="true"
                             style="height: 41px; "
                         >
                             <f:selectItem itemLabel="Choisir Administrateur" />

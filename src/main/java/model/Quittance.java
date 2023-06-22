@@ -4,6 +4,7 @@
  */
 package model;
 
+import jakarta.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,13 +13,14 @@ import java.util.Date;
  * @author Ibrahim
  */
 
+@ManagedBean
 public class Quittance implements Serializable {
 
     private Integer id;
     private double montantPaye;
     private Date dateQuittance;
     private double montantRestanteDu;
-    private Impot idImpot;
+    private Integer idPayement;
 
     public Quittance() {
     }
@@ -29,6 +31,14 @@ public class Quittance implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+    
+    public Integer getIdPayement() {
+        return idPayement;
+    }
+
+    public void setIdPayement(Integer idPayement) {
+        this.idPayement = idPayement;
     }
 
     public double getMontantPaye() {
@@ -54,16 +64,5 @@ public class Quittance implements Serializable {
     public void setMontantRestanteDu(double montantRestanteDu) {
         this.montantRestanteDu = montantRestanteDu;
     }
-
-    public Impot getIdImpot() {
-        return idImpot;
-    }
-
-    public void setIdImpot(Impot idImpot) {
-        this.idImpot = idImpot;
-    }
-    
-    
-
-    
+        
 }

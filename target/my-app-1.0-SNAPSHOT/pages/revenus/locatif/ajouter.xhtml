@@ -5,10 +5,14 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
                 
-   <h:form id="dialogs-representant" >
+   <h:form id="dialogs-revenus" >
        <p:growl id="messages" showDetail="true" />
-        <p:dialog header="Representant Details" widgetVar="manageRepresentantDialog" minHeight="40" width="750" showEffect="fade">
-            <p:outputPanel id="manage-representant-content" class="ui-fluid">
+        <p:dialog header="Revenus Locatif" 
+                  widgetVar="manageRevenusDialog" 
+                  minHeight="40" width="750" 
+                  showEffect="fade">
+            
+            <p:outputPanel id="manage-revenus-content" class="ui-fluid">
                 
                 <p:outputPanel rendered="#{not empty representantController.model}">
 
@@ -50,14 +54,14 @@
             <f:facet name="footer">
                 <p:commandButton 
                     value="Enregistrer" 
-                    actionListener="#{representantController.createOrUpdate}"
-                    update="manage-representant-content messages" 
-                    process="manage-representant-content @this" 
+                    actionListener="#{revenusLoctifController.createOrUpdate}"
+                    update="manage-revenus-content messages" 
+                    process="manage-revenus-content @this" 
                 />
                 
                 <p:commandButton 
                     value="Cancel" 
-                    onclick="PF('manageRepresentantDialog').hide()"
+                    onclick="PF('manageRevenusDialog').hide()"
                     class="ui-button-secondary" 
                     type="button" />
             </f:facet>

@@ -5,7 +5,7 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
     
-        <h:form id="form">
+        <h:form>
             <p:growl id="messages" showDetail="true" />
             <!--
             <p:messages id="messages" showDetail="true" closable="true">
@@ -24,12 +24,11 @@
                 value="#{impotController.impotList}"
                 widgetVar="dtImpot" 
                 var="impot"
-                rowKey="#{impot.nomimpot}"
+                rowKey="#{impot}"
                 paginator="true" 
                 rows="4" 
                 paginatorPosition="bottom"
-                binding="#{table}" 
-            >
+                binding="#{table}" >
                 
                 <f:facet name="header">
                      <div class="flex justify-content-between">

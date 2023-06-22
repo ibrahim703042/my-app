@@ -10,7 +10,7 @@ import jakarta.faces.bean.ViewScoped;
 import jakarta.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
-import model.Amande;
+import model.Amende;
 import model.Colline;
 import model.Commune;
 import model.Contribuable;
@@ -20,9 +20,10 @@ import model.Payement;
 import model.Province;
 import model.Quittance;
 import model.Representant;
-import model.RevenuLocatif;
+import model.RevenusLocatif;
 import model.RevenuSousLocation;
 import util.RevenusDbUtil;
+import util.RevenusLocatifDbUtil;
 
 /**
  *
@@ -53,8 +54,8 @@ public final class RevenusController implements Serializable {
     private Declaration modelDeclaration;
     private List<Declaration> listDeclaration;
 
-    private RevenuLocatif modelRevenuLocatif;
-    private List<RevenuLocatif> listRevenuLocatif;
+    private RevenusLocatif modelRevenuLocatif;
+    private List<RevenusLocatif> listRevenuLocatif;
     
     private RevenuSousLocation modelRevenuSousLocation;
     private List<RevenuSousLocation> listRevenuSousLocation;
@@ -62,8 +63,8 @@ public final class RevenusController implements Serializable {
     private Impot modelImpot;
     private List<Impot> listImpot;
     
-    private Amande modelAmande;
-    private List< Amande> listAmande;
+    private Amende modelAmande;
+    private List< Amende> listAmande;
     
     private Payement modelPayement;
     private List<Payement> listPayement;
@@ -75,15 +76,17 @@ public final class RevenusController implements Serializable {
 
     @Inject
     private RevenusDbUtil revenuDbUtil;
+    //private RevenusLocatifDbUtil revenusLocatifDbUtil;
   
     @PostConstruct
     public void init(){
         
        listRevenuLocatif = revenuDbUtil.findAll();
-       this.modelRevenuLocatif = new RevenuLocatif();
+       
+       this.modelRevenuLocatif = new RevenusLocatif();
        this.modelRevenuSousLocation = new RevenuSousLocation();
        this.modelImpot = new Impot();
-       this.modelAmande = new Amande();
+       this.modelAmande = new Amende();
        this.modelPayement = new Payement();
        this.modelQuittance = new Quittance();
        
@@ -310,19 +313,19 @@ public final class RevenusController implements Serializable {
         this.listDeclaration = listDeclaration;
     }
 
-    public RevenuLocatif getModelRevenuLocatif() {
+    public RevenusLocatif getModelRevenuLocatif() {
         return modelRevenuLocatif;
     }
 
-    public void setModelRevenuLocatif(RevenuLocatif modelRevenuLocatif) {
+    public void setModelRevenuLocatif(RevenusLocatif modelRevenuLocatif) {
         this.modelRevenuLocatif = modelRevenuLocatif;
     }
 
-    public List<RevenuLocatif> getListRevenuLocatif() {
+    public List<RevenusLocatif> getListRevenuLocatif() {
         return listRevenuLocatif;
     }
 
-    public void setListRevenuLocatif(List<RevenuLocatif> listRevenuLocatif) {
+    public void setListRevenuLocatif(List<RevenusLocatif> listRevenuLocatif) {
         this.listRevenuLocatif = listRevenuLocatif;
     }
 
@@ -358,19 +361,19 @@ public final class RevenusController implements Serializable {
         this.listImpot = listImpot;
     }
 
-    public Amande getModelAmande() {
+    public Amende getModelAmande() {
         return modelAmande;
     }
 
-    public void setModelAmande(Amande modelAmande) {
+    public void setModelAmande(Amende modelAmande) {
         this.modelAmande = modelAmande;
     }
 
-    public List< Amande> getListAmande() {
+    public List< Amende> getListAmande() {
         return listAmande;
     }
 
-    public void setListAmande(List< Amande> listAmande) {
+    public void setListAmande(List< Amende> listAmande) {
         this.listAmande = listAmande;
     }
 

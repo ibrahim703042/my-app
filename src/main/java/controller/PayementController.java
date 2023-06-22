@@ -21,12 +21,12 @@ import util.PayementDbUtil;
 @ManagedBean
 @SessionScoped
 
-public class PayementController extends PayementDbUtil implements Serializable {
+public class PayementController extends MessageController implements Serializable {
     
     private Payement modelPayement;
     private List<Payement> payementList;
     
-    //@Inject
+    @Inject
     private PayementDbUtil payementDbUtil;
     
     @PostConstruct

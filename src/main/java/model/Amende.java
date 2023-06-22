@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 
 @ManagedBean
-public class Amande implements Serializable {
+public class Amende implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
@@ -25,7 +25,7 @@ public class Amande implements Serializable {
     
     private Impot impot;
     
-    public Amande() {
+    public Amende() {
         amandeFixe=200;
         penalite=200;
         total=200;

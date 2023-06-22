@@ -1,0 +1,127 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+                
+   <h:form id="dialogs" >
+       <p:growl id="messages" showDetail="true" />
+        <p:dialog header="Approver Payement" widgetVar="manageFormDialog" minHeight="40" width="450" showEffect="fade">
+            <p:outputPanel id="manage-form-content" class="ui-fluid">
+                
+                <p:outputPanel rendered="#{not empty payementController.modelPayement}">
+                    
+                    <!--
+                    <div class="field">
+                        <p:inputText type="text" value="#{payementController.modelPayement.id}" />
+                    </div>
+                    -->
+                    
+                    <div class="field">
+                        <component:inputTextField
+                        label="Montant"
+                        placeholder="Entrer montant"
+                        value="#{payementController.modelPayement.montantPaye}"/>
+                    </div>
+                    
+                    <div class="field">
+                        <p:outputLabel class="font-bold"  value="Date"/>
+                        <p:datePicker 
+                            value="#{payementController.modelPayement.datePayement}" 
+                            style="height: 41px; "
+                        showIcon="true"
+                        monthNavigator="true"
+                        yearNavigator="true"
+                        pattern="yyyy-MMM-dd"
+                        dir="rtl"
+                        required="true"/>
+                    </div>
+                    
+                    <div class="field mt-1">
+                        
+                        <p:outputPanel id="customPanel">
+                            <h5 class="mb-2"> Mode de Payement</h5>
+
+                            <p:selectOneMenu id="custom" value="#{payementController.modelPayement.modePayement}">
+                                <f:selectItem itemLabel="Espèces" itemValue="Espèces"/>
+                                <f:selectItem itemLabel="Carte Cash" itemValue="Carte Cash"/>
+                                <f:selectItem itemLabel="Banque" itemValue="Banque"/>
+                                <f:selectItem itemLabel="O.V" itemValue="O.V"/>
+                                <f:selectItem itemLabel="C.S.T" itemValue="C.S.T"/>
+                                <f:selectItem itemLabel="Autres" itemValue="Autres"/>
+
+                            </p:selectOneMenu>
+                            <!--
+                            <div class="field">
+                                <div class="flex ">
+                                    <p:outputLabel for="opt1" value="Espèces" styleClass="block mb-2 mr-3"/>
+                                    <p:checkbox id="opt1" for="custom" itemIndex="0"/>
+                                </div>
+                                <div class="flex ">
+                                    <p:outputLabel for="opt2" value="Carte Cash" styleClass="block mb-2 mr-3"/>
+                                    <p:checkbox id="opt2" for="custom" itemIndex="1"/>
+                                </div>
+                                <div class="flex ">
+                                    <p:outputLabel for="opt3" value="Banque" styleClass="block mb-2 mr-3"/>
+                                    <p:checkbox id="opt3" for="custom" itemIndex="2"/>
+                                </div>
+                                <div class="flex ">
+                                    <p:outputLabel for="opt4" value="O.V" styleClass="block mb-2 mr-3"/>
+                                    <p:checkbox id="opt4" for="custom" itemIndex="3"/>
+                                </div>
+                                <div class="flex ">
+                                    <p:outputLabel for="opt5" value="C.S.T" styleClass="block mb-2 mr-3"/>
+                                    <p:checkbox id="opt5" for="custom" itemIndex="4"/>
+                                </div>
+                                <div class="flex ">
+                                    <p:outputLabel for="opt6" value="Autres" styleClass="block mb-2 mr-3"/>
+                                    <p:checkbox id="opt6" for="custom" itemIndex="5"/>
+                                </div>
+
+                            </div>
+                            -->
+
+                        </p:outputPanel>
+
+                    </div>
+                    <div class="field mt-1">
+                        
+                        <p:outputPanel >
+                            <h5 class="mb-2"> Mode de Payement</h5>
+
+                            <p:selectOneMenu value="#{payementController.modelPayement.status}">
+                                <f:selectItem itemLabel="Oui" itemValue="Oui"/>
+                                <f:selectItem itemLabel="Non" itemValue="Non"/>
+                            </p:selectOneMenu>
+
+                        </p:outputPanel>
+
+                    </div>
+                    
+                    
+                </p:outputPanel>
+            </p:outputPanel>
+            
+            <f:facet name="footer">
+                
+                <p:commandButton 
+                    value="Enregistrer" 
+                    actionListener="#{payementController.createOrUpdate}"
+                    update="manage-form-content messages" 
+                    process="manage-form-content @this" 
+                />
+                
+                <p:commandButton 
+                    value="Cancel" 
+                    onclick="PF('manageFormDialog').hide()"
+                    class="ui-button-secondary" 
+                    type="button" />
+            </f:facet>
+
+        </p:dialog>
+
+    </h:form>   
+    
+</ui:composition>
+                                

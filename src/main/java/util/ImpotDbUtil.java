@@ -10,11 +10,8 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Named;
-
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import jakarta.faces.bean.ApplicationScoped;
+import jakarta.faces.bean.ManagedBean;
 import java.sql.SQLException;
 import java.sql.Statement;
 import model.Impot;
@@ -22,13 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Named
+@ManagedBean
 @ApplicationScoped
 
 public class ImpotDbUtil extends MySQLJDBCUtil {
     
    private List<Impot> impotList;
    private Impot impot;
+   private String query;
     
     //*************************** display data *****************/
     public List<Impot> findAll() {
@@ -36,11 +34,12 @@ public class ImpotDbUtil extends MySQLJDBCUtil {
         impotList = new ArrayList();
         
         try {
-            String query = ""
-                    + "SELECT * "
-                    + "FROM revenusouslocation, impot "
-                    + "WHERE impot.id_sous_location = revenusouslocation.id_revenuSousLocatif "
-                    + "ORDER BY id_impot DESC";
+            query = ""
+                + "SELECT * "
+                + "FROM revenusouslocation, impot "
+                + "WHERE impot.id_sous_location = revenusouslocation.id_revenuSousLocatif "
+                + "ORDER BY id_impot DESC";
+            
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
@@ -53,7 +52,7 @@ public class ImpotDbUtil extends MySQLJDBCUtil {
                 impot.setIdRevenuSousLocation(resultSet.getInt("id_sous_location"));  
                 impot.setAccompteImpotDejaPaye(resultSet.getDouble("impot_deja_paye")); 
                 impot.setDate(resultSet.getDate("date_impot")); 
-                impot.setRevenuSousNetImposable(resultSet.getDouble("revenuNetImposable")); 
+                //impot.setRevenuSousNetImposable(resultSet.getDouble("revenuNetImposable")); 
 
                 impotList.add(impot);  
             }   
@@ -83,6 +82,7 @@ public class ImpotDbUtil extends MySQLJDBCUtil {
 
             resultSet = pstmt.getGeneratedKeys();
             int generatedKey = 0;
+            
             if (resultSet.next()) {
                 generatedKey = resultSet.getInt(1);
             }

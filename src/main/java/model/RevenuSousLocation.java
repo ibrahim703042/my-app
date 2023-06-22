@@ -19,6 +19,7 @@ import jakarta.faces.bean.RequestScoped;
 public class RevenuSousLocation {
     
     private Integer id;
+    private Integer idRevenusLocatif;
     private double recetteSousLocation;
     private double loyerPayes;
     private double revenusNetsImposables;
@@ -26,7 +27,7 @@ public class RevenuSousLocation {
     private double abbattements ;
     private double revenuSousNetImposable;
     
-    private RevenuLocatif revenuLocatif;
+    private RevenusLocatif revenuLocatif;
     
     public RevenuSousLocation() {
         
@@ -38,6 +39,14 @@ public class RevenuSousLocation {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+    
+    public Integer getIdRevenusLocatif() {
+        return idRevenusLocatif;
+    }
+
+    public void setIdRevenusLocatif(Integer idRevenusLocatif) {
+        this.idRevenusLocatif = idRevenusLocatif;
     }
 
     public double getRecetteSousLocation() {
@@ -91,11 +100,11 @@ public class RevenuSousLocation {
         this.revenuSousNetImposable = revenuSousNetImposable;
     }
 
-    public RevenuLocatif getRevenuLocatif() {
+    public RevenusLocatif getRevenuLocatif() {
         return revenuLocatif;
     }
 
-    public void setRevenuLocatif(RevenuLocatif revenuLocatif) {
+    public void setRevenuLocatif(RevenusLocatif revenuLocatif) {
         this.revenuLocatif = revenuLocatif;
     }
     

@@ -6,12 +6,19 @@ package util;
 
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.faces.application.FacesMessage;
+import static dbconnection.MySQLJDBCUtil.connection;
+import static dbconnection.MySQLJDBCUtil.dataSource;
+import static dbconnection.MySQLJDBCUtil.pstmt;
+import static dbconnection.MySQLJDBCUtil.resultSet;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import model.Administrateur;
 
 /**
  *
@@ -30,6 +37,66 @@ public class AuthDbUtil extends MySQLJDBCUtil {
     private static String query;
 
     //************** authentification  ***********************/
+    
+    
+    //**************  ***************************/
+    public static List<Administrateur> authentificator(String email,String motPasse) {
+
+        List<Administrateur> administrateurList = new ArrayList();
+        
+        String isActive = "Actif";
+//        query = ""
+//            + "SELECT administrateur.* FROM administrateur "
+//            + " WHERE email = ? AND motPasse = ? AND isActive = ? " ;
+        
+        query = " "
+                + "SELECT administrateur.*, role.nomRole, role.description "
+                + "FROM administrateur, role "
+                + "WHERE administrateur.id_role = role.id "
+                + "AND email = ? AND motPasse = ? AND isActive = ? " ;
+        
+        try {
+            
+            connection = dataSource.getConnection();
+            pstmt = connection.prepareStatement(query);
+            
+            pstmt.setString(1, email);
+            pstmt.setString(2, motPasse);
+            pstmt.setString(3, isActive);
+
+            resultSet = pstmt.executeQuery();
+             
+            
+            if(resultSet.next()) {
+                
+                Administrateur administrateur = new Administrateur();
+                
+                administrateur.setId(resultSet.getInt("id"));  
+                administrateur.setNom(resultSet.getString("nom"));  
+                administrateur.setPrenom(resultSet.getString("prenom"));  
+                administrateur.setEmail(resultSet.getString("email"));  
+                administrateur.setMotPasse(resultSet.getString("motPasse"));  
+                administrateur.setTelephone(resultSet.getInt("telephone"));  
+                administrateur.setBp(resultSet.getString("BP")); 
+                administrateur.setIsActive(resultSet.getString("isActive"));  
+                
+                /********** Role *********/
+                
+                administrateur.setRoleId(resultSet.getInt("id_role"));  
+                administrateur.setNomRole(resultSet.getString("nomRole")); 
+               
+                administrateurList.add(administrateur);
+
+            }
+            
+            connection.close();
+
+        } catch(SQLException sqlException) {
+            printSQLException(sqlException);
+        }
+        return administrateurList;
+    }
+    
     
     public static boolean validate(String email,String motPasse) throws SQLException {
         
@@ -87,30 +154,6 @@ public class AuthDbUtil extends MySQLJDBCUtil {
             connection.close();
         }
         return false;
-    }
-    
-    
-    public void warningMessage(String msg1, String msg2){
-        FacesContext.getCurrentInstance().addMessage( null,
-        new FacesMessage(FacesMessage.SEVERITY_WARN,msg1,msg2));
-    }
-    
-    // ******   Message Session ******/
-    public void showInfo(String content, String msg) {
-        addMessage(FacesMessage.SEVERITY_INFO, content, msg);
-    }
-    
-    public void showWarn(String content, String msg) {
-        addMessage(FacesMessage.SEVERITY_WARN, content, msg);
-    }
-
-    public void showError(String content, String msg) {
-        addMessage(FacesMessage.SEVERITY_ERROR, content, msg);
-    }
-
-    public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
-        FacesContext.getCurrentInstance().
-        addMessage(null, new FacesMessage(severity, summary, detail));
     }
     
     public static void printSQLException(SQLException ex) {

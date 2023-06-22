@@ -15,9 +15,10 @@ import java.io.Serializable;
  */
 @ManagedBean
 @RequestScoped
-public class RevenuLocatif implements Serializable {
+public class RevenusLocatif implements Serializable {
 
     private Integer id;
+    private Integer idImmeuble;
     
     private double loyerExonere;
     private double loyerImposable;
@@ -34,7 +35,7 @@ public class RevenuLocatif implements Serializable {
     private double revenuNetImposable;
       
     
-    public RevenuLocatif(){
+    public RevenusLocatif(){
 //        this.loyerExonere = 1000000;
 //        this.loyerImposable = 1000000;   
 //        this.chargeIncombat = 100000;
@@ -48,6 +49,14 @@ public class RevenuLocatif implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+    
+    public Integer getIdImmeuble() {
+        return idImmeuble;
+    }
+
+    public void setIdImmeuble(Integer idImmeuble) {
+        this.idImmeuble = idImmeuble;
     }
 
     public double getLoyerExonere() {

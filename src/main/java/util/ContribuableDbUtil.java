@@ -76,9 +76,6 @@ public class ContribuableDbUtil extends MySQLJDBCUtil {
                contribuable.setMotif_C(resultSet.getShort("motif_C")); 
                contribuable.setMotif_D(resultSet.getShort("motif_D")); 
                contribuable.setMotif_E(resultSet.getShort("motif_E")); 
-               
-               
-               
 
                contribuableList.add(contribuable);  
             }   
