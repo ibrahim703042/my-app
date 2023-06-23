@@ -21,8 +21,8 @@ public class Declaration implements Serializable {
 
     private Integer id;
     private Integer idImmeuble;
-    private Integer nif;
-    private Integer ccf;
+    private String nif;
+    private String ccf;
     private String contribuable;
    
     private Date date_1;
@@ -74,19 +74,19 @@ public class Declaration implements Serializable {
         this.idImmeuble = idImmeuble;
     }
 
-    public Integer getNif() {
+    public String getNif() {
         return nif;
     }
 
-    public void setNif(Integer nif) {
+    public void setNif(String nif) {
         this.nif = nif;
     }
 
-    public Integer getCcf() {
+    public String getCcf() {
         return ccf;
     }
 
-    public void setCcf(Integer ccf) {
+    public void setCcf(String ccf) {
         this.ccf = ccf;
     }
 
@@ -250,5 +250,4 @@ public class Declaration implements Serializable {
         this.nomCommune = nomCommune;
     }
 
-    
 }

@@ -6,13 +6,10 @@
 package controller;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Declaration;
 import util.DeclarationDbUtil;
@@ -29,6 +26,7 @@ import util.DeclarationDbUtil;
 public class DeclarationController implements Serializable {
 
     public ArrayList declarations;
+    private Declaration declaration;
     
     @Inject
     private DeclarationDbUtil declarationDbUtil;
@@ -37,82 +35,64 @@ public class DeclarationController implements Serializable {
     @PostConstruct
     public void init() {
         declarations = declarationDbUtil.findAll();
+        //declaration = new Declaration();
     }
 
+    public void autoNIF() {
+        declarationDbUtil.autoNIF();
+    }
+    
     public ArrayList declarationList() {
         
         declarations.clear();
-        try {
-            declarations = declarationDbUtil.findAll();
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
+        declarations = declarationDbUtil.findAll();
         return declarations;
     }
         
     //************************ save data **************************/
     public String save(Declaration declaration) {
         
-        try {
-            declarationDbUtil.save(declaration);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
+        declarationDbUtil.save(declaration);
         return "/pages/declaration/template.xhtml?faces-redirect=true";
+        
     }
     	
     //************************  edit data by Id  **************************/
     public String edit(int id) {
-        
-        try {
-            declarationDbUtil.findById(id);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
+            
+        declarationDbUtil.findById(id);
         return "/pages/declaration/edit.xhtml?faces-redirect=true";
     }
     
     //************************  edit data by Id  **************************/
     public String calculRevenu(int id) {
-        
-        try {
-            declarationDbUtil.ViewById(id);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
+        declarationDbUtil.ViewById(id);
         return "/pages/declaration/declaration.xhtml?faces-redirect=true";
     }
     
     //************************ update data **************************/
     public String update(Declaration c) {
         
-        try {
-            declarationDbUtil.update(c);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
+        declarationDbUtil.update(c);
         return "/pages/declaration/template.xhtml?faces-redirect=true";
+        
     }
     
     ///************************ delete data **************************/
     public String delete(int id) {
         
-        try {
-            declarationDbUtil.delete(id);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
+        declarationDbUtil.delete(id);
         return "/pages/declaration/template.xhtml?faces-redirect=true";
     }
     
-    //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
+    
+    public Declaration getDeclaration() {
+        return declaration;
     }
+
+    public void setDeclaration(Declaration declaration) {
+        this.declaration = declaration;
+    }
+    
+    
 }

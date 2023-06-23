@@ -16,6 +16,7 @@ import jakarta.faces.context.FacesContext;
 import model.Payement;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -78,18 +79,26 @@ public class PayementDbUtil extends MySQLJDBCUtil {
 
             query = ""
                     + "INSERT INTO payement "
-                    + "(modePayement, montantPaye,payement_status, datePayement) "
-                    + "values (?,?,?,?)";
+                    + "(modePayement, montantPaye,payement_status, payement_status, datePayement) "
+                    + "values (?,?,?,?,?)";
             
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             
-            pstmt = connection.prepareStatement(query);         
+            pstmt = connection.prepareStatement(query);
+            
+            Date date = (Date) payement.getDatePayement();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            
+            String mysqlDateString = sdf.format(date);
+            java.sql.Date payementDate = java.sql.Date.valueOf(mysqlDateString);
+
 
             pstmt.setString(1, payement.getModePayement());
             pstmt.setDouble(2, payement.getMontantPaye());
             pstmt.setString(3, payement.getStatus());
-            pstmt.setDate(4, (Date) payement.getDatePayement());
+             pstmt.setString(4, payement.getStatus());
+            pstmt.setDate(5, payementDate);
 
             pstmt.executeUpdate();
             
@@ -139,13 +148,20 @@ public class PayementDbUtil extends MySQLJDBCUtil {
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             
-            pstmt = connection.prepareStatement(query);         
+            pstmt = connection.prepareStatement(query);
+            
+            Date date = (Date) payement.getDatePayement();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            
+            String mysqlDateString = sdf.format(date);
+            java.sql.Date payementDate = java.sql.Date.valueOf(mysqlDateString);
+
 
             pstmt.setInt(1, payement.getIdAmande());
             pstmt.setString(2, payement.getModePayement());
             pstmt.setDouble(3, payement.getMontantPaye());
             pstmt.setString(4, payement.getStatus());
-            pstmt.setDate(5, (Date) payement.getDatePayement());
+            pstmt.setDate(5, payementDate);
             pstmt.setInt(6, payement.getId());
 
             pstmt.executeUpdate();

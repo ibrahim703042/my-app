@@ -23,7 +23,6 @@ import model.Representant;
 import model.RevenusLocatif;
 import model.RevenuSousLocation;
 import util.RevenusDbUtil;
-import util.RevenusLocatifDbUtil;
 
 /**
  *
@@ -72,7 +71,19 @@ public final class RevenusController implements Serializable {
     private List<Quittance> listQuittance;
     private Quittance modelQuittance;
     
+    
+//    public static double revenusTranche_1 ;
+//    public static double revenusTranche_2;
+//    public static double revenusTranche_3;
+    
+    public static double revenus;
     public static double restante = 0;
+    
+    public static double impot = 0;
+    public static double impot_1;
+    public static double impot_2;
+    public  static double impot_3;
+    
 
     @Inject
     private RevenusDbUtil revenuDbUtil;
@@ -123,51 +134,44 @@ public final class RevenusController implements Serializable {
        return total;
     }
      
+    
     // *********** MONTANT PAR TRANCHE L’IMPOT DU  ****************/
-    
-    public static double tranche = 0;
-    public static double revenus_1 ;
-    public static double revenus_2;
-    public  static double revenus_3;
-    
-    
-    public Double revenuTranche() {
-        
-        double montant = totalRevenuSousLocatifTotalRevenusNetsImposable();
-        double montant_restante_par_tranche = montant;
-        
-       if( montant_restante_par_tranche > 0 && montant_restante_par_tranche <= 1800000 ){
-           
-           tranche = montant_restante_par_tranche;
-//           revenus_1 = montant_restante_par_tranche;
-           montant_restante_par_tranche = this.modelImpot.getTranche_1();
 
-       }else if( montant_restante_par_tranche > 1800000 && montant_restante_par_tranche <=3600000 ){
-            
-            tranche = montant_restante_par_tranche  ;
-//            revenus_2 = montant_restante_par_tranche  ;
-              montant_restante_par_tranche = this.modelImpot.getTranche_2()  ;
-            
-
-       }else if( montant_restante_par_tranche > 3600000){
-
-            tranche = montant_restante_par_tranche  ;
-//            revenus_3 = montant_restante_par_tranche  ;
-            montant_restante_par_tranche = this.modelImpot.getTranche_3();
-       }
-       
-       return montant_restante_par_tranche;
+    public static void setRevenus(double revenus) {
+        RevenusController.revenus = revenus;
     }
     
-    // *********** DETERMINATION DE L’IMPOT DU  ****************/
-    public static double impot = 0;
-    public static double impot_1;
-    public static double impot_2;
-    public  static double impot_3;
     
-    public double impotDu() {
+    public Double getRevenus() {
         
-        double revenus = totalRevenuSousLocatifTotalRevenusNetsImposable();
+        double montant = totalRevenuSousLocatifRevenuNetImposable();
+        restante = montant;
+        
+       if( restante > 0 && restante <= 1800000 ){
+           
+            restante = this.modelImpot.getTranche_1();
+            revenus = this.modelImpot.getTranche_1();
+
+       }else if( restante > 1800000 && restante <=3600000 ){
+            
+            restante = this.modelImpot.getTranche_2();
+            revenus = this.modelImpot.getTranche_2();
+            
+       }else if( restante > 3600000){
+
+            restante = this.modelImpot.getTranche_3();
+            revenus = this.modelImpot.getTranche_3();
+       }
+       
+       return restante;
+    }
+
+    
+    // *********** DETERMINATION DE L’IMPOT DU  ****************/
+    
+    /*public double impotDu() {
+        
+        revenus = totalRevenuSousLocatifTotalRevenusNetsImposable();
         restante = revenus;
         
        if( restante > 0 && restante <= 1800000 ){
@@ -187,16 +191,36 @@ public final class RevenusController implements Serializable {
        }
        
        return impot;
-    }
+    }*/
      
+    public Double totalImpotDu_1() {
+        //impot = restante*0;
+        //impot_1 = restante*0;
+        return ( this.modelImpot.getTranche_1() * 0 );
+    }
+    
+    public Double totalImpotDu_2() {
+        //impot =  (restante-1800000) *0.2;  
+        //impot_2 =  (restante-1800000) *0.2;  
+        return ( this.modelImpot.getTranche_2() * 20)/100;
+    }
+    
+    public Double totalImpotDu_3() {
+        //impot =  0+30000+(restante-3600000) *0.3; 
+        //impot_3 =(restante-3600000) *0.3; 
+        return (this.modelImpot.getTranche_3() * 30)/100;
+    }
+    
+//    public Double totalImpotDu() {
+//        return (this.modelImpot.getTranche_3() + this.modelImpot.getTranche_2() +this.modelImpot.getTranche_1());
+//    }
     
     // *********** . RESERVE A L’ADMINISTRATION FISCALE   ****************/
-     
-
-
+    
     // *********** TOTALITE RESERVE A L’ADMINISTRATION FISCALE   ****************/
+    
     public double totalImpotDU(){
-       return impot_1 + impot_2 + impot_3;
+       return totalImpotDu_3() + totalImpotDu_2() + totalImpotDu_1();
     }
 
     public double totalRestantDU(){
@@ -408,5 +432,5 @@ public final class RevenusController implements Serializable {
     public void setModelQuittance(Quittance modelQuittance) {
         this.modelQuittance = modelQuittance;
     }
-     
+
 }

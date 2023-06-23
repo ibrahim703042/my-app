@@ -44,30 +44,27 @@
 
                     <!-- ====================== Declaration ===========================-->
 
-                    <div>
 
-                        <div class="formgrid grid">
-                            <div class="field col">
-                                <label >Exercice comptable/Fiscale</label>
-                                <span class="mr-2">Du ..../.../20...</span>
-                                <span> au ..../..../20...</span>
-                            </div>
-
+                    <div class="block justify-content-end">
+                        <div class="field col">
+                            <h5 class="mb-2">Exercice comptable/Fiscale</h5>
+                            <span class="mr-2" >Du  #{declarationMapped.date_1} </span>
+                            <span> au #{declarationMapped.date_2}</span>
                         </div>
 
                         <div class="formgroup-inline">
                             <div class="field">
-                                <label class="p-sr-only">NIF</label>
-                                <p:outputLabel>450000000000</p:outputLabel>
+                                <label class="p-sr-only font-bold">NIF :</label>
+                                <p:outputLabel>#{declarationMapped.nif}</p:outputLabel>
                             </div>
                             <div class="field">
-                                <label class="p-sr-only">CCF</label>
-                                <p:outputLabel>12345</p:outputLabel>
+                                <label class="p-sr-only font-bold">CCF :</label>
+                                <p:outputLabel>#{declarationMapped.ccf}</p:outputLabel>
                             </div>
                         </div>
-
                     </div>
-                        
+
+
                     
                     <div class="ui-fluid formgrid grid py-3">
 
@@ -453,8 +450,8 @@
                                         <p:inputNumber 
                                             placeholder="......." 
                                             id="tranche_1"
-                                            value="#{revenusController.revenuTranche()}" >
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            value="#{revenusController.modelImpot.tranche_1}" >
+                                            <p:ajax event="blur" update="tranche_1_Col_5" />
                                         </p:inputNumber>
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >0%</p:column>
@@ -462,8 +459,8 @@
                                         <p:inputNumber 
                                             placeholder="....... "
                                             id="tranche_1_Col_5"
-                                            value="#{revenusController.impotDu()}" >
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            value="#{revenusController.totalImpotDu_1()}" >
+                                            <p:ajax event="blur" update="impotTotalDuc" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -477,8 +474,8 @@
                                         <p:inputNumber 
                                             placeholder="......."
                                             id="tranche_2"
-                                            value="#{revenusController.revenuTranche()}" >
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            value="#{revenusController.modelImpot.tranche_2}" >
+                                            <p:ajax event="blur" update="tranche_2_Col_5" />
                                         </p:inputNumber>
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
@@ -488,8 +485,8 @@
                                         <p:inputNumber 
                                             placeholder="......."
                                             id="tranche_2_Col_5"
-                                            value="#{revenusController.impotDu()}">
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            value="#{revenusController.totalImpotDu_2()}">
+                                            <p:ajax event="blur" update="impotTotalDuc" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -503,8 +500,8 @@
                                         <p:inputNumber 
                                             placeholder="......."
                                             id="tranche_3"
-                                            value="#{revenusController.revenuTranche()}" >
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            value="#{revenusController.modelImpot.tranche_3}" >
+                                            <p:ajax event="blur" update="tranche_3_Col_5" />
                                         </p:inputNumber>
                                     </p:column>
                                     <p:column colspan="2" styleClass="text-primary" >
@@ -514,8 +511,8 @@
                                         <p:inputNumber 
                                             placeholder="......."
                                             id="tranche_3_Col_5"
-                                            value="#{revenusController.impotDu()}">
-                                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                                            value="#{revenusController.totalImpotDu_3()}">
+                                            <p:ajax event="blur" update="impotTotalDuc" />
                                         </p:inputNumber>
                                     </p:column>
                                 </p:row>
@@ -529,7 +526,7 @@
                                     <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;" >
                                         <p:inputNumber 
                                             placeholder="......."
-                                            id="impotTotalDu"
+                                            id="impotTotalDuc"
                                             readonly="true"
                                             value="#{revenusController.totalImpotDU()}">
                                             <p:ajax event="blur" update="totalRestantDu" />
@@ -546,7 +543,6 @@
                                         <p:inputNumber 
                                             placeholder="......."
                                             id="accompteImpotDejaPaye"
-                                            readonly="true"
                                             value="#{revenusController.modelImpot.accompteImpotDejaPaye}">
                                             <p:ajax event="blur" update="totalRestantDu" />
                                         </p:inputNumber>

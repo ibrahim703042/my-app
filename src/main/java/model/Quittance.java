@@ -17,6 +17,7 @@ import java.util.Date;
 public class Quittance implements Serializable {
 
     private Integer id;
+    private String numero;
     private double montantPaye;
     private Date dateQuittance;
     private double montantRestanteDu;
@@ -63,6 +64,14 @@ public class Quittance implements Serializable {
 
     public void setMontantRestanteDu(double montantRestanteDu) {
         this.montantRestanteDu = montantRestanteDu;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
         
 }

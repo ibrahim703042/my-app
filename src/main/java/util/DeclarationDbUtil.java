@@ -14,11 +14,7 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import model.Declaration;
 import java.util.*;
@@ -28,6 +24,7 @@ import java.util.*;
 @ApplicationScoped
 
 public class DeclarationDbUtil extends MySQLJDBCUtil {
+    private Declaration declaration;
     
     //*************************** display data *****************/
     public ArrayList findAll() {
@@ -43,7 +40,7 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
                     + "declaration.* "
                     + "FROM contribuable, declaration, immeuble "
                     + "WHERE contribuable.id = immeuble.id_contribuable "
-                    + "AND immeuble.id = declaration.id_immeuble";
+                    + "AND immeuble.id = declaration.id_immeuble ORDER BY declaration.id DESC ";
                    
             
             connection = dataSource.getConnection();
@@ -52,13 +49,13 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
 
             while(resultSet.next()) { 
 
-                Declaration declaration = new Declaration(); 
+                declaration = new Declaration(); 
 
                 declaration.setId(resultSet.getInt("id"));  
                 declaration.setIdImmeuble(resultSet.getInt("Immeuble_id"));  
                 declaration.setContribuable(resultSet.getString("Contribuable"));  
-                declaration.setNif(resultSet.getInt("NIF"));  
-                declaration.setCcf(resultSet.getInt("CCF")); 
+                declaration.setNif(resultSet.getString("NIF"));  
+                declaration.setCcf(resultSet.getString("CCF")); 
                 declaration.setDate_1(resultSet.getDate("datePlutot")); 
                 declaration.setDate_2(resultSet.getDate("datePlutard")); 
                  
@@ -70,7 +67,7 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
             connection.close();
 
         } catch(SQLException sqlException) {  
-            sqlException.printStackTrace();
+            printSQLException(sqlException);
         }
         return declarationList;
     }
@@ -98,8 +95,8 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
 
             
             pstmt.setInt(1, declaration.getIdImmeuble());
-            pstmt.setInt(2, declaration.getNif());
-            pstmt.setInt(3, declaration.getCcf());
+            pstmt.setString(2, declaration.getNif());
+            pstmt.setString(3, declaration.getCcf());
             pstmt.setDate(4, datePlutot);
             pstmt.setDate(5, datePlutard);
 
@@ -110,14 +107,14 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
 
         }catch (SQLException e) {
             // handle the exception
-            System.err.println("Error inserting data: " + e.getMessage());
+            printSQLException(e);
         }
     }
 
     //************** find data by ID ***************************/
     public void findById(int declarationId) {
         
-        Declaration declaration = null;
+        declaration = null;
         System.out.println(" findById() : Immeuble Id: " + declarationId);
         
         /* Setting The Particular province Details In Session */
@@ -142,8 +139,8 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
                 declaration = new Declaration();
                 declaration.setId(resultSet.getInt("id"));  
                 declaration.setIdImmeuble(resultSet.getInt("Immeuble_id"));  
-                declaration.setNif(resultSet.getInt("NIF"));  
-                declaration.setCcf(resultSet.getInt("CCF")); 
+                declaration.setNif(resultSet.getString("NIF"));  
+                declaration.setCcf(resultSet.getString("CCF")); 
                 declaration.setDate_1(resultSet.getDate("datePlutot")); 
                 declaration.setDate_2(resultSet.getDate("datePlutard")); 
 
@@ -153,14 +150,14 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
     }
 	
     //*************************** View data by id *****************/
     public void ViewById(int declarationId ) {
         
-        Declaration declaration = null;
+        declaration = null;
         System.out.println(" findById() : Declaration Id: " + declarationId);
         
         /* Setting The Particular province Details In Session */
@@ -207,8 +204,8 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
                 
                 declaration.setId(resultSet.getInt("id"));  
                 declaration.setIdImmeuble(resultSet.getInt("Immeuble_ID"));  
-                declaration.setNif(resultSet.getInt("NIF"));  
-                declaration.setCcf(resultSet.getInt("CCF")); 
+                declaration.setNif(resultSet.getString("NIF"));  
+                declaration.setCcf(resultSet.getString("CCF")); 
                 declaration.setDate_1(resultSet.getDate("datePlutot")); 
                 declaration.setDate_2(resultSet.getDate("datePlutard")); 
  
@@ -274,8 +271,8 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
 
             
             pstmt.setInt(1, declaration.getIdImmeuble());
-            pstmt.setInt(2, declaration.getNif());
-            pstmt.setInt(3, declaration.getCcf());
+            pstmt.setString(2, declaration.getNif());
+            pstmt.setString(3, declaration.getCcf());
             pstmt.setDate(4, datePlutot);
             pstmt.setDate(5, datePlutard);
             pstmt.setInt(6, declaration.getId());
@@ -284,7 +281,7 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
     }
 
@@ -301,15 +298,51 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
             connection.close();
             
         } catch(SQLException sqlException){
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
         
     }
      
-     //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
+    
+    public void autoNIF() {
         
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
+         String query = "SELECT Max(NIF) FROM declaration ";
+                
+           
+        try {
+            
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);  
+
+            while(resultSet.next()) {
+               declaration = new Declaration(); 
+
+                //declaration.setId(resultSet.getInt("id")); 
+               // declaration.setNif(resultSet.getString("NIF"));  
+                //declaration.setCcf(resultSet.getString("CCF")); 
+
+                resultSet.getString("MAX(NIF)");
+                //resultSet.getString("MAX(CCF)");
+                
+                if(resultSet.getString("MAX(NIF)") == null){
+                    declaration.setNif(("4000000001"));
+                }
+                else{
+                    long id = Long.parseLong(resultSet.getString("MAX(NIF)").substring(2,resultSet.getString("MAX(NIF)").length()));
+                    id++;
+                    
+                    declaration.setNif(("400000000" + String.format("%03d", id)));
+                }
+                
+                //declarationList.add(declaration);
+            }
+            
+            connection.close();
+
+        } catch(SQLException sqlException) {  
+            sqlException.printStackTrace();
+        }
+      }
+    
 }
