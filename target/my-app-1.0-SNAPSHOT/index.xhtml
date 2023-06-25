@@ -4,21 +4,124 @@
 
 <html xmlns = "http://www.w3.org/1999/xhtml"   
    xmlns:h = "http://java.sun.com/jsf/html"
-   xmlns:ui = "http://java.sun.com/jsf/facelets">
+   xmlns:ui = "http://java.sun.com/jsf/facelets"
+   xmlns:f="http://xmlns.jcp.org/jsf/core">
         
    <h:body>
-      <ui:composition template = "/resources/templates/welcomeTemplate.xhtml">
+      <ui:composition template = "/resources/templates/masterTemplate.xhtml">
 
          <ui:define name = "hero">
             <ui:include src = "/hero.xhtml" />
          </ui:define>
          
         <ui:define name = "content">
-         
-            <ui:include src = "/apropos.xhtml" />
-            <ui:include src = "/declaration.xhtml" />
-            <ui:include src = "/contact.xhtml" /> 
             
+            <section id="about" class="about">
+                <div class="container" data-aos="fade-up">
+                   <div class="section-title">
+                      <h2>Apropos</h2>
+                   </div>
+                    <div class="row">
+                        <div class="col-lg-6 pt-4 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
+                            <h:graphicImage name="image/Siege.jpg"  class="img-fluid" />
+                        </div>
+                        <div class="col-lg-6 pt-4 order-2 pt-lg-0 order-lg-1 content" data-aos="fade-right"
+                            data-aos-delay="100">
+                            <h3>Contexte de création de l’OBR </h3>
+                            <p class="fst-italic">
+                                Toutes les administrations fiscales et douanières se réforment pour deux objectifs essentiels : mieux servir les contribuables et améliorer la rentrée des recettes fiscales et douanières pour le Trésor public. C’est dans ce cadre que l’OBR a été créé. La création de l’OBR est également une réforme qui cadre avec la politique d’intégration économique du Burundi au sein de la Communauté Est Africaine (CEA). L’Office Burundais des Recettes (OBR) en sigle est doté d’une personnalité juridique et placé sous la tutelle du Ministère ayant les finances dans ses attributions.
+                                 Il est régi par la loi n° 1/22 du 5 novembre 2021 portant révision de la n°1/11 du 14 juillet 2009 portant création, organisation et fonctionnement de l’Office Burundais des Recettes. Le but général de création de cette institution est la réduction de la pauvreté par le biais d’une collecte améliorée des recettes publiques ainsi qu’un environnement amélioré des affaires au Burundi. L’OBR est donc une institution créée pour inaugurer une ère d’administration fiscale et douanière moderne et professionnelle au Burundi. 
+                                 La loi régissant l’OBR a été révisée aux fins de l’adapter et l’harmoniser au contexte socio-économique évolutif du pays.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </section>     
+            
+            <section id="declaration" class="declaration">
+                <div class="container" data-aos="fade-up">
+                   <div class="section-title">
+                      <h2>Declaration</h2>
+                   </div>
+
+                   <div class="row">
+
+                      <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
+                            <div class="particulier" data-aos="fade-up" data-aos-delay="100">
+                               <div class="particulier-img">
+                                  <h:graphicImage name="image/OBR_2.png"  class="img-fluid" />
+                               </div>
+                               <div class="particulier-info">
+                                  <h4>Titre</h4>
+                                  <span class="text-justify">
+                                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+                                     Numquam unde id quisquam recusandae architecto nam temporibus 
+                                     labore vel neque eius incidunt explicabo velit autem, odio facere, 
+                                     fuga voluptate quidem soluta.
+                                  </span>
+
+                               </div>
+                               <div class="particulier-button">
+                                    <div class="particulier-plus">
+                                        <h:outputLink  class="button-link" value="https://www.obr.bi/index.php/en/lois-et-reglements">En savoir plus</h:outputLink>
+                                    </div>
+                               </div>
+                            </div>
+                      </div>
+
+                      <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
+                            <div class="particulier" data-aos="fade-up" data-aos-delay="100">
+                               <div class="particulier-img">
+                                  <!-- <img src="#{resources/image/OBR_2.png }" class="img-fluid" alt="" /> -->
+                                  <h:graphicImage name="image/OBR_2.png"  class="img-fluid" />
+
+                               </div>
+                               <div class="particulier-info">
+                                  <h4>Titre</h4>
+                                  <span class="text-justify">
+                                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+                                     Numquam unde id quisquam recusandae architecto nam temporibus 
+                                     labore vel neque eius incidunt explicabo velit autem, odio facere, 
+                                     fuga voluptate quidem soluta.
+                                  </span>
+                               </div>
+                               <div class="particulier-button">
+                                  <div class="particulier-plus">
+                                     <h:link outcome="login" class="button-link" value="Declarer" >
+                                        <f:param name="pageId" value="1"/>
+                                     </h:link>
+                                  </div>
+                               </div>
+                            </div>
+                      </div>
+
+                   </div>
+                    
+                </div>
+            </section> 
+            
+            <section id="contact" class="contact">
+                
+                <div class="container" data-aos="fade-up">
+                <div class="section-title">
+                    <h2>Contact</h2>
+                    <p>Contactez-nous</p>
+                </div>
+
+                <div>
+
+                    <iframe style ="border: 0; width: 100%; height: 270px;"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.889802143735!2d29.344571173684535!3d-3.3771015414833134!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19c183cfc066fd17%3A0xd8e4a5a2dc4810b8!2sOBR%20VIRAGO!5e0!3m2!1sen!2sbi!4v1686088281439!5m2!1sen!2sbi"  
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
+                </div>
+
+            </section> 
             
          </ui:define>
 

@@ -41,7 +41,6 @@ controller\RevenusSousLocationController.class
 controller\AvenueController.class
 util\AvenueDbUtil.class
 controller\MessageController.class
-controller\Trash.class
 model\Amende.class
 util\AmendeDbUtil.class
 model\Administrateur.class

@@ -1,19 +1,19 @@
 <ui:composition xmlns = "http://www.w3.org/1999/xhtml"   
    xmlns:h = "http://java.sun.com/jsf/html"
-   xmlns:ui = "http://java.sun.com/jsf/facelets" 
+   xmlns:ui = "http://java.sun.com/jsf/facelets"
+   template = "/resources/templates/miniTemplate.xhtml"
    xmlns:p="http://primefaces.org/ui">
 
-        <!-- <ui:define name = "content"> -->
+         <ui:define name = "content"> 
         
-            <section id="about" class="about">
+            <section class="main">
                 <div class="container" data-aos="fade-up">
                    <div class="section-title">
                       <h2>Apropos</h2>
                    </div>
                     <div class="row">
                         <div class="col-lg-6 pt-4 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
-                            <!-- <p:graphicImage name="siege.jpg" library="image" alt="Image" class="min-h" />  -->
-                            <h:graphicImage name="image/siege.jpg"  class="img-fluid" />
+                            <h:graphicImage name="image/Siege.jpg"  class="img-fluid" />
                         </div>
                         <div class="col-lg-6 pt-4 order-2 pt-lg-0 order-lg-1 content" data-aos="fade-right"
                             data-aos-delay="100">
@@ -29,6 +29,6 @@
                 </div>
             </section>        
                 
-        <!--</ui:define>-->
+        </ui:define>
 </ui:composition>
   

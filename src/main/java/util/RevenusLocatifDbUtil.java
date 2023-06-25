@@ -21,12 +21,12 @@ import model.RevenusLocatif;
 @ApplicationScoped
 
 public class RevenusLocatifDbUtil extends MySQLJDBCUtil {
-    private RevenusLocatif revenuLocatif;
-    private List<RevenusLocatif> revenuLocatifList;
-    private String query;
+    private static RevenusLocatif revenuLocatif;
+    private static List<RevenusLocatif> revenuLocatifList;
+    private static String query;
 
     //*************************** display data *****************/
-    public List<RevenusLocatif> findAll() {
+    public static List<RevenusLocatif> findAll() {
         
         revenuLocatifList = new ArrayList<>();
         
@@ -77,7 +77,7 @@ public class RevenusLocatifDbUtil extends MySQLJDBCUtil {
     }
     
     //************** Save data **********************************/ 
-    public RevenusLocatif save(RevenusLocatif revenusLocatif){
+    public static RevenusLocatif save(RevenusLocatif revenusLocatif){
         RevenusLocatif model = null;
         
         try {
@@ -129,7 +129,7 @@ public class RevenusLocatifDbUtil extends MySQLJDBCUtil {
     
     
     //************** update data **********************************/ 
-    public RevenusLocatif update(RevenusLocatif revenusLocatif){
+    public static RevenusLocatif update(RevenusLocatif revenusLocatif){
         RevenusLocatif model = null;
         try {
 
@@ -184,7 +184,7 @@ public class RevenusLocatifDbUtil extends MySQLJDBCUtil {
     }
     
     //************** delete data **********************************/ 
-    public void delete(Integer revenulocatifId){
+    public static void delete(Integer revenulocatifId){
         
         System.out.println("delete() : Revenus Locatif Id: " + revenulocatifId);
         

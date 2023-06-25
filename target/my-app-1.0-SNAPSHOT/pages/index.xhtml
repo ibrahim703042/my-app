@@ -7,49 +7,190 @@
     <h:head>
         <title>Login Admin</title>
         <h:outputStylesheet library="webjars" name="primeflex/3.3.0/primeflex.min.css" />
-        <h:outputStylesheet library="css" name="login.css"/>
     </h:head>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins" , sans-serif;
+          }
+          #body{
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+          }
+          .container{
+            position: relative;
+            max-width: 850px;
+            width: 100%;
+            background: #fff;
+            padding: 40px 30px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+          }
+          .container .cover{
+            position: absolute;
+            top: 0;
+            left: 50%;
+            height: 100%;
+            width: 50%;
+            z-index: 98;
+            transition: all 1s ease;
+          }
+           .container .cover .front{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+          }
+          .container .cover::before{
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            opacity: 0.5;
+            z-index: 12;
+          }
+          
+          .container .cover .img{
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            z-index: 10;
+          }
+          .container .cover .text{
+            position: absolute;
+            z-index: 130;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          }
+          .cover .text .text-1,
+          .cover .text .text-2{
+            font-size: 26px;
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+          }
+          .cover .text .text-2{
+            font-size: 15px;
+            font-weight: 500;
+          }
+          .container .forms{
+            height: 100%;
+            width: 100%;
+            background: #fff;
+          }
+          .container .form-content{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+          .form-content .login-form{
+            width: calc(100% / 2 - 25px);
+          }
+          .forms .form-content .title{
+            position: relative;
+            font-size: 24px;
+            font-weight: 500;
+            color: #333;
+          }
+          .forms .form-content .title:before{
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 25px;
+            background: red;
+          }
+
+          @media (max-width: 730px) {
+            .container .cover{
+              display: none;
+            }
+            .form-content .login-form{
+              width: 100%;
+            }
+          }
+
+    </style>
+    
     <h:body id="body">
         
-        <div class="mt-5 pt-5">
-            <div class="flex align-items-center justify-content-center">
-                <div class="surface-card p-4 shadow-2 border-round w-full lg:w-4">
-                    <h:form id="form_login">
-                        <div class="text-center mb-5">
-                            <p:messages id="messages" showDetail="true" closable="true">
-                                <p:autoUpdate/>
-                            </p:messages>
-                            <p:graphicImage name="image_1.png" library="image" alt="Image" height="50" styleClass="mb-3"/>
-                            <div class="text-900 text-3xl font-medium mb-3">Authentification</div>
-                            <p:spacer height="20"/>
-                            
-                        </div>
-
-                        <div>
-                            <label for="email" class="block text-900 font-medium mb-2">Email</label>
-                            <p:inputText id="email" value="#{authController.administrateur.email}" placeholder="example@outlook.com" styleClass="w-full mb-3" />
-
-                            <label for="motPasse" class="block text-900 font-medium mb-2">Mot de passe</label>
-                            <p:inputText id="motPasse" value="#{authController.administrateur.motPasse}" type="password" placeholder="**********" styleClass="w-full mb-3"/>
-
-                            <p:spacer height="20"/>
-                            
-                            <p:commandButton 
-                                ajax="false"
-                                value="Se connectez" 
-                                styleClass="w-full"
-                                update="form_login"
-                                action="#{authController.loginAdmin}"
-                            >
-                                <f:param name="pageId" value="1"/>
-                            </p:commandButton>
-                        </div>
-                        
-                    </h:form>
+        <div class="container">
+            
+            <div class="cover">
+                <div class="front">
+                  <p:graphicImage name="image_1.png" library="image" alt="Image" height="50" styleClass="mb-3 img"/>
+                  <div class="text">
+                    <span class="text-1"><br/></span>
+                    <span class="text-2"></span>
+                  </div>
                 </div>
             </div>
-        </div>
+            <div class="forms">
+                <div class="form-content">
+                    <div class="login-form">
+                      <div class="title">S'authentifier</div>
+                
+                        <h:form id="form_login">
+                            <div class="text-center mb-5">
+                                <p:growl id="messages" showDetail="true" />
+                                <p:spacer height="30"/>
+                            </div>
 
+                            <div>
+                                <label 
+                                    for="email" 
+                                    class="block text-900 font-medium mb-2">
+                                    Email
+                                </label>
+                                <p:inputText id="email" 
+                                             value="#{authController.administrateur.email}" 
+                                             placeholder="example@outlook.com" 
+                                             styleClass="w-full mb-3" />
+
+                                <label 
+                                    for="motPasse" 
+                                    class="block text-900 font-medium mb-2">
+                                    Mot de passe
+                                </label>
+                                <p:inputText id="motPasse" 
+                                             value="#{authController.administrateur.motPasse}" 
+                                             type="password" 
+                                             placeholder="**********" 
+                                             styleClass="w-full mb-3"/>
+
+                                <p:spacer height="20"/>
+
+                                <p:commandButton 
+                                    ajax="false"
+                                    value="Se connectez" 
+                                    styleClass="w-full"
+                                    update="form_login"
+                                    action="#{authController.loginAdmin}"
+                                >
+                                    <f:param name="pageId" value="1"/>
+                                </p:commandButton>
+                            </div>
+
+                        </h:form>
+                      
+                    </div>
+                </div>
+            </div>
+                      
+        </div>
         
     </h:body>
 </html>

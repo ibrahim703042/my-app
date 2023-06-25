@@ -16,17 +16,17 @@ import util.RevenusLocatifDbUtil;
  * @author Ibrahim
  */
 
-public class RevenusLoctifController  implements Serializable{
+public class RevenusLoctifController extends RevenusLocatifDbUtil  implements Serializable{
     
     private RevenusLocatif modelRevenusLocatif;
     private List<RevenusLocatif> revenusLocatifList;
     
-    @Inject
-    private RevenusLocatifDbUtil revenusLocatifDbUtil;
+//    @Inject
+//    private RevenusLocatifDbUtil revenusLocatifDbUtil;
     
     @PostConstruct
     public void init(){
-        revenusLocatifList = revenusLocatifDbUtil.findAll();
+        revenusLocatifList = RevenusLocatifDbUtil.findAll();
     }
 
     
@@ -41,6 +41,11 @@ public class RevenusLoctifController  implements Serializable{
         return (totalRevenulocatifRevenubrut() * 40)/100;
     }
     
+    // ************************** Getters et Setters ************************************************/
+    public List<RevenusLocatif> getRevenusLocatifList() {
+        return revenusLocatifList;
+    }
+    
     public Double totalRevenuLocatifRevenunetImposable() {
         return (totalRevenulocatifRevenubrut()-totalDeductionDepensesEntretien() - this.modelRevenusLocatif.getInteretEmprunt());
     }
@@ -53,12 +58,4 @@ public class RevenusLoctifController  implements Serializable{
         this.modelRevenusLocatif = modelRevenusLocatif;
     }
 
-    
-    // ************************** Getters et Setters ************************************************/
-    public List<RevenusLocatif> getRevenusLocatifList() {
-        return revenusLocatifList;
-    }
-
-    
-    
 }

@@ -35,14 +35,15 @@
                         <h3>#{authController.authAdministrateur.prenom}</h3>
                         <span class="text-900">#{authController.authAdministrateur.nomRole}</span>
                     </div>
-                    <!--
+                    
                     <li>
-                        <a href="#">
-                            <i class='pi pi-user icon' ></i> 
+                        <h:commandLink action="#{authController.logout}">
+                            <!--<f:param name="pageId" value="2"/>-->
+                            <i class='pi pi-user icon' ></i>
                             Profile
-                        </a>
+                        </h:commandLink>
+                    
                     </li>
-                    -->
 
                     <li>
                         <h:commandLink action="#{authController.logout}">

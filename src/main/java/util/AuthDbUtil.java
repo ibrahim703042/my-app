@@ -12,13 +12,12 @@ import static dbconnection.MySQLJDBCUtil.pstmt;
 import static dbconnection.MySQLJDBCUtil.resultSet;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
-import jakarta.faces.context.FacesContext;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import model.Administrateur;
+import model.Contribuable;
 
 /**
  *
@@ -38,16 +37,11 @@ public class AuthDbUtil extends MySQLJDBCUtil {
 
     //************** authentification  ***********************/
     
-    
-    //**************  ***************************/
     public static List<Administrateur> authentificator(String email,String motPasse) {
 
         List<Administrateur> administrateurList = new ArrayList();
         
         String isActive = "Actif";
-//        query = ""
-//            + "SELECT administrateur.* FROM administrateur "
-//            + " WHERE email = ? AND motPasse = ? AND isActive = ? " ;
         
         query = " "
                 + "SELECT administrateur.*, role.nomRole, role.description "
@@ -97,63 +91,45 @@ public class AuthDbUtil extends MySQLJDBCUtil {
         return administrateurList;
     }
     
-    
-    public static boolean validate(String email,String motPasse) throws SQLException {
-        
-        String isActive = "Actif";
-          query = " "
-                + "SELECT administrateur.*, role.nomRole, role.description "
-                + "FROM administrateur, role "
-                + "WHERE administrateur.id_role = role.id "
-                + "AND email = ? AND motPasse = ? AND isActive = ? " ;
-        
-        try {
-            
-            connection = dataSource.getConnection();
-            pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, email);
-            pstmt.setString(2, motPasse);
-            pstmt.setString(3, isActive);
+    public static List<Contribuable> authentificato(String email,String motPasse) {
 
-            resultSet = pstmt.executeQuery();
-            
-            while(resultSet.next()) { 
-                return true;
-            }
-
-        }catch (SQLException ex) {
-            printSQLException(ex);
-            return false;
-        } finally {
-            connection.close();
-        }
-        return false;
-    }
-    
-    public static boolean validateContribuable(String email,String motPasse) throws SQLException {
+        List<Contribuable> contribuableList = new ArrayList();
         
         query = "SELECT * FROM contribuable WHERE email = ? AND motPasse = ? ";
         
         try {
+            
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
+            
             pstmt.setString(1, email);
             pstmt.setString(2, motPasse);
-
-            resultSet = pstmt.executeQuery();
             
-            while(resultSet.next()) { 
-                return true;
-                //connection.commit();
-            }
+            resultSet = pstmt.executeQuery();
+             
+            
+            if(resultSet.next()) {
+                
+               Contribuable contribuable = new Contribuable(); 
 
-        }catch (SQLException ex) {
-            printSQLException(ex);
-            return false;
-        } finally {
+               contribuable.setId(resultSet.getInt("id"));  
+               contribuable.setNom(resultSet.getString("nom"));  
+               contribuable.setEmail(resultSet.getString("email"));  
+               contribuable.setMotPasse(resultSet.getString("motPasse"));  
+               contribuable.setTelephone(resultSet.getInt("telephone"));  
+               contribuable.setBp(resultSet.getString("BP"));  
+               contribuable.setDate(resultSet.getDate("date")); 
+               
+               contribuableList.add(contribuable);  
+            }   
+
+            System.out.println("Total Records Fetched: " + contribuableList.size());
             connection.close();
+
+        } catch(SQLException sqlException) {  
+            sqlException.printStackTrace();
         }
-        return false;
+        return contribuableList;
     }
     
     public static void printSQLException(SQLException ex) {

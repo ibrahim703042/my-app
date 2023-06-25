@@ -51,6 +51,7 @@ public class Contribuable implements Serializable {
     public Contribuable (){
         beneficiaire = "No";
         motif_A = 1;
+        email="Kwizera.ibrahim@gmail.com";
     }
     private Date date;
 
