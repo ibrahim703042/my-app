@@ -38,11 +38,10 @@ model\Payement.class
 util\AdministrateurDbUtil.class
 dbconnection\MySQLJDBCUtil.class
 controller\RevenusSousLocationController.class
-controller\AvenueController.class
-util\AvenueDbUtil.class
 controller\MessageController.class
 model\Amende.class
 util\AmendeDbUtil.class
+util\DashboardDbUtil.class
 model\Administrateur.class
 model\Role.class
 model\Permission.class

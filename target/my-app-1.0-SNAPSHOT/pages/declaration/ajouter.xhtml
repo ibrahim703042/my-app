@@ -5,98 +5,104 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
                 
-    <h:form id="form" class=" py-3">
-        <!--<p:messages id="msgs"/>-->
-        <div class="">
-            <div class="ui-fluid formgrid grid">
+   <h:form id="dialogs-form" >
+       <p:growl id="messages" showDetail="true" />
+        <p:dialog header="Declaration details" 
+                  widgetVar="manageFormDialog" 
+                  minHeight="40" width="750" 
+                  showEffect="fade">
+            
+            <p:outputPanel id="manage-form-content" class="ui-fluid">
                 
-                <div class="field col-12 md:col-7">
-                    <p:outputLabel class="font-bold"  value="Immeuble"/>
-                    <p:selectOneMenu
-                        value="#{declaration.idImmeuble}"
-                        filter="true" 
-                        filterMatchMode="startsWith" 
-                        dynamic="true"
-                        style="height: 41px; "
-                        required="true"
-                    >
-                        <f:selectItem itemLabel=" ------- Choisir Immeuble -------" />
-                        <f:selectItems var="cont"
-                            value="#{immeubleController.immeubleList()}"
-                            itemLabel=" #{cont.id} :              
-                            PROVINCE: #{cont.nomProvince}   -     
-                            COMMUNE: #{cont.nomCommune}     -   
-                            COLLINE: #{cont.nomColline}     -    
-                            AVENUE: #{cont.nomAvenue} "
-                            itemValue="#{cont.id}" 
-                        />
+                <p:outputPanel rendered="#{not empty declarationController.declaration}">
 
-                    </p:selectOneMenu>
-                </div>
+                    <div class="field">
+                        <p:outputLabel class="font-bold"  value="Immeuble"/>
+                        <p:selectOneMenu
+                            value="#{declarationController.declaration.idImmeuble}"
+                            filter="true" 
+                            filterMatchMode="startsWith" 
+                            dynamic="true"
+                            style="height: 41px; ">
+
+                            <f:selectItem itemLabel=" ------- Choisir Immeuble -------" />
+                            <f:selectItems var="cont"
+                                value="#{immeubleController.immeubleList()}"
+                                itemLabel=" #{cont.id} :              
+                                PROVINCE: #{cont.nomProvince}   -     
+                                COMMUNE: #{cont.nomCommune}     -   
+                                COLLINE: #{cont.nomColline}     -    
+                                AVENUE: #{cont.nomAvenue} "
+                                itemValue="#{cont.id}" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <component:inputTextField label="NIF" placeholder="NIF" value="#{declarationController.declaration.nif}" />
+                        </div>
+                        <div class="field col">
+                            <component:inputTextField label="CCF" placeholder="CCF" value="#{declarationController.declaration.ccf}" />
+                        </div>
+                    </div>
+                    
+                    <div class="formgrid grid">
+                        
+                        <div class="field col-12 md:col-6">
+                            <p:outputLabel class="font-bold"  value="Date plutot"/>
+                            <p:datePicker value="#{declarationController.declaration.date_1}" 
+                                style="height: 41px; "
+                                showIcon="true"
+                                locale="de"
+                                monthNavigator="true"
+                                yearNavigator="true"
+                                pattern="yyyy-MMM-dd"
+                                dir="rtl"
+                                readonly="true"/>
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <p:outputLabel class="font-bold"  value="Date plutard"/>
+                            <p:datePicker value="#{declarationController.declaration.date_2}" 
+                                style="height: 41px; "
+                                showIcon="true"
+                                monthNavigator="true"
+                                yearNavigator="true"
+                                pattern="yyyy-MMM-dd"
+                                dir="rtl"
+                                required="true" />
+
+                        </div>
+                        
+                    </div>
+                    
+                </p:outputPanel>
+
+            </p:outputPanel>
+            
+            <f:facet name="footer">
+                <p:commandButton 
+                    value="Enregistrer" 
+                    actionListener="#{declarationController.createOrUpdate}"
+                    update="manage-form-content messages" 
+                    process="manage-form-content @this" 
+                />
                 
-                <div class="field col-12 md:col-3">
+                <p:commandButton 
+                    value="Cancel" 
+                    onclick="PF('manageFormDialog').hide()"
+                    class="ui-button-secondary" 
+                    type="button" />
+            </f:facet>
 
-                    <component:inputTextField
-                        label="NIF"
-                        placeholder="NIF"
-                        value="#{declaration.nif}"
-                    />
+        </p:dialog>
 
-                </div>
-                
-                <div class="field col-12 md:col-2">
-
-                    <component:inputTextField
-                        label="CCF"
-                        placeholder="CCF"
-                        value="#{declaration.ccf}"
-                    />
-
-                </div>
-                
-                <div class="field col-12 md:col-2">
-                    <p:outputLabel class="font-bold"  value="Date plutot"/>
-                    <p:datePicker 
-                        value="#{declaration.date_1}" 
-                        style="height: 41px; "
-                        showIcon="true"
-                        locale="de"
-                        monthNavigator="true"
-                        yearNavigator="true"
-                        pattern="yyyy-MMM-dd"
-                        dir="rtl"
-                        readonly="true"
-                    />
-
-                </div>
-                
-                <div class="field col-12 md:col-4">
-                    <p:outputLabel class="font-bold"  value="Date plutard"/>
-                    <p:datePicker
-                        value="#{declaration.date_2}" 
-                        style="height: 41px; "
-                        showIcon="true"
-                        monthNavigator="true"
-                        yearNavigator="true"
-                        pattern="yyyy-MMM-dd"
-                        dir="rtl"
-                        required="true"
-                    />
-
-                </div>
-                
-                <div class="field col-12 md:col-4 pt-1">
-                    <p:spacer />
-                    <p:commandButton 
-                        value="Enregistrer" 
-                        ajax="false"
-                        action="#{declarationController.save(declaration)}"
-                        style="height: 41px; "
-                    />
-                </div>
-            </div>
-        </div>
-
-    </h:form>
-                
+        <p:confirmDialog global="true" showEffect="fade" width="300">
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                icon="pi pi-times" />
+        </p:confirmDialog>
+       
+       
+    </h:form>   
+    
 </ui:composition>

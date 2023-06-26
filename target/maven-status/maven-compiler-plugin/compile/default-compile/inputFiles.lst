@@ -1,7 +1,6 @@
 D:\BIU\internShip\my-app\src\main\java\com\obr\management\JakartaRestConfiguration.java
 D:\BIU\internShip\my-app\src\main\java\controller\MessageController.java
 D:\BIU\internShip\my-app\src\main\java\model\Colline.java
-D:\BIU\internShip\my-app\src\main\java\controller\AvenueController.java
 D:\BIU\internShip\my-app\src\main\java\model\NavigationController.java
 D:\BIU\internShip\my-app\src\main\java\model\Declaration.java
 D:\BIU\internShip\my-app\src\main\java\util\CollineDbUtil.java
@@ -44,6 +43,7 @@ D:\BIU\internShip\my-app\src\main\java\model\Administrateur.java
 D:\BIU\internShip\my-app\src\main\java\util\PermissionDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\model\Avenue.java
 D:\BIU\internShip\my-app\src\main\java\util\AmendeDbUtil.java
+D:\BIU\internShip\my-app\src\main\java\util\DashboardDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\controller\RevenusLoctifController.java
 D:\BIU\internShip\my-app\src\main\java\util\ContribuableDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\controller\DeclarationController.java
@@ -55,7 +55,6 @@ D:\BIU\internShip\my-app\src\main\java\controller\PermissionController.java
 D:\BIU\internShip\my-app\src\main\java\util\QuittanceDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\controller\AuthController.java
 D:\BIU\internShip\my-app\src\main\java\model\Payement.java
-D:\BIU\internShip\my-app\src\main\java\util\AvenueDbUtil.java
 D:\BIU\internShip\my-app\src\main\java\dbconnection\TestConnection.java
 D:\BIU\internShip\my-app\src\main\java\model\RevenuSousLocation.java
 D:\BIU\internShip\my-app\src\main\java\dbconnection\MySQLJDBCUtil.java

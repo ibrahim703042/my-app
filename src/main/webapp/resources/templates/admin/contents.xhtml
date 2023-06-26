@@ -46,7 +46,7 @@
                                     styleClass="ui-button-help" >
                                     <p:dataExporter 
                                         type="xls" 
-                                        target="dt-declaractions" 
+                                        target="dt-declarations" 
                                         fileName="Gestion declaractions" 
                                     />
                                 </p:commandButton>
@@ -61,8 +61,8 @@
                             paginatorPosition="bottom"
                             binding="#{table}" 
                             var="declaration" 
-                            value="#{declarationController.declarationList()}"
-                            rowKey="#{declaration.nom}">
+                            value="#{declarationController.declarations}"
+                            rowKey="#{declaration}">
 
                             <f:facet name="header">
                                 <div class="flex justify-content-between">

@@ -10,7 +10,6 @@ package util;
  * 
  */
 
-
 import dbconnection.MySQLJDBCUtil;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;

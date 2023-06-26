@@ -10,7 +10,6 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
@@ -24,16 +23,18 @@ import java.util.*;
 @ApplicationScoped
 
 public class DeclarationDbUtil extends MySQLJDBCUtil {
-    private Declaration declaration;
+    private static Declaration declaration;
+    private static List<Declaration> declarationList;
+    private static String query;
     
     //*************************** display data *****************/
-    public ArrayList findAll() {
+    public static List<Declaration> findAll() {
         
-        ArrayList declarationList = new ArrayList();
+        declarationList = new ArrayList();
         
         try {
             
-            String query = ""
+            query = ""
                     + "SELECT "
                     + "contribuable.nom AS Contribuable, "
                     + "immeuble.id AS Immeuble_id, "
@@ -73,11 +74,11 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
     }
 
     //************** Save data **********************************/ 
-    public void save(Declaration declaration){
+    public static Declaration save(Declaration declaration){
+        Declaration model = null;
         
         try {
-
-            String query = ""
+                query = ""
                     + "INSERT INTO declaration (id_immeuble, NIF, CCF, datePlutot, datePlutard) "
                     + "values (?, ?, ?, ?, ?)";
             
@@ -109,10 +110,11 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
             // handle the exception
             printSQLException(e);
         }
+        return model;
     }
 
     //************** find data by ID ***************************/
-    public void findById(int declarationId) {
+    public static void findById(int declarationId) {
         
         declaration = null;
         System.out.println(" findById() : Immeuble Id: " + declarationId);
@@ -122,7 +124,7 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
 
         try {
            
-            String query = ""
+            query = ""
                     + "SELECT "
                     + "immeuble.id AS Immeuble_id, "
                     + "declaration.* "
@@ -155,7 +157,7 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
     }
 	
     //*************************** View data by id *****************/
-    public void ViewById(int declarationId ) {
+    public static void ViewById(int declarationId ) {
         
         declaration = null;
         System.out.println(" findById() : Declaration Id: " + declarationId);
@@ -164,34 +166,32 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         
         try {
-            String query =
-            "SELECT "
-            + "contribuable.id As Contribuable_ID, "
-            + "contribuable.nom As nom_contribuable, "
-            + "contribuable.email AS email_contribuable, "
-            + "contribuable.telephone AS tel_contribuable, "
-            + "contribuable.BP AS BP_contribuable, "
-            + "representant.id As representant_ID, "
-            + "representant.nomRepresentant As nom_representant, "
-            + "representant.prenomRepresentant AS prenom_representant, "
-            + "representant.emailRepresentant AS email_representant, "
-            + "representant.telephoneRepresentant AS tel_representant, "
-            + "representant.bpRepresentant AS BP_representant, "
-            + "immeuble.id as Immeuble_ID, "
-            + "immeuble.nomAvenue as Rue , "
-            + "colline.nomColline as Colline,  "
-            + "commune.nomCommune as Commune, "
-            + "province.nomProvince as province, "
-            + "declaration.* "
-            + "FROM representant, declaration , contribuable, immeuble, colline, commune, province "
-            + "WHERE contribuable.id_representant = representant.id "
-            + "AND immeuble.id_contribuable = contribuable.id "
-            + "AND immeuble.id_colline = colline.id "
-            + "AND colline.id_commune = commune.id "
-            + "AND declaration.id = " + declarationId ;
-            
+            query =
+                "SELECT "
+                + "contribuable.id As Contribuable_ID, "
+                + "contribuable.nom As nom_contribuable, "
+                + "contribuable.email AS email_contribuable, "
+                + "contribuable.telephone AS tel_contribuable, "
+                + "contribuable.BP AS BP_contribuable, "
+                + "representant.id As representant_ID, "
+                + "representant.nomRepresentant As nom_representant, "
+                + "representant.prenomRepresentant AS prenom_representant, "
+                + "representant.emailRepresentant AS email_representant, "
+                + "representant.telephoneRepresentant AS tel_representant, "
+                + "representant.bpRepresentant AS BP_representant, "
+                + "immeuble.id as Immeuble_ID, "
+                + "immeuble.nomAvenue as Rue , "
+                + "colline.nomColline as Colline,  "
+                + "commune.nomCommune as Commune, "
+                + "province.nomProvince as province, "
+                + "declaration.* "
+                + "FROM representant, declaration , contribuable, immeuble, colline, commune, province "
+                + "WHERE contribuable.id_representant = representant.id "
+                + "AND immeuble.id_contribuable = contribuable.id "
+                + "AND immeuble.id_colline = colline.id "
+                + "AND colline.id_commune = commune.id "
+                + "AND declaration.id = " + declarationId ;
 
-            // String query = "SELECT * FROM declaration WHERE id IS NOT NULL ORDER BY id DESC";
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
@@ -243,11 +243,12 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
     }
 
     //************** update data ******************************/
-    public void update(Declaration declaration){
-
+    public static Declaration update(Declaration declaration){
+        Declaration model = null;
+        
         try {
 
-            String query =""
+            query =""
                     + "UPDATE "
                     + "declaration SET "
                     + "id_immeuble = ?,"
@@ -283,16 +284,17 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
         } catch(SQLException sqlException) {
             printSQLException(sqlException);
         }
+        return model;
     }
 
     //************** delete data ********************************/
-    public void delete(int declarationId) {
+    public static void delete(int declarationId) {
         
         System.out.println("delete() : declaration Id: " + declarationId);
 
         try {
             connection = dataSource.getConnection();
-            String query = "DELETE FROM declaration WHERE id = " + declarationId ;
+            query = "DELETE FROM declaration WHERE id = " + declarationId ;
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate();  
             connection.close();
@@ -304,10 +306,9 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
     }
      
     
-    public void autoNIF() {
+    public static void autoNIF() {
         
-         String query = "SELECT Max(NIF) FROM declaration ";
-                
+        query = "SELECT Max(NIF) FROM declaration ";
            
         try {
             
@@ -343,6 +344,6 @@ public class DeclarationDbUtil extends MySQLJDBCUtil {
         } catch(SQLException sqlException) {  
             sqlException.printStackTrace();
         }
-      }
+    }
     
 }

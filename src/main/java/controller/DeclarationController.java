@@ -8,10 +8,10 @@ package controller;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
-import jakarta.inject.Inject;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 import model.Declaration;
+import org.primefaces.PrimeFaces;
 import util.DeclarationDbUtil;
 
 /**
@@ -23,68 +23,101 @@ import util.DeclarationDbUtil;
 @ManagedBean
 @SessionScoped
 
-public class DeclarationController implements Serializable {
+public class DeclarationController extends DeclarationDbUtil implements Serializable {
 
-    public ArrayList declarations;
+    public List<Declaration> declarations;
     private Declaration declaration;
-    
-    @Inject
-    private DeclarationDbUtil declarationDbUtil;
     
     //************************ display data **************************/
     @PostConstruct
     public void init() {
-        declarations = declarationDbUtil.findAll();
-        //declaration = new Declaration();
+        declarations = DeclarationDbUtil.findAll();
     }
 
-    public void autoNIF() {
-        declarationDbUtil.autoNIF();
+    public void clearForm(){
+        this.declaration = new Declaration();
     }
     
-    public ArrayList declarationList() {
-        
-        declarations.clear();
-        declarations = declarationDbUtil.findAll();
-        return declarations;
+    public static void autoNIF() {
+        DeclarationDbUtil.autoNIF();
     }
+    
+    private boolean IsValid() {
         
+        if (this.declaration.getIdImmeuble() == null)
+        {
+            showError("Required","Immeuble number is required");
+            return false;
+        }
+        if (this.declaration.getNif().isEmpty())
+        {
+            showError("Required","NIF is required");
+            return false;
+        }
+        if (this.declaration.getCcf().isEmpty())
+        {
+            showError("Required","CCF is required");
+            return false;
+        }
+//        if (this.declaration.getDate_1().equals(this))
+//        {
+//            showError("Required","Date is required");
+//            return false;
+//        }
+//        if (this.declaration.getDate_2().before(1-06-2023))
+//        {
+//            showError("Required","Must be a future date");
+//            return false;
+//        }
+        
+        return true;
+    }
+   
     //************************ save data **************************/
-    public String save(Declaration declaration) {
+    
+    public void createOrUpdate() {
         
-        declarationDbUtil.save(declaration);
-        return "/pages/declaration/template.xhtml?faces-redirect=true";
-        
-    }
-    	
-    //************************  edit data by Id  **************************/
-    public String edit(int id) {
+        if(IsValid()){
             
-        declarationDbUtil.findById(id);
-        return "/pages/declaration/edit.xhtml?faces-redirect=true";
+            if(this.declaration.getId() == null){
+                
+                DeclarationDbUtil.save(this.declaration);
+                showInfo("Inserted","Data inserted");
+                this.init();
+                PrimeFaces.current().executeScript("PF('manageFormDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-declarations");
+   
+            }else if(this.declaration.getId() != null){
+                DeclarationDbUtil.update(this.declaration);
+                showInfo("Updated","Data Updated");
+                this.init();
+                PrimeFaces.current().executeScript("PF('manageFormDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-declarations");
+   
+            }
+        }
     }
     
     //************************  edit data by Id  **************************/
     public String calculRevenu(int id) {
-        declarationDbUtil.ViewById(id);
+        DeclarationDbUtil.ViewById(id);
         return "/pages/declaration/declaration.xhtml?faces-redirect=true";
     }
     
     //************************ update data **************************/
-    public String update(Declaration c) {
-        
-        declarationDbUtil.update(c);
-        return "/pages/declaration/template.xhtml?faces-redirect=true";
+    public void update() {
+        DeclarationDbUtil.update(this.declaration);
         
     }
     
     ///************************ delete data **************************/
-    public String delete(int id) {
+    public void delete() {
         
-        declarationDbUtil.delete(id);
-        return "/pages/declaration/template.xhtml?faces-redirect=true";
+        DeclarationDbUtil.delete(this.declaration.getId());
+        
     }
     
+    /// ************************ Getters && Setters **************************/
     
     public Declaration getDeclaration() {
         return declaration;
@@ -93,6 +126,11 @@ public class DeclarationController implements Serializable {
     public void setDeclaration(Declaration declaration) {
         this.declaration = declaration;
     }
+
+    public List<Declaration> getDeclarations() {
+        return declarations;
+    }
+
     
     
 }
