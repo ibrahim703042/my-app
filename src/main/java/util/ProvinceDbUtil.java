@@ -6,10 +6,8 @@ package util;
 
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.*;
 import jakarta.faces.context.FacesContext;
-import java.io.Serializable;
 import java.sql.*;
 import java.util.*;
 

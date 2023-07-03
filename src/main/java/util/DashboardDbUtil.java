@@ -5,10 +5,12 @@
 package util;
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.ViewScoped;
+import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,7 +19,7 @@ import java.sql.SQLException;
  */
 @ManagedBean
 @ViewScoped
-public class DashboardDbUtil extends MySQLJDBCUtil {
+public class DashboardDbUtil extends MySQLJDBCUtil implements Serializable{
     
     private static Integer administrateur;
     private static Integer contribuable;
@@ -45,14 +47,10 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
             resultSet.next();
             
             administrateur = resultSet.getInt(1);
-            
-         } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(DashboardDbUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+         
         return administrateur;
     }
     
@@ -71,10 +69,7 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
             contribuable = resultSet.getInt(1);
             
          } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
+            Logger.getLogger(DashboardDbUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return contribuable;
@@ -94,11 +89,8 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
             
             representant = resultSet.getInt(1);
             
-         } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(DashboardDbUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return representant;
@@ -117,14 +109,9 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
             resultSet.next();
             
             immeuble = resultSet.getInt(1);
-            
-         } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(DashboardDbUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         return immeuble;
     }
     
@@ -144,10 +131,7 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
             }
            
         } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
+            Logger.getLogger(DashboardDbUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
         return role;
     }
@@ -168,12 +152,8 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
                 //connection.commit();
             }
            
-            
         } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
+            Logger.getLogger(DashboardDbUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
         return province;
     }
@@ -194,13 +174,8 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
                 
                 //connection.commit();
             }
-           
-            
         } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
+            Logger.getLogger(DashboardDbUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
         return commune;
     }
@@ -220,10 +195,7 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
                 //connection.commit();
             }
         } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
+            Logger.getLogger(DashboardDbUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
         return colline;
     }
