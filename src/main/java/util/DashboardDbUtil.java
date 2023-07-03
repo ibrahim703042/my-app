@@ -5,46 +5,53 @@
 package util;
 
 import dbconnection.MySQLJDBCUtil;
+import jakarta.faces.bean.ApplicationScoped;
+import jakarta.faces.bean.ManagedBean;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import model.Administrateur;
-import model.Colline;
-import model.Commune;
-import model.Contribuable;
-import model.Declaration;
-import model.Payement;
-import model.Province;
-import model.Quittance;
-import model.Representant;
-import model.Role;
 
 /**
  *
  * @author Ibrahim
  * 
  */
-
+@ManagedBean
+@ApplicationScoped
 public class DashboardDbUtil extends MySQLJDBCUtil {
     
-    private static List<Role> roles;
-    private static List<Province> provinces;
-    private static List<Commune> communes;
-    private static List<Colline> collines;
-    private static List<Administrateur> administrateurs;
-    private static List<Contribuable> contribuables;
-    private static List<Representant> representants;
-    private static List<Declaration> declarations;
-    private static List<Payement> payements;
-    private static List<Quittance> quittances;
+    private static Integer countList = 0 ;
+    private static Integer count;
+    private static Integer administrateur;
     private static String query;
     
     public DashboardDbUtil(){
     }
 
-    public static List<Role> countRole() {
+    public Integer administrateurCount(){
         
-        roles = new ArrayList<>();
+        query = "SELECT COUNT(*) FROM administrateur ";
+         
+        try {
+            connection = dataSource.getConnection();
+            //connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);
+            
+            resultSet = pstmt.executeQuery();  
+            resultSet.next();
+            
+            administrateur = resultSet.getInt(1);
+            
+         } catch (SQLException ex) {
+            //connection.rollback();
+            printSQLException(ex);
+        }finally {
+            //connection.setAutoCommit(true);
+        }
+        
+        return administrateur;
+    }
+    
+    public static Integer countRole() {
+        
         query = " SELECT COUNT(*) FROM role ";
         
         try {
@@ -55,26 +62,21 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
             
             while(resultSet.next()) { 
                 
-                Role role = new Role();
-                role.setId(resultSet.getInt("id"));  
-                
-                roles.add(role);  
+                count = resultSet.getInt(1);
                 //connection.commit();
             }
            
-            
         } catch (SQLException ex) {
             //connection.rollback();
             printSQLException(ex);
         }finally {
             //connection.setAutoCommit(true);
         }
-        return roles;
+        return countList;
     }
    
-    public static List<Province> countProvince() {
+    public static Integer countProvince() {
         
-        contribuables = new ArrayList<>();
         query = " SELECT COUNT(*) FROM province ";
         
         try {
@@ -85,10 +87,7 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
             
             while(resultSet.next()) { 
                 
-                Province province = new Province();
-                province.setId(resultSet.getInt("id"));  
-                
-                provinces.add(province);  
+                count = resultSet.getInt(1);
                 //connection.commit();
             }
            
@@ -99,12 +98,11 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
         }finally {
             //connection.setAutoCommit(true);
         }
-        return provinces;
+        return countList;
     }
 
-    public static List<Commune> countCommune() {
+    public static Integer countCommune() {
         
-        communes = new ArrayList<>();
         query = " SELECT COUNT(*) FROM commune ";
         
         try {
@@ -115,10 +113,8 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
             
             while(resultSet.next()) { 
                 
-                Commune commune = new Commune();
-                commune.setId(resultSet.getInt("id"));  
+                count = resultSet.getInt(1);
                 
-                communes.add(commune);  
                 //connection.commit();
             }
            
@@ -129,12 +125,11 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
         }finally {
             //connection.setAutoCommit(true);
         }
-        return communes;
+        return countList;
     }
     
-    public static List<Colline> countColline() {
+    public static Integer countColline() {
         
-        declarations = new ArrayList<>();
         query = " SELECT COUNT(*) FROM colline ";
         
         try {
@@ -144,231 +139,16 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
             resultSet = pstmt.executeQuery();  
             
             while(resultSet.next()) { 
-                
-                Colline colline = new Colline();
-                colline.setId(resultSet.getInt("id"));  
-                
-                collines.add(colline);  
+                count = resultSet.getInt(1);
                 //connection.commit();
             }
-           
-            
         } catch (SQLException ex) {
             //connection.rollback();
             printSQLException(ex);
         }finally {
             //connection.setAutoCommit(true);
         }
-        return collines;
-    }
-
-
-    public static void countAdministrateur() {
-        
-        //administrateurs = new ArrayList<>();
-        query = " SELECT COUNT(*) FROM administrateur ";
-        
-        try {
-            connection = dataSource.getConnection();
-            //connection.setAutoCommit(false);
-            pstmt = connection.prepareStatement(query);
-            resultSet = pstmt.executeQuery();  
-            
-            resultSet.next() ;
-            int count = resultSet.getInt(1);
-            System.out.println("Number of rows: " + count);
-            //connection.commit();
-            
-           
-            
-        } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
-        }
-        //return administrateurs;
-    }
-    
-    public static List<Contribuable> countContribuable() {
-        
-        contribuables = new ArrayList<>();
-        query = " SELECT COUNT(*) FROM contribuable ";
-        
-        try {
-            connection = dataSource.getConnection();
-            //connection.setAutoCommit(false);
-            pstmt = connection.prepareStatement(query);
-            resultSet = pstmt.executeQuery();  
-            
-            while(resultSet.next()) { 
-                
-                Contribuable contribuable = new Contribuable();
-                contribuable.setId(resultSet.getInt("id"));  
-                
-                contribuables.add(contribuable);  
-                //connection.commit();
-            }
-           
-            
-        } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
-        }
-        return contribuables;
-    }
-
-    public static List<Representant> countRepresentant() {
-        
-        representants = new ArrayList<>();
-        query = " SELECT COUNT(*) FROM representant ";
-        
-        try {
-            connection = dataSource.getConnection();
-            //connection.setAutoCommit(false);
-            pstmt = connection.prepareStatement(query);
-            resultSet = pstmt.executeQuery();  
-            
-            while(resultSet.next()) { 
-                
-                Representant representant = new Representant();
-                representant.setId(resultSet.getInt("id"));  
-                
-                representants.add(representant);  
-                //connection.commit();
-            }
-           
-            
-        } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
-        }
-        return representants;
-    }
-    
-    public static List<Declaration> countDeclaration() {
-        
-        declarations = new ArrayList<>();
-        query = " SELECT COUNT(*) FROM declaration ";
-        
-        try {
-            connection = dataSource.getConnection();
-            //connection.setAutoCommit(false);
-            pstmt = connection.prepareStatement(query);
-            resultSet = pstmt.executeQuery();  
-            
-            while(resultSet.next()) { 
-                
-                Declaration declaration = new Declaration();
-                declaration.setId(resultSet.getInt("id"));  
-                
-                declarations.add(declaration);  
-                //connection.commit();
-            }
-           
-            
-        } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
-        }
-        return declarations;
-    }
-
-
-    public static List<Payement> countPaidPayement() {
-        
-        payements = new ArrayList<>();
-        query = " SELECT COUNT(*) FROM payement ";
-        
-        try {
-            connection = dataSource.getConnection();
-            //connection.setAutoCommit(false);
-            pstmt = connection.prepareStatement(query);
-            resultSet = pstmt.executeQuery();  
-            
-            while(resultSet.next()) { 
-                
-                Payement payement = new Payement();
-                payement.setId(resultSet.getInt("id"));  
-                
-                payements.add(payement);  
-                //connection.commit();
-            }
-           
-            
-        } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
-        }
-        return payements;
-    }
-    
-    public static List<Payement> countUnpaidPayement() {
-        
-        payements = new ArrayList<>();
-        query = " SELECT COUNT(*) FROM payement ";
-        
-        try {
-            connection = dataSource.getConnection();
-            //connection.setAutoCommit(false);
-            pstmt = connection.prepareStatement(query);
-            resultSet = pstmt.executeQuery();  
-            
-            while(resultSet.next()) { 
-                
-                Payement payement = new Payement();
-                payement.setId(resultSet.getInt("id"));  
-                
-                payements.add(payement);  
-                //connection.commit();
-            }
-           
-            
-        } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
-        }
-        return payements;
-    }
-    
-    public static List<Quittance> countQuittance() {
-        
-        quittances = new ArrayList<>();
-        query = " SELECT COUNT(*) FROM quittance ";
-        
-        try {
-            connection = dataSource.getConnection();
-            //connection.setAutoCommit(false);
-            pstmt = connection.prepareStatement(query);
-            resultSet = pstmt.executeQuery();  
-            
-            while(resultSet.next()) { 
-                
-                Quittance quittance = new Quittance();
-                quittance.setId(resultSet.getInt("id"));  
-                
-                quittances.add(quittance);  
-                //connection.commit();
-            }
-           
-            
-        } catch (SQLException ex) {
-            //connection.rollback();
-            printSQLException(ex);
-        }finally {
-            //connection.setAutoCommit(true);
-        }
-        return quittances;
+        return countList;
     }
 
 

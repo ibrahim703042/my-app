@@ -37,6 +37,7 @@ util\QuittanceDbUtil.class
 model\Payement.class
 util\AdministrateurDbUtil.class
 dbconnection\MySQLJDBCUtil.class
+controller\DashboardController.class
 controller\RevenusSousLocationController.class
 controller\MessageController.class
 model\Amende.class
