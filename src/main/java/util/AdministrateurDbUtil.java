@@ -73,6 +73,7 @@ public class AdministrateurDbUtil  extends MySQLJDBCUtil{
                 //connection.commit();
             }
            
+            System.out.println("Total Records Fetched: " + administrateurs.size());
             
         } catch (SQLException ex) {
             //connection.rollback();
@@ -263,4 +264,35 @@ public class AdministrateurDbUtil  extends MySQLJDBCUtil{
         return administrateur;
     }
 
+    /*
+    public List<Administrateur> count() {
+        
+        administrateurs = new ArrayList<>();
+        query = "SELECT COUNT(*) FROM administrateur";
+        try {
+            connection = dataSource.getConnection();
+            //connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);
+            resultSet = pstmt.executeQuery();  
+            
+            while(resultSet.next()) { 
+                
+                administrateur = new Administrateur(); 
+                administrateur.setId(resultSet.getInt("id"));  
+                
+                administrateurs.add(administrateur);  
+                //connection.commit();
+            }
+           
+            
+        } catch (SQLException ex) {
+            //connection.rollback();
+            printSQLException(ex);
+        }finally {
+            //connection.setAutoCommit(true);
+        }
+        return new ArrayList<>(administrateurs.size());
+    }
+    */
+    
 }

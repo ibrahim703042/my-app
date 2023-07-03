@@ -33,6 +33,7 @@ public class AdminController extends MessageController implements Serializable{
     private Role modelRole;
     
     private List<Administrateur> administrateurs;
+    //private List<Administrateur> administrateurCount;
     private Administrateur administrateur;
     
     @Inject
@@ -51,6 +52,11 @@ public class AdminController extends MessageController implements Serializable{
     public void clearForm() {
         this.setAdministrateur(new Administrateur());
     }
+    
+//    public List<Administrateur> count() {
+//        this.administrateurCount = this.administrateurDbUtil.count();
+//        return administrateurCount;
+//    }
      
     // ************************ create Admin **************************/
     
