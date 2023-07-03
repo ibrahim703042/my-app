@@ -7,6 +7,7 @@ package util;
 import dbconnection.MySQLJDBCUtil;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
+import jakarta.faces.bean.ViewScoped;
 import java.sql.SQLException;
 
 /**
@@ -15,18 +16,23 @@ import java.sql.SQLException;
  * 
  */
 @ManagedBean
-@ApplicationScoped
+@ViewScoped
 public class DashboardDbUtil extends MySQLJDBCUtil {
     
-    private static Integer countList = 0 ;
-    private static Integer count;
     private static Integer administrateur;
+    private static Integer contribuable;
+    private static Integer representant;
+    private static Integer immeuble;
+    private static Integer province;
+    private static Integer commune;
+    private static Integer colline;
+    private static Integer role;
     private static String query;
     
     public DashboardDbUtil(){
     }
 
-    public Integer administrateurCount(){
+    public Integer adminCount(){
         
         query = "SELECT COUNT(*) FROM administrateur ";
          
@@ -50,8 +56,79 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
         return administrateur;
     }
     
-    public static Integer countRole() {
+    public Integer taxPayerCount(){
         
+        query = "SELECT COUNT(*) FROM contribuable ";
+         
+        try {
+            connection = dataSource.getConnection();
+            //connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);
+            
+            resultSet = pstmt.executeQuery();  
+            resultSet.next();
+            
+            contribuable = resultSet.getInt(1);
+            
+         } catch (SQLException ex) {
+            //connection.rollback();
+            printSQLException(ex);
+        }finally {
+            //connection.setAutoCommit(true);
+        }
+        
+        return contribuable;
+    }
+    
+    public Integer reperesentative(){
+        
+        query = "SELECT COUNT(*) FROM representant ";
+         
+        try {
+            connection = dataSource.getConnection();
+            //connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);
+            
+            resultSet = pstmt.executeQuery();  
+            resultSet.next();
+            
+            representant = resultSet.getInt(1);
+            
+         } catch (SQLException ex) {
+            //connection.rollback();
+            printSQLException(ex);
+        }finally {
+            //connection.setAutoCommit(true);
+        }
+        
+        return representant;
+    }
+    
+    public Integer building(){
+        
+        query = "SELECT COUNT(*) FROM immeuble ";
+         
+        try {
+            connection = dataSource.getConnection();
+            //connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);
+            
+            resultSet = pstmt.executeQuery();  
+            resultSet.next();
+            
+            immeuble = resultSet.getInt(1);
+            
+         } catch (SQLException ex) {
+            //connection.rollback();
+            printSQLException(ex);
+        }finally {
+            //connection.setAutoCommit(true);
+        }
+        
+        return immeuble;
+    }
+    
+    public static Integer countRole() {
         query = " SELECT COUNT(*) FROM role ";
         
         try {
@@ -62,7 +139,7 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
             
             while(resultSet.next()) { 
                 
-                count = resultSet.getInt(1);
+                role = resultSet.getInt(1);
                 //connection.commit();
             }
            
@@ -72,7 +149,7 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
         }finally {
             //connection.setAutoCommit(true);
         }
-        return countList;
+        return role;
     }
    
     public static Integer countProvince() {
@@ -87,7 +164,7 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
             
             while(resultSet.next()) { 
                 
-                count = resultSet.getInt(1);
+                province = resultSet.getInt(1);
                 //connection.commit();
             }
            
@@ -98,7 +175,7 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
         }finally {
             //connection.setAutoCommit(true);
         }
-        return countList;
+        return province;
     }
 
     public static Integer countCommune() {
@@ -113,7 +190,7 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
             
             while(resultSet.next()) { 
                 
-                count = resultSet.getInt(1);
+                commune = resultSet.getInt(1);
                 
                 //connection.commit();
             }
@@ -125,7 +202,7 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
         }finally {
             //connection.setAutoCommit(true);
         }
-        return countList;
+        return commune;
     }
     
     public static Integer countColline() {
@@ -139,7 +216,7 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
             resultSet = pstmt.executeQuery();  
             
             while(resultSet.next()) { 
-                count = resultSet.getInt(1);
+                colline = resultSet.getInt(1);
                 //connection.commit();
             }
         } catch (SQLException ex) {
@@ -148,7 +225,7 @@ public class DashboardDbUtil extends MySQLJDBCUtil {
         }finally {
             //connection.setAutoCommit(true);
         }
-        return countList;
+        return colline;
     }
 
 

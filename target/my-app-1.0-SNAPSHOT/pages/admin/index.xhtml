@@ -28,13 +28,13 @@
             <p:dataTable
                 id="dt-administrateurs"
                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                rowsPerPageTemplate="5,10,15"
+                rowsPerPageTemplate="3,10,15"
                 paginator="true"
                 widgetVar="dtAdministrateurs"
                 value="#{adminController.administrateurs}" 
                 var="administrateur" 
                 rowKey="#{administrateur.email}"
-                rows="4" 
+                rows="3" 
                 paginatorPosition="bottom"
                 binding="#{table}" 
 
