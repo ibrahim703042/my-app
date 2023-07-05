@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:ui = "http://java.sun.com/jsf/facelets" >
+    
+<h:head>
+    <title>
+        <ui:insert name="title">Tele declaration d'impot fiscale</ui:insert>
+    </title>
+    
+    <!-- Custom styles for this template -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'/>
+    <h:outputStylesheet library="webjars" name="primeflex/3.3.0/primeflex.min.css" />
+    <h:outputStylesheet library="css" name="admin.css"/>
+    
+    
+</h:head>
+<h:body>
+    
+    <ui:insert name="sidebar" >
+        <ui:include src="/resources/templates/admin/sidebar.xhtml" />
+    </ui:insert>
+    
+    <section id="content">
+        <ui:insert name="header" >
+            <ui:include src="/resources/templates/admin/header.xhtml" />
+        </ui:insert>
+        <main>
+            <ui:insert name="contents" >
+                <ui:include src="/resources/templates/admin/contents.xhtml" />
+            </ui:insert>
+        </main>
+    </section>
+        
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <h:outputScript library="js" name="script.js"/>
+    <h:outputScript library="primefaces" name="jquery/jquery.js" />
+     
+</h:body>
+</html>

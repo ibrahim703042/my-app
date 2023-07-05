@@ -1,0 +1,78 @@
+<ui:composition xmlns = "http://www.w3.org/1999/xhtml"   
+   xmlns:h = "http://java.sun.com/jsf/html"
+   xmlns:ui = "http://java.sun.com/jsf/facelets" 
+   xmlns:f="http://xmlns.jcp.org/jsf/core"
+   template = "/resources/templates/miniTemplate.xhtml">
+
+        <ui:define name = "content"> 
+
+            <section class="main">
+                <div class="container" data-aos="fade-up">
+                    <h:form>
+                        <div class="section-title">
+                           <h2>Welcome : #{authController.authContribuable.nom}</h2>
+                        </div>
+                    
+                        <!--<p>Welcome #{authController.authContribuable.email}</p>-->
+                        <h:commandLink action="#{authController.taxPayer_logout}" value="Se deconnectez"/>
+                    </h:form>
+                    
+                   <div class="row">
+
+                      <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
+                            <div class="particulier" data-aos="fade-up" data-aos-delay="100">
+                               <div class="particulier-img">
+                                  <h:graphicImage name="image/OBR_2.png"  class="img-fluid" />
+                               </div>
+                               <div class="particulier-info">
+                                  <h4>Titre</h4>
+                                  <span class="text-justify">
+                                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+                                     Numquam unde id quisquam recusandae architecto nam temporibus 
+                                     labore vel neque eius incidunt explicabo velit autem, odio facere, 
+                                     fuga voluptate quidem soluta.
+                                  </span>
+
+                               </div>
+                               <div class="particulier-button">
+                                    <div class="particulier-plus">
+                                        <h:outputLink  class="button-link" value="https://www.obr.bi/index.php/en/lois-et-reglements">En savoir plus</h:outputLink>
+                                    </div>
+                               </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
+                            <div class="particulier" data-aos="fade-up" data-aos-delay="100">
+                               <div class="particulier-img">
+                                  <!-- <img src="#{resources/image/OBR_2.png }" class="img-fluid" alt="" /> -->
+                                  <h:graphicImage name="image/OBR_2.png"  class="img-fluid" />
+
+                               </div>
+                               <div class="particulier-info">
+                                  <h4>Titre</h4>
+                                  <span class="text-justify">
+                                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+                                     Numquam unde id quisquam recusandae architecto nam temporibus 
+                                     labore vel neque eius incidunt explicabo velit autem, odio facere, 
+                                     fuga voluptate quidem soluta.
+                                  </span>
+                               </div>
+                                <div class="particulier-button">
+                                    <div class="particulier-plus">
+                                       <h:link outcome="login" class="button-link" value="Declarer" >
+                                          <!--<f:param name="pageId" value="1"/>-->
+                                       </h:link>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+
+                   </div>
+                </div>
+            </section> 
+
+         </ui:define> 
+
+</ui:composition>
+  

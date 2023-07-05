@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+    
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+            
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton 
+                        value="Ajouter" 
+                        icon="pi pi-plus" 
+                        actionListener="#{permissionController.clearForm}"
+                        update=":dialogs-permission:manage-permission-content"
+                        oncomplete="PF('managePermissionDialog').show()"
+                        styleClass="ui-button-success" 
+                        style="margin-right: .5rem">
+                        
+                        <p:resetInput target=":dialogs-permission:manage-permission-content" />
+                        
+                    </p:commandButton>
+                    
+                </p:toolbarGroup>
+                
+            </p:toolbar>
+            
+            <p:dataTable
+                id="dt-roles"
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="3,10,15,20,25,50,75,100"
+                value="#{permissionController.permissions}"
+                widgetVar="dtPermissions" 
+                var="permission"
+                rowKey="#{permissionController.permissions}"
+                paginator="true" 
+                rows="4" 
+                paginatorPosition="bottom"
+                binding="#{table}" 
+            >
+                
+                <f:facet name="header">
+                     <div class="flex justify-content-between">
+                         <span 
+                             style="font-weight: bold;
+                              font-size: 18px; text-transform: uppercase"
+                         >
+                            Liste
+                         </span>
+                         <span class="filter-container ui-input-icon-left"> 
+                             <i class="pi pi-search icon"></i>
+                             <p:inputText 
+                                 id="globalFilter"
+                                 onkeyup="PF('dtPermissions').filter()" 
+                                 placeholder="Search..." 
+                             />
+                         </span>
+                     </div>
+                 </f:facet>
+                
+                <p:column headerText="No" style="width: 5%">
+                      <h:outputText value="#{table.rowIndex + 1}" />
+                </p:column>
+                
+                <p:column headerText="Nom complet" >
+                    <h:outputText value="#{permission.nom} #{permission.prenom}" />
+                </p:column>
+                
+                <p:column headerText="Affiche" >
+                    <h:outputText value="#{permission.afficher}" />
+                </p:column>
+                
+                <p:column headerText="Ajouter" >
+                    <h:outputText value="#{permission.ajouter}" />
+                </p:column>
+                
+                <p:column headerText="Modifier" >
+                    <h:outputText value="#{permission.modifier}" />
+                </p:column>
+                
+                <p:column headerText="Supprimer" >
+                    <h:outputText value="#{permission.supprimer}" />
+                </p:column>
+
+            <p:column exportable="false" style="width: 10%" >
+                
+                <p:commandButton 
+                    icon="pi pi-pencil" 
+                    styleClass="edit-button rounded-button ui-button-success mr-4"
+                    oncomplete="PF('managePermissionDialog').show()"
+                    update=":dialogs-permission:manage-permission-content"
+                    process="@this"
+                    
+                >
+                    <f:setPropertyActionListener value="#{permission}" target="#{permissionController.permission}" />
+                    <p:resetInput target=":dialogs-permission:manage-permission-content" />
+                </p:commandButton>
+                
+                <p:commandButton 
+                    class="ui-button-warning rounded-button" 
+                    icon="pi pi-trash"
+                    ajax="false"
+                    action="#{adminController.delete(permission.id)}"
+                    
+                >
+                </p:commandButton>
+                
+             </p:column>
+
+            </p:dataTable>
+            
+        </h:form>
+        <ui:include src="ajouter.xhtml" />
+    
+                
+</ui:composition>

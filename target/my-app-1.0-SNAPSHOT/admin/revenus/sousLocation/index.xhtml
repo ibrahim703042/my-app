@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+    
+        <h:form>
+            <p:growl id="message" showDetail="true"/>
+            
+            <p:dataTable
+                id="dt-revenus"
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="3,10,15,20"
+                paginator="true" 
+                rows="3"
+                widgetVar="dtRevenus"
+                rowSelectMode="add" 
+                paginatorPosition="bottom"
+                binding="#{table}" 
+                value="#{revenusSousLocationController.listRevenuSousLocation}" 
+                var="revenus"
+                rowKey="#{revenus}">
+
+                <f:facet name="header">
+                    <div class="flex justify-content-between">
+                         <span 
+                            style="font-weight: bold;
+                            font-size: 18px; text-transform: uppercase">
+                             LISTE
+                         </span>
+                         <span class="filter-container ui-input-icon-left"> 
+                             <i class="pi pi-search icon"></i>
+                             <p:inputText 
+                                 id="globalFilter" 
+                                 onkeyup="PF('dtRevenus').filter()" 
+                                 placeholder="Search...." 
+                             />
+                         </span>
+                     </div>
+                </f:facet>
+                
+                <p:column 
+                   headerText="#" 
+                   style="width: 5%">
+                    <h:outputText value="#{table.rowIndex + 1}" />
+                </p:column>
+
+                <p:column headerText="Recette sous location">
+                     <h:outputText value="#{revenus.recetteSousLocation}" />
+                </p:column>
+
+                <p:column headerText="Loyer payes" >
+                   <h:outputText value="#{revenus.loyerPayes}" />
+                </p:column>
+
+                <p:column headerText="Revenus nets imposables" >
+                   <h:outputText value="#{revenus.revenusNetsImposables}" />
+                </p:column>
+
+                <p:column headerText="Total revenus nets imposables" >
+                   <h:outputText value="#{revenus.totalRevenusNetsImposables}" />
+                </p:column>
+
+                <p:column headerText="Abbattements" >
+                   <h:outputText value="#{revenus.abbattements}" />
+                </p:column>
+                
+                <p:column headerText="Revenus net imposable" >
+                   <h:outputText value="#{revenus.revenuSousNetImposable}" />
+                </p:column>
+                
+            </p:dataTable>
+         </h:form>
+    
+       <ui:include src="ajouter.xhtml" />
+            
+</ui:composition>

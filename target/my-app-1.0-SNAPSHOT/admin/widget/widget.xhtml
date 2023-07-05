@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:co = "http://java.sun.com/jsf/composite/component"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component"> 
+    
+    <div class="info-data">
+            
+        <div class="card">
+            <h:form>
+                <div class="head">
+                    <div>
+                        <h2>#{dashboardDbUtil.adminCount()}</h2>
+                        <!--<h2>10</h2>-->
+                        <p>Administrateur</p>
+                    </div>
+                    <i class='pi pi-users icon' ></i>
+                </div>
+                <span></span>
+                <span class="label"></span>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <div class="head">
+                <div>
+                    <h2>#{dashboardDbUtil.taxPayerCount()}</h2>
+                    <p>Contribuable</p>
+                </div>
+                <i class='pi pi-users icon' ></i>
+            </div>
+            <span></span>
+            <span class="label"></span>
+        </div>
+
+        <div class="card">
+            <div class="head">
+                <div>
+                    <h2>#{dashboardDbUtil.reperesentative()}</h2>
+                    <p>Représentant</p>
+                </div>
+                <i class='pi pi-users icon' ></i>
+            </div>
+            <span></span>
+            <span class="label"></span>
+        </div>
+
+        <div class="card">
+            <div class="head">
+                <div>
+                    <h2>#{dashboardDbUtil.building()}</h2>
+                    <p>Immeuble</p>
+                </div>
+                <i class='pi pi-building icon' ></i>
+            </div>
+            <span></span>
+            <span class="label"></span>
+        </div>
+
+    </div>
+    
+</ui:composition>
+  

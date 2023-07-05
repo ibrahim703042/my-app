@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+                
+   <h:form id="dialogs-permission" >
+       <p:growl id="messages" showDetail="true" />
+        <p:dialog header="Permission Details" widgetVar="managePermissionDialog" minHeight="40" width="450" showEffect="fade">
+            <p:outputPanel id="manage-permission-content" class="ui-fluid">
+                
+                <p:outputPanel >
+                    <!--<p:inputText value="#{permissionController.permission.id}"/>-->
+                    <div class="field">
+                        <p:outputLabel class="font-bold"  value="Administrateur"/>
+                        <p:selectOneMenu 
+                            value="#{permissionController.permission.idAdministrateur}"
+                            filter="true" 
+                            filterMatchMode="startsWith" 
+                            dynamic="true"
+                            required="true"
+                            style="height: 41px; "
+                        >
+                            <f:selectItem itemLabel="Choisir Administrateur" />
+                            <f:selectItems var="administrateur"
+                                value="#{permissionController.administrateurs}"
+                                itemLabel="#{administrateur.id} : #{administrateur.nom} #{administrateur.prenom}"
+                                itemValue="#{administrateur.id}" 
+                            />
+
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div class="field">
+                        <p:outputLabel ></p:outputLabel>
+                        <p:selectBooleanCheckbox value="#{permissionController.permission.afficher}" itemLabel="Afficher"/>
+                    </div>
+
+                    <div class="field">
+                        <p:outputLabel ></p:outputLabel>
+                        <p:selectBooleanCheckbox value="#{permissionController.permission.ajouter}" itemLabel="Ajouter"/>
+                    </div>
+                    
+                    <div class="field">
+                        <p:outputLabel ></p:outputLabel>
+                        <p:selectBooleanCheckbox value="#{permissionController.permission.modifier}" itemLabel="Modifier"/>
+                    </div>
+
+                    <div class="field">
+                        <p:outputLabel ></p:outputLabel>
+                        <p:selectBooleanCheckbox value="#{permissionController.permission.supprimer}" itemLabel="Supprimer"/>
+                    </div>
+
+                </p:outputPanel>
+            </p:outputPanel>
+            
+            <f:facet name="footer">
+                
+                <p:commandButton 
+                    value="Privilegies" 
+                    actionListener="#{permissionController.createOrUpdatePermission}"
+                    update="manage-permission-content messages" 
+                    process="manage-permission-content @this" 
+                />
+                
+                <p:commandButton 
+                    value="Cancel" 
+                    icon="pi pi-times" 
+                    onclick="PF('managePermissionDialog').hide()"
+                    class="ui-button-secondary" 
+                    type="button" />
+            </f:facet>
+
+        </p:dialog>
+       
+       
+    </h:form>   
+    
+</ui:composition>

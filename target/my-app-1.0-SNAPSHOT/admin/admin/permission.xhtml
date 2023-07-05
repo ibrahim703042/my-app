@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+                
+   <h:form id="dialogs-permission" >
+       <p:growl id="messages" showDetail="true" />
+        <p:dialog header="Permission Details" widgetVar="managePermissionDialog" minHeight="40" width="450" showEffect="fade">
+            <p:outputPanel id="manage-permission-content" class="ui-fluid">
+                
+                <p:outputPanel rendered="#{not empty adminController.administrateur}">
+                    
+                    <div class="field">
+                        <p:outputLabel >Id</p:outputLabel>
+                        <p:inputText value="#{adminController.administrateur.id}"/>
+                    </div>
+                    
+                    <div class="field">
+                        <p:outputLabel ></p:outputLabel>
+                        <p:selectBooleanCheckbox value="#{adminController.administrateur.afficher}" itemLabel="Afficher"/>
+                    </div>
+
+                    <div class="field">
+                        <p:outputLabel ></p:outputLabel>
+                        <p:selectBooleanCheckbox value="#{adminController.administrateur.ajouter}" itemLabel="Ajouter"/>
+                    </div>
+                    
+                    <div class="field">
+                        <p:outputLabel ></p:outputLabel>
+                        <p:selectBooleanCheckbox value="#{adminController.administrateur.modifier}" itemLabel="Modifier"/>
+                    </div>
+
+                    <div class="field">
+                        <p:outputLabel ></p:outputLabel>
+                        <p:selectBooleanCheckbox value="#{adminController.administrateur.supprimer}" itemLabel="Supprimer"/>
+                    </div>
+
+                </p:outputPanel>
+            </p:outputPanel>
+            
+            <f:facet name="footer">
+                
+                <p:commandButton 
+                    value="Privilegies" 
+                    actionListener="#{adminController.updatePermission}"
+                    update="manage-permission-content messages" 
+                    process="manage-permission-content @this" 
+                />
+                
+                <p:commandButton 
+                    value="Cancel" 
+                    icon="pi pi-times" 
+                    onclick="PF('managePermissionDialog').hide()"
+                    class="ui-button-secondary" 
+                    type="button" />
+            </f:facet>
+
+        </p:dialog>
+       
+       
+    </h:form>   
+    
+</ui:composition>
