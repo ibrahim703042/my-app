@@ -30,7 +30,7 @@
                             </h:link>
                         </li>
                         <li>
-                            <h:link outcome="declaration" class="nav-link scrollto" value="Declaration" >
+                            <h:link outcome="declaration" class="nav-link scrollto" value="Déclaration" >
                                 <!--<f:param name="pageId" value="1"/>-->
                             </h:link>
                         </li>
@@ -45,7 +45,15 @@
                     
                 </nav>
                 
-                <h:link outcome="login" class=" login-btn text-decoration-none" value="Se connecter" />
+                <c:choose>
+                    <c:when test="#{authController.authContribuable.email != null}">
+                      <h:link outcome="#{authController.taxPayer_logout}" class=" login-btn text-decoration-none" value="Se connectez" />
+                    </c:when>
+                    <c:otherwise>
+                        <h:link outcome="login" class=" login-btn text-decoration-none" value="Se connectez" />
+                    </c:otherwise>
+                </c:choose>
+                <!--<h:link outcome="login" class=" login-btn text-decoration-none" value="Se connectez" />-->
                 
             </div>
             

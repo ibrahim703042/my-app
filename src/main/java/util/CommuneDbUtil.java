@@ -10,10 +10,8 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
-import jakarta.faces.context.FacesContext;
 import java.sql.*;
 import java.util.*;
 import model.Commune;
@@ -22,11 +20,11 @@ import model.Commune;
 @ApplicationScoped
 
 public class CommuneDbUtil extends MySQLJDBCUtil{
-    
+    private List<Commune> communeList;
+    private Commune commune;
     //*************************** display data *****************/
-    public  ArrayList findAll() {
-        
-        ArrayList communeList = new ArrayList();
+    public  List<Commune> findAll() {
+        communeList = new ArrayList<>();
         
         try {
             String query = ""
@@ -41,7 +39,7 @@ public class CommuneDbUtil extends MySQLJDBCUtil{
 
             while(resultSet.next()) { 
 
-                Commune commune = new Commune(); 
+                commune = new Commune(); 
 
                 commune.setId(resultSet.getInt("id"));  
                 commune.setIdProvince(resultSet.getInt("id_province"));  
@@ -78,52 +76,8 @@ public class CommuneDbUtil extends MySQLJDBCUtil{
             connection.close();
 
         }catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         } 
-    }
-
-    //************** find data by ID ***************************/
-    public void findById(int communeId) {
-        
-        Commune commune = null;
-        System.out.println(" findById() : Commune Id: " + communeId);
-        
-        /* Setting The Particular commune Details In Session */
-        Map<String,Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-
-        try {
-            
-            String query = ""
-                    + "SELECT commune.*, province.nomProvince, province.id as Province_id "
-                    + "FROM commune, province "
-                    + "WHERE commune.id_province = province.id "
-                    + "AND commune.id = " + communeId ;
-            
-           
-           // String query = "SELECT * FROM commune C WHERE C.id = " + communeId ;
-
-            connection = dataSource.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);    
-            
-            if(resultSet.next()) {
-                
-                commune = new Commune();
-                
-                commune.setId(resultSet.getInt("id"));  
-                commune.setIdProvince(resultSet.getInt("Province_id"));  
-                commune.setNomProvince(resultSet.getString("nomProvince"));
-                commune.setNomCommune(resultSet.getString("nomCommune"));
-                
-            }
-            
-            session.put("communeMapped", commune);
-            connection.close();
-
-        } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
-        }
-        
     }
 	
     //************** update data ******************************/
@@ -148,7 +102,7 @@ public class CommuneDbUtil extends MySQLJDBCUtil{
             connection.close();
 
         } catch(SQLException sqlException) {
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
         
     }
@@ -167,14 +121,9 @@ public class CommuneDbUtil extends MySQLJDBCUtil{
             connection.close();
             
         } catch(SQLException sqlException){
-            addErrorMessage(sqlException);
+            printSQLException(sqlException);
         }
     }
     
-     //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
+    
 }

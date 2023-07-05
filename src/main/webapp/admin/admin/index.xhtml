@@ -1,0 +1,125 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+           
+            <p:toolbar>
+                <p:toolbarGroup>
+
+                    <p:commandButton 
+                        value="Ajouter" 
+                        icon="pi pi-plus" 
+                        actionListener="#{adminController.clearForm}"
+                        update=":dialogs-admin:manage-admin-content"
+                        oncomplete="PF('manageAdminDialog').show()"
+                        styleClass="ui-button-success" 
+                        style="margin-right: .5rem"
+                    >
+                        <p:resetInput target=":dialogs-admin:manage-admin-content" />
+                    </p:commandButton>
+
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:dataTable
+                id="dt-administrateurs"
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="3,10,15"
+                paginator="true"
+                widgetVar="dtAdministrateurs"
+                value="#{adminController.administrateurs}" 
+                var="administrateur" 
+                rowKey="#{administrateur}"
+                rows="3" 
+                paginatorPosition="bottom"
+                binding="#{table}" 
+
+            >
+                <f:facet name="header">
+                    <div class="flex justify-content-between">
+                         <span 
+                            style="font-weight: bold;
+                            font-size: 18px; text-transform: uppercase">
+                             LISTE
+                         </span>
+                         <span class="filter-container ui-input-icon-left"> 
+                             <i class="pi pi-search icon"></i>
+                             <p:inputText 
+                                 id="globalFilter" 
+                                 onkeyup="PF('dtAdministrateurs').filter()" 
+                                 placeholder="Search...." 
+                             />
+                         </span>
+                     </div>
+                 </f:facet>
+
+
+                <p:column headerText="" style="width: 5%">
+                     <h:outputText value="#{table.rowIndex + 1}" />
+                 </p:column>
+                
+                <!--
+                <p:column headerText="#"  style="width: 5%">
+                   <h:outputText value="#{administrateur.id}" />
+                </p:column>
+                -->
+
+                <p:column headerText="Prenom" sortBy="#{administrateur.prenom}" filterBy="#{administrateur.prenom}" style="width: 10%">
+                   <h:outputText value="#{administrateur.prenom}" />
+                </p:column>
+
+                 <p:column headerText="Email" sortBy="#{administrateur.email}" filterBy="#{administrateur.email}">
+                    <h:outputText value="#{administrateur.email}" />
+                 </p:column>
+
+                <p:column headerText="B.P" sortBy="#{administrateur.bp}" filterBy="#{administrateur.bp}" style="width: 10%">
+                    <h:outputText value="#{administrateur.bp}" />
+                </p:column>
+
+
+                <p:column headerText="Role" sortBy="#{administrateur.nomRole}" filterBy="#{administrateur.nomRole}" style="width: 10%">
+                    <h:outputText value="#{administrateur.nomRole}" />
+                </p:column>
+
+
+                <!--
+                 <p:column headerText="Date" sortBy="#{administrateur.date}" filterBy="#{administrateur.date}" >
+                    <h:outputText value="#{administrateur.date}" />
+                 </p:column>
+                -->
+
+                <p:column headerText="" exportable="false" class="flex justify-content-end" >
+
+                    
+                    <p:commandButton
+                        icon="pi pi-pencil"
+                        styleClass="edit-button rounded-button ui-button-success mr-4"
+                        oncomplete="PF('manageEditAdminDialog').show()"
+                        update=":dialogs-edit-admin:manage-edit-admin-content"
+                        process="@this"
+                    >
+                        <f:setPropertyActionListener value="#{administrateur}" target="#{adminController.administrateur}" />
+                        <p:resetInput target=":dialogs-edit-admin:manage-edit-admin-content" />
+                    </p:commandButton>
+
+
+                    <p:commandButton
+                        class="ui-button-warning rounded-button" 
+                        icon="pi pi-trash"
+                        ajax="false"
+                        action="#{adminController.delete(administrateur.id)}">  
+                    </p:commandButton>
+
+                 </p:column>
+
+            </p:dataTable>
+        </h:form>
+        <ui:include src="ajouter.xhtml" />
+        <ui:include src="edit-adminisrateur.xhtml" />
+        <ui:include src="permission.xhtml" />
+            
+</ui:composition>

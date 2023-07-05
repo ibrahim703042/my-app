@@ -32,3 +32,5 @@ WHERE revenulocatif.id_revenuLocatif = revenusouslocation.id_revenuLocatif
 
 String b = "SELECT (((revenulocatif.loyerExonere + revenulocatif.loyerImposable)-(revenulocatif.loyerExonere + revenulocatif.loyerImposable) * 0.4) - revenulocatif.interetEmprunt) AS " Revenus nets imposables ", revenusouslocation.id_revenuSousLocatif, revenusouslocation.id_revenuLocatif, revenusouslocation.recetteSousLocation, revenusouslocation.loyerPayes, (revenusouslocation.recetteSousLocation - revenusouslocation.loyerPayes) AS "Revenus_nets_imposables " , ((((revenulocatif.loyerExonere + revenulocatif.loyerImposable)-(revenulocatif.loyerExonere + revenulocatif.loyerImposable) * 0.4) - revenulocatif.interetEmprunt) + (revenusouslocation.recetteSousLocation - revenusouslocation.loyerPayes)) AS "Total_revenus_nets_imposables" , revenusouslocation.abbattements, ((((revenulocatif.loyerExonere + revenulocatif.loyerImposable)-(revenulocatif.loyerExonere + revenulocatif.loyerImposable) * 0.4) - revenulocatif.interetEmprunt) + (revenusouslocation.recetteSousLocation - revenusouslocation.[...]
 "
+
+-- Revenu locatif

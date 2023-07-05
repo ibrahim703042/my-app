@@ -12,6 +12,7 @@ import java.io.Serializable;
 import model.Province;
 
 import java.util.*;
+import org.primefaces.PrimeFaces;
 import util.ProvinceDbUtil;
 
 /**
@@ -27,7 +28,7 @@ import util.ProvinceDbUtil;
 
 public class ProvinceController extends MessageController implements Serializable{
 
-    public ArrayList provinces;
+    public List<Province> provinces;
     private Province province;
     
     @Inject
@@ -37,79 +38,72 @@ public class ProvinceController extends MessageController implements Serializabl
     public void init(){
        provinces = provinceDbUtil.findAll();
     }
- 
     
-    public ArrayList provinceList() {
+    public void clearForm(){
+        this.province = new Province();
+    }
+    
+    public void createOrUpdate() {
         
-        provinces.clear();
-        try {
-            provinces = provinceDbUtil.findAll();
-        }catch (Exception ex) {
-            ex.printStackTrace();
+        if(IsValid()){
+            
+            if (this.province.getId() == null) {
+
+                this.provinceDbUtil.save(this.province);
+                this.init();
+                showInfo("Inserted","Data Added");
+                PrimeFaces.current().executeScript("PF('manageFormDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-provinces");
+                
+            }else if (this.province.getId() != null) {
+
+                this.provinceDbUtil.update(this.province);
+                this.init();
+                showInfo("Updated","Data Updated");
+                PrimeFaces.current().executeScript("PF('manageFormDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-provinces");
+               
+            } 
         }
-        return provinces;
+
     }
-     
-    public String save(Province province) {
+    
+    // ******   Input Validation ******/
+    private boolean IsValid(){
+        if (this.province.getNomProvince().isEmpty())
+        {
+            showError("Failed"," Name is required");
+            return false;
+        }
         
-        try {
-            
-            provinceDbUtil.save(province);
-            this.showInfo("Inserted", "Data Inserted");
-            this.init();
-
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return "/pages/pays/province/template.xhtml?faces-redirect=true";
+        return true;
     }
-     
-    public String edit(int id) {
-        try {
-            
-            provinceDbUtil.findById(id);
-
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return "/pages/pays/province/edit.xhtml?faces-redirect=true";
-    }
-     
-    public String update(Province province) {
-        
-        try {
-            
-            provinceDbUtil.update(province);
-            this.showInfo("Updated", "Data updeted");
-//            this.init();
-
-
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return "/pages/pays/province/template.xhtml?faces-redirect=true";
-    }
-     
+    
+    // ******   Delete data ******/
     public void delete(int id) {
-        
-        try {
-         provinceDbUtil.delete(id);
-            this.showInfo("Deleted", "Data deleted");
-            this.init();
-
-
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        }
-//        return "/pages/pays/province/template.xhtml?faces-redirect=true";
+        this.provinceDbUtil.delete(id);
+        this.init();
+        showInfo("Deleted","Data deleted");
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-provinces");
     }
-    
 
-    public Province getProvince() {
-        return province;
+    public void setProvinces(List<Province> provinces) {
+        this.provinces = provinces;
     }
 
     public void setProvince(Province province) {
         this.province = province;
     }
+
+    
+    public Province getProvince() {
+        return province;
+    }
+
+    public List<Province> getProvinces() {
+        return provinces;
+    }
+
+    
+    
 }	

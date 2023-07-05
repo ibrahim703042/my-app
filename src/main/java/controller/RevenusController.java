@@ -87,12 +87,12 @@ public final class RevenusController implements Serializable {
 
     @Inject
     private RevenusDbUtil revenuDbUtil;
-    //private RevenusLocatifDbUtil revenusLocatifDbUtil;
   
     @PostConstruct
     public void init(){
         
-       listRevenuLocatif = revenuDbUtil.findAll();
+       listRevenuLocatif = revenuDbUtil.getRevenusLocatif();
+       listRevenuSousLocation = revenuDbUtil.getRevenuSousLocation();
        
        this.modelRevenuLocatif = new RevenusLocatif();
        this.modelRevenuSousLocation = new RevenuSousLocation();
@@ -134,7 +134,6 @@ public final class RevenusController implements Serializable {
        return total;
     }
      
-    
     // *********** MONTANT PAR TRANCHE L’IMPOT DU  ****************/
 
     public static void setRevenus(double revenus) {

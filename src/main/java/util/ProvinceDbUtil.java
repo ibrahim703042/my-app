@@ -7,7 +7,6 @@ package util;
 
 import dbconnection.MySQLJDBCUtil;
 import jakarta.faces.bean.*;
-import jakarta.faces.context.FacesContext;
 import java.sql.*;
 import java.util.*;
 
@@ -24,20 +23,24 @@ import model.Province;
 
 public class ProvinceDbUtil extends MySQLJDBCUtil{
     
+    private String query;
+    private List<Province> provinceList;
+    private Province province;
+
     /// ************************ display data *************************/
-    public ArrayList findAll() {
+    public List<Province> findAll() {
         
-        ArrayList provinceList = new ArrayList();  
+        provinceList = new ArrayList();  
         
         try {
             connection = dataSource.getConnection();
             statement = connection.createStatement();
-            String query = "SELECT * FROM province P WHERE P.id IS NOT NULL ORDER BY P.nomProvince";
+            query = "SELECT * FROM province P WHERE P.id IS NOT NULL ORDER BY P.nomProvince";
             resultSet = statement.executeQuery(query);  
             
             while(resultSet.next()) { 
                 
-                Province province = new Province(); 
+                province = new Province(); 
                 
                 province.setId(resultSet.getInt("id"));  
                 province.setNomProvince(resultSet.getString("nomProvince"));  
@@ -56,11 +59,12 @@ public class ProvinceDbUtil extends MySQLJDBCUtil{
     }
     
     /// ************************ save data *************************/
-    public void save(Province province) {
+    public Province save(Province province) {
+        Province model = null;
         
         try {   
             
-            String query = "INSERT INTO province (nomProvince) VALUES (?)";
+            query = "INSERT INTO province (nomProvince) VALUES (?)";
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);         
             pstmt.setString(1, province.getNomProvince());
@@ -71,44 +75,16 @@ public class ProvinceDbUtil extends MySQLJDBCUtil{
         } catch(SQLException sqlException) {
             printSQLException(sqlException);
         }
+        
+        return model;
     }
     
-    /// ************************ find data by ID *************************/
-    public void findById(int provinceId) {
-        
-        Province province = null;
-        System.out.println(" findById() : Province Id: " + provinceId);
-
-        /* Setting The Particular province Details In Session */
-        Map<String,Object> sessionMapObj = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-
-        try {
-            
-            String query = "SELECT * FROM province WHERE id = " + provinceId ;
-            connection = dataSource.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);    
-            
-            if(resultSet != null) {
-                resultSet.next();
-                province = new Province(); 
-                province.setId(resultSet.getInt("id"));
-                province.setNomProvince(resultSet.getString("nomProvince"));
-
-            }
-            sessionMapObj.put("provinceMapped", province);
-            connection.close();
-            
-        } catch(SQLException sqlException) {
-            printSQLException(sqlException);
-        }
-    }
-
     /// ************************ update data *************************/
-    public void update(Province province) {
+    public Province update(Province province) {
+        Province model = null;
         
         try {
-            String query = "UPDATE province SET nomProvince = ? WHERE id = ? ";
+            query = "UPDATE province SET nomProvince = ? WHERE id = ? ";
             
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
@@ -122,6 +98,8 @@ public class ProvinceDbUtil extends MySQLJDBCUtil{
         } catch(SQLException sqlException) {
             printSQLException(sqlException);
         }
+        
+        return model;
     }
 
     /// ************************ delete data *************************/
@@ -131,7 +109,7 @@ public class ProvinceDbUtil extends MySQLJDBCUtil{
         
         try {
             
-            String query = "DELETE FROM province WHERE id = " + provinceId ;
+            query = "DELETE FROM province WHERE id = " + provinceId ;
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(query);
             pstmt.executeUpdate(); 

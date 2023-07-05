@@ -10,11 +10,10 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.annotation.PostConstruct;
 import jakarta.faces.bean.*;
-import jakarta.faces.context.FacesContext;
 import java.sql.*;
 import java.util.*;
+import model.RevenuSousLocation;
 import model.RevenusLocatif;
 
 @ManagedBean
@@ -23,70 +22,51 @@ import model.RevenusLocatif;
 public class RevenusDbUtil extends MySQLJDBCUtil {
     
     private List<RevenusLocatif> revenusLocatif;
+    private RevenusLocatif model;
+    
+    private List<RevenuSousLocation> revenuSousLocationList;
+    private RevenuSousLocation revenuSousLocation;
+    
+    private String query;
     
     //*************************** display data *****************/
-    @PostConstruct
-    public void init () {
-        revenusLocatif = new ArrayList();
-        
-        try {
-            String query = "SELECT * FROM revenulocatif WHERE id_revenuLocatif IS NOT NULL ORDER BY id_revenuLocatif DESC";
-            connection = dataSource.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);  
-
-            while(resultSet.next()) { 
-
-                RevenusLocatif revenuLocatif = new RevenusLocatif(); 
-
-                revenuLocatif.setId(resultSet.getInt("id_revenuLocatif"));  
-                revenuLocatif.setLoyerExonere(resultSet.getDouble("loyerExonere"));  
-                revenuLocatif.setLoyerImposable(resultSet.getDouble("loyerImposable"));  
-                revenuLocatif.setChargeIncombat(resultSet.getDouble("chargeIncombat"));  
-                revenuLocatif.setInteretEmprunt(resultSet.getDouble("interetEmprunt"));  
-                
-                revenusLocatif.add(revenuLocatif);
-                //connection.commit();
-                
-            }   
-
-            System.out.println("Total Records Fetched: " + revenusLocatif.size());
-            connection.close();
-
-        } catch(SQLException sqlException) {  
-            sqlException.printStackTrace();
-        }
-    }
-
+  
     public List<RevenusLocatif> getRevenusLocatif() {
-        return new ArrayList<>(revenusLocatif);
-    }
-    
-    
-    
-    public List<RevenusLocatif> findAll() {
-        revenusLocatif = new ArrayList();
-        
+        revenusLocatif = new ArrayList<>();
         
         try {
-            String query = "SELECT * FROM revenulocatif WHERE id_revenuLocatif IS NOT NULL ORDER BY id_revenuLocatif DESC";
+            query = ""
+                    + "SELECT "
+                    + "revenulocatif.id_revenuLocatif, "
+                    + "revenulocatif.id_immeuble, "
+                    + "revenulocatif.loyerExonere, "
+                    + "revenulocatif.loyerImposable, "
+                    + "revenulocatif.chargeIncombat, "
+                    + "(revenulocatif.loyerExonere + revenulocatif.loyerImposable) AS revenuBrut , "
+                    + "((revenulocatif.loyerExonere + revenulocatif.loyerImposable) * 0.4) AS deductionPourDepenses , "
+                    + "revenulocatif.interetEmprunt, "
+                    + "(((revenulocatif.loyerExonere + revenulocatif.loyerImposable)-(revenulocatif.loyerExonere + revenulocatif.loyerImposable) * 0.4) - revenulocatif.interetEmprunt) AS RevenusNetsImposables  "
+                    + "FROM revenulocatif ORDER BY revenulocatif.id_revenuLocatif DESC";
+
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);  
 
             while(resultSet.next()) { 
 
-                RevenusLocatif revenuLocatif = new RevenusLocatif(); 
-
-                revenuLocatif.setId(resultSet.getInt("id_revenuLocatif"));  
-                revenuLocatif.setLoyerExonere(resultSet.getDouble("loyerExonere"));  
-                revenuLocatif.setLoyerImposable(resultSet.getDouble("loyerImposable"));  
-                revenuLocatif.setChargeIncombat(resultSet.getDouble("chargeIncombat"));  
-                revenuLocatif.setInteretEmprunt(resultSet.getDouble("interetEmprunt"));  
+                model = new RevenusLocatif();
                 
+                model.setId(resultSet.getInt("id_revenuLocatif"));
+                model.setId(resultSet.getInt("id_immeuble"));
+                model.setLoyerExonere(resultSet.getDouble("loyerExonere"));
+                model.setLoyerImposable(resultSet.getDouble("loyerImposable"));
+                model.setChargeIncombat(resultSet.getDouble("chargeIncombat"));
+                model.setRevenuBrut(resultSet.getDouble("revenuBrut"));
+                model.setDeductionDepenses(resultSet.getDouble("deductionPourDepenses"));
+                model.setInteretEmprunt(resultSet.getDouble("interetEmprunt"));
+                model.setRevenuNetImposable(resultSet.getDouble("RevenusNetsImposables"));
 
-                revenusLocatif.add(revenuLocatif);
-                //connection.commit();
+                revenusLocatif.add(model);
                 
             }   
 
@@ -97,138 +77,350 @@ public class RevenusDbUtil extends MySQLJDBCUtil {
             sqlException.printStackTrace();
         }
         return revenusLocatif;
+
     }
     
-    //************** Save data **********************************/ 
-    public void save(RevenusLocatif revenuLocatif){
+    public List<RevenuSousLocation> getRevenuSousLocation() {
+        
+        revenuSousLocationList = new ArrayList<>();
         
         try {
+            query =  " "
+                    + "SELECT "
+                    + "revenusouslocation.id_revenuSousLocatif, "
+                    + "revenusouslocation.id_revenuLocatif, "
+                    + "revenusouslocation.recetteSousLocation,"
+                    + "revenusouslocation.loyerPayes, "
+                    + "(revenusouslocation.recetteSousLocation - revenusouslocation.loyerPayes) AS Revenus_nets_imposables , "
+                    + "((((revenulocatif.loyerExonere + revenulocatif.loyerImposable)-(revenulocatif.loyerExonere + revenulocatif.loyerImposable) * 0.4) - revenulocatif.interetEmprunt) + (revenusouslocation.recetteSousLocation - revenusouslocation.loyerPayes)) AS  Total_revenus_nets_imposables , "
+                    + "revenusouslocation.abbattements, "
+                    + "((((revenulocatif.loyerExonere + revenulocatif.loyerImposable)-(revenulocatif.loyerExonere + revenulocatif.loyerImposable) * 0.4) - revenulocatif.interetEmprunt) + (revenusouslocation.recetteSousLocation - revenusouslocation.loyerPayes)) - revenusouslocation.abbattements AS REVENU_NET_IMPOSABLE "
+                    + "FROM revenusouslocation, revenulocatif "
+                    + "WHERE revenulocatif.id_revenuLocatif = revenusouslocation.id_revenuLocatif "
+                    + "AND revenusouslocation.id_revenuSousLocatif IS NOT NULL ORDER BY revenusouslocation.id_revenuSousLocatif DESC";
 
-            String query ="INSERT INTO revenulocatif (id_immeuble, loyerExonere, loyerImposable, interetEmprunt) "
-                    + "values (?, ?, ?, ?)";
-            
-            connection = dataSource.getConnection();
-            pstmt = connection.prepareStatement(query);         
-
-            pstmt.setInt(1, revenuLocatif.getId());
-            pstmt.setDouble(2, revenuLocatif.getLoyerExonere());
-            pstmt.setDouble(3, revenuLocatif.getLoyerImposable());
-            pstmt.setDouble(4, revenuLocatif.getChargeIncombat());
-            pstmt.setDouble(5, revenuLocatif.getInteretEmprunt());
-
-            pstmt.executeUpdate();
-            connection.close();
-
-        }catch(SQLException sqlException) {
-            printSQLException(sqlException);
-        }
-    }
-
-    //************** find data by ID ***************************/
-    public void findById(int revenuId) {
-        
-        RevenusLocatif revenuLocatif = null;
-        System.out.println(" findById() : Revenu Id: " + revenuId);
-        
-        /* Setting The Particular administrateur Details In Session */
-        Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-
-        try {
-           
-            String query = ""
-                    + "SELECT * "
-                    + "FROM revenuLocatif "
-                    + "WHERE id_revenuLocatif = " + revenuId ;
-            
             connection = dataSource.getConnection();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);    
-            
-            if(resultSet.next()) {
+            resultSet = statement.executeQuery(query);  
+
+            while(resultSet.next()) { 
+
+                revenuSousLocation = new RevenuSousLocation();
                 
-                revenuLocatif = new RevenusLocatif(); 
+                revenuSousLocation.setId(resultSet.getInt("id_revenuSousLocatif")); 
+                revenuSousLocation.setIdRevenusLocatif(resultSet.getInt("id_revenuLocatif")); 
+                revenuSousLocation.setRecetteSousLocation(resultSet.getDouble("recetteSousLocation")); 
+                revenuSousLocation.setLoyerPayes(resultSet.getDouble("loyerPayes")); 
+                revenuSousLocation.setRevenusNetsImposables(resultSet.getDouble("Revenus_nets_imposables")); 
+                revenuSousLocation.setTotalRevenusNetsImposables(resultSet.getDouble("Total_revenus_nets_imposables")); 
+                revenuSousLocation.setAbbattements(resultSet.getDouble("abbattements")); 
+                revenuSousLocation.setRevenuSousNetImposable(resultSet.getDouble("REVENU_NET_IMPOSABLE")); 
+    
+                revenuSousLocationList.add(revenuSousLocation);  
+            }   
 
-                revenuLocatif.setId(resultSet.getInt("id"));  
-                revenuLocatif.setLoyerExonere(resultSet.getDouble("loyerExonere"));  
-                revenuLocatif.setLoyerImposable(resultSet.getDouble("loyerImposable"));  
-                revenuLocatif.setChargeIncombat(resultSet.getDouble("chargeIncombat"));  
-                revenuLocatif.setInteretEmprunt(resultSet.getDouble("interetEmprunt"));  
-                
-            }
-            
-            sessionMap.put("revenuMapped", revenuLocatif);
+            System.out.println("Total Records Fetched: " + revenuSousLocationList.size());
             connection.close();
 
-        } catch(SQLException sqlException) {
-            printSQLException(sqlException);
+        } catch(SQLException sqlException) {  
+            sqlException.printStackTrace();
         }
-    }
-	
-    //************** update data ******************************/
-    public void update(RevenusLocatif revenuLocatif){
+        return revenuSousLocationList;
 
-        try {
-
-            var query =" "
-                    + "UPDATE revenuLocatif "
-                    + "SET "
-                    + "id_immeuble  = ?, "
-                    + "loyerExonere = ?, "
-                    + "loyerImposable = ?, "
-                    + "interetEmprunt = ? " 
-                    + "where id_revenuLocatif = ? ";
-
-            connection = dataSource.getConnection();
-            pstmt = connection.prepareStatement(query);
-            
-            pstmt.setInt(1, revenuLocatif.getId());
-            pstmt.setDouble(2, revenuLocatif.getLoyerExonere());
-            pstmt.setDouble(3, revenuLocatif.getLoyerImposable());
-            pstmt.setDouble(4, revenuLocatif.getChargeIncombat());
-            pstmt.setDouble(5, revenuLocatif.getInteretEmprunt());
-            pstmt.setInt(6, revenuLocatif.getId());
-
-            pstmt.execute();
-            connection.close();
-
-        } catch(SQLException sqlException) {
-            printSQLException(sqlException);
-        }
-    }
-
-    //************** delete data ********************************/
-    public void delete(int revenuId) {
-        
-        System.out.println("delete() : Administrateur Id: " + revenuId);
-
-        try {
-            
-            String query = "DELETE FROM revenuLocatif WHERE id_revenuLocatif = " + revenuId ;
-            connection = dataSource.getConnection();
-            pstmt = connection.prepareStatement(query);
-            pstmt.executeUpdate();  
-            connection.close();
-            
-        } catch(SQLException sqlException){
-            printSQLException(sqlException);
-        }
-        
     }
     
     
-    public static void printSQLException(SQLException ex) {
-        for (Throwable e : ex) {
-            if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
-                Throwable t = ex.getCause();
-                while (t != null) {
-                        System.out.println("Cause: " + t);
-                        t = t.getCause();
+    //************** Save data **********************************/ 
+    public RevenusLocatif saveRevenusLocatif(RevenusLocatif revenusLocatif){
+        model = null;
+        
+        try {
+
+            query =""
+                + "INSERT INTO revenulocatif "
+                + "(id_immeuble, loyerExonere, loyerImposable, chargeIncombat, interetEmprunt) "
+                + "VALUES (?, ?, ?, ?, ?)";
+            
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);         
+
+            pstmt.setInt(1, revenusLocatif.getIdImmeuble());
+            pstmt.setDouble(2, revenusLocatif.getLoyerExonere());
+            pstmt.setDouble(3, revenusLocatif.getLoyerImposable());
+            pstmt.setDouble(4, revenusLocatif.getChargeIncombat());
+            pstmt.setDouble(5, revenusLocatif.getInteretEmprunt());
+
+            pstmt.executeUpdate();
+            
+            connection.commit();
+            connection.setAutoCommit(true);
+
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
                 }
             }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+             }
+        }
+        return model;
+    }
+    
+    public RevenuSousLocation saveRevenuSousLocation(RevenuSousLocation revenuSousLocation){
+        RevenuSousLocation modelRevenuSousLocation = null;
+        try {
+
+            query =""
+                + "INSERT INTO revenusouslocation "
+                + "(id_revenuLocatif, recetteSousLocation, loyerPayes, abbattements) "
+                + "VALUES (?, ?, ?, ?)";
+            
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);         
+
+            pstmt.setInt(1, revenuSousLocation.getId());
+            pstmt.setDouble(2, revenuSousLocation.getRecetteSousLocation());
+            pstmt.setDouble(3, revenuSousLocation.getLoyerPayes());
+            pstmt.setDouble(4, revenuSousLocation.getAbbattements());
+
+            pstmt.executeUpdate();
+            
+            connection.commit();
+            connection.setAutoCommit(true);
+
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
+                }
+            }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+             }
+        }
+        return modelRevenuSousLocation;
+    }
+    
+    //************** update data **********************************/ 
+    public RevenusLocatif updateRevenusLocatif(RevenusLocatif revenusLocatif){
+        model = null;
+        try {
+
+            query =""
+                    + " UPDATE revenulocatif SET "
+                    + "id_immeuble = ?,"
+                    + "loyerExonere = ?, "
+                    + "loyerImposable = ?, "
+                    + "chargeIncombat = ?, "
+                    + "interetEmprunt = ? "
+                    + "WHERE = ? ";
+            
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);         
+
+            pstmt.setInt(1, revenusLocatif.getIdImmeuble());
+            pstmt.setDouble(2, revenusLocatif.getLoyerExonere());
+            pstmt.setDouble(3, revenusLocatif.getLoyerImposable());
+            pstmt.setDouble(4, revenusLocatif.getChargeIncombat());
+            pstmt.setDouble(5, revenusLocatif.getInteretEmprunt());
+            pstmt.setInt(1, revenusLocatif.getId());
+
+            pstmt.executeUpdate();
+            
+            connection.commit();
+            connection.setAutoCommit(true);
+
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
+                }
+            }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+             }
+        }
+        return model;
+    }
+    
+    public RevenuSousLocation updateRevenuSousLocation(RevenuSousLocation revenuSousLocation){
+        RevenuSousLocation modelRevenuSousLocation = null;
+        try {
+
+            query =""
+                + "UPDATE revenusouslocation SET "
+                + "id_revenuLocatif = ?, "
+                + "recetteSousLocation = ?, "
+                + "loyerPayes = ?, "
+                + "abbattements = ? "
+                + "WHERE = ? ";
+            
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);         
+
+            pstmt.setInt(1, revenuSousLocation.getIdRevenusLocatif());
+            pstmt.setDouble(2, revenuSousLocation.getRecetteSousLocation());
+            pstmt.setDouble(3, revenuSousLocation.getLoyerPayes());
+            pstmt.setDouble(4, revenuSousLocation.getAbbattements());
+            pstmt.setInt(5, revenuSousLocation.getId());
+
+            pstmt.executeUpdate();
+            
+            connection.commit();
+            connection.setAutoCommit(true);
+
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
+                }
+            }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return modelRevenuSousLocation;
+    }
+    
+    //************** delete data **********************************/ 
+    public void deleteRevenusLocatif(Integer revenulocatifId){
+        
+        System.out.println("delete() : Revenus Locatif Id: " + revenulocatifId);
+        
+        try {
+
+            query = " DELETE revenulocatif WHERE = ? ";
+            
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);         
+
+            pstmt.setInt(1, revenulocatifId);
+
+            pstmt.executeUpdate();
+            
+            connection.commit();
+            connection.setAutoCommit(true);
+
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
+                }
+            }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
+
+    public void deleteRevenuSousLocation(Integer revenuSousLocationId){
+        
+        System.out.println("delete() : RevenuSousLocation Id: " + revenuSousLocationId);
+        
+        try {
+
+            query = " DELETE revenusouslocation WHERE = ? ";
+            
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            pstmt = connection.prepareStatement(query);         
+
+            pstmt.setInt(1, revenuSousLocation.getId());
+
+            pstmt.executeUpdate();
+            
+            connection.commit();
+            connection.setAutoCommit(true);
+
+        }catch (SQLException e) {
+            if (connection!= null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                   printSQLException(ex);
+                }
+            }
+            printSQLException(e);
+            
+        }finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+    
 }

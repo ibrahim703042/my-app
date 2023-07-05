@@ -8,7 +8,7 @@
         
         <section id="sidebar">
 
-            <p:link styleClass="brand no-underline" outcome="/pages/dashboard.xhtml" >
+            <p:link styleClass="brand no-underline" outcome="/admin/dashboard.xhtml" >
                 <f:param name="pageId" value="1"/>
                 <p:graphicImage class="icon" name="obr.jpg" library="image" height="60" alt="Logo"/>
                 Impot Fiscale
@@ -17,7 +17,7 @@
             <ul class="side-menu">
                 <!-- =============== Dashborad section ================= -->
                 <li>
-                    <p:link class="no-underline active" outcome="/pages/dashboard.xhtml" >
+                    <p:link class="no-underline active" outcome="/admin/dashboard.xhtml" >
                         <f:param name="pageId" value="1"/>
                         <i class="pi pi-th-large icon"></i>
                         Dashboard
@@ -35,43 +35,42 @@
                     </a>
                     <ul class="side-dropdown">
                         <li>
-                            <p:link class="no-underline nav-link" outcome="/pages/role/template" >
+                            <p:link class="no-underline nav-link" outcome="/admin/role/template" >
                                 <f:param name="pageId" value="2"/>
                                 <i class='pi pi-list icon' ></i>
                                 Roles
                             </p:link>
                         </li>
                         <li>
-                            <p:link class="no-underline nav-link" outcome="/pages/permission/template" >
+                            <p:link class="no-underline nav-link" outcome="/admin/permission/template" >
                                 <f:param name="pageId" value="8"/>
                                 <i class='pi pi-list icon' ></i>
                                 Permission
                             </p:link>
                         </li>
                         <li>
-                            <p:link class="no-underline nav-link" outcome="/pages/admin/template" >
+                            <p:link class="no-underline nav-link" outcome="/admin/admin/template" >
                                 <f:param name="pageId" value="3"/>
                                 <i class='pi pi-users icon' ></i>
                                 Administrateurs
                              </p:link> 
                         </li>
                         <li>
-                            <p:link class="no-underline nav-link" outcome="/pages/pays/province/template.xhtml" >
+                            <p:link class="no-underline nav-link" outcome="/admin/pays/province/template.xhtml" >
                                 <f:param name="pageId" value="4"/>
                                 <i class='pi pi-flag icon' ></i>
                                 Provinces
                              </p:link> 
-                            
                         </li>
                         <li>
-                            <p:link class="no-underline nav-link" outcome="/pages/pays/commune/template.xhtml" >
+                            <p:link class="no-underline nav-link" outcome="/admin/pays/commune/template.xhtml" >
                                 <f:param name="pageId" value="5"/>
                                 <i class='pi pi-map icon' ></i>
                                 Communes
                              </p:link> 
                         </li>
                         <li>
-                            <p:link class="no-underline nav-link" outcome="/pages/pays/colline/template.xhtml" >
+                            <p:link class="no-underline nav-link" outcome="/admin/pays/colline/template.xhtml" >
                                 <f:param name="pageId" value="6"/>
                                 <i class='pi pi-map-marker icon' ></i>
                                 Collines
@@ -89,28 +88,28 @@
                     </a>
                     <ul class="side-dropdown">
                         <li>
-                            <p:link class="no-underline nav-link" outcome="/pages/representant/template.xhtml" >
+                            <p:link class="no-underline nav-link" outcome="/admin/representant/template.xhtml" >
                                 <f:param name="pageId" value="7"/>
                                 <i class='pi pi-users icon' ></i>
                                 Representants
                              </p:link> 
                         </li>
                         <li>
-                            <p:link class="no-underline nav-link" outcome="/pages/abbattement/template.xhtml" >
+                            <p:link class="no-underline nav-link" outcome="/admin/abbattement/template.xhtml" >
                                 <f:param name="pageId" value="20"/>
                                 <i class='pi pi-users icon' ></i>
                                 Abbattement
                              </p:link> 
                         </li>
                         <li>
-                            <p:link class="no-underline nav-link" outcome="/pages/contribuable/template.xhtml" >
+                            <p:link class="no-underline nav-link" outcome="/admin/contribuable/template.xhtml" >
                                 <f:param name="pageId" value="8"/>
                                 <i class='pi pi-users icon' ></i>
                                 Contribuable
                              </p:link> 
                         </li>
                         <li>
-                            <p:link class="no-underline nav-link" outcome="/pages/immeuble/template.xhtml" >
+                            <p:link class="no-underline nav-link" outcome="/admin/immeuble/template.xhtml" >
                                 <f:param name="pageId" value="9"/>
                                 <i class='pi pi-building icon' ></i>
                                 Immeubles
@@ -126,10 +125,10 @@
 
                 <!-- =============== Declaration section ================= -->
                 <li>
-                    <p:link class="no-underline nav-link" outcome="/pages/declaration/template.xhtml" >
+                    <p:link class="no-underline nav-link" outcome="/admin/declaration/template.xhtml" >
                         <f:param name="pageId" value="7"/>
                         <i class='pi pi-calculator icon' ></i>
-                        Declaration
+                        Déclaration
                     </p:link> 
                 </li>
 
@@ -146,21 +145,21 @@
                     </a>
                     <ul class="side-dropdown">
                         <li>
-                            <p:link class="no-underline nav-link"  outcome="/pages/revenus/locatif/template.xhtml"  >
+                            <p:link class="no-underline nav-link"  outcome="/admin/revenus/locatif/template.xhtml"  >
                                 <!--<f:param name="pageId" value="100"/>-->
                                 <i class='pi pi-building icon' ></i>
                                 Revenus Locatif
                              </p:link> 
                         </li>
                         <li>
-                            <p:link class="no-underline nav-link" outcome="/pages/revenus/sousLocation/template.xhtml" >
+                            <p:link class="no-underline nav-link" outcome="/admin/revenus/sousLocation/template.xhtml" >
                                 <!--<f:param name="pageId" value="8"/>-->
                                 <i class='pi pi-building icon' ></i>
                                 Revenus des sous Location
                              </p:link> 
                         </li>
                         <li>
-                            <p:link class="no-underline nav-link" outcome="/pages/revenus/impot/template.xhtml" >
+                            <p:link class="no-underline nav-link" outcome="/admin/revenus/impot/template.xhtml" >
                                 <!--<f:param name="pageId" value="9"/>-->
                                 <i class='pi pi-calculator icon' ></i>
                                 Impot
@@ -175,7 +174,7 @@
                 </li>
 
                 <li>
-                    <p:link class="no-underline nav-link" outcome="/pages/impot/template.xhtml">
+                    <p:link class="no-underline nav-link" outcome="/admin/impot/template.xhtml">
                         <!--<f:param name="pageId" value="7"/>-->
                         <i class='pi pi-calculator icon' ></i>
                         Impot
@@ -183,7 +182,7 @@
                 </li>
                 
                 <li>
-                    <p:link class="no-underline nav-link" outcome="/pages/amande/template.xhtml">
+                    <p:link class="no-underline nav-link" outcome="/admin/amande/template.xhtml">
                         <!--<f:param name="pageId" value="7"/>-->
                         <i class='pi pi-list icon' ></i>
                         Amende
@@ -191,7 +190,7 @@
                 </li>
                 
                 <li>
-                    <p:link class="no-underline nav-link" outcome="/pages/payement/template.xhtml">
+                    <p:link class="no-underline nav-link" outcome="/admin/payement/template.xhtml">
                         <!--<f:param name="pageId" value="7"/>-->
                         <i class='pi pi-dollar icon' ></i>
                         Payement
@@ -199,7 +198,7 @@
                 </li>
                 
                 <li>
-                    <p:link class="no-underline nav-link" outcome="/pages/quittance/template.xhtml">
+                    <p:link class="no-underline nav-link" outcome="/admin/quittance/template.xhtml">
                         <!--<f:param name="pageId" value="7"/>-->
                         <i class='pi pi-list icon' ></i>
                         Quittance

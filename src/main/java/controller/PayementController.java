@@ -34,24 +34,37 @@ public class PayementController extends MessageController implements Serializabl
         payementList = payementDbUtil.findAll();
     }
 
+    private boolean IsValid(){
+       
+       if ( this.modelPayement.getMontantPaye() < 0 || this.modelPayement.getMontantPaye() == 0 )
+       {
+           showError("Failed","The amount must be greater than 0 ");
+           return false;
+       }
+       
+       return true;
+   }
+    
     public void createOrUpdate(){
         
-        if(this.modelPayement.getId() == null){
-                
-            payementDbUtil.save(this.modelPayement);
-            showInfo("Inserted","Data inserted");
-            this.init();
-            PrimeFaces.current().executeScript("PF('manageContribuableDialog').hide()");
-            PrimeFaces.current().ajax().update("form:messages", "form:dt-contribuables");
+        if(IsValid()){
+            if(this.modelPayement.getId() == null){
 
-        }else if(this.modelPayement.getId() != null){
-            
-            payementDbUtil.update(this.modelPayement);
-            showInfo("Updated","Data Updated");
-            this.init();
-            PrimeFaces.current().executeScript("PF('manageContribuableDialog').hide()");
-            PrimeFaces.current().ajax().update("form:messages", "form:dt-contribuables");
+                payementDbUtil.save(this.modelPayement);
+                showInfo("Inserted","Data inserted");
+                this.init();
+                PrimeFaces.current().executeScript("PF('manageFormDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-payement");
 
+            }else if(this.modelPayement.getId() != null){
+
+                payementDbUtil.update(this.modelPayement);
+                this.init();
+                showInfo("Updated","Data Updated");
+                PrimeFaces.current().executeScript("PF('manageFormDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-payement");
+
+            }
         }
         
     }

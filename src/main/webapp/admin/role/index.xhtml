@@ -1,0 +1,105 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+    
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+            
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton 
+                        value="Ajouter" 
+                        icon="pi pi-plus" 
+                        actionListener="#{roleController.clearForm}"
+                        update=":dialogs:manage-role-content"
+                        oncomplete="PF('manageRoleDialog').show()"
+                        styleClass="ui-button-success" 
+                        style="margin-right: .5rem">
+                        
+                        <p:resetInput target=":dialogs:manage-role-content" />
+                        
+                    </p:commandButton>
+                    
+                </p:toolbarGroup>
+                
+            </p:toolbar>
+            
+            <p:dataTable
+                id="dt-roles"
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="5,10,15,20"
+                value="#{roleController.roles}"
+                widgetVar="dtRoles" 
+                var="role"
+                rowKey="#{role.nomRole}"
+                paginator="true" 
+                rows="4" 
+                paginatorPosition="bottom"
+                binding="#{table}" 
+            >
+                
+                <f:facet name="header">
+                     <div class="flex justify-content-between">
+                         <span 
+                             style="font-weight: bold;
+                              font-size: 18px; text-transform: uppercase"
+                         >
+                            Liste
+                         </span>
+                         <span class="filter-container ui-input-icon-left"> 
+                             <i class="pi pi-search icon"></i>
+                             <p:inputText 
+                                 id="globalFilter"
+                                 onkeyup="PF('dtRoles').filter()" 
+                                 placeholder="Search..." 
+                             />
+                         </span>
+                     </div>
+                 </f:facet>
+                
+                <p:column headerText="No" style="width: 5%">
+                      <h:outputText value="#{table.rowIndex + 1}" />
+                </p:column>
+                
+                <p:column headerText="Nom" >
+                    <h:outputText value="#{role.nomRole}" />
+                </p:column>
+                
+                <p:column headerText="Description" >
+                    <h:outputText value="#{role.description}" />
+                </p:column>
+
+            <p:column exportable="false" style="width: 10%" >
+                
+                <p:commandButton 
+                    icon="pi pi-pencil" 
+                    styleClass="edit-button rounded-button ui-button-success mr-4"
+                    oncomplete="PF('manageRoleDialog').show()"
+                    update=":dialogs:manage-role-content"
+                    process="@this"
+                >
+                    <f:setPropertyActionListener value="#{role}" target="#{roleController.role}" />
+                    <p:resetInput target=":dialogs:manage-role-content" />
+                </p:commandButton>
+                
+                <p:commandButton 
+                    class="ui-button-warning rounded-button" 
+                    icon="pi pi-trash"
+                    ajax="false"
+                    action="#{roleController.delete(role.id)}"
+                    
+                >
+                </p:commandButton>
+                
+             </p:column>
+
+            </p:dataTable>
+            
+        </h:form>
+        <ui:include src="ajouter.xhtml" />
+    
+                
+</ui:composition>

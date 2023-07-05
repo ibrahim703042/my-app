@@ -1,0 +1,118 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/dashboardTemplate.xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:define name = "contents">
+            
+        
+        <h1 class="title">Immeuble</h1>
+        
+        <ul class="breadcrumbs">
+            <li>
+                <p:link styleClass="no-underline"  outcome="/admin/immeuble/template" >
+                    <f:param name="pageId" value="9"/>
+                    Acceuil
+                </p:link>
+            </li>
+            
+            <li class="divider">/</li>
+            <li>
+                <p:link styleClass="no-underline active"  outcome="/admin/dashboard.xhtml" >
+                    <f:param name="pageId" value="1"/>
+                    Enregistrer
+                </p:link>
+            </li>
+            
+            <li class="divider">/</li>
+            <li>
+                <p:link styleClass="no-underline active"  outcome="/admin/dashboard.xhtml" >
+                    <f:param name="pageId" value="1"/>
+                    Immeuble
+                </p:link>
+            </li>
+        </ul>
+        
+        <div class="data">
+            <div class="content-data">
+                <!--                
+                    <div class="head">
+                    </div>
+                -->
+                <div class="data-details">
+        
+                    <h:form id="form-edit-immeuble" class="px-3">
+
+                        <div class="ui-fluid formgrid grid">
+                       
+                            <div class="field col-12 md:col-12">
+                                <p:outputLabel class="font-bold"  value="Contribuable"/>
+                                <p:selectOneMenu 
+                                    value="#{immeubleMapped.idContribuable}"
+                                    filter="true" 
+                                    filterMatchMode="startsWith" 
+                                    dynamic="true"
+                                    style="height: 41px; "
+                                >
+                                    <f:selectItem itemLabel="Choisir contribuable" />
+                                    <f:selectItems var="contribuabl"
+                                        value="#{contribuableController.contribuableList()}"
+                                        itemLabel="#{contribuabl.id} : #{contribuabl.nom} "
+                                        itemValue="#{contribuabl.id}" 
+                                    />
+
+                                </p:selectOneMenu>
+                            </div>
+
+                            <div class="field col-12 md:col-12">
+                                <p:outputLabel class="font-bold"  value="Colline"/>
+                                <p:selectOneMenu 
+                                    value="#{immeubleMapped.idColline}"
+                                    filter="true" 
+                                    filterMatchMode="startsWith" 
+                                    dynamic="true"
+                                    style="height: 41px; "
+                                >
+                                    <f:selectItem itemLabel="Choisir colline" />
+                                    <f:selectItems var="coll"
+                                        value="#{collineController.collineList()}"
+                                        itemLabel="#{coll.nomColline} "
+                                        itemValue="#{coll.id}" 
+                                    />
+
+                                </p:selectOneMenu>
+                            </div>
+
+                            <div class="field col-12 md:col-12">
+                                <component:inputTextField
+                                    label="Avenue/Rue"
+                                    placeholder="20 Av No 109"
+                                    value="#{immeubleMapped.nomAvenue}"
+                                />
+                            </div>
+
+                            <div class="field col-12 md:col-10"></div>
+                            <div class="field col-12 md:col-2">
+                                <p:commandButton
+                                    ajax="false"
+                                    value="Modifier" 
+                                    action="#{immeubleController.update(immeubleMapped)}"
+                                    style="height: 41px; "
+                                />
+                            </div>
+                        </div>
+
+                    </h:form>
+                    
+                </div>
+                
+            </div>
+        </div>
+            
+    </ui:define>
+        
+</ui:composition>

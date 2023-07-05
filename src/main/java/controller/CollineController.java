@@ -6,15 +6,15 @@
 package controller;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import model.Colline;
+import model.Commune;
+import org.primefaces.PrimeFaces;
 import util.CollineDbUtil;
 
 /**
@@ -28,7 +28,9 @@ import util.CollineDbUtil;
 
 public class CollineController extends MessageController implements Serializable {
 
-    public ArrayList collines;
+    private List<Colline> collines;
+    private Colline colline;
+    
     
     @Inject
     private CollineDbUtil collineDbUtil;
@@ -38,53 +40,52 @@ public class CollineController extends MessageController implements Serializable
     public void init() {
         collines = collineDbUtil.findAll();
     }
-
-    public ArrayList collineList() {
-        
-        collines.clear();
-        try {
-            collines = collineDbUtil.findAll();
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return collines;
-    }
-        
-    //************************ save data **************************/
-    public String save(Colline colline) {
-        
-        try {
-            collineDbUtil.save(colline);
-
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return "/pages/pays/colline/template.xhtml?faces-redirect=true";
-    }
-    	
-    //************************  edit data by Id  **************************/
-    public String edit(int id) {
-        
-        try {
-            collineDbUtil.findById(id);
-
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return "/pages/pays/colline/edit.xhtml?faces-redirect=true";
+    
+    public void clearForm(){
+       this.colline = new Colline();
     }
     
-    //************************ update data **************************/
-    public String update(Colline colline) {
+    public void createOrUpdate() {
         
-        try {
-            collineDbUtil.update(colline);
+        if(IsValid()){
+            
+            if (this.colline.getId() == null) {
 
-        }catch (Exception ex) {
-            ex.printStackTrace();
+                this.collineDbUtil.save(this.colline);
+                this.init();
+                showInfo("Inserted","Data Added");
+                PrimeFaces.current().executeScript("PF('manageFormDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-communes");
+                
+            }else if (this.colline.getId() != null) {
+
+                this.collineDbUtil.update(this.colline);
+                this.init();
+                showInfo("Updated","Data Updated");
+                PrimeFaces.current().executeScript("PF('manageFormDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-communes");
+               
+            } 
         }
-        return "/pages/pays/colline/template.xhtml?faces-redirect=true";
+
     }
+    
+    // ******   Input Validation ******/
+    private boolean IsValid(){
+        if (this.colline.getNomColline().isEmpty())
+        {
+            showError("Required","Name is required");
+            return false;
+        }
+        if (this.colline.getId() == null)
+        {
+            showError("Required","Name is required");
+            return false;
+        }
+        
+        return true;
+    }
+   
     
     ///************************ delete data **************************/
     public String delete(int id) {
@@ -99,5 +100,19 @@ public class CollineController extends MessageController implements Serializable
         }
         return "/pages/pays/colline/template.xhtml?faces-redirect=true";
     }
+
+    public List<Colline> getCollines() {
+        return collines;
+    }
+
+    public Colline getColline() {
+        return colline;
+    }
    
+    public void setColline(Colline colline) {
+        this.colline = colline;
+    }
+
+
+    
 }
