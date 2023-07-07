@@ -46,7 +46,7 @@ public class DeclarationController extends DeclarationDbUtil implements Serializ
         
         if (this.declaration.getIdImmeuble() == null)
         {
-            showError("Required","Immeuble number is required");
+            showError("Required","Immeuble is required");
             return false;
         }
         if (this.declaration.getNif().isEmpty())
@@ -101,7 +101,7 @@ public class DeclarationController extends DeclarationDbUtil implements Serializ
     //************************  edit data by Id  **************************/
     public String calculRevenu(int id) {
         DeclarationDbUtil.ViewById(id);
-        return "/pages/declaration/declaration.xhtml?faces-redirect=true";
+        return "/admin/declaration/declaration.xhtml?faces-redirect=true";
     }
     
     //************************ update data **************************/

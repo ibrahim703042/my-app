@@ -1,0 +1,176 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+                
+        
+        <div class="field col-lg-12 col-md-12">
+            
+            <p:panelGrid style="margin-top:20px; width: 100%">
+                
+                <!--======================= Amande =====================-->
+                <f:facet name="header">
+                    <p:row styleClass="ui-primary">
+                        <p:column colspan="3" style="text-align: left">
+                            <h5>F. RESERVE A L’ADMINISTRATION FISCALE </h5>
+                        </p:column>
+                    </p:row>
+
+                </f:facet>
+
+                <p:row>
+                    <p:column colspan="" style="font-weight: bold;">
+                       Amende fixe pour retard de déclaration et pénalités pour retard de paiement (BIF) :
+                    </p:column>
+                    <p:column colspan="2"/>
+
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="" >
+                        20. Base (Ligne 19)
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        <p:inputNumber 
+                            placeholder="......."
+                            value="#{revenusController.modelAmande.baseLine}"/>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="" >
+                        21. Amende fixe
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        <p:inputNumber 
+                            placeholder="......."
+                            value="#{revenusController.modelAmande.amandeFixe}"/>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="" >
+                        22. Pénalités pour paiement tardif (10%)
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        <p:inputNumber 
+                            placeholder="......."
+                            value="#{revenusController.modelAmande.penalite}"/>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="" style="font-weight: bold;" >
+                        23. Total amendes et pénalités (Lignes 21 + 22)
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        <p:inputNumber 
+                            placeholder="......."
+                            value="#{revenusController.modelAmande.total}"/>
+                    </p:column>
+                </p:row>
+
+            </p:panelGrid>
+
+        </div>
+
+        <div class="field col-lg-12 col-md-12">
+            <p:panelGrid style="margin-top:20px; width: 100%">
+
+                <p:row>
+                    <p:column colspan="" style="font-weight: bold;">
+                       Mode de paiement :
+                    </p:column>
+                    <p:column colspan="">
+                        Quittance
+                    </p:column>
+
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <div class="field d-flex mb-2">
+                            <label class="me-3">Especes</label>
+                            <div class="col-12">
+                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                            </div>
+                        </div>
+                        <div class="field d-flex mb-3">
+                            <label class="me-3">Carte Cash</label>
+                            <div class="col-11">
+                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                            </div>
+                        </div>
+
+                        <div class="field d-flex mb-2">
+                            <label class="me-3">Banque</label>
+                            <div class="col-12">
+                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                            </div>
+                        </div>
+                        <div class="field d-flex mb-2">
+                            <label class="me-3">Numero</label>
+                            <div class="col-12 md:col-3">
+                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                            </div>
+                        </div>
+                        <div class="field d-flex mb-2">
+                            <label class="me-3">O.V</label>
+                            <div class="col-12">
+                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                            </div>
+                        </div>
+                        <div class="field d-flex mb-2">
+                            <label class="me-3">C.S.T</label>
+                            <div class="col-6">
+                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                            </div>
+                        </div>
+                        <div class="field d-flex mb-2">
+                            <label class="me-3">Autre</label>
+                            <div class="col-6">
+                                <p:triStateCheckbox value="#{payement.modePayement}"/>
+                            </div>
+                        </div>
+                    </p:column>
+
+                    <p:column colspan="" >
+                        <div class="field d-flex">
+                            <label>Numero</label>
+                            <div class="col-6 md:col-8">
+                                <p:inputNumber placeholder="......."/>
+                            </div>
+                        </div>
+                        <div class="field d-flex">
+                            <label>Date</label>
+                            <div class="col-6 md:col-8">
+                                <p:inputNumber placeholder="......."/>
+                            </div>
+                        </div>
+                        <div class="field d-flex">
+                            <label>Montant paye</label>
+                            <div class="col-6 md:col-8">
+                                <p:inputNumber 
+                                    placeholder="......."
+                                    value="#{revenusController.modelPayement.montantPaye}"/>
+                            </div>
+                        </div>
+                        <div class="field d-flex">
+                            <label>Restant Du</label>
+                            <div class="col-6 md:col-8">
+                                <p:inputNumber 
+                                    placeholder="......."
+                                     value="#{revenusController.modelPayement.montantPaye}"/>
+                            </div>
+                        </div>
+
+                    </p:column>
+
+                </p:row>
+
+            </p:panelGrid>
+
+        </div>
+        
+</ui:composition>

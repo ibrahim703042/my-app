@@ -36,27 +36,28 @@ public class CommuneController extends MessageController implements Serializable
     @PostConstruct
     public void init() {
         communes = communeDbUtil.findAll();
+        clearForm();
     }
 
-   public void clearForm(){
-       this.setCommune(new Commune());
+    public void clearForm(){
+       this.commune = new Commune();
     }
     
     public void createOrUpdate() {
         
         if(IsValid()){
             
-            if (this.getCommune().getId() == null) {
+            if (this.commune.getId() == null) {
 
-                this.communeDbUtil.save(this.getCommune());
-                this.init();
+                this.communeDbUtil.save(this.commune);
                 showInfo("Inserted","Data Added");
+                this.init();
                 PrimeFaces.current().executeScript("PF('manageFormDialog').hide()");
                 PrimeFaces.current().ajax().update("form:messages", "form:dt-communes");
                 
-            }else if (this.getCommune().getId() != null) {
+            }else if (this.commune.getId() != null) {
 
-                this.communeDbUtil.update(this.getCommune());
+                this.communeDbUtil.update(this.commune);
                 this.init();
                 showInfo("Updated","Data Updated");
                 PrimeFaces.current().executeScript("PF('manageFormDialog').hide()");
@@ -69,12 +70,12 @@ public class CommuneController extends MessageController implements Serializable
     
     // ******   Input Validation ******/
     private boolean IsValid(){
-        if (this.getCommune().getNomCommune().isEmpty())
+        if (this.commune.getNomCommune().isEmpty())
         {
             showError("Required","Name is required");
             return false;
         }
-        if (this.getCommune().getIdProvince() == null)
+        if (this.commune.getIdProvince() == null)
         {
             showError("Required","Name is required");
             return false;
@@ -100,7 +101,7 @@ public class CommuneController extends MessageController implements Serializable
     public List<Commune> getCommunes() {
         return communes;
     }
-
+    
     public Commune getCommune() {
         return commune;
     }

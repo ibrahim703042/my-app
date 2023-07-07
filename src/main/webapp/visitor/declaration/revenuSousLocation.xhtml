@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+                
+    <h:form id="contribuable" >
+        
+        <div class="field col-12 md:col-12">
+            <p:panelGrid style="margin-top:20px; width: 100%">
+
+                <f:facet name="header">
+                    <p:row styleClass="ui-primary">
+                        <p:column colspan="2" style="text-align: left">
+                            <h5>D. REVENUS DES SOUS-LOCATIONS</h5>
+                        </p:column>
+                    </p:row>
+                </f:facet>
+
+                <p:row>
+                    <p:column colspan="" >8. Recettes des sous-locations</p:column>
+                    <p:column colspan="2">
+                        <p:inputNumber 
+                            placeholder="......"
+                            id="recetteSousLocation"
+                            value="#{revenusController.modelRevenuSousLocation.recetteSousLocation}" >
+                            <p:ajax event="blur" update="revenusNetsImposables" />
+                        </p:inputNumber>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan=""> 9. Loyers payés pour la location des immeubles et terrains donnés en sous-location</p:column>
+                    <p:column colspan="2">
+                        <p:inputNumber  
+                            placeholder="......"
+                            id="loyerPayes"
+                            value="#{revenusController.modelRevenuSousLocation.loyerPayes}" >
+                            <p:ajax event="blur" update="revenusNetsImposables" />
+                        </p:inputNumber>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan=""> <b>10. Revenus nets imposables (Ligne 8 – Ligne 9) </b> </p:column>
+                    <p:column colspan="2"  >
+                        <p:inputNumber  
+                            placeholder="......"
+                            id="revenusNetsImposables"
+                            readonly="true"
+                            value="#{revenusController.totalRevenuSousLocationRevenusNetsImposables()}" >
+                            <p:ajax event="blur" update="totalRevenusNetsImposables" />
+                        </p:inputNumber>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan=""> <b>11. Total revenus nets imposables (Ligne 7 + Ligne 10)</b> </p:column>
+                    <p:column colspan="2">
+                        <p:inputNumber 
+                            placeholder="......"
+                            readonly="true"
+                            id="totalRevenusNetsImposables"
+                            value="#{revenusController.totalRevenuSousLocatifTotalRevenusNetsImposable()}" >
+                            <p:ajax event="blur" update="revenuSousNetImposable" />
+                        </p:inputNumber>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="">12 Abbattement </p:column>
+                    <p:column>
+                        <p:inputNumber  
+                            placeholder="......"
+                            id="abbattements"
+                            value="#{revenusController.modelRevenuSousLocation.abbattements}" >
+                            <p:ajax event="blur" update="revenuSousNetImposable" />
+                        </p:inputNumber>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan=""> <b>13. REVENU NET IMPOSABLE (Ligne 11- Ligne 12)</b> </p:column>
+                    <p:column colspan="2">
+                        <p:inputNumber  
+                            placeholder="......"
+                            readonly="true"
+                            id="revenuSousNetImposable"
+                            value="#{revenusController.totalRevenuSousLocatifRevenuNetImposable()}" >
+                            <p:ajax event="blur" update="tranche_1" />
+                        </p:inputNumber>
+                    </p:column>
+                </p:row>
+
+            </p:panelGrid>
+
+        </div>
+        
+    </h:form>
+</ui:composition>

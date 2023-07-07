@@ -1,0 +1,158 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 6, 2023, 11:52:05 AM
+    Author     : Ibrahim
+*/
+
+
+
+/* ---------------------------------------------------
+# Declaration 
+----------------------------------------------------*/
+
+.main{
+    margin-top: 50px;
+    background: var(--white);
+    padding: 60px 0;
+    border-top: 1px solid #eee;
+}
+
+.declaration {
+    background: var(--white);
+    padding: 60px 0;
+    border-top: 1px solid #eee;
+}
+
+.declaration .particulier {
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 5px;
+    background: var(--white);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.declaration .particulier .particulier-img {
+    position: relative;
+    overflow: hidden;
+}
+
+.declaration .particulier .particulier-img .img {
+   width: 100%;
+   height: 15rem; 
+}
+
+
+.declaration .particulier-button{
+    position: fixed;
+    bottom: 25px;
+    right: 15px;
+}
+
+.declaration .particulier-button .button-link {
+    background-color: #fe0000;
+    transition: color 0.3s;
+    border-radius: 5px;
+    padding: 10px;
+    text-decoration: none;
+    color: #ffff;
+    
+}
+
+.declaration .particulier-button .particulier-plus .button-link:hover {
+    background-color: #000;
+    color: #ffffff;
+}
+
+.declaration .particulier .particulier-info {
+    margin-bottom: 40px;
+    padding: 30px 15px;
+}
+
+.declaration .particulier .particulier-info h4{
+    font-weight: 500;
+    margin-bottom: 5px;
+    font-size: 20px;
+    color: var(--dark-text);
+}
+
+.declaration .particulier .particulier-info span{
+    display: block;
+    font-size: 15px;
+    font-weight: 400;
+    color: #aaa;
+}
+
+.declaration .particulier .particulier-info p {
+    font-style: italic;
+    font-size: 14px;
+    line-height: 26px;
+    color: #777;
+}
+
+/* ---------------------------------------------------
+# questions 
+----------------------------------------------------*/
+.questions .content {
+    padding: 3px 0;
+}
+
+
+.questions .content h3 {
+    font-weight: 700;
+    font-size: 34px;
+    color: var(--dark-text);
+}
+
+.questions .content p {
+    margin-bottom: 0;
+}
+
+.questions .content .question-box {
+    padding: 10px 2px;
+    width: 100%;
+    background: #eee;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #fe0000;
+}
+
+.questions .content .question-box i {
+    display: block;
+    font-size: 36px;
+    color: var(--main-color);
+    float: left;
+}
+
+.questions .content .question-box span {
+    font-size: 50px;
+    line-height: 30px;
+    display: block;
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-left: 50px;
+}
+
+.questions .content .question-box p {
+    padding: 15px 0 0 0;
+    margin: 0 0 0 50px;
+    font-family: "Raleway", sans-serif;
+    font-size: 15px;
+    color: #3b3b3b;
+}
+
+.questions .content .question-box a {
+    font-weight: 600;
+    display: block;
+    margin-top: 20px;
+    color: #3b3b3b;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+    transition: ease-in-out .3s;
+}
+
+.questions .content .question-box a:hover {
+    color: #626262;
+}
+

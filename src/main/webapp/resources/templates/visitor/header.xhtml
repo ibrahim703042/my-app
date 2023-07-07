@@ -39,21 +39,27 @@
                                 <!--<f:param name="pageId" value="1"/>-->
                             </h:link>
                         </li>
+                        <li>
+                            <h:link outcome="declaration-en-ligne" class="nav-link scrollto" value="Test" >
+                                <!--<f:param name="pageId" value="1"/>-->
+                            </h:link>
+                        </li>
                     </ul>
                     
                     <i class="bi bi-list mobile-nav-toggle"></i>
                     
                 </nav>
-                
+                <!--
                 <c:choose>
-                    <c:when test="#{authController.authContribuable.email != null}">
-                      <h:link outcome="#{authController.taxPayer_logout}" class=" login-btn text-decoration-none" value="Se connectez" />
+                    <c:when test="#">
+                      <h:link outcome="#" class=" login-btn text-decoration-none" value="Se connectez" />
                     </c:when>
                     <c:otherwise>
                         <h:link outcome="login" class=" login-btn text-decoration-none" value="Se connectez" />
                     </c:otherwise>
                 </c:choose>
-                <!--<h:link outcome="login" class=" login-btn text-decoration-none" value="Se connectez" />-->
+                -->
+                <h:link outcome="login" class=" login-btn text-decoration-none" value="Se connectez" />
                 
             </div>
             

@@ -108,7 +108,7 @@ public class AuthController extends AuthDbUtil implements Serializable {
         
         HttpSession session = SessionUtils.getSession();
         session.invalidate();
-        return "/pages/index?faces-redirect=true";
+        return "/admin/index?faces-redirect=true";
         
     }
     
@@ -201,7 +201,7 @@ public class AuthController extends AuthDbUtil implements Serializable {
     }
 
     public Contribuable getAuthContribuable() {
-          FacesContext context = FacesContext.getCurrentInstance();
+        FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         contribuable = (Contribuable) externalContext.getSessionMap().get("authContribuable");
         return authContribuable;

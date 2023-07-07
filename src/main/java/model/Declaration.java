@@ -6,7 +6,6 @@ package model;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.bean.ManagedBean;
-import jakarta.validation.constraints.Future;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -26,7 +25,6 @@ public class Declaration implements Serializable {
     private String contribuable;
    
     private Date date_1;
-    @Future
     private Date date_2;
     
     private String nomAvenue;

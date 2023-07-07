@@ -2,22 +2,19 @@
    xmlns:h = "http://java.sun.com/jsf/html"
    xmlns:ui = "http://java.sun.com/jsf/facelets" 
    xmlns:f="http://xmlns.jcp.org/jsf/core"
-   template = "/resources/templates/miniTemplate.xhtml">
+   template = "/resources/templates/miniTemplate.xhtml"
+   xmlns:p="http://primefaces.org/ui">
 
         <ui:define name = "content"> 
 
-            <section class="main">
+            <section id="main" class="main declaration">
                 <div class="container" data-aos="fade-up">
-                   <div class="section-title">
-                      <h2>Declaration</h2>
-                   </div>
-
-                   <div class="row">
+                    <div class="row">
 
                       <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
                             <div class="particulier" data-aos="fade-up" data-aos-delay="100">
                                <div class="particulier-img">
-                                  <h:graphicImage name="image/OBR_2.png"  class="img-fluid" />
+                                  <p:graphicImage name="impot.jpeg" library="image" styleClass="mb-3 img"/>
                                </div>
                                <div class="particulier-info">
                                   <h4>Titre</h4>
@@ -31,7 +28,8 @@
                                </div>
                                <div class="particulier-button">
                                     <div class="particulier-plus">
-                                        <h:outputLink  class="button-link" value="https://www.obr.bi/index.php/en/lois-et-reglements">En savoir plus</h:outputLink>
+                                        <!--<h:outputLink  class="button-link" value="https://www.obr.bi/index.php/en/lois-et-reglements">En savoir plus</h:outputLink>-->
+                                        <h:outputLink  class="button-link" value="https://www.obr.bi/index.php/en/formulaires-d-impots-et-taxes">En savoir plus</h:outputLink>
                                     </div>
                                </div>
                             </div>
@@ -40,9 +38,7 @@
                       <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
                             <div class="particulier" data-aos="fade-up" data-aos-delay="100">
                                <div class="particulier-img">
-                                  <!-- <img src="#{resources/image/OBR_2.png }" class="img-fluid" alt="" /> -->
-                                  <h:graphicImage name="image/OBR_2.png"  class="img-fluid" />
-
+                                    <p:graphicImage name="impot.jpeg" library="image" styleClass="mb-3 img"/>
                                </div>
                                <div class="particulier-info">
                                   <h4>Titre</h4>
@@ -53,19 +49,44 @@
                                      fuga voluptate quidem soluta.
                                   </span>
                                </div>
-                                <div class="particulier-button">
-                                    <div class="particulier-plus">
-                                       <h:link outcome="login" class="button-link" value=" déclarer" >
-                                          <!--<f:param name="pageId" value="1"/>-->
-                                       </h:link>
-                                    </div>
-                                </div>
+                               <div class="particulier-button">
+                                  <div class="particulier-plus">
+                                     <h:link outcome="login" class="button-link" value="Déclarer" >
+                                        <f:param name="pageId" value="1"/>
+                                     </h:link>
+                                  </div>
+                               </div>
                             </div>
                       </div>
 
                    </div>
+                    
                 </div>
             </section> 
+            
+            <section id="questions" class="questions">
+                <div class="container" data-aos="fade-up">
+                    <div class="section-title">
+                        <p>questions du moment</p>
+                    </div> 
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-6 d-md-flex align-items-md-stretch">
+                                <div class="question-box">
+                                    <p><strong>Happy Clients</strong>Doloremque excepturi, harum illo atque
+                                        ipsum voluptas blanditiis</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-md-flex align-items-md-stretch">
+                                <div class="question-box">
+                                    <p><strong>Happy Clients</strong>Doloremque excepturi, harum illo atque
+                                        ipsum voluptas blanditiis</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
          </ui:define> 
 

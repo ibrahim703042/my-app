@@ -1,0 +1,172 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+                
+        <div class="field fluid col-lg-12 col-md-12">
+            <p:panelGrid  style="margin-top:20px; width: 100%">
+                <f:facet name="header">
+                    <p:row styleClass="ui-primary">
+                        <p:column colspan="8">
+
+                            <h5>E. DETERMINATION DE L’IMPOT DU </h5>
+                            <p:spacer height="10" />
+                            <h6>1. Personnes Physiques et Morales </h6>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column styleClass="text-primary" >COL 1</p:column>
+                        <p:column styleClass="text-primary" colspan="2">COL 2</p:column>
+                        <p:column styleClass="text-primary" colspan="2">COL 3</p:column>
+                        <p:column styleClass="text-primary" colspan="2">COL 4</p:column>
+                        <p:column styleClass="text-primary" colspan="2">COL 5</p:column>
+                    </p:row>
+
+                </f:facet>
+
+                <p:row>
+                    <p:column styleClass="text-primary" style="font-weight: bold;">
+                        Lignes
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                        Tranches de revenus annuels nets imposables
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                        Montant
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                        Taux d’imposition
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                        Impôt correspondant
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="" styleClass="text-primary" >14</p:column>
+                    <p:column colspan="2" styleClass="text-primary" >0 – 1 800 000 FBU</p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        <p:inputNumber 
+                            placeholder="......." 
+                            id="tranche_1"
+                            value="#{revenusController.modelImpot.tranche_1}" >
+                            <p:ajax event="blur" update="tranche_1_Col_5" />
+                        </p:inputNumber>
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" >0%</p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        <p:inputNumber 
+                            placeholder="....... "
+                            id="tranche_1_Col_5"
+                            value="#{revenusController.totalImpotDu_1()}" >
+                            <p:ajax event="blur" update="impotTotalDuc" />
+                        </p:inputNumber>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="" styleClass="text-primary" >15</p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        1 800 001 – 3 600 000 FBU 
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        <p:inputNumber 
+                            placeholder="......."
+                            id="tranche_2"
+                            value="#{revenusController.modelImpot.tranche_2}" >
+                            <p:ajax event="blur" update="tranche_2_Col_5" />
+                        </p:inputNumber>
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        20% de la part qui dépasse 1 800 000 FBU
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        <p:inputNumber 
+                            placeholder="......."
+                            id="tranche_2_Col_5"
+                            value="#{revenusController.totalImpotDu_2()}">
+                            <p:ajax event="blur" update="impotTotalDuc" />
+                        </p:inputNumber>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="" styleClass="text-primary" >16</p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        Plus de 3 600 000 FBU
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        <p:inputNumber 
+                            placeholder="......."
+                            id="tranche_3"
+                            value="#{revenusController.modelImpot.tranche_3}" >
+                            <p:ajax event="blur" update="tranche_3_Col_5" />
+                        </p:inputNumber>
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        30% de la part qui dépasse 3600 000 FBU 
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" >
+                        <p:inputNumber 
+                            placeholder="......."
+                            id="tranche_3_Col_5"
+                            value="#{revenusController.totalImpotDu_3()}">
+                            <p:ajax event="blur" update="impotTotalDuc" />
+                        </p:inputNumber>
+                    </p:column>
+                </p:row>
+
+
+                <p:row>
+                    <p:column colspan="" styleClass="text-primary" >17</p:column>
+                    <p:column colspan="6" styleClass="text-primary" style="font-weight: bold;" >
+                        Impôt total dû (Ligne 14+ Ligne 15+ Ligne 16)
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;" >
+                        <p:inputNumber 
+                            placeholder="......."
+                            id="impotTotalDuc"
+                            readonly="true"
+                            value="#{revenusController.totalImpotDU()}">
+                            <p:ajax event="blur" update="totalRestantDu" />
+                        </p:inputNumber>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="" styleClass="text-primary" >18</p:column>
+                    <p:column colspan="6" styleClass="text-primary" style="font-weight: bold;" >
+                        Acomptes sur l’impôt locatif déjà payés
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;" >
+                        <p:inputNumber 
+                            placeholder="......."
+                            id="accompteImpotDejaPaye"
+                            value="#{revenusController.modelImpot.accompteImpotDejaPaye}">
+                            <p:ajax event="blur" update="totalRestantDu" />
+                        </p:inputNumber>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="" styleClass="text-primary" >19</p:column>
+                    <p:column colspan="6" styleClass="text-primary" style="font-weight: bold;">
+                       Total restant dû (Ligne 17- Ligne 18)
+                    </p:column>
+                    <p:column colspan="2" styleClass="text-primary" style="font-weight: bold;">
+                        <p:inputNumber 
+                            placeholder="......."
+                            id="totalRestantDu"
+                            readonly="true"
+                            value="#{revenusController.totalRestantDU()}">
+                            <!--<p:ajax event="blur" update="revenuBrut" />-->
+                        </p:inputNumber>
+                    </p:column>
+                </p:row>
+
+            </p:panelGrid>
+
+        </div>
+</ui:composition>

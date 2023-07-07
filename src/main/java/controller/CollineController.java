@@ -10,10 +10,8 @@ import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.inject.Inject;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import model.Colline;
-import model.Commune;
 import org.primefaces.PrimeFaces;
 import util.CollineDbUtil;
 
@@ -39,6 +37,7 @@ public class CollineController extends MessageController implements Serializable
     @PostConstruct
     public void init() {
         collines = collineDbUtil.findAll();
+        clearForm();
     }
     
     public void clearForm(){
@@ -52,10 +51,10 @@ public class CollineController extends MessageController implements Serializable
             if (this.colline.getId() == null) {
 
                 this.collineDbUtil.save(this.colline);
-                this.init();
                 showInfo("Inserted","Data Added");
+                this.init();
                 PrimeFaces.current().executeScript("PF('manageFormDialog').hide()");
-                PrimeFaces.current().ajax().update("form:messages", "form:dt-communes");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-collines");
                 
             }else if (this.colline.getId() != null) {
 
@@ -63,7 +62,7 @@ public class CollineController extends MessageController implements Serializable
                 this.init();
                 showInfo("Updated","Data Updated");
                 PrimeFaces.current().executeScript("PF('manageFormDialog').hide()");
-                PrimeFaces.current().ajax().update("form:messages", "form:dt-communes");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-collinees");
                
             } 
         }
@@ -77,7 +76,7 @@ public class CollineController extends MessageController implements Serializable
             showError("Required","Name is required");
             return false;
         }
-        if (this.colline.getId() == null)
+        if (this.colline.getIdCommune() == null)
         {
             showError("Required","Name is required");
             return false;
@@ -85,20 +84,14 @@ public class CollineController extends MessageController implements Serializable
         
         return true;
     }
-   
     
     ///************************ delete data **************************/
-    public String delete(int id) {
+    public void delete(int id) {
         
-        try {
-            collineDbUtil.delete(id);
-            this.showInfo("Deleted", "Data deleted");
-            this.init();
+        collineDbUtil.delete(id);
+        this.showInfo("Deleted", "Data deleted");
+        this.init();
 
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return "/pages/pays/colline/template.xhtml?faces-redirect=true";
     }
 
     public List<Colline> getCollines() {

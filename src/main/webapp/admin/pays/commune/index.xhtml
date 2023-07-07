@@ -13,13 +13,13 @@
                     <p:commandButton 
                         value="Ajouter" 
                         icon="pi pi-plus" 
-                        actionListener="#{commune.clearForm}"
+                        actionListener="#{communeController.clearForm}"
                         update=":dialogs:manage-form-content"
                         oncomplete="PF('manageFormDialog').show()"
                         styleClass="ui-button-success" 
                         style="margin-right: .5rem">
                         
-                        <p:resetInput target=":dialogs:manage-Form-content" />
+                        <p:resetInput target=":dialogs:manage-form-content" />
                         
                     </p:commandButton>
                     
@@ -27,6 +27,7 @@
                 
             </p:toolbar>
            <p:dataTable
+               id="dt-communes"
                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                rowsPerPageTemplate="3,10,15"
                paginator="true" 
@@ -35,7 +36,7 @@
                paginatorPosition="bottom"
                binding="#{table}" 
                value="#{communeController.communes}" 
-               var="commun"
+               var="commune"
                rowKey="#{commune.nomCommune}">
 
                <f:facet name="header">
@@ -45,6 +46,7 @@
                            font-size: 18px; text-transform: uppercase">
                             LISTE
                         </span>
+                       <!--
                         <span class="filter-container ui-input-icon-left"> 
                             <i class="pi pi-search icon"></i>
                             <p:inputText 
@@ -53,6 +55,7 @@
                                 placeholder="Search...." 
                             />
                         </span>
+                       -->
                     </div>
                 </f:facet>
 
