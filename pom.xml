@@ -13,7 +13,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <jakartaee>9.1.0</jakartaee>
+        
     </properties>
+    
+    <repositories>
+         <!-- https://dzone.com/articles/implementing-a-web-chat-with-ai-in-java -->
+        <!--
+        <repository>
+            <id>JCenter</id>
+            <url>https://jcenter.bintray.com</url>
+        </repository>
+        -->
+    </repositories>
     
     
     <dependencies>
@@ -79,6 +90,21 @@
             <version>2.9.0</version>
         </dependency>
         
+        <!-- https://dzone.com/articles/implementing-a-web-chat-with-ai-in-java -->
+        <!--
+        <dependency>
+            <groupId>org.goldrenard</groupId>
+            <artifactId>ab</artifactId>
+            <version>1.0.7</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.vaadin.artur</groupId>
+            <artifactId>avataaar</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        -->
+
     </dependencies>
     
     <build>

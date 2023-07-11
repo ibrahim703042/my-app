@@ -6,15 +6,13 @@
 package controller;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import model.Abbattement;
+import org.primefaces.PrimeFaces;
 import util.AbbattementDbUtil;
 
 /**
@@ -23,12 +21,14 @@ import util.AbbattementDbUtil;
  * 
  */
 
+
 @ManagedBean
 @SessionScoped
 
-public class AbbattementController implements Serializable {
-
-    public ArrayList abbattements;
+public class AbbattementController extends MessageController implements Serializable{
+    
+    private List< Abbattement>  abbattementList;
+    private Abbattement modelAbbattement;
     
     @Inject
     private AbbattementDbUtil abbattementDbUtil;
@@ -36,71 +36,84 @@ public class AbbattementController implements Serializable {
     //************************ display data **************************/
     @PostConstruct
     public void init() {
-        abbattements = abbattementDbUtil.findAll();
+        abbattementList = abbattementDbUtil.findAll();
     }
 
-    public ArrayList abbattementList() {
-        
-        abbattements.clear();
-        try {
-            abbattements = abbattementDbUtil.findAll();
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
-        return abbattements;
+    public void clearForm(){
+        this.modelAbbattement = new Abbattement();
     }
         
-    //************************ save data **************************/
-    public String save(Abbattement abbattement) {
-        
-        try {
-            abbattementDbUtil.save(abbattement);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
-        return "/pages/pays/abbattement/template.xhtml?faces-redirect=true";
-    }
-    	
-    //************************  edit data by Id  **************************/
-    public String edit(int id) {
-        
-        try {
-            abbattementDbUtil.findById(id);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
-        return "/pages/pays/abbattement/edit.xhtml?faces-redirect=true";
-    }
     
-    //************************ update data **************************/
-    public String update(Abbattement abbattement) {
+    //************************ save data **************************/
+    public void createOrUpdate() {
         
-        try {
-            abbattementDbUtil.update(abbattement);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
+        if(IsValid()){
+            
+            if(this.modelAbbattement.getId() == null){
+                
+                abbattementDbUtil.save(this.modelAbbattement);
+                this.init();
+                PrimeFaces.current().executeScript("PF('manageContribuableDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-abbattement");
+   
+            }else if(this.modelAbbattement.getId() != null){
+                abbattementDbUtil.update(this.modelAbbattement);
+                this.init();
+                PrimeFaces.current().executeScript("PF('manageContribuableDialog').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-abbattement");
+   
+            }
         }
-        return "/pages/pays/abbattement/template.xhtml?faces-redirect=true";
     }
     
     ///************************ delete data **************************/
-    public String delete(int id) {
+    public void delete(int id) {
         
-        try {
-            abbattementDbUtil.delete(id);
-
-        }catch (Exception ex) {
-            addErrorMessage ((SQLException) ex);
-        }
-        return "/pages/pays/abbattement/template.xhtml?faces-redirect=true";
+        abbattementDbUtil.delete(id);
+        this.init();
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-abbattement");
     }
     
-    //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
+    
+    //************** Getters && Setters ***********************/
+
+    public List< Abbattement> getAbbattementList() {
+        return abbattementList;
     }
+
+    public void setAbbattementList(List< Abbattement> abbattementList) {
+        this.abbattementList = abbattementList;
+    }
+
+    public Abbattement getModelAbbattement() {
+        return modelAbbattement;
+    }
+
+    public void setModelAbbattement(Abbattement modelAbbattement) {
+        this.modelAbbattement = modelAbbattement;
+    }
+    
+    
+    // ******   Input Validation ******/
+    
+    private boolean IsValid(){
+        if (this.modelAbbattement.getIdContribuable() == null)
+        {
+            showError("Required","Full name is required");
+            return false;
+        }
+        if (this.modelAbbattement.getBeneficiaire().isBlank())
+        {
+            showError("Required","Beneficiaire is required");
+            return false;
+        }
+        if (this.modelAbbattement.getMotifAbbattement().isEmpty())
+        {
+            showError("Required","Motif is required");
+            return false;
+        }
+        
+        return true;
+    }
+    
 }

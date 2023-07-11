@@ -110,15 +110,66 @@
                                             filter="true" 
                                             filterMatchMode="startsWith" 
                                             dynamic="true"
-                                            style="height: 41px; "
-                                        >
-                                            <f:selectItems var="representan"
-                                                value="#{representantController.representantList()}"
-                                                itemLabel="#{representan.id} : #{representan.nomRepresentant} #{representan.prenomRepresentant}"
-                                                itemValue="#{representan.id}" 
+                                            style="height: 41px; ">
+                                            <f:selectItems var="representant"
+                                                value="#{representantController.representantList}"
+                                                itemLabel="#{representant.id} : #{representant.nomRepresentant} #{representant.prenomRepresentant}"
+                                                itemValue="#{representant.id}" 
                                             />
 
                                         </p:selectOneMenu>
+                                        
+                                    </div>
+                                    
+                                    
+                                    <div class="field col-6 md:col-12 mt-0">
+                                        <p:outputLabel >
+                                            Bénéficiaire d’abattement (Article 84)2 
+                                        </p:outputLabel>
+                                        <p:selectOneRadio value="#{contribuableController.modelAbbattement.beneficiaire}">
+                                            <f:selectItem itemValue="Oui" itemLabel="Oui"/>
+                                            <f:selectItem itemValue="Non" itemLabel="Non"/>
+                                        </p:selectOneRadio>
+                                    </div>
+
+                                    <div class="field mt-1">
+                                            <p:outputPanel id="customPanel">
+                                            <h5 class="mb-2"> Motif d’abattement : </h5>
+                                            <p:selectManyCheckbox id="custom" value="#{contribuableController.modelAbbattement.motifAbbattement}" layout="custom">
+                                                <f:selectItem itemLabel="#{contribuableController.modelAbbattement.motif_A}" itemValue="#{contribuableController.modelAbbattement.motif_A}"/>
+                                                <f:selectItem itemLabel="#{contribuableController.modelAbbattement.motif_B}" itemValue="#{contribuableController.modelAbbattement.motif_B}"/>
+                                                <f:selectItem itemLabel="#{contribuableController.modelAbbattement.motif_C}" itemValue="#{contribuableController.modelAbbattement.motif_C}"/>
+                                                <f:selectItem itemLabel="#{contribuableController.modelAbbattement.motif_D}" itemValue="#{contribuableController.modelAbbattement.motif_D}"/>
+                                                <f:selectItem itemLabel="#{contribuableController.modelAbbattement.motif_E}" itemValue="#{contribuableController.modelAbbattement.motif_E}"/>
+                                                <f:selectItem itemLabel="#{contribuableController.modelAbbattement.motif_E}" itemValue="#{contribuableController.modelAbbattement.motif_E}"/>
+
+                                            </p:selectManyCheckbox>
+
+                                            <div class="field">
+                                                <div class="flex ">
+                                                    <p:outputLabel for="opt1" value="#{contribuableController.modelAbbattement.motif_A}" styleClass="block mb-2 mr-3"/>
+                                                    <p:checkbox id="opt1" for="custom" itemIndex="0"/>
+                                                </div>
+                                                <div class="flex ">
+                                                    <p:outputLabel for="opt2" value="#{contribuableController.modelAbbattement.motif_B}" styleClass="block mb-2 mr-3"/>
+                                                    <p:checkbox id="opt2" for="custom" itemIndex="1"/>
+                                                </div>
+                                                <div class="flex ">
+                                                    <p:outputLabel for="opt3" value="#{contribuableController.modelAbbattement.motif_C}" styleClass="block mb-2 mr-3"/>
+                                                    <p:checkbox id="opt3" for="custom" itemIndex="2"/>
+                                                </div>
+                                                <div class="flex ">
+                                                    <p:outputLabel for="opt4" value="#{contribuableController.modelAbbattement.motif_D}" styleClass="block mb-2 mr-3"/>
+                                                    <p:checkbox id="opt4" for="custom" itemIndex="3"/>
+                                                </div>
+                                                <div class="flex ">
+                                                    <p:outputLabel for="opt5" value="#{contribuableController.modelAbbattement.motif_E}" styleClass="block mb-2 mr-3"/>
+                                                    <p:checkbox id="opt5" for="custom" itemIndex="4"/>
+                                                </div>
+
+                                            </div>
+                                        </p:outputPanel>
+
                                     </div>
                                 </div>
 

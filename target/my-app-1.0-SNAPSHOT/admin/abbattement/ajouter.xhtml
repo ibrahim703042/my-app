@@ -7,69 +7,31 @@
                 
    <h:form id="dialogs-contribuable" >
        <p:growl id="messages" showDetail="true" />
-        <p:dialog header="Contribuable Details" 
-                  widgetVar="manageContribuableDialog" 
-                  minHeight="40" width="1200" 
-                  minimizable="true" maximizable="true"
-                  showEffect="fade">
+        <p:dialog header="Abbattement Details" 
+                widgetVar="manageContribuableDialog" 
+                minHeight="40" width="1200" 
+                minimizable="true" maximizable="true"
+                showEffect="fade">
             <p:outputPanel id="manage-contribuable-content" class="ui-fluid">
                 
-                <p:outputPanel rendered="#{not empty contribuableController.modelContribuable}">
+                <p:outputPanel rendered="#{not empty abbattementController.modelAbbattement}">
                     
                     <div class="formgrid grid">
                         
-                        <div class="field col-6 md:col-6">
-                            <component:inputTextField label="Nom ou Raison Sociale"
-                                placeholder="Entrer nom ou raison Sociale"
-                                value="#{contribuableController.modelContribuable.nom}"/>
-                        </div>
-                        
-                        <div class="field col-6 md:col-6">
-                            <component:inputTextField
-                                label="E-mail"
-                                placeholder="Entrer email "
-                                value="#{contribuableController.modelContribuable.email}"/>
-                        </div>
-
-                        <div class="field col-6 md:col-6">
-                            <component:inputTextField
-                                label="Mot de passe"
-                                type="password"
-                                placeholder="Entrer Mot de passe"
-                                value="#{contribuableController.modelContribuable.motPasse}"/>
-                        </div>
-
-                        <div class="field col-6 md:col-6">
-                            <component:inputTextField
-                                label="Boite postal"
-                                placeholder="BP 1023456 "
-                                value="#{contribuableController.modelContribuable.bp}"
-                            />
-
-                        </div>
-
-                        <div class="field col-6 md:col-6">
-                            <component:inputTextField
-                                label="Telephone"
-                                placeholder="+25771204778"
-                                value="#{contribuableController.modelContribuable.telephone}"
-                            />
-                        </div>
-
-                        <div class="field col-6 md:col-6">
-                            <p:outputLabel class="font-bold"  value="Representant"/>
+                        <div class="field col-12">
+                            <p:outputLabel class="font-bold"  value="Contribuable"/>
                             <p:selectOneMenu 
-                                value="#{contribuableController.modelContribuable.idRepresentant}"
+                                value="#{abbattementController.modelAbbattement.idContribuable}"
                                 filter="true" 
                                 filterMatchMode="startsWith" 
                                 dynamic="true"
                                 style="height: 41px; " >
 
-                                <f:selectItem itemLabel="Choisir Representant" />
-                                <f:selectItems var="representant"
-                                    value="#{contribuableController.representantList}"
-                                    itemLabel="#{representant.id} : #{representant.nomRepresentant} #{representant.prenomRepresentant}"
-                                    itemValue="#{representant.id}" />
+                                <f:selectItem itemLabel="Choisir Contribuable" />
+                                <f:selectItems var="contribuable"
+                                    value="#{contribuableController.contribuableList}"
+                                    itemLabel="#{contribuable.id} : #{contribuable.nom}"
+                                    itemValue="#{contribuable.id}" />
 
                             </p:selectOneMenu>
                         </div>
@@ -78,51 +40,59 @@
                             <p:outputLabel >
                                 Bénéficiaire d’abattement (Article 84)2 
                             </p:outputLabel>
-                            <p:selectOneRadio value="#{contribuableController.modelContribuable.beneficiaire}">
+                            <p:selectOneRadio value="#{abbattementController.modelAbbattement.beneficiaire}">
                                 <f:selectItem itemValue="Oui" itemLabel="Oui"/>
                                 <f:selectItem itemValue="Non" itemLabel="Non"/>
                             </p:selectOneRadio>
                         </div>
                     
-                        <div class="field mt-1">
-                                <p:outputPanel id="customPanel">
-                                <h5 class="mb-2"> Motif d’abattement : </h5>
-                                <p:selectManyCheckbox id="custom" value="#{contribuableController.modelContribuable.motif}" layout="custom">
-                                    <f:selectItem itemLabel="#{contribuableController.modelContribuable.motif_A}" itemValue="#{contribuableController.modelContribuable.motif_A}"/>
-                                    <f:selectItem itemLabel="#{contribuableController.modelContribuable.motif_B}" itemValue="#{contribuableController.modelContribuable.motif_B}"/>
-                                    <f:selectItem itemLabel="#{contribuableController.modelContribuable.motif_C}" itemValue="#{contribuableController.modelContribuable.motif_C}"/>
-                                    <f:selectItem itemLabel="#{contribuableController.modelContribuable.motif_D}" itemValue="#{contribuableController.modelContribuable.motif_D}"/>
-                                    <f:selectItem itemLabel="#{contribuableController.modelContribuable.motif_E}" itemValue="#{contribuableController.modelContribuable.motif_E}"/>
+                        <div class="field col-12 md:col-12 mt-1">
+                                <p:outputPanel id="cus">
+                                <h5 class="mb-2"> Motif d’abbattement : </h5>
+                                <p:selectOneMenu value="#{abbattementController.modelAbbattement.motifAbbattement}">
+                                    <f:selectItem itemLabel="Choisir motif" itemValue="Aucun motif" />
+                                    <f:selectItem itemLabel="#{abbattementController.modelAbbattement.motif_A}" itemValue="#{abbattementController.modelAbbattement.motif_A}"/>
+                                    <f:selectItem itemLabel="#{abbattementController.modelAbbattement.motif_B}" itemValue="#{abbattementController.modelAbbattement.motif_B}"/>
+                                    <f:selectItem itemLabel="#{abbattementController.modelAbbattement.motif_C}" itemValue="#{abbattementController.modelAbbattement.motif_C}"/>
+                                    <f:selectItem itemLabel="#{abbattementController.modelAbbattement.motif_D}" itemValue="#{abbattementController.modelAbbattement.motif_D}"/>
+                                    <f:selectItem itemLabel="#{abbattementController.modelAbbattement.motif_E}" itemValue="#{abbattementController.modelAbbattement.motif_E}"/>
 
-                                </p:selectManyCheckbox>
-
-                                <div class="field">
-                                    <div class="flex ">
-                                        <p:outputLabel for="opt1" value="#{abbattement.motif_A}" styleClass="block mb-2 mr-3"/>
-                                        <p:checkbox id="opt1" for="custom" itemIndex="0"/>
-                                    </div>
-                                    <div class="flex ">
-                                        <p:outputLabel for="opt2" value="#{abbattement.motif_B}" styleClass="block mb-2 mr-3"/>
-                                        <p:checkbox id="opt2" for="custom" itemIndex="1"/>
-                                    </div>
-                                    <div class="flex ">
-                                        <p:outputLabel for="opt3" value="#{abbattement.motif_C}" styleClass="block mb-2 mr-3"/>
-                                        <p:checkbox id="opt3" for="custom" itemIndex="2"/>
-                                    </div>
-                                    <div class="flex ">
-                                        <p:outputLabel for="opt4" value="#{abbattement.motif_D}" styleClass="block mb-2 mr-3"/>
-                                        <p:checkbox id="opt4" for="custom" itemIndex="3"/>
-                                    </div>
-                                    <div class="flex ">
-                                        <p:outputLabel for="opt5" value="#{abbattement.motif_E}" styleClass="block mb-2 mr-3"/>
-                                        <p:checkbox id="opt5" for="custom" itemIndex="4"/>
-                                    </div>
+                                </p:selectOneMenu>
                                     
-                                </div>
                             </p:outputPanel>
 
                         </div>
                     
+                        <!--
+                        <div class="field mt-1">
+                            <p:outputPanel id="customPanel">
+                                <div class="field">
+                                    <div class="flex ">
+                                        <p:outputLabel for="opt1" value="#{abbattementController.modelAbbattement.motif_A}" styleClass="block mb-2 mr-3"/>
+                                        <p:selectBooleanCheckbox id="opt1" value="#{complexValidationView.nameRequired}"/>
+                                    </div>
+                                    <div class="flex ">
+                                        <p:outputLabel for="opt2" value="#{abbattementController.modelAbbattement.motif_B}" styleClass="block mb-2 mr-3"/>
+                                        <p:selectBooleanCheckbox id="opt2" value="#{complexValidationView.nameRequired}"/>
+                                    </div>
+                                    <div class="flex ">
+                                        <p:outputLabel for="opt3" value="#{abbattementController.modelAbbattement.motif_C}" styleClass="block mb-2 mr-3"/>
+                                        <p:selectBooleanCheckbox id="opt3" value="#{complexValidationView.nameRequired}"/>
+                                    </div>
+                                    <div class="flex ">
+                                        <p:outputLabel for="opt4" value="#{abbattementController.modelAbbattement.motif_D}" styleClass="block mb-2 mr-3"/>
+                                        <p:selectBooleanCheckbox id="opt4" value="#{complexValidationView.nameRequired}"/>
+                                    </div>
+                                    <div class="flex ">
+                                        <p:outputLabel for="opt5" value="#{abbattementController.modelAbbattement.motif_E}" styleClass="block mb-2 mr-3"/>
+                                        <p:selectBooleanCheckbox id="opt5" value="#{complexValidationView.nameRequired}"/>
+                                    </div>
+
+                                </div>
+                            </p:outputPanel>
+
+                        </div>
+                        -->
                     </div>
                 </p:outputPanel>
 
@@ -131,7 +101,7 @@
             <f:facet name="footer">
                 <p:commandButton 
                     value="Enregistrer" 
-                    actionListener="#{contribuableController.createOrUpdate}"
+                    actionListener="#{abbattementController.createOrUpdate}"
                     update="manage-contribuable-content messages" 
                     process="manage-contribuable-content @this" 
                 />

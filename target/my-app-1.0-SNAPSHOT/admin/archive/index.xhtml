@@ -1,80 +1,78 @@
-    <ui:composition
-        xmlns = "http://www.w3.org/1999/xhtml"   
-        xmlns:h = "http://java.sun.com/jsf/html"
-        xmlns:ui = "http://java.sun.com/jsf/facelets"
-        xmlns:p="http://primefaces.org/ui"
-        xmlns:f="http://xmlns.jcp.org/jsf/core"
-        xmlns:component="http://xmlns.jcp.org/jsf/composite/component"
-        template = "/resources/templates/dashboardTemplate.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
+    
+        <h:form>
+            <p:growl id="message" showDetail="true"/>
+            
+            <p:dataTable
+                id="dt-revenus"
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="3,10,15,20"
+                paginator="true" 
+                rows="3"
+                widgetVar="dtRevenus"
+                rowSelectMode="add" 
+                paginatorPosition="bottom"
+                binding="#{table}" 
+                value="#{revenusController.listRevenuSousLocation}" 
+                var="revenus"
+                rowKey="#{revenus}">
 
-        <ui:define name ="contents">
+                <f:facet name="header">
+                    <div class="flex justify-content-between">
+                         <span 
+                            style="font-weight: bold;
+                            font-size: 18px; text-transform: uppercase">
+                             LISTE
+                         </span>
+                         <span class="filter-container ui-input-icon-left"> 
+                             <i class="pi pi-search icon"></i>
+                             <p:inputText 
+                                 id="globalFilter" 
+                                 onkeyup="PF('dtRevenus').filter()" 
+                                 placeholder="Search...." 
+                             />
+                         </span>
+                     </div>
+                </f:facet>
+                
+                <p:column 
+                   headerText="#" 
+                   style="width: 5%">
+                    <h:outputText value="#{table.rowIndex + 1}" />
+                </p:column>
 
-            <h:form>
-                <div class="card">
-                    
-                    <div class="card-container pt-5 pb-5 pr-3 pl-3">
+                <p:column headerText="Recette sous location">
+                     <h:outputText value="#{revenus.recetteSousLocation}" />
+                </p:column>
 
-                        <div class="ui-fluid formgrid grid">
-                            <div class="field col-12 md:col-6">
-                                
-                                <component:inputTextField
-                                    label="Nom"
-                                    placeholder="Entrer nom"
-                                    value="#{contribuable.nom}"
-                                />
+                <p:column headerText="Loyer payes" >
+                   <h:outputText value="#{revenus.loyerPayes}" />
+                </p:column>
 
-                            </div>
-                            <div class="field col-12 md:col-6">
-                                <component:inputTextField
-                                    label="Prenom"
-                                    placeholder="Entrer prenom"
-                                    value="#{contribuable.prenom}"
-                                />
-                            </div>
-                            
-                            <div class="field col-12 md:col-6">
-                                <component:inputTextField
-                                    label="E-mail"
-                                    placeholder="Entrer email "
-                                    value="#{contribuable.email}"
-                                />
+                <p:column headerText="Revenus nets imposables" >
+                   <h:outputText value="#{revenus.revenusNetsImposables}" />
+                </p:column>
 
-                            </div>
-                            <div class="field col-12 md:col-6">
-                                <component:inputTextField
-                                    label="Mot de passe"
-                                    placeholder="Entrer Mot de passe"
-                                    value="#{contribuable.password}"
-                                    type="password"
-                                />
-                            </div>
-                            
-                            <div class="field col-12 md:col-6">
-                                <component:inputTextField
-                                    label="Boite postal"
-                                    placeholder="B.P 1023456 "
-                                    value="#{contribuable.BP}"
-                                />
+                <p:column headerText="Total revenus nets imposables" >
+                   <h:outputText value="#{revenus.totalRevenusNetsImposables}" />
+                </p:column>
 
-                            </div>
-                            <div class="field col-12 md:col-6">
-                                <component:inputTextField
-                                    label="Telephone"
-                                    placeholder="+257 71 20 47 78"
-                                    value="#{contribuable.telephone}"
-                                    type="number"
-                                />
-                            </div>
-                            
-                            
-                            
-                            
-                        </div>
-                    </div>
-                    
-                </div>
-            </h:form>
-
-        </ui:define>
-
-    </ui:composition>	
+                <p:column headerText="Abbattements" >
+                   <h:outputText value="#{revenus.abbattements}" />
+                </p:column>
+                
+                <p:column headerText="Revenus net imposable" >
+                   <h:outputText value="#{revenus.revenuSousNetImposable}" />
+                </p:column>
+                
+            </p:dataTable>
+         </h:form>
+    
+       <ui:include src="ajouter.xhtml" />
+            
+</ui:composition>

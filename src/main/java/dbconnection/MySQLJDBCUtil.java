@@ -73,11 +73,18 @@ public class MySQLJDBCUtil {
         addMessage(FacesMessage.SEVERITY_ERROR, content, msg);
     }
 
+    //************** error  message from sql ***********************/
+    public void addErrorMessage(SQLException ex) {
+        
+        //FacesMessage message = new FacesMessage(ex.getMessage());
+        //FacesContext.getCurrentInstance().addMessage(null, message);
+        addMessage(FacesMessage.SEVERITY_ERROR,"Error SQL",ex.getMessage());
+    }
+    
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
         addMessage(null, new FacesMessage(severity, summary, detail));
     }
-    
     
     public static void printSQLException(SQLException ex) {
       for (Throwable e : ex) {

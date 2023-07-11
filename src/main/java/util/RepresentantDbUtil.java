@@ -10,11 +10,9 @@ package util;
  */
 
 import dbconnection.MySQLJDBCUtil;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.bean.ApplicationScoped;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.context.FacesContext;
-import java.io.Serializable;
 import model.Representant;
 import java.sql.*;
 import java.util.*;
@@ -23,21 +21,13 @@ import java.util.*;
 @ApplicationScoped
 
 public class RepresentantDbUtil extends MySQLJDBCUtil{
-    
-    private static RepresentantDbUtil instance;
-
-    public static RepresentantDbUtil getInstance() throws Exception {
-        if (instance == null) {
-            instance = new RepresentantDbUtil();
-        }
-        return instance;
-    }
-
+    private List< Representant>  representantList;
+    private Representant representant;
     //*************************** display data *****************/
     
-    public ArrayList findAll() {
+    public List< Representant> findAll() {
         
-        ArrayList representantList = new ArrayList();
+        representantList = new ArrayList<>();
         
         try {
             String query = "SELECT * FROM representant WHERE id IS NOT NULL ORDER BY id DESC";
@@ -47,7 +37,7 @@ public class RepresentantDbUtil extends MySQLJDBCUtil{
 
             while(resultSet.next()) { 
 
-                Representant representant = new Representant(); 
+                representant = new Representant(); 
 
                 representant.setId(resultSet.getInt("id"));  
                 representant.setNomRepresentant(resultSet.getString("nomRepresentant"));  
@@ -104,7 +94,7 @@ public class RepresentantDbUtil extends MySQLJDBCUtil{
     //************** find data by ID ***************************/
     public void findById(int representantId) {
         
-        Representant representant = null;
+        representant = null;
         System.out.println(" findById() : Representant Id: " + representantId);
         
         /* Setting The Particular representant Details In Session */
@@ -196,11 +186,4 @@ public class RepresentantDbUtil extends MySQLJDBCUtil{
         }
     }
     
-   
-    //************** error  message from sql ***********************/
-    private void addErrorMessage(SQLException ex) {
-        
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
 }

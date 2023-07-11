@@ -19,9 +19,13 @@ public class Abbattement implements Serializable{
 
     private Integer id;
     private String beneficiaire;
-    private String[] motifAbbattement;
-    private Representant representant;
-    private Integer Idrepresentant;
+    //private String[] motifAbbattement;
+    private String motifAbbattement;
+    private Integer IdContribuable;
+    
+    private static Contribuable contribuable;
+    private String nom;
+    private String email;
     
     private String motif_A = "A. Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à l’âge de 25 ans, orphelin de père et de mère, héritier ou usufruitier";
     private String motif_B = "B. Enfant mineur ou enfant majeur, copropriétaires, cohéritiers et co-usufruitier";
@@ -30,7 +34,9 @@ public class Abbattement implements Serializable{
     private String motif_E = "E. Démobilisé non en fonction publique, privée ou élective ";
 
     public Abbattement(){
-        //beneficiaire = "No";
+        //beneficiaire = "Non";
+        //motif_A = "A. Enfant mineur ou enfant majeur en cours de scolarisation jusqu’à l’âge de 25 ans, orphelin de père et de mère, héritier ou usufruitier";
+        //motifAbbattement = new String[3];
         
     }
 
@@ -50,28 +56,20 @@ public class Abbattement implements Serializable{
         this.beneficiaire = beneficiaire;
     }
 
-    public String[] getMotifAbbattement() {
+    public String getMotifAbbattement() {
         return motifAbbattement;
     }
 
-    public void setMotifAbbattement(String[] motifAbbattement) {
+    public void setMotifAbbattement(String motifAbbattement) {
         this.motifAbbattement = motifAbbattement;
     }
 
-    public Representant getRepresentant() {
-        return representant;
+    public Integer getIdContribuable() {
+        return IdContribuable;
     }
 
-    public void setRepresentant(Representant representant) {
-        this.representant = representant;
-    }
-
-    public Integer getIdrepresentant() {
-        return Idrepresentant;
-    }
-
-    public void setIdrepresentant(Integer Idrepresentant) {
-        this.Idrepresentant = Idrepresentant;
+    public void setIdContribuable(Integer IdContribuable) {
+        this.IdContribuable = IdContribuable;
     }
 
     public String getMotif_A() {
@@ -113,6 +111,31 @@ public class Abbattement implements Serializable{
     public void setMotif_E(String motif_E) {
         this.motif_E = motif_E;
     }
+
+    public static void setContribuable(Contribuable contribuable) {
+        Abbattement.contribuable = contribuable;
+    }
+
+    public static Contribuable getContribuable() {
+        return contribuable;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
     
     
 }

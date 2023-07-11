@@ -5,7 +5,7 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:component="http://xmlns.jcp.org/jsf/composite/component">
              
-        <h:form>
+        <h:form id="form">
             <p:growl id="message" showDetail="true"/>
 
             <p:toolbar>
@@ -14,59 +14,27 @@
                     <p:commandButton 
                         value="Ajouter" 
                         icon="pi pi-plus" 
-                        actionListener="#{contribuableController.clearForm}"
+                        actionListener="#{abbattementController.clearForm}"
                         update=":dialogs-contribuable:manage-contribuable-content"
                         oncomplete="PF('manageContribuableDialog').show()"
                         styleClass="ui-button-success"
-                        style="margin-right: .5rem">
+                        style="margin-right: 5rem">
                         <p:resetInput target=":dialogs-contribuable:manage-contribuable-content" />
                     </p:commandButton>
-                </p:toolbarGroup>
-                
-                <p:toolbarGroup align="right">
-
-                    <!-- Export data pdf -->
-                    <p:commandButton 
-                        value="PDF" 
-                        icon="pi pi-print" 
-                        styleClass="ui-button-help" 
-                        ajax="false"
-                        class="mr-2"
-                        >
-                        <p:dataExporter 
-                            type="pdf" 
-                            target="dt-contribuables" 
-                            fileName="Gestion des contribuables" 
-                        />
-                    </p:commandButton>
-
-                    <!--Export data excel -->
-                    <p:commandButton 
-                        value="EXCEL" 
-                        icon="pi pi-upload" 
-                        styleClass="ui-button-help" 
-                        ajax="false">
-                        <p:dataExporter 
-                            type="xls" 
-                            target="dt-contribuables" 
-                            fileName="Gestion des contribuables" 
-                        />
-                    </p:commandButton>
-
                 </p:toolbarGroup>
                 
             </p:toolbar>
             
             <p:dataTable
-                id="dt-contribuables"
+                id="dt-abbattement"
                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                rowsPerPageTemplate="3,10,15,20"
+                rowsPerPageTemplate="2,10,15,20"
                 paginator="true"
-                widgetVar="dtContribuables" 
-                rows="3"
-                value="#{contribuableController.contribuableList}" 
-                var="contribuable" 
-                rowKey="#{contribuable}"
+                widgetVar="dtAbbattement" 
+                rows="2"
+                value="#{abbattementController.abbattementList}" 
+                var="abbattement" 
+                rowKey="#{abbattement}"
                 paginatorPosition="bottom"
                 binding="#{table}" >
 
@@ -81,7 +49,7 @@
                          <i class="pi pi-search icon"></i>
                          <p:inputText 
                              id="globalFilter" 
-                             onkeyup="PF('dtContribuables').filter()" 
+                             onkeyup="PF('dtAbbattement').filter()" 
                              placeholder="Search..." 
                          />
                      </span>
@@ -94,28 +62,20 @@
                   <h:outputText value="#{table.rowIndex + 1}" />
               </p:column>
 
-              <p:column 
-                 headerText="Nom / Raison sociale" 
-                 sortBy="#{contribuable.nom}" 
-                 filterBy="#{contribuable.nom}">
+                <p:column headerText="Nom / Raison sociale" sortBy="#{abbattement.nom}" filterBy="#{abbattement.nom}">
+                   <h:outputText value="#{abbattement.nom}" />
+                </p:column>
 
-                 <h:outputText value="#{contribuable.nom}" />
-              </p:column>
-
-              <p:column 
-                 headerText="Email" 
-                 sortBy="#{contribuable.email}" 
-                 filterBy="#{contribuable.email}"
-                 >
-                 <h:outputText value="#{contribuable.email}" />
-              </p:column>
-
-                <p:column 
-                    headerText="B.P" 
-                    sortBy="#{contribuable.bp}" 
-                    filterBy="#{contribuable.bp}"
-                    style="width: 10%">
-                    <h:outputText value="#{contribuable.bp}" />
+                <p:column headerText="Email" sortBy="#{abbattement.email}" filterBy="#{abbattement.email}">
+                   <h:outputText value="#{abbattement.email}" />
+                </p:column>
+                
+                <p:column headerText="Beneficiaire"  filterBy="#{abbattement.beneficiaire}" style="width: 7%">
+                    <h:outputText value="#{abbattement.beneficiaire}" />
+                </p:column>
+                
+                <p:column headerText="Motif" sortBy="#{abbattement.motifAbbattement}" filterBy="#{abbattement.motifAbbattement}">
+                    <h:outputText value="#{abbattement.motifAbbattement}" />
                 </p:column>
 
                 <p:column exportable="false" style="width: 10%" >
@@ -126,7 +86,7 @@
                         update=":dialogs-contribuable:manage-contribuable-content"
                         process="@this">
 
-                        <f:setPropertyActionListener value="#{contribuable}" target="#{contribuableController.modelContribuable}" />
+                        <f:setPropertyActionListener value="#{abbattement}" target="#{abbattementController.modelAbbattement}" />
                         <p:resetInput target=":dialogs-contribuable:manage-contribuable-content" />
 
                     </p:commandButton>
@@ -136,7 +96,7 @@
                     icon="pi pi-trash"
                     process="@this"
                     ajax="false"
-                    action="#{contribuableController.delete(contribuable.id)}">
+                    action="#{abbattementController.delete(abbattement.id)}">
 
                 </p:commandButton>
                     

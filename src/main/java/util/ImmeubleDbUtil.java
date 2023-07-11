@@ -389,10 +389,4 @@ public class ImmeubleDbUtil extends MySQLJDBCUtil {
         }
     }
     
-     //************** error  message from sql ***********************/
-    private static void addErrorMessage(SQLException ex) {
-        
-        FacesMessage message = new FacesMessage(ex.getMessage());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
 }

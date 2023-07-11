@@ -41,17 +41,7 @@ public class ContribuableDbUtil extends MySQLJDBCUtil {
         
         try {
 
-            String query = ""
-                    + "SELECT contribuable.*, "+ "abbattement.id_abbattement as Abbattement_ID, "
-                    + "abbattement.beneficiaire, "
-                    + "abbattement.motif_A, "
-                    + "abbattement.motif_B, "
-                    + "abbattement.motif_C, "
-                    + "abbattement.motif_D, "
-                    + "abbattement.motif_E "
-                    + "FROM contribuable,  abbattement "
-                    + "WHERE contribuable.id = abbattement.id_contribuable "
-                    + "AND contribuable.id IS NOT NULL ORDER BY contribuable.id DESC";
+            String query = "SELECT * FROM contribuable WHERE contribuable.id IS NOT NULL ORDER BY contribuable.id DESC";
             
             connection = dataSource.getConnection();
             statement = connection.createStatement();
@@ -68,15 +58,7 @@ public class ContribuableDbUtil extends MySQLJDBCUtil {
                contribuable.setTelephone(resultSet.getInt("telephone"));  
                contribuable.setBp(resultSet.getString("BP"));  
                contribuable.setDate(resultSet.getDate("date")); 
-               
-               contribuable.setIdRepresentant(resultSet.getInt("id_representant"));
-               contribuable.setBeneficiaire(resultSet.getString("beneficiaire"));
-               contribuable.setMotif_A(resultSet.getShort("motif_A"));
-               contribuable.setMotif_B(resultSet.getShort("motif_B")); 
-               contribuable.setMotif_C(resultSet.getShort("motif_C")); 
-               contribuable.setMotif_D(resultSet.getShort("motif_D")); 
-               contribuable.setMotif_E(resultSet.getShort("motif_E")); 
-
+                             
                contribuableList.add(contribuable);  
             }   
 

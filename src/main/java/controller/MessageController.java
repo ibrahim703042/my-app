@@ -5,7 +5,10 @@
 package controller;
 
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
+import java.io.IOException;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -41,6 +44,15 @@ public class MessageController {
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
         addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+    
+    public void redirect(String content, String msg, String navigation) throws IOException{
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        externalContext.getFlash().setKeepMessages(true);
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, content, msg));
+        //PrimeFaces.current().executeScript("PF('statusDialog').show()");
+        externalContext.redirect(navigation);
     }
 
 }

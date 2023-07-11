@@ -53,17 +53,8 @@ public class ContribuableController extends MessageController implements Seriali
     public void clearForm(){
         this.modelContribuable = new Contribuable();
     }
-    public List<Contribuable> contribuableList() {
         
-        contribuableList.clear();
-        try {
-            contribuableList = contribuableDbUtil.findAll();
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return contribuableList;
-    }
-        
+    
     //************************ save data **************************/
     public void createOrUpdate() {
         
@@ -97,7 +88,7 @@ public class ContribuableController extends MessageController implements Seriali
         }catch (Exception ex) {
             ex.printStackTrace();
         }
-        return "/pages/contribuable/edit.xhtml?faces-redirect=true";
+        return "/admin/contribuable/edit.xhtml?faces-redirect=true";
     }
     
     //************************ update data **************************/
@@ -110,10 +101,9 @@ public class ContribuableController extends MessageController implements Seriali
         }catch (Exception ex) {
             ex.printStackTrace();
         }
-        return "/pages/contribuable/template.xhtml?faces-redirect=true";
+        return "/admin/contribuable/template.xhtml?faces-redirect=true";
     }
     
-     
     ///************************ delete data **************************/
     public void delete(int id) {
         
