@@ -1,5 +1,6 @@
 <ui:composition xmlns:ui = "http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"> 
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"> 
     
     <footer id="footer">
         <div class="footer-top">
@@ -8,8 +9,11 @@
                     
                     <div class="col-lg-6 col-md-6">
                         <div class="footer-info">
-
-                            <h3 >OBR</h3>
+                            
+                            <div >
+                                <p:graphicImage name="OBR_3.png" library="image" styleClass=" img-fluid img-log"/>
+                            </div>
+                            
 
                             <h4 class="mb-2 mt-5 ">Vision</h4>
                             <p class="text-justify">
@@ -90,7 +94,7 @@
 
                     
                     <div class="col-lg-3 col-md-6 footer-newsletter">
-                        <h4>Contactez nous</h4>
+                        <h4>Adresse</h4>
                         <p>
                             Immeuble Virago<br/>Avenue de la Tanzanie
                             <br/><br/>
@@ -98,10 +102,18 @@
                             <strong>Email:</strong>obr.direction@obr.gov.bi<br/>
                         </p>
                         <div class="social-links mt-3">
-                            <a href="" class="twitter"><i class="bx bxl-twitter"></i></a>
-                            <a href="" class="facebook"><i class="bx bxl-facebook"></i></a>
-                            <a href="" class="instagram"><i class="bx bxl-instagram"></i></a>
-                            <a href="" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                            <h:outputLink  class="twitter text-decoration-none" value="https://www.obr.bi/index.php/en/lois-et-reglements">
+                                <i class="bx bxl-twitter"></i>
+                            </h:outputLink>
+                            <h:outputLink  class="facebook text-decoration-none" value="https://www.obr.bi/index.php/en/lois-et-reglements">
+                                <i class="bx bxl-facebook"></i>
+                            </h:outputLink>
+                            <h:outputLink  class="instagram text-decoration-none" value="https://www.obr.bi/index.php/en/lois-et-reglements">
+                                <i class="bx bxl-instagram"></i>
+                            </h:outputLink>
+                            <h:outputLink  class="linkedin text-decoration-none" value="https://www.obr.bi/index.php/en/lois-et-reglements">
+                                <i class="bx bxl-linkedin"></i>
+                            </h:outputLink>
                         </div>
                     </div>
 

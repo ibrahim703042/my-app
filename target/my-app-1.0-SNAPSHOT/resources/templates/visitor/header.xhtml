@@ -13,41 +13,42 @@
             
             <div class="container d-flex align-item-center justify-content-lg-between">
                 <div class="logo me-auto me-lg-0">
-                    <h:link outcome="index" class="text-decoration-none" value="OBR" >
-                        <!--<f:param name="pageId" value="1"/>-->
-                    </h:link>
+                    <div >
+                        <p:graphicImage name="OBR.png" library="image" styleClass=" img-fluid img-log"/>
+                    </div>
                 </div>
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
                         <li>
-                            <h:link outcome="index" class="nav-link scrollto active" value=" Acceuil" >
+                            <h:link outcome="index" styleClass="nav-link active" value=" Acceuil" >
                                 <!--<f:param name="pageId" value="1"/>-->
                             </h:link>
                         </li>
                         <li>
-                            <h:link outcome="apropos" class="nav-link scrollto" value="Apropos" >
+                            <h:link outcome="apropos" styleClass="nav-link" value="Apropos" >
                                 <!--<f:param name="pageId" value="1"/>-->
                             </h:link>
                         </li>
                         <li>
-                            <h:link outcome="particulier" class="nav-link scrollto" value="Particulier" >
+                            <h:link outcome="particulier" styleClass="nav-link" value="Particulier" >
                                 <!--<f:param name="pageId" value="1"/>-->
                             </h:link>
                         </li>
                         <li>
-                            <h:link outcome="contact_nous" class="nav-link scrollto" value="Contactez nous" >
+                            <h:link outcome="contact_nous" styleClass="nav-link" value="Contactez nous" >
                                 <!--<f:param name="pageId" value="1"/>-->
                             </h:link>
                         </li>
                         <li>
-                            <h:link outcome="declaration-en-ligne" class="nav-link scrollto" value="Test" >
+                            <h:link outcome="declaration-en-ligne" styleClass="nav-link" value="Test" >
                                 <!--<f:param name="pageId" value="1"/>-->
                             </h:link>
                         </li>
                     </ul>
                     
-                    <i class="bi bi-list mobile-nav-toggle"></i>
-                    
+                    <label class="mobile-icon">
+                        <i class="bi bi-list mobile-nav-toggle"></i>
+                    </label>
                 </nav>
                 <!--
                 <c:choose>
