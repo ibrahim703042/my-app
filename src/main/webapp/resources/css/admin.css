@@ -24,7 +24,7 @@
         overflow-x: hidden;
     }
 
-    body {
+    .body {
         background: var(--grey);
         overflow-x: hidden;
     }
@@ -190,49 +190,13 @@
         height: 64px;
         padding: 0 20px;
         display: flex;
+        justify-content: space-between;
         align-items: center;
         grid-gap: 28px;
         position: sticky;
         top: 0;
         left: 0;
         z-index: 100;
-    }
-    
-    nav .toggle-sidebar {
-        font-size: 20px;
-        cursor: pointer;
-    }
-    
-    nav form {
-        max-width: 400px;
-        width: 100%;
-        margin-right: auto;
-    }
-    
-    nav .form-group {
-        position: relative;
-    }
-    
-    nav .form-group input {
-        width: 100%;
-        background: var(--grey);
-        border-radius: 5px;
-        border: none;
-        outline: none;
-        padding: 10px 36px 10px 16px;
-        transition: all .3s ease;
-    }
-    
-    nav .form-group input:focus {
-        box-shadow: 0 0 0 1px var(--blue), 0 0 0 4px var(--light-blue);
-    }
-    
-    nav .form-group .icon {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 16px;
-        color: var(--dark-grey);
     }
     
     nav .nav-link {

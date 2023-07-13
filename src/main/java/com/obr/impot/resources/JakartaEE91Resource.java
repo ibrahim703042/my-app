@@ -1,4 +1,4 @@
-package com.obr.management.resources;
+package com.obr.impot.resources;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

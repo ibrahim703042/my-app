@@ -26,9 +26,9 @@ public class Amende implements Serializable {
     private Impot impot;
     
     public Amende() {
-        amandeFixe=200;
-        penalite=200;
-        total=200;
+//        amandeFixe=200;
+//        penalite=200;
+//        total=200;
     }
 
     public Integer getId() {

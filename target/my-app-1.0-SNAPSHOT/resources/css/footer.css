@@ -141,9 +141,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     padding-top: 30px;
 }
 
-
-
-#preloader {
+/*#preloader {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -151,7 +149,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     right: 0;
     z-index: 9999;
     overflow: hidden;
-    /*background-color: var(--background-color);*/
+    background-color: var(--background-color);
     background: rgba(0, 0, 0, 0.8);
 }
 
@@ -179,4 +177,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     100% {
         transform: rotate(360deg);
     }
-}
+}*/

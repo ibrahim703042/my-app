@@ -33,8 +33,7 @@ import util.RevenusDbUtil;
 @ManagedBean
 @ViewScoped
 public final class RevenusController implements Serializable {
-    
-    
+   
     private Contribuable modelContribuable;
     private List<Contribuable> listContribuable;
 
@@ -70,11 +69,6 @@ public final class RevenusController implements Serializable {
     
     private List<Quittance> listQuittance;
     private Quittance modelQuittance;
-    
-    
-//    public static double revenusTranche_1 ;
-//    public static double revenusTranche_2;
-//    public static double revenusTranche_3;
     
     public static double revenus;
     public static double restante = 0;
@@ -218,19 +212,26 @@ public final class RevenusController implements Serializable {
     
     // *********** TOTALITE RESERVE A L’ADMINISTRATION FISCALE   ****************/
     
+    
     public double totalImpotDU(){
-       return totalImpotDu_3() + totalImpotDu_2() + totalImpotDu_1();
+       return  totalImpotDu_3() + totalImpotDu_2() + totalImpotDu_1();
     }
-
+       
     public double totalRestantDU(){
        return  totalImpotDU() - this.modelImpot.getAccompteImpotDejaPaye();
     }
 
     // *********** AMANDE ****************/
 
-    public double totalAmandePenalite(){
-       return  totalRestantDU() + this.modelAmande.getAmandeFixe() + (this.modelAmande.getPenalite() * 10)/100 ;
+    public double penalite(){
+       return  (totalRestantDU() * 10)/100 ;
     }
+    
+    public double totalAmandePenalite(){
+       //return  totalRestantDU() + this.modelAmande.getAmandeFixe() + (this.modelAmande.getPenalite() * 10)/100 ;
+       return  penalite() + this.modelAmande.getAmandeFixe();
+    }
+    
 
     // *********** Qittance  ****************/
     public double getQuittanceMontantRestantDu(){
