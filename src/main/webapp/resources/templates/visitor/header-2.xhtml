@@ -1,0 +1,92 @@
+
+<ui:composition 
+    xmlns = "http://www.w3.org/1999/xhtml" 
+    xmlns:ui = "http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
+
+    <!-- =============== Header =============== -->
+    <header id="header" class="fixed-top">
+        <h:form>
+            
+            <div class="container d-flex align-item-center justify-content-lg-between">
+                <div class="logo me-auto me-lg-0">
+                    <div >
+                        <p:graphicImage name="OBR.png" library="image" styleClass=" img-fluid img-log"/>
+                    </div>
+                </div>
+                <c:choose>
+                    <c:when test="#{not empty authentificatorController.contribuable.email}">
+                        <nav id="navbar" class="navbar order-last order-lg-0">
+                            <ul>
+                                <li>
+                                    <h:link outcome="index" styleClass="nav-link active" value=" Acceuil" />
+                                </li>
+                                <li>
+                                    <h:link outcome="apropos" styleClass="nav-link" value="Apropos" />
+                                </li>
+                                <li>
+                                    <h:link outcome="particulier" styleClass="nav-link" value="Particulier" />
+                                </li>
+                                <li>
+                                    <h:link outcome="contact_nous" styleClass="nav-link" value="Contactez nous" />
+                                </li>
+                                <li>
+                                    <h:link outcome="declaration-en-ligne" styleClass="nav-link" value="Test" />
+                                </li>
+                            </ul>
+
+                            <label class="mobile-icon">
+                                <i class="bi bi-list mobile-nav-toggle"></i>
+                            </label>
+                        </nav> 
+                        <h:commandLink class="login-btn text-decoration-none" action="#{authentificatorController.logoutTaxPayer()}" value="Se deconnectez"/>
+                    </c:when>
+                    <c:otherwise>
+                        <nav id="navbar" class="navbar order-last order-lg-0">
+                            <ul>
+                                <li>
+                                    <h:link outcome="index" styleClass="nav-link active" value=" Acceuil" />
+                                </li>
+                                <li>
+                                    <h:link outcome="apropos" styleClass="nav-link" value="Apropos" />
+                                </li>
+                                <li>
+                                    <h:link outcome="particulier" styleClass="nav-link" value="Particulier" />
+                                </li>
+                                <li>
+                                    <h:link outcome="contact_nous" styleClass="nav-link" value="Contactez nous" />
+                                </li>
+                                
+                            </ul>
+
+                            <label class="mobile-icon">
+                                <i class="bi bi-list mobile-nav-toggle"></i>
+                            </label>
+                        </nav> 
+                        <h:link outcome="login" class=" login-btn text-decoration-none" value="Se connectez" />
+                    </c:otherwise>
+                </c:choose>
+                
+                <!--
+                <c:choose>
+                    <c:when test="#{not empty authentificatorController.contribuable.email}">
+                        <h:commandLink class="login-btn text-decoration-none" action="#{authentificatorController.logoutTaxPayer()}" value="Se deconnectez"/>
+                    </c:when>
+                    <c:otherwise>
+                        <h:link outcome="login" class=" login-btn text-decoration-none" value="Se connectez" />
+                    </c:otherwise>
+                </c:choose>
+                -->
+                
+            </div>
+            
+        </h:form>
+    </header>
+    <!-- =============== End Header =============== -->
+
+
+</ui:composition>
+  

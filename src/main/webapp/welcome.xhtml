@@ -9,42 +9,44 @@
 
             <section id="main" class="main declaration">
                 <div class="container" data-aos="fade-up">
-                    <h:form>
-                        <div class="section-title">
-                           <!--<h2>Welcome : #{authController.contribuable.nom}</h2>-->
-                           <h2>Welcome : #{authentificatorController.contribuable.email}</h2>
-                        </div>
                     
-                        <h:commandLink action="#{authentificatorController.logoutTaxPayer}" value="Se deconnectez"/>
-                    </h:form>
-                    
+                    <!--
+                    <div class="section-title">
+                    </div>
+                    -->
+
                     <div class="row">
 
-                        <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
+                        <div class="col-lg-3 col-md-3 d-flex align-items-stretch">
                             <div class="particulier" data-aos="fade-up" data-aos-delay="100">
-                                <div class="particulier-img">
-                                    <p:graphicImage name="impot.jpeg" library="image" styleClass="mb-3 img"/>
+                                <div class="particulier-img text-center py-2">
+                                    <p:graphicImage name="avatar.png" library="image" height="70" styleClass="mb-3"/>
+                                    <h6 class="px-3">#{authentificatorController.contribuable.email}</h6>
                                 </div>
-                                <div class="particulier-info">
-                                    <h4>Titre</h4>
-                                    <span class="text-justify">
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                                        Numquam unde id quisquam recusandae architecto nam temporibus 
-                                        labore vel neque eius incidunt explicabo velit autem, odio facere, 
-                                        fuga voluptate quidem soluta.
-                                    </span>
+                                <div class="particulier-info text-justify">
+                                    <ul>
+                                        <li>
+                                            <h:link outcome="login" class="button-link" value="Changer un mot de passe" />
+                                        </li>
+                                        <li>
+                                            <h:link outcome="login" class="button-link" value="Changer un mot de passe" />
+                                        </li>
+                                        <li>
+                                            <h:link outcome="login" class="button-link" value="Changer un mot de passe" />
+                                        </li>
+                                        <li>
+                                            <h:link outcome="login" class="button-link" value="Changer un mot de passe" />
+                                        </li>
+                                        <li>
+                                            <h:link outcome="login" class="button-link" value="Changer un mot de passe" />
+                                        </li>
+                                    </ul>
+                                </div>
 
-                                </div>
-                                <div class="particulier-button">
-                                    <div class="particulier-plus">
-                                        <!--<h:outputLink  class="button-link" value="https://www.obr.bi/index.php/en/lois-et-reglements">En savoir plus</h:outputLink>-->
-                                        <h:outputLink  class="button-link" value="https://www.obr.bi/index.php/en/formulaires-d-impots-et-taxes">En savoir plus</h:outputLink>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
+                        <div class="col-lg-9 col-md-9 d-flex align-items-stretch">
                             <div class="particulier" data-aos="fade-up" data-aos-delay="100">
                                <div class="particulier-img">
                                     <p:graphicImage name="impot.jpeg" library="image" styleClass="mb-3 img"/>
@@ -59,16 +61,17 @@
                                   </span>
                                </div>
                                <div class="particulier-button">
-                                  <div class="particulier-plus">
-                                     <h:link outcome="login" class="button-link" value="Déclarer" >
-                                        <f:param name="pageId" value="1"/>
-                                     </h:link>
-                                  </div>
+                                    <div class="particulier-plus">
+                                        <h:link outcome="login" class="button-link" value="Déclarer" >
+                                           <f:param name="pageId" value="1"/>
+                                        </h:link>
+                                    </div>
                                </div>
                             </div>
                       </div>
 
                     </div>
+                        
                 </div>
             </section> 
 

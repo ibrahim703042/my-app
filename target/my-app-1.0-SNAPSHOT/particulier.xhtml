@@ -3,7 +3,8 @@
    xmlns:ui = "http://java.sun.com/jsf/facelets" 
    xmlns:f="http://xmlns.jcp.org/jsf/core"
    template = "/resources/templates/miniTemplate.xhtml"
-   xmlns:p="http://primefaces.org/ui">
+   xmlns:p="http://primefaces.org/ui"
+   xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
         <ui:define name = "content"> 
 
@@ -11,52 +12,105 @@
                 <div class="container" data-aos="fade-up">
                     <div class="row">
 
-                        <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
-                            <div class="particulier" data-aos="fade-up" data-aos-delay="100">
-                               <div class="particulier-img">
-                                  <p:graphicImage name="impot.jpeg" library="image" styleClass="mb-3 img"/>
-                               </div>
-                               <div class="particulier-info">
-                                  <h4>Titre</h4>
-                                  <span class="text-justify">
-                                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                                     Numquam unde id quisquam recusandae architecto nam temporibus 
-                                     labore vel neque eius incidunt explicabo velit autem, odio facere, 
-                                     fuga voluptate quidem soluta.
-                                  </span>
+                        <c:choose>
+                            <c:when test="#{not empty authentificatorController.contribuable.email}">
 
-                               </div>
-                               <div class="particulier-button">
-                                    <div class="particulier-plus">
-                                        <h:outputLink  class="button-link" value="https://www.obr.bi/index.php/en/formulaires-d-impots-et-taxes">En savoir plus</h:outputLink>
-                                    </div>
-                               </div>
-                            </div>
-                      </div>
+                                <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
+                                    <div class="particulier" data-aos="fade-up" data-aos-delay="100">
+                                       <div class="particulier-img">
+                                          <p:graphicImage name="impot.jpeg" library="image" styleClass="mb-3 img"/>
+                                       </div>
+                                       <div class="particulier-info">
+                                          <h4>Titre</h4>
+                                          <span class="text-justify">
+                                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+                                             Numquam unde id quisquam recusandae architecto nam temporibus 
+                                             labore vel neque eius incidunt explicabo velit autem, odio facere, 
+                                             fuga voluptate quidem soluta.
+                                          </span>
 
-                        <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
-                            <div class="particulier" data-aos="fade-up" data-aos-delay="100">
-                               <div class="particulier-img">
-                                    <p:graphicImage name="impot.jpeg" library="image" styleClass="mb-3 img"/>
-                               </div>
-                               <div class="particulier-info">
-                                  <h4>Titre</h4>
-                                  <span class="text-justify">
-                                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                                     Numquam unde id quisquam recusandae architecto nam temporibus 
-                                     labore vel neque eius incidunt explicabo velit autem, odio facere, 
-                                     fuga voluptate quidem soluta.
-                                  </span>
-                               </div>
-                               <div class="particulier-button">
-                                    <div class="particulier-plus">
-                                        <h:link outcome="login" class="button-link" value="Déclarer" >
-                                            <f:param name="pageId" value="1"/>
-                                        </h:link>
+                                       </div>
+                                       <div class="particulier-button">
+                                            <div class="particulier-plus">
+                                                <h:outputLink  class="button-link" value="https://www.obr.bi/index.php/en/formulaires-d-impots-et-taxes">En savoir plus</h:outputLink>
+                                            </div>
+                                       </div>
                                     </div>
-                               </div>
-                            </div>
-                      </div>
+                              </div>
+                                
+                                <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
+                                    <div class="particulier" data-aos="fade-up" data-aos-delay="100">
+                                       <div class="particulier-img">
+                                          <p:graphicImage name="impot.jpeg" library="image" styleClass="mb-3 img"/>
+                                       </div>
+                                       <div class="particulier-info">
+                                          <h4>Titre</h4>
+                                          <span class="text-justify">
+                                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+                                             Numquam unde id quisquam recusandae architecto nam temporibus 
+                                             labore vel neque eius incidunt explicabo velit autem, odio facere, 
+                                             fuga voluptate quidem soluta.
+                                          </span>
+
+                                       </div>
+                                       <div class="particulier-button">
+                                            <div class="particulier-plus">
+                                                <h:outputLink  class="button-link" value="https://www.obr.bi/index.php/en/formulaires-d-impots-et-taxes">En savoir plus</h:outputLink>
+                                            </div>
+                                       </div>
+                                    </div>
+                              </div>
+
+                            </c:when>
+                            <c:otherwise>
+                                <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
+                                    <div class="particulier" data-aos="fade-up" data-aos-delay="100">
+                                       <div class="particulier-img">
+                                          <p:graphicImage name="impot.jpeg" library="image" styleClass="mb-3 img"/>
+                                       </div>
+                                       <div class="particulier-info">
+                                          <h4>Titre</h4>
+                                          <span class="text-justify">
+                                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+                                             Numquam unde id quisquam recusandae architecto nam temporibus 
+                                             labore vel neque eius incidunt explicabo velit autem, odio facere, 
+                                             fuga voluptate quidem soluta.
+                                          </span>
+
+                                       </div>
+                                       <div class="particulier-button">
+                                            <div class="particulier-plus">
+                                                <h:outputLink  class="button-link" value="https://www.obr.bi/index.php/en/formulaires-d-impots-et-taxes">En savoir plus</h:outputLink>
+                                            </div>
+                                       </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-12 d-flex align-items-stretch">
+                                    <div class="particulier" data-aos="fade-up" data-aos-delay="100">
+                                       <div class="particulier-img">
+                                            <p:graphicImage name="impot.jpeg" library="image" styleClass="mb-3 img"/>
+                                       </div>
+                                       <div class="particulier-info">
+                                          <h4>Titre</h4>
+                                          <span class="text-justify">
+                                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+                                             Numquam unde id quisquam recusandae architecto nam temporibus 
+                                             labore vel neque eius incidunt explicabo velit autem, odio facere, 
+                                             fuga voluptate quidem soluta.
+                                          </span>
+                                       </div>
+                                       <div class="particulier-button">
+                                            <div class="particulier-plus">
+                                                <h:link outcome="login" class="button-link" value="Déclarer" >
+                                                    <f:param name="pageId" value="1"/>
+                                                </h:link>
+                                            </div>
+                                       </div>
+                                    </div>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
 
                    </div>
                     

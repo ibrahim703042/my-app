@@ -29,39 +29,49 @@
                                 <!--<f:param name="pageId" value="1"/>-->
                             </h:link>
                         </li>
+                        <c:choose>
+                            <c:when test="#{not empty authentificatorController.contribuable.email}">
+                                <li>
+                                    <h:link outcome="welcome" styleClass="nav-link" value="Contribuable" />
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                                <li>
+                                    <h:link outcome="particulier" styleClass="nav-link" value="Particulier" />
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                        
                         <li>
-                            <h:link outcome="particulier" styleClass="nav-link" value="Particulier" >
-                                <!--<f:param name="pageId" value="1"/>-->
-                            </h:link>
+                            <h:link outcome="contact_nous" styleClass="nav-link" value="Contactez nous" />
                         </li>
-                        <li>
-                            <h:link outcome="contact_nous" styleClass="nav-link" value="Contactez nous" >
-                                <!--<f:param name="pageId" value="1"/>-->
-                            </h:link>
-                        </li>
-                        <li>
-                            <h:link outcome="declaration-en-ligne" styleClass="nav-link" value="Test" >
-                                <!--<f:param name="pageId" value="1"/>-->
-                            </h:link>
-                        </li>
+                        
+                        <!--
+                        <c:choose>
+                            <c:when test="#{not empty authentificatorController.contribuable.email}">
+                                <li>
+                                    <h:link outcome="declaration-en-ligne" styleClass="nav-link" value="Test" />
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                            </c:otherwise>
+                        </c:choose>
+                        -->
+                                
                     </ul>
                     
                     <label class="mobile-icon">
                         <i class="bi bi-list mobile-nav-toggle"></i>
                     </label>
-                </nav>
-                
-                <!--                
+                </nav>   
                 <c:choose>
-                    <c:when test="#{authentificatorController.contribuable.email}">
-                        <h:commandLink action="#" value="Se deconnectez"/>
+                    <c:when test="#{not empty authentificatorController.contribuable.email}">
+                        <h:commandLink class="login-btn text-decoration-none" action="#{authentificatorController.logoutTaxPayer()}" value="Se deconnectez"/>
                     </c:when>
                     <c:otherwise>
                         <h:link outcome="login" class=" login-btn text-decoration-none" value="Se connectez" />
                     </c:otherwise>
                 </c:choose>
-                -->
-                
                 
                 <!--
                 <p:outputLabel rendered="">
@@ -69,7 +79,7 @@
                 </p:outputLabel>
                 -->
                 
-                <h:link outcome="login" class="login-btn text-decoration-none" value="Se connectez" />
+                <!--<h:link outcome="login" class="login-btn text-decoration-none" value="Se connectez" />-->
                 
                 
             </div>
