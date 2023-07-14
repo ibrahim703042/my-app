@@ -11,11 +11,11 @@
                 <div class="container" data-aos="fade-up">
                     <h:form>
                         <div class="section-title">
-                           <h2>Welcome : #{authController.authContribuable.nom}</h2>
+                           <!--<h2>Welcome : #{authController.contribuable.nom}</h2>-->
+                           <h2>Welcome : #{authentificatorController.contribuable.email}</h2>
                         </div>
                     
-                        <!--<p>Welcome #{authController.authContribuable.email}</p>-->
-                        <h:commandLink action="#{authController.taxPayer_logout}" value="Se deconnectez"/>
+                        <h:commandLink action="#{authentificatorController.logoutTaxPayer}" value="Se deconnectez"/>
                     </h:form>
                     
                     <div class="row">

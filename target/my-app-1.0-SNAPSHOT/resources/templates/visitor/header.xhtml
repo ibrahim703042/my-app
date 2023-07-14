@@ -50,16 +50,18 @@
                         <i class="bi bi-list mobile-nav-toggle"></i>
                     </label>
                 </nav>
-                <!--
+                
+                <!--                
                 <c:choose>
-                    <c:when test="#">
-                      <h:link outcome="#" class=" login-btn text-decoration-none" value="Se connectez" />
+                    <c:when test="#{authentificatorController.contribuable.email}">
+                        <h:commandLink action="#" value="Se deconnectez"/>
                     </c:when>
                     <c:otherwise>
                         <h:link outcome="login" class=" login-btn text-decoration-none" value="Se connectez" />
                     </c:otherwise>
                 </c:choose>
                 -->
+                
                 
                 <!--
                 <p:outputLabel rendered="">
@@ -68,6 +70,7 @@
                 -->
                 
                 <h:link outcome="login" class="login-btn text-decoration-none" value="Se connectez" />
+                
                 
             </div>
             

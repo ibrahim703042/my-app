@@ -4,7 +4,8 @@
  */
 
 package authentification;
-
+ 
+import static authentification.AuthSession.getRequest;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.servlet.http.HttpSession;
@@ -14,14 +15,13 @@ import model.Administrateur;
 import model.Contribuable;
 import org.apache.commons.codec.digest.DigestUtils;
 import util.AuthDbUtil;
-import util.SessionUtils;
 
 /**
  *
  * @author Ibrahim
  * 
  */
-
+ 
 @ManagedBean
 @SessionScoped
 public class AuthentificatorController extends AuthDbUtil implements Serializable {
@@ -67,7 +67,7 @@ public class AuthentificatorController extends AuthDbUtil implements Serializabl
         return true;
     }
     
-    //validate login
+    /* ========================================= Administrator ====================================================*/
     
     public String authAdministrator() throws SQLException {
         
@@ -79,14 +79,14 @@ public class AuthentificatorController extends AuthDbUtil implements Serializabl
         
             if (valid) {
 
-                HttpSession session = SessionUtils.getSession();
-                session.setAttribute("email", mail);
+                HttpSession session = AuthSession.getSession();
+                session.setAttribute("authSessionName", mail);
                 return "/admin/dashboard?faces-redirect=true";
 
             } else {
 
                 //showInfo("Bocked"," Your account is disable ");
-                warningMessage("Incorrect Email and Passowrd","Please Enter Correct Email and Password");
+                warningMessage("Incorrect Email and Password","Please Enter Correct Email and Password");
                 return "";
             }
             
@@ -94,44 +94,50 @@ public class AuthentificatorController extends AuthDbUtil implements Serializabl
         
     }
     
-    //validate login
+    public String logoutAdministrator() {
+        
+        HttpSession session = getRequest().getSession(false);
+        
+        if (session != null) {
+            session.invalidate();
+        }
+        return "/admin/index?faces-redirect=true";
+    }
+    
+    
+    /* ========================================= TaxPayer ====================================================*/
+    
     public String authTaxPayer() throws SQLException {
         
-        String mail = this.administrateur.getEmail();
-        String password = DigestUtils.shaHex(this.administrateur.getMotPasse());
+        String nom = this.contribuable.getNom();
+        String mail = this.contribuable.getEmail();
+        String password = DigestUtils.shaHex(this.contribuable.getMotPasse());
+        
         valid = AuthentificatorDbUtil.validate_2(mail,password);
                 
         if (valid) {
 
-            HttpSession session = SessionUtils.getSession();
-            session.setAttribute("email", mail);
+            HttpSession session = AuthSession.getSession();
+            session.setAttribute("authSessionName", nom);
             return "welcome?faces-redirect=true";
 
         } else {
 
             //showInfo("Bocked"," Your account is disable ");
-            warningMessage("Incorrect Email and Passowrd","Please Enter Correct Email and Password");
+            warningMessage("Incorrect Email and Password","Please Enter Correct Email and Password");
             return "";
         }
         
     }
     
-    /// ****************logout event, invalidate session*********
-    public String logout() {
+    public String logoutTaxPayer() {
         
-        HttpSession session = SessionUtils.getSession();
-        session.invalidate();
-        return "/admin/index?faces-redirect=true";
+        HttpSession session = getRequest().getSession(false);
         
-    }
-    
-    /// ****************logout event, invalidate session*********
-    
-    public String taxPayer_logout() {
-        
-        HttpSession session = SessionUtils.getSession();
-        session.invalidate();
-        return "index?faces-redirect=true";
+        if (session != null) {
+            session.invalidate();
+        }
+        return "index.xhtml?faces-redirect=true";
         
     }
     

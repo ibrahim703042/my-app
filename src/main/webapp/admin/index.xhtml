@@ -64,27 +64,7 @@
             object-fit: cover;
             z-index: 10;
         }
-        .container .cover .text{
-            position: absolute;
-            z-index: 130;
-            height: 100%;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .cover .text .text-1,
-        .cover .text .text-2{
-            font-size: 26px;
-            font-weight: 600;
-            color: #fff;
-            text-align: center;
-        }
-        .cover .text .text-2{
-            font-size: 15px;
-            font-weight: 500;
-        }
+        
         .container .forms{
             height: 100%;
             width: 100%;
@@ -131,13 +111,14 @@
             
             <div class="cover">
                 <div class="front">
-                  <p:graphicImage name="image_1.png" library="image" alt="Image" height="50" styleClass="mb-3 img"/>
+                    <p:graphicImage name="image_1.png" library="image" alt="Image" height="50" styleClass="mb-3 img"/>
                   <div class="text">
                     <span class="text-1"><br/></span>
                     <span class="text-2"></span>
                   </div>
                 </div>
             </div>
+            
             <div class="forms">
                 <div class="form-content">
                     <div class="login-form">
@@ -178,7 +159,7 @@
                                     value="Se connectez" 
                                     styleClass="w-full"
                                     update="form_login"
-                                    action="#{authController.loginAdmin}"
+                                    action="#{authController.authAdministrator}"
                                 >
                                     <f:param name="pageId" value="1"/>
                                 </p:commandButton>

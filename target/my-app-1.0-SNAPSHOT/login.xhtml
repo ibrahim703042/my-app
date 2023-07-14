@@ -17,7 +17,8 @@
                     
                     <div class="cover">
                         <div class="front">
-                            <h:graphicImage name="image/formLoginImg.jpg"  class=" img" />
+                            <h:graphicImage name="image/image_1.png"  class=" img" />
+                            <!--
                             <div class="text">
                                 <span class="text-1">
                                     Lorem ipsum dolor sit, amet 
@@ -25,6 +26,7 @@
                                 </span>
                               <span class="text-2">Lorem ipsum dolor</span>
                             </div>
+                            -->
                         </div>
                     </div>
                    
@@ -41,7 +43,7 @@
                                             <div class="input-box">
                                                 <i class="ri-mail-line"></i>
 
-                                                <h:inputText class="input" value="#{authController.contribuable.email}">
+                                                <h:inputText class="input" value="#{authentificatorController.contribuable.email}">
                                                     <f:passThroughAttribute name="type" value="email"/>
                                                     <f:passThroughAttribute name="placeholder" value="Email"/>
                                                 </h:inputText>
@@ -50,14 +52,14 @@
 
                                             <div class="input-box">
                                                 <i class="ri-lock-password-line"></i>
-                                                 <h:inputSecret class="input" value="#{authController.contribuable.motPasse}" >
+                                                 <h:inputSecret class="input" value="#{authentificatorController.contribuable.motPasse}" >
                                                     <f:passThroughAttribute name="password" value="motPasse"/>
                                                     <f:passThroughAttribute name="placeholder" value="Mot de passe"/>
                                                 </h:inputSecret>
                                             </div>
 
                                             <div class="button input-box">
-                                                <h:commandButton value="Se connecter" class="btnInput" action="#{authController.taxPayer_login}">
+                                                <h:commandButton value="Se connecter" class="btnInput" action="#{authentificatorController.authTaxPayer}">
                                                     <!--<f:param name="pageId" value="2"/>-->
                                                 </h:commandButton>
                                             </div>

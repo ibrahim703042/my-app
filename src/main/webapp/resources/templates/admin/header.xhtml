@@ -6,7 +6,8 @@
     
     
     <nav>
-        <i class="pi pi-bars toggle-sidebar"></i>
+        <!--<i class="pi pi-bars toggle-sidebar"></i>-->
+        <i class="pi pi-bars"></i>
         <!--
         <h:form>
             <a href="#" class="nav-link">
@@ -31,18 +32,26 @@
                         <h3>#{authController.authAdministrateur.prenom}</h3>
                         <span class="text-900">#{authController.authAdministrateur.nomRole}</span>
                     </div>
+                    <!--
+                    <li>
+                        <p:link class="no-underline nav-link" outcome="/admin/admin/change-password" >
+                            <i class='pi pi-list icon' ></i>
+                            Profile
+                        </p:link>
+                    </li>
+                    -->
                     
                     <li>
-                        <h:commandLink action="#{authController.logout}">
+                        <h:link outcome="/admin/admin/change-password" >
                             <!--<f:param name="pageId" value="2"/>-->
-                            <i class='pi pi-user icon' ></i>
-                            Profile
-                        </h:commandLink>
+                            <i class='pi pi-lock icon' ></i>
+                            Parametre
+                        </h:link>
                     
                     </li>
 
                     <li>
-                        <h:commandLink action="#{authController.logout}">
+                        <h:commandLink action="#{authController.logoutAdministrator()}">
                             <!--<f:param name="pageId" value="2"/>-->
                             <i class='pi pi-sign-out' ></i>
                             Se deconnecter

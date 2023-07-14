@@ -5,6 +5,7 @@
 
 package controller;
 
+import authentification.AuthSession;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.faces.context.ExternalContext;
@@ -16,7 +17,6 @@ import model.Administrateur;
 import model.Contribuable;
 import org.apache.commons.codec.digest.DigestUtils;
 import util.AuthDbUtil;
-import util.SessionUtils;
 
 /**
  *
@@ -73,7 +73,7 @@ public class AuthController extends AuthDbUtil implements Serializable {
         return true;
     }
     
-    public String loginAdmin(){
+    public String authAdministrator(){
         
         String mail = this.administrateur.getEmail();
         String password = DigestUtils.shaHex(this.administrateur.getMotPasse());
@@ -104,16 +104,16 @@ public class AuthController extends AuthDbUtil implements Serializable {
     }
     
     /// ****************logout event, invalidate session*********
-    public String logout() {
+    public String logoutAdministrator() {
         
-        HttpSession session = SessionUtils.getSession();
+        HttpSession session = AuthSession.getSession();
         session.invalidate();
         return "/admin/index?faces-redirect=true";
         
     }
     
     
-    public String taxPayer_login(){
+    public String authTaxPayer(){
         
         String mail = this.getContribuable().getEmail();
         String password = DigestUtils.shaHex(this.getContribuable().getMotPasse());
@@ -144,9 +144,9 @@ public class AuthController extends AuthDbUtil implements Serializable {
     
     /// ****************logout event, invalidate session*********
     
-    public String taxPayer_logout() {
+    public String logoutTaxPayer() {
         
-        HttpSession session = SessionUtils.getSession();
+        HttpSession session = AuthSession.getSession();
         session.invalidate();
         return "index?faces-redirect=true";
         
